@@ -28,6 +28,9 @@ protected:
     void paintEvent(QPaintEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
     QSize sizeHint() const override;
+
+private:
+    const double aspectRatio = 2.0 / 3.0;
 };
 
 #endif // LOGINUI_H

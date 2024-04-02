@@ -41,10 +41,15 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
     // Resize background image to fit window size
-    QPixmap scaledBgImage = backgroundImage;
-    scaledBgImage = scaledBgImage.scaled(this->size(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+    QPixmap scaledBgImage = backgroundImage.scaled(this->size(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+
+    // Calculate new centre position
+    int x = (this->width() - scaledBgImage.width()) / 2;
+    int y = (this->height() - scaledBgImage.height()) / 2;
+
+    // Resize background image from centre position
     backgroundLabel->setPixmap(scaledBgImage);
-    backgroundLabel->setGeometry(0, 0, this->size().width(), this->size().height());
+    backgroundLabel->setGeometry(x, y, scaledBgImage.size().width(), scaledBgImage.size().height());
 }
 
 MainWindow::~MainWindow()

@@ -7,7 +7,7 @@ loginUI::loginUI(MainWindow *parent)
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setAlignment(Qt::AlignHCenter);
     layout->setSpacing(20);
-    layout->setContentsMargins(0, 10, 0, 10);   // left, top, right, bottom
+    layout->setContentsMargins(0, 10, 0, 10);                           // left, top, right, bottom
 
     // Load icon
     QPixmap appIcon(":/AppIcon/Icon1.png");
@@ -36,16 +36,15 @@ RectangleWidget::RectangleWidget(QWidget *parent) {
 void RectangleWidget::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing);  // Set antialiasing for smooth edges
+    painter.setRenderHint(QPainter::Antialiasing);                      // Set antialiasing for smooth edges
     painter.setBrush(QColor(32, 31, 30, 240));
-    painter.drawRect(rect());                       // Dimensions of rectangle widget
+    painter.drawRect(rect());                                           // Dimensions of rectangle widget
 }
 
 void RectangleWidget::resizeEvent(QResizeEvent *event)
 {
     // Calculate new rectangle size (2:3 aspect ratio)
-    const double aspectRatio = 2.0 / 3.0;
-    int newHeight = this->height();
+    int newHeight = this->height();                                     // Height due to expanding size policy
     int newWidth = static_cast<int>(newHeight * aspectRatio);
 
     // Calculate new centre position of rectangle
@@ -59,7 +58,6 @@ void RectangleWidget::resizeEvent(QResizeEvent *event)
 QSize RectangleWidget::sizeHint() const
 {
     // Set initial size of rectangle
-    const double aspectRatio = 2.0 / 3.0;
     int height = 561;
     int width = static_cast<int>(height * aspectRatio);
 
