@@ -31,5 +31,6 @@ private:
     Ui::MainWindow *ui;
     QPixmap backgroundImage;
     QLabel *backgroundLabel;
+    QWidget *loginBox;
 };
 #endif // MAINWINDOW_H

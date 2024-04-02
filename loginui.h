@@ -1,6 +1,7 @@
 #ifndef LOGINUI_H
 #define LOGINUI_H
 
+#include "mainwindow.h"
 #include <QWidget>
 #include <QLabel>
 #include <QVBoxLayout>
@@ -10,7 +11,10 @@ class loginUI : public QWidget
 {
     Q_OBJECT
 public:
-    explicit loginUI(QWidget *parent = nullptr);
+    explicit loginUI(MainWindow *parent = nullptr);
+
+protected:
+    MainWindow *mainWindow;
 
 signals:
 };
@@ -22,6 +26,8 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
+    QSize sizeHint() const override;
 };
 
 #endif // LOGINUI_H

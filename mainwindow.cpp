@@ -34,8 +34,8 @@ MainWindow::MainWindow(QWidget *parent)
     backgroundLabel->setGraphicsEffect(colorize);
 
     // Create loginUI object
-    loginUI *login = new loginUI(this);
-    this->setCentralWidget(login);
+    loginBox = new loginUI(this);
+    this->setCentralWidget(loginBox);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
