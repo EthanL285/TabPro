@@ -5,4 +5,8 @@
     <qresource prefix="/Background">
         <file>background.png</file>
     </qresource>
+    <qresource prefix="/FieldIcon">
+        <file>user.png</file>
+        <file>lock.png</file>
+    </qresource>
 </RCC>

@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QPainter>
+#include <QLineEdit>
 
 class loginUI : public QWidget
 {
