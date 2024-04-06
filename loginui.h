@@ -7,7 +7,11 @@
 #include <QVBoxLayout>
 #include <QPainter>
 #include <QLineEdit>
+#include <QPushButton>
+#include <QCheckBox>
+#include <QUrl>
 
+// loginUI Class
 class loginUI : public QWidget
 {
     Q_OBJECT
@@ -18,8 +22,13 @@ protected:
     MainWindow *mainWindow;
 
 signals:
+
+public slots:
+    void loginSlot();
+    void rememberSlot();
 };
 
+// RectangleWidget Class
 class RectangleWidget : public QWidget
 {
 public:
@@ -34,4 +43,18 @@ private:
     const double aspectRatio = 2.0 / 3.0;
 };
 
+// CLickableLabel Class
+class ClickableLabel : public QLabel {
+    Q_OBJECT
+public:
+    explicit ClickableLabel(const QString &text, QWidget *parent = nullptr);
+
+public slots:
+    void forgotSlot();
+
+protected:
+    void mousePressEvent(QMouseEvent *event) override;
+    void enterEvent(QEnterEvent *event) override;
+    void leaveEvent(QEvent *event) override;
+};
 #endif // LOGINUI_H

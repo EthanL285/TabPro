@@ -1,7 +1,6 @@
 #include "loginui.h"
 
-loginUI::loginUI(MainWindow *parent)
-    : mainWindow(parent)
+loginUI::loginUI(MainWindow *parent) : mainWindow(parent)
 {
     // Create layout
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -12,7 +11,7 @@ loginUI::loginUI(MainWindow *parent)
     // Load icon
     QPixmap appIcon(":/AppIcon/Icon1.png");
     QSize iconSize(100, 100);
-    appIcon = appIcon.scaled(iconSize, Qt::KeepAspectRatio);
+    appIcon = appIcon.scaled(iconSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     // Create QLabel to display icon
     QLabel *iconLabel = new QLabel(this);
@@ -74,10 +73,23 @@ loginUI::loginUI(MainWindow *parent)
     username->setMinimumSize(0, 50);
     password->setMinimumSize(0, 50);
 
-    username->setStyleSheet("background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(96, 94, 92, 200), stop: 1 rgba(32, 31, 30, 200));"
-                            "border: none; color: white; font: 12pt Muli; padding-left: 5px;");
-    password->setStyleSheet("background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(96, 94, 92, 200), stop: 1 rgba(32, 31, 30, 200));"
-                            "border: none; color: white; font: 12pt Muli; padding-left: 5px;");
+    username->setStyleSheet
+    (
+        "background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(96, 94, 92, 200), stop: 1 rgba(32, 31, 30, 200));"
+        "border: none;"
+        "color: white;"
+        "font: 12pt Muli;"
+        "padding-left: 6px;"
+    );
+
+    password->setStyleSheet
+    (
+        "background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(96, 94, 92, 200), stop: 1 rgba(32, 31, 30, 200));"
+        "border: none;"
+        "color: white;"
+        "font: 12pt Muli;"
+        "padding-left: 6px;"
+    );
 
     // Add icons to text fields
     QHBoxLayout *userLayout = new QHBoxLayout();
@@ -85,7 +97,6 @@ loginUI::loginUI(MainWindow *parent)
 
     textLayout->addLayout(userLayout);
     textLayout->addLayout(passwordLayout);
-
     userLayout->setSpacing(0);
     passwordLayout->setSpacing(0);
 
@@ -93,8 +104,8 @@ loginUI::loginUI(MainWindow *parent)
     QPixmap passwordIcon(":/FieldIcon/lock.png");
 
     QSize fieldIcon(50, 50);
-    userIcon = userIcon.scaled(fieldIcon, Qt::KeepAspectRatio);
-    passwordIcon = passwordIcon.scaled(fieldIcon, Qt::KeepAspectRatio);
+    userIcon = userIcon.scaled(fieldIcon, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    passwordIcon = passwordIcon.scaled(fieldIcon, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     QLabel *userLabel = new QLabel();
     QLabel *passwordLabel = new QLabel();
@@ -110,8 +121,91 @@ loginUI::loginUI(MainWindow *parent)
 
     userLayout->addWidget(username);
     passwordLayout->addWidget(password);
+
+    // Add 'remember me' and 'forgot password'
+    QHBoxLayout *accountLayout = new QHBoxLayout();
+    textLayout->addLayout(accountLayout);
+
+    QCheckBox *rememberMe = new QCheckBox("Remember me");
+    accountLayout->addWidget(rememberMe);
+    rememberMe->setStyleSheet ("color: gray; font: 11pt Muli;");
+    connect(rememberMe, &QCheckBox::stateChanged, this, &loginUI::rememberSlot);
+
+    QLabel *forgotPassword = new ClickableLabel("Forgot password?");
+    forgotPassword->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    forgotPassword->setStyleSheet("color: gray; font: Italic 11pt Muli;");
+    accountLayout->addWidget(forgotPassword);
+
+    // Add login button
+    QPushButton *loginButton = new QPushButton("Login", this);
+    loginButton->setMinimumSize(0, 50);
+    connect(loginButton, &QPushButton::clicked, this, &loginUI::loginSlot);  // Connect signal (QPushButton::clicked) to login slot
+
+    loginButton->setStyleSheet
+     (
+       "QPushButton {"
+           "background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(255, 255, 255, 200), stop: 1 rgba(96, 94, 92, 200));"
+           "border: none;"
+           "color: black;"
+           "font: 15pt Moon;"
+       "}"
+       "QPushButton:hover {"
+           "background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(255, 255, 255, 200), stop: 0.2 rgba(243, 242, 241, 200));"
+       "}"
+       "QPushButton:pressed {"
+           "background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgba(32, 31, 30, 200), stop: 0.3 rgba(59, 58, 57, 200));" // Vertical gradient
+           "color: white;"
+           "font: 15pt Moon;"
+       "}"
+    );
+
+    loginButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    textLayout->addWidget(loginButton);
 }
 
+
+// loginUI Slots
+void loginUI::loginSlot()
+{
+    qDebug() << "Login Successful";
+}
+
+void loginUI::rememberSlot()
+{
+    qDebug() << "Tick Successful";
+}
+
+// ClickableLabel Class
+ClickableLabel::ClickableLabel(const QString &text, QWidget *parent) : QLabel(text, parent)
+{
+    setStyleSheet("color: gray; font: Italic 11pt Muli;");
+}
+
+void ClickableLabel::forgotSlot()
+{
+    qDebug() << "Link Successful";
+}
+
+void ClickableLabel::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton) {
+        ClickableLabel::forgotSlot();
+    }
+}
+
+void ClickableLabel::enterEvent(QEnterEvent *event)
+{
+    QLabel::enterEvent(event);
+    setStyleSheet("color: white; font: Italic 11pt Muli;");
+}
+
+void ClickableLabel::leaveEvent(QEvent *event)
+{
+    QLabel::leaveEvent(event);
+    setStyleSheet("color: gray; font: Italic 11pt Muli;");
+}
+
+// RectangleWidget Class
 RectangleWidget::RectangleWidget(QWidget *parent) {
     this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     setAttribute(Qt::WA_TranslucentBackground);
@@ -130,7 +224,7 @@ void RectangleWidget::paintEvent(QPaintEvent *event)
     // Draw rounded rectangle with gradient
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setBrush(QBrush(gradient));
-    painter.setPen(Qt::NoPen);                                              // No border
+    painter.setPen(Qt::NoPen);
     painter.drawRoundedRect(rect(), 15, 15);
 }
 

@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowIcon(appIcon);
 
     // Set initial and minimum window size
-    this->resize(1280,720);
+    this->resize(1600, 900);
     this->setMinimumSize(1280, 720);
 
     // Load background image
