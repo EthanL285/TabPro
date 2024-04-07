@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Set initial and minimum window size
     this->resize(1600, 900);
-    this->setMinimumSize(1280, 720);
+    this->setMinimumSize(1600, 900);
 
     // Load background image
     backgroundImage = QPixmap(":/Background/background.png");

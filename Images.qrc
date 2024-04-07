@@ -1,12 +1,15 @@
 <RCC>
     <qresource prefix="/AppIcon">
         <file>Icon1.png</file>
+        <file>IconStripped.png</file>
     </qresource>
     <qresource prefix="/Background">
         <file>background.png</file>
     </qresource>
     <qresource prefix="/FieldIcon">
+        <file>VisibilityChecked.png</file>
         <file>user.png</file>
         <file>lock.png</file>
+        <file>VisibilityUnchecked.png</file>
     </qresource>
 </RCC>

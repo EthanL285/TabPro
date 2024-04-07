@@ -9,7 +9,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QCheckBox>
-#include <QUrl>
+#include <QToolButton>
 
 // loginUI Class
 class loginUI : public QWidget
@@ -21,11 +21,14 @@ public:
 protected:
     MainWindow *mainWindow;
 
-signals:
-
-public slots:
+private slots:
     void loginSlot();
     void rememberSlot();
+    void toggleVisibility();
+
+private:
+    QLineEdit *passwordField;
+    bool visibility = false;
 };
 
 // RectangleWidget Class
@@ -41,20 +44,37 @@ protected:
 
 private:
     const double aspectRatio = 2.0 / 3.0;
+    QLabel *iconLabel;
 };
 
-// CLickableLabel Class
-class ClickableLabel : public QLabel {
+// ResizableImageLabel Class
+class ResizableImageLabel : public QLabel {
+public:
+    explicit ResizableImageLabel(const QPixmap image, QWidget* parent = nullptr);
+
+protected:
+    void resizeEvent(QResizeEvent* event) override;
+
+private:
+    const QPixmap image;
+};
+
+
+// ClickableLabel Class
+class ClickableLabel : public QLabel
+{
     Q_OBJECT
 public:
     explicit ClickableLabel(const QString &text, QWidget *parent = nullptr);
 
 public slots:
     void forgotSlot();
+    void registerAccount();
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
     void enterEvent(QEnterEvent *event) override;
     void leaveEvent(QEvent *event) override;
 };
+
 #endif // LOGINUI_H
