@@ -14,7 +14,7 @@ loginUI::loginUI(MainWindow *parent) : mainWindow(parent)
 
     // Create text layout
     QVBoxLayout *textLayout = new QVBoxLayout(loginBox);
-    textLayout->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    textLayout->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
     textLayout->setContentsMargins(40, 50, 40, 70);
     textLayout->setSpacing(30);
 
@@ -23,7 +23,7 @@ loginUI::loginUI(MainWindow *parent) : mainWindow(parent)
     QLabel *iconLabel = new ResizableImageLabel(appIcon, this);
 
     iconLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    iconLabel->setMaximumSize(200, 200);
+    iconLabel->setMaximumSize(252, 252);
 
     textLayout->addWidget(iconLabel);
     textLayout->setAlignment(iconLabel, Qt::AlignHCenter);
