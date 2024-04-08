@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "loginui.h"
+#include "registerui.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -33,9 +34,35 @@ MainWindow::MainWindow(QWidget *parent)
     colorize->setColor(Qt::black);
     backgroundLabel->setGraphicsEffect(colorize);
 
+    // Create central and stacked widget to manage pages
+    QWidget *centralWidget = new QWidget(this);
+    setCentralWidget(centralWidget);
+
+    stackedWidget = new QStackedWidget(centralWidget);
+
+    // Create main layout
+    QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
+    mainLayout->addWidget(stackedWidget);
+    mainLayout->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+
     // Create loginUI object
     loginBox = new loginUI(this);
-    this->setCentralWidget(loginBox);
+    stackedWidget->addWidget(loginBox);
+
+    // Create registerUI object
+    registerBox = new RegisterUI(this);
+    stackedWidget->addWidget(registerBox);
+}
+
+// MainWindow slots
+void MainWindow::redirectLogin()
+{
+    stackedWidget->setCurrentWidget(loginBox);
+}
+
+void MainWindow::redirectRegister()
+{
+    stackedWidget->setCurrentWidget(registerBox);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)

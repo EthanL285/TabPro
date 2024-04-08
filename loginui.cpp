@@ -161,10 +161,9 @@ loginUI::loginUI(MainWindow *parent) : mainWindow(parent)
     QCheckBox *rememberMe = new QCheckBox("Remember me");
     accountLayout->addWidget(rememberMe);
     rememberMe->setStyleSheet ("color: gray; font: 11pt Muli;");
-    rememberMe->setCursor(Qt::PointingHandCursor);
     connect(rememberMe, &QCheckBox::stateChanged, this, &loginUI::rememberSlot);
 
-    QLabel *forgotPassword = new ClickableLabel("Forgot password?");
+    QLabel *forgotPassword = new ClickableLabel("Forgot password?", mainWindow);
     forgotPassword->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     forgotPassword->setStyleSheet("color: gray; font: Italic 11pt Muli;");
     forgotPassword->setCursor(Qt::PointingHandCursor);
@@ -208,7 +207,7 @@ loginUI::loginUI(MainWindow *parent) : mainWindow(parent)
     signup->setStyleSheet("color: gray; font: Italic 11pt Muli;");
     registerLayout->addWidget(signup);
 
-    QLabel *reg = new ClickableLabel("Register");
+    QLabel *reg = new ClickableLabel("Register", mainWindow);
     reg->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     reg->setStyleSheet("color: white; font: 11pt Muli;");
     reg->setCursor(Qt::PointingHandCursor);
@@ -253,7 +252,7 @@ void ResizableImageLabel::resizeEvent(QResizeEvent* event)
 }
 
 // ClickableLabel Class
-ClickableLabel::ClickableLabel(const QString &text, QWidget *parent) : QLabel(text, parent)
+ClickableLabel::ClickableLabel(const QString &text, MainWindow *mainWindow) : QLabel(text, mainWindow), mainWindow(mainWindow)
 {
     setStyleSheet("color: gray; font: Italic 11pt Muli;");
 }
@@ -265,7 +264,7 @@ void ClickableLabel::forgotSlot()
 
 void ClickableLabel::registerAccount()
 {
-    qDebug() << "Register Successful";
+    mainWindow->redirectRegister();
 }
 
 void ClickableLabel::mousePressEvent(QMouseEvent *event)

@@ -43,7 +43,6 @@ protected:
 
 private:
     const double aspectRatio = 2.0 / 3.0;
-    QLabel *iconLabel;
 };
 
 // ResizableImageLabel Class
@@ -64,7 +63,7 @@ class ClickableLabel : public QLabel
 {
     Q_OBJECT
 public:
-    explicit ClickableLabel(const QString &text, QWidget *parent = nullptr);
+    explicit ClickableLabel(const QString &text, MainWindow *parent = nullptr);
 
 public slots:
     void forgotSlot();
@@ -74,6 +73,9 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void enterEvent(QEnterEvent *event) override;
     void leaveEvent(QEvent *event) override;
+
+private:
+    MainWindow *mainWindow;
 };
 
 #endif // LOGINUI_H

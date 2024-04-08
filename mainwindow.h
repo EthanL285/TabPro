@@ -9,6 +9,7 @@
 #include <QImage>
 #include <QPainter>
 #include <QGraphicsColorizeEffect>
+#include <QtWidgets>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -27,10 +28,16 @@ public:
 protected:
     void resizeEvent(QResizeEvent *event) override;
 
+public slots:
+    void redirectRegister();
+    void redirectLogin();
+
 private:
     Ui::MainWindow *ui;
     QPixmap backgroundImage;
     QLabel *backgroundLabel;
     QWidget *loginBox;
+    QWidget *registerBox;
+    QStackedWidget *stackedWidget;
 };
 #endif // MAINWINDOW_H
