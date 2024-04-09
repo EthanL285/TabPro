@@ -2,6 +2,7 @@
 #define LOGINUI_H
 
 #include "mainwindow.h"
+#include "uiwidgets.h"
 #include <QWidget>
 #include <QLabel>
 #include <QVBoxLayout>
@@ -23,11 +24,6 @@ protected:
 private slots:
     void loginSlot();
     void rememberSlot();
-    void toggleVisibility();
-
-private:
-    QLineEdit *passwordField;
-    bool visibility = false;
 };
 
 // RectangleWidget Class
@@ -68,6 +64,7 @@ public:
 public slots:
     void forgotSlot();
     void registerAccount();
+    void backToLogin();
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;

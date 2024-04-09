@@ -58,101 +58,12 @@ loginUI::loginUI(MainWindow *parent) : mainWindow(parent)
     textLayout->setAlignment(phrase, Qt::AlignHCenter);
 
     // Create text fields
-    QLineEdit *username = new QLineEdit(loginBox);
-    QLineEdit *password = new QLineEdit(loginBox);
-    passwordField = password;
-
+    QWidget *username = new TextField("Username", ":/FieldIcon/user.png", loginBox);
+    QWidget *password = new TextField("Password", ":/FieldIcon/lock.png", loginBox);
     username->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     password->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    username->setPlaceholderText("Username");
-    password->setPlaceholderText("Password");
-
     textLayout->addWidget(username);
     textLayout->addWidget(password);
-
-    username->setMinimumSize(0, 50);
-    password->setMinimumSize(0, 50);
-    password->setEchoMode(QLineEdit::Password);
-
-    username->setStyleSheet
-    (
-        "background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(96, 94, 92, 200), stop: 1 rgba(32, 31, 30, 200));"
-        "border: none;"
-        "color: white;"
-        "font: 12pt Muli;"
-        "padding-left: 6px;"
-    );
-
-    password->setStyleSheet
-    (
-        "background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(96, 94, 92, 200), stop: 1 rgba(32, 31, 30, 200));"
-        "border: none;"
-        "color: white;"
-        "font: 12pt Muli;"
-        "padding-left: 6px;"
-    );
-
-    // Add icons to text fields
-    QHBoxLayout *userLayout = new QHBoxLayout();
-    QHBoxLayout *passwordLayout = new QHBoxLayout();
-
-    textLayout->addLayout(userLayout);
-    textLayout->addLayout(passwordLayout);
-    userLayout->setSpacing(0);
-    passwordLayout->setSpacing(0);
-
-    QPixmap userIcon(":/FieldIcon/user.png");
-    QPixmap passwordIcon(":/FieldIcon/lock.png");
-
-    QSize fieldIcon(50, 50);
-    userIcon = userIcon.scaled(fieldIcon, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    passwordIcon = passwordIcon.scaled(fieldIcon, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-    QLabel *userLabel = new QLabel();
-    QLabel *passwordLabel = new QLabel();
-
-    userLabel->setStyleSheet("background-color: rgba(0, 0, 0, 100);");
-    passwordLabel->setStyleSheet("background-color: rgba(0, 0, 0, 100);");
-
-    userLabel->setPixmap(userIcon);
-    passwordLabel->setPixmap(passwordIcon);
-
-    userLayout->addWidget(userLabel);
-    passwordLayout->addWidget(passwordLabel);
-
-    userLayout->addWidget(username);
-    passwordLayout->addWidget(password);
-
-    // Add password visibility feature
-    QHBoxLayout *visibilityLayout = new QHBoxLayout(password);
-    QCheckBox *visibility = new QCheckBox();
-    visibility->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-    visibility->setCursor(Qt::ArrowCursor);
-
-    visibility->setCursor(Qt::PointingHandCursor);
-    visibility->setStyleSheet
-    (
-        "QCheckBox { background: transparent; }"
-
-        "QCheckBox:indicator:unchecked {"
-            "border: none;"
-            "background: none;"
-            "image: url(:/FieldIcon/VisibilityUnchecked.png);"
-            "width: 35px;"
-            "height: 35px;"
-        "}"
-        "QCheckBox:indicator:checked {"
-            "border: none;"
-            "background: none;"
-            "image: url(:/FieldIcon/VisibilityChecked.png);"
-            "width: 35px;"
-            "height: 35px;"
-        "}"
-    );
-
-    visibilityLayout->addWidget(visibility);
-    visibilityLayout->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-    connect(visibility, &QCheckBox::stateChanged, this, &loginUI::toggleVisibility);
 
     // Add 'remember me' and 'forgot password'
     QHBoxLayout *accountLayout = new QHBoxLayout();
@@ -225,20 +136,6 @@ void loginUI::rememberSlot()
     qDebug() << "Tick Successful";
 }
 
-void loginUI::toggleVisibility()
-{
-    if (visibility)
-    {
-        passwordField->setEchoMode(QLineEdit::Password);
-        visibility = false;
-    }
-    else
-    {
-        passwordField->setEchoMode(QLineEdit::Normal);
-        visibility = true;
-    }
-}
-
 // ResizeableImageLabel Class
 ResizableImageLabel::ResizableImageLabel(const QPixmap image, QWidget* parent) : image(image), QLabel(parent) {}
 
@@ -269,21 +166,29 @@ void ClickableLabel::registerAccount()
 
 void ClickableLabel::mousePressEvent(QMouseEvent *event)
 {
-    if (text() == "Forgot password?") {
+    if (text() == "Forgot password?")
+    {
         ClickableLabel::forgotSlot();
     }
-    else if (text() == "Register") {
+    else if (text() == "Register")
+    {
         ClickableLabel::registerAccount();
+    }
+    else if (text() == "Login")
+    {
+        ClickableLabel::backToLogin();
     }
 }
 
 void ClickableLabel::enterEvent(QEnterEvent *event)
 {
     QLabel::enterEvent(event);
-    if (text() == "Forgot password?") {
+    if (text() == "Forgot password?")
+    {
         setStyleSheet("color: white; font: Italic 11pt Muli;");
     }
-    else if (text() == "Register") {
+    else if (text() == "Register" || "Login")
+    {
         setStyleSheet("color: white; font: Italic 11pt Muli; text-decoration: underline;");
     }
 }
@@ -291,10 +196,12 @@ void ClickableLabel::enterEvent(QEnterEvent *event)
 void ClickableLabel::leaveEvent(QEvent *event)
 {
     QLabel::leaveEvent(event);
-    if (text() == "Forgot password?") {
+    if (text() == "Forgot password?")
+    {
         setStyleSheet("color: gray; font: Italic 11pt Muli;");
     }
-    else if (text() == "Register") {
+    else if (text() == "Register" || "Login")
+    {
         setStyleSheet("color: white; font: Italic 11pt Muli;");
     }
 }

@@ -37,7 +37,7 @@ private:
     QPixmap backgroundImage;
     QLabel *backgroundLabel;
     QWidget *loginBox;
-    QWidget *registerBox;
+    QWidget *registerBox = nullptr;
     QStackedWidget *stackedWidget;
 };
 #endif // MAINWINDOW_H

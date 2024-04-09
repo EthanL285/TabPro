@@ -2,6 +2,7 @@
 #define REGISTERUI_H
 
 #include "mainwindow.h"
+#include "uiwidgets.h"
 #include <QWidget>
 
 // RegisterAccount Class
@@ -12,7 +13,6 @@ public:
     explicit RegisterUI(MainWindow *parent = nullptr);
 
 private:
-    MainWindow *mainWindow;
-};
+    MainWindow *mainWindow;};
 
 #endif // REGISTERUI_H

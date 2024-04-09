@@ -48,10 +48,6 @@ MainWindow::MainWindow(QWidget *parent)
     // Create loginUI object
     loginBox = new loginUI(this);
     stackedWidget->addWidget(loginBox);
-
-    // Create registerUI object
-    registerBox = new RegisterUI(this);
-    stackedWidget->addWidget(registerBox);
 }
 
 // MainWindow slots
@@ -62,6 +58,12 @@ void MainWindow::redirectLogin()
 
 void MainWindow::redirectRegister()
 {
+    // Create registerUI object if first time
+    if (registerBox == nullptr)
+    {
+        registerBox = new RegisterUI(this);
+        stackedWidget->addWidget(registerBox);
+    }
     stackedWidget->setCurrentWidget(registerBox);
 }
 

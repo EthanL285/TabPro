@@ -11,5 +11,6 @@
         <file>user.png</file>
         <file>lock.png</file>
         <file>VisibilityUnchecked.png</file>
+        <file>email.png</file>
     </qresource>
 </RCC>
