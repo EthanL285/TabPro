@@ -2,6 +2,7 @@
 #include "./ui_mainwindow.h"
 #include "loginui.h"
 #include "registerui.h"
+#include "transitions.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -48,12 +49,18 @@ MainWindow::MainWindow(QWidget *parent)
     // Create loginUI object
     loginBox = new loginUI(this);
     stackedWidget->addWidget(loginBox);
+
+    // Create Transitiosn object
+    transition = new Transitions(this);
 }
 
 // MainWindow slots
 void MainWindow::redirectLogin()
 {
-    stackedWidget->setCurrentWidget(loginBox);
+    // Add transition and change widgets
+    int currentIndex = stackedWidget->currentIndex();
+    int nextIndex = (currentIndex + 1) % stackedWidget->count();   // Loop back if index exceeds total number of widgets
+    transition->fadeInOut(stackedWidget->currentWidget(), stackedWidget->widget(nextIndex), stackedWidget);
 }
 
 void MainWindow::redirectRegister()
@@ -64,7 +71,10 @@ void MainWindow::redirectRegister()
         registerBox = new RegisterUI(this);
         stackedWidget->addWidget(registerBox);
     }
-    stackedWidget->setCurrentWidget(registerBox);
+    // Add transition and change widgets
+    int currentIndex = stackedWidget->currentIndex();
+    int nextIndex = (currentIndex + 1) % stackedWidget->count();
+    transition->fadeInOut(stackedWidget->currentWidget(), stackedWidget->widget(nextIndex), stackedWidget);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)

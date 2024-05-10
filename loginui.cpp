@@ -1,6 +1,6 @@
 #include "loginui.h"
 
-loginUI::loginUI(MainWindow *parent) : mainWindow(parent)
+loginUI::loginUI(MainWindow *parent) : QWidget(parent), mainWindow(parent)
 {
     // Create layout
     QVBoxLayout *layout = new QVBoxLayout(this);

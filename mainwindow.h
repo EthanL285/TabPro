@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "transitions.h"
 #include <QMainWindow>
 #include <QIcon>
 #include <QPixmap>
@@ -38,6 +39,7 @@ private:
     QLabel *backgroundLabel;
     QWidget *loginBox;
     QWidget *registerBox = nullptr;
-    QStackedWidget *stackedWidget;
+    QStackedWidget *stackedWidget = nullptr;
+    Transitions *transition = nullptr;
 };
 #endif // MAINWINDOW_H

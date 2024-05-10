@@ -1,7 +1,8 @@
 #include "registerui.h"
 #include "loginui.h"
+#include "uiwidgets.h"
 
-RegisterUI::RegisterUI(MainWindow *parent) : mainWindow(parent)
+RegisterUI::RegisterUI(MainWindow *parent) : QWidget(parent), mainWindow(parent)
 {
     // Add rectangle layout
     QVBoxLayout *rectangleLayout = new QVBoxLayout(this);
@@ -29,8 +30,8 @@ RegisterUI::RegisterUI(MainWindow *parent) : mainWindow(parent)
     widgetLayout->addWidget(iconLabel);
     widgetLayout->setAlignment(iconLabel, Qt::AlignHCenter);
 
-    QSpacerItem *verticalSpacer = new QSpacerItem(0, 10, QSizePolicy::Fixed, QSizePolicy::Fixed);
-    widgetLayout->addItem(verticalSpacer);
+    QSpacerItem *verticalSpacer1 = new QSpacerItem(0, 10, QSizePolicy::Fixed, QSizePolicy::Fixed);
+    widgetLayout->addItem(verticalSpacer1);
 
     // Add title
     QHBoxLayout *titleLayout = new QHBoxLayout();
@@ -45,7 +46,6 @@ RegisterUI::RegisterUI(MainWindow *parent) : mainWindow(parent)
     title->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     title->setStyleSheet("color: white; font: 30pt Moon;");
     titleLayout->addWidget(title);
-    // widgetLayout->setAlignment(title, Qt::AlignHCenter);
 
     QFrame *lineFrameRight = new QFrame();
     lineFrameRight->setFrameShape(QFrame::HLine);
@@ -66,7 +66,9 @@ RegisterUI::RegisterUI(MainWindow *parent) : mainWindow(parent)
     widgetLayout->addWidget(password);
 
     // Add Register button
-    widgetLayout->addItem(verticalSpacer);
+    QSpacerItem *verticalSpacer2 = new QSpacerItem(0, 10, QSizePolicy::Fixed, QSizePolicy::Fixed);
+    widgetLayout->addItem(verticalSpacer2);
+
     QPushButton *loginButton = new MainButton("Register", registerBox);
     widgetLayout->addWidget(loginButton);
     connect(loginButton, &QPushButton::clicked, this, &RegisterUI::registerSlot);

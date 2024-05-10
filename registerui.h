@@ -2,7 +2,6 @@
 #define REGISTERUI_H
 
 #include "mainwindow.h"
-#include "uiwidgets.h"
 #include <QWidget>
 
 // RegisterAccount Class
