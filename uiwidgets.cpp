@@ -1,6 +1,6 @@
 #include "uiwidgets.h"
 
-TextField::TextField(const QString &text, const QString &imagePath, QWidget *parent)
+TextField::TextField(const QString &text, const QString &imagePath, QWidget *parent) : QWidget(parent)
 {
     // Add text field
     QHBoxLayout *layout = new QHBoxLayout(this);
@@ -10,7 +10,7 @@ TextField::TextField(const QString &text, const QString &imagePath, QWidget *par
     field->setMinimumSize(0, 50);
     field->setStyleSheet
     (
-            "background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(96, 94, 92, 200), stop: 1 rgba(32, 31, 30, 200));"
+            "background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(96, 94, 92, 100), stop: 1 rgba(32, 31, 30, 200));"
             "border: none;"
             "color: white;"
             "font: 12pt Muli;"
@@ -30,6 +30,7 @@ TextField::TextField(const QString &text, const QString &imagePath, QWidget *par
     // Configure layout
     layout->addWidget(imageLabel);
     layout->addWidget(field);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
 
     // Add visibility feature if password
@@ -80,4 +81,30 @@ void TextField::toggleVisibility()
         passwordField->setEchoMode(QLineEdit::Normal);
         visibility = true;
     }
+}
+
+MainButton::MainButton(const QString &text, QWidget *parent) : QPushButton(parent)
+{
+    // Add main button
+    setText(text);
+    setMinimumSize(0, 50);
+    setStyleSheet
+    (
+        "QPushButton {"
+        "background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(255, 255, 255, 200), stop: 1 rgba(96, 94, 92, 200));"
+        "border: none;"
+        "color: black;"
+        "font: 15pt Moon;"
+        "}"
+        "QPushButton:hover {"
+        "background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(255, 255, 255, 200), stop: 0.2 rgba(243, 242, 241, 200));"
+        "}"
+        "QPushButton:pressed {"
+        "background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgba(32, 31, 30, 200), stop: 0.3 rgba(59, 58, 57, 200));" // Vertical gradient
+        "color: white;"
+        "font: 15pt Moon;"
+        "}"
+    );
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    setCursor(Qt::PointingHandCursor);
 }

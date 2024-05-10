@@ -23,7 +23,7 @@ loginUI::loginUI(MainWindow *parent) : mainWindow(parent)
     QLabel *iconLabel = new ResizableImageLabel(appIcon, this);
 
     iconLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    iconLabel->setMaximumSize(252, 252);
+    iconLabel->setMaximumSize(234, 234);
 
     textLayout->addWidget(iconLabel);
     textLayout->setAlignment(iconLabel, Qt::AlignHCenter);
@@ -62,6 +62,7 @@ loginUI::loginUI(MainWindow *parent) : mainWindow(parent)
     QWidget *password = new TextField("Password", ":/FieldIcon/lock.png", loginBox);
     username->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     password->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+
     textLayout->addWidget(username);
     textLayout->addWidget(password);
 
@@ -81,31 +82,9 @@ loginUI::loginUI(MainWindow *parent) : mainWindow(parent)
     accountLayout->addWidget(forgotPassword);
 
     // Add login button
-    QPushButton *loginButton = new QPushButton("Login", this);
-    loginButton->setMinimumSize(0, 50);
-    connect(loginButton, &QPushButton::clicked, this, &loginUI::loginSlot);  // Connect signal (QPushButton::clicked) to login slot
-
-    loginButton->setStyleSheet
-     (
-       "QPushButton {"
-           "background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(255, 255, 255, 200), stop: 1 rgba(96, 94, 92, 200));"
-           "border: none;"
-           "color: black;"
-           "font: 15pt Moon;"
-       "}"
-       "QPushButton:hover {"
-           "background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(255, 255, 255, 200), stop: 0.2 rgba(243, 242, 241, 200));"
-       "}"
-       "QPushButton:pressed {"
-           "background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgba(32, 31, 30, 200), stop: 0.3 rgba(59, 58, 57, 200));" // Vertical gradient
-           "color: white;"
-           "font: 15pt Moon;"
-       "}"
-    );
-
-    loginButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    loginButton->setCursor(Qt::PointingHandCursor);
+    QPushButton *loginButton = new MainButton("Login");
     textLayout->addWidget(loginButton);
+    connect(loginButton, &QPushButton::clicked, this, &loginUI::loginSlot);  // Connect signal (QPushButton::clicked) to login slot
 
     // Add register
     QHBoxLayout *registerLayout = new QHBoxLayout();

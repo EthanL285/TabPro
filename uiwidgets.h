@@ -7,6 +7,7 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QCheckBox>
+#include <QPushButton>
 
 class TextField : public QWidget
 {
@@ -17,11 +18,18 @@ public:
 public slots:
     void toggleVisibility();
 
-
 private:
     QWidget *parentWidget;
     QLineEdit *passwordField;
     bool visibility = false;
+
+};
+
+class MainButton: public QPushButton
+{
+    Q_OBJECT
+public:
+    explicit MainButton(const QString &text, QWidget *parent = nullptr);
 };
 
 #endif // UIWIDGETS_H

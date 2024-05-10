@@ -13,6 +13,10 @@ public:
     explicit RegisterUI(MainWindow *parent = nullptr);
 
 private:
-    MainWindow *mainWindow;};
+    MainWindow *mainWindow;
+
+private slots:
+    void registerSlot();
+};
 
 #endif // REGISTERUI_H
