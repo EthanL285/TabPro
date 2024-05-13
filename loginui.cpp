@@ -1,4 +1,5 @@
 #include "loginui.h"
+#include "uiwidgets.h"
 
 loginUI::loginUI(MainWindow *parent) : QWidget(parent), mainWindow(parent)
 {

@@ -5,6 +5,7 @@ TextField::TextField(const QString &text, const QString &imagePath, QWidget *par
     // Add text field
     QHBoxLayout *layout = new QHBoxLayout(this);
     QLineEdit *field = new QLineEdit(this);
+    field->setObjectName("field");     // Set object name for easy retrieval of text using 'findchild'
     field->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     field->setPlaceholderText(text);
     field->setMinimumSize(0, 50);

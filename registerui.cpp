@@ -4,6 +4,9 @@
 
 RegisterUI::RegisterUI(MainWindow *parent) : QWidget(parent), mainWindow(parent)
 {
+    // Create UserModel class to add users to database
+    usermodel = new UserModel;
+
     // Add rectangle layout
     QVBoxLayout *rectangleLayout = new QVBoxLayout(this);
     rectangleLayout->setAlignment(Qt::AlignHCenter);
@@ -15,10 +18,10 @@ RegisterUI::RegisterUI(MainWindow *parent) : QWidget(parent), mainWindow(parent)
     rectangleLayout->addWidget(registerBox);
 
     // Add widget layout
-    QVBoxLayout *widgetLayout = new QVBoxLayout(registerBox);
-    widgetLayout ->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
-    widgetLayout ->setContentsMargins(40, 50, 40, 70);
-    widgetLayout ->setSpacing(30);
+    widgetLayout = new QVBoxLayout(registerBox);
+    widgetLayout->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
+    widgetLayout->setContentsMargins(40, 50, 40, 70);
+    widgetLayout->setSpacing(30);
 
     // Add icon
     QPixmap appIcon(":/AppIcon/IconStripped.png");
@@ -65,11 +68,14 @@ RegisterUI::RegisterUI(MainWindow *parent) : QWidget(parent), mainWindow(parent)
     widgetLayout->addWidget(username);
     widgetLayout->addWidget(password);
 
+    this->email = email->findChild<QLineEdit*>("field");
+    this->username = username->findChild<QLineEdit*>("field");
+
     // Add Register button
     QSpacerItem *verticalSpacer2 = new QSpacerItem(0, 10, QSizePolicy::Fixed, QSizePolicy::Fixed);
     widgetLayout->addItem(verticalSpacer2);
 
-    QPushButton *loginButton = new MainButton("Register", registerBox);
+    QPushButton *loginButton = new MainButton("Sign Up", registerBox);
     widgetLayout->addWidget(loginButton);
     connect(loginButton, &QPushButton::clicked, this, &RegisterUI::registerSlot);
 
@@ -94,7 +100,15 @@ RegisterUI::RegisterUI(MainWindow *parent) : QWidget(parent), mainWindow(parent)
 // RegisterUI Slots
 void RegisterUI::registerSlot()
 {
-    qDebug() << "Register Successful";
+    // Add user to database
+    usermodel->addUser(email->text(), username->text());
+
+    // Add success text
+    QLabel *registerSuccess = new QLabel("Account successfully created");
+    registerSuccess->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    registerSuccess->setStyleSheet("color: rgb(114, 191, 106); font: 11pt Muli;");
+    widgetLayout->addWidget(registerSuccess);
+    widgetLayout->setAlignment(registerSuccess, Qt::AlignHCenter);
 }
 
 // ClickableLabel Class

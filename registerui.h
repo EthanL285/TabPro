@@ -2,6 +2,7 @@
 #define REGISTERUI_H
 
 #include "mainwindow.h"
+#include "usermodel.h"
 #include <QWidget>
 
 // RegisterAccount Class
@@ -13,6 +14,10 @@ public:
 
 private:
     MainWindow *mainWindow;
+    QVBoxLayout *widgetLayout;
+    UserModel *usermodel;
+    QLineEdit *email;
+    QLineEdit *username;
 
 private slots:
     void registerSlot();

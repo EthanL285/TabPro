@@ -2,7 +2,6 @@
 #define LOGINUI_H
 
 #include "mainwindow.h"
-#include "uiwidgets.h"
 #include <QWidget>
 #include <QLabel>
 #include <QVBoxLayout>
