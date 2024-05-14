@@ -16,6 +16,7 @@ TabPro_autogen/timestamp: \
   C:/Qt/6.7.0/mingw_64/include/QtCore/QSizeF \
   C:/Qt/6.7.0/mingw_64/include/QtCore/QString \
   C:/Qt/6.7.0/mingw_64/include/QtCore/QStringList \
+  C:/Qt/6.7.0/mingw_64/include/QtCore/QThread \
   C:/Qt/6.7.0/mingw_64/include/QtCore/QVariant \
   C:/Qt/6.7.0/mingw_64/include/QtCore/QtCore \
   C:/Qt/6.7.0/mingw_64/include/QtCore/QtCoreDepends \

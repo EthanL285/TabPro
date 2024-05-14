@@ -1,7 +1,8 @@
 #include "transitions.h"
 
-Transitions::Transitions(QMainWindow *parent) : QObject(parent) {}
+Transitions::Transitions(QWidget *parent) : QObject(parent) {}
 
+// Fade transition between two widets
 void Transitions::fadeInOut(QWidget *fadeInWidget, QWidget *fadeOutWidget, QStackedWidget *stack)
 {
     // Create opacity effects for current and next widgets
@@ -19,6 +20,8 @@ void Transitions::fadeInOut(QWidget *fadeInWidget, QWidget *fadeOutWidget, QStac
     fadeOutAnimation->setEndValue(0.0);
     fadeOutAnimation->setEasingCurve(QEasingCurve::Linear);
 
+    fadeOutAnimation->start();
+
     // Fade in next widget
     QPropertyAnimation *fadeInAnimation = new QPropertyAnimation(nextOpacityEffect, "opacity");
     fadeInAnimation->setDuration(500);
@@ -34,6 +37,29 @@ void Transitions::fadeInOut(QWidget *fadeInWidget, QWidget *fadeOutWidget, QStac
         fadeInAnimation->start();
         stack->setCurrentIndex(nextIndex);
     });
+}
+
+/*
+// Fade out a widget
+void Transitions::fadeOut(QWidget *fadeOutWidget)
+{
+    // Create opacity effect for widget
+    QGraphicsOpacityEffect *opacityEffect = new QGraphicsOpacityEffect(fadeOutWidget);
+    opacityEffect->setOpacity(0);
+    fadeOutWidget->setGraphicsEffect(opacityEffect);
+
+    // Fade out current widget
+    QPropertyAnimation *fadeOutAnimation = new QPropertyAnimation(opacityEffect, "opacity");
+    fadeOutAnimation->setDuration(500);
+    fadeOutAnimation->setStartValue(1.0);
+    fadeOutAnimation->setEndValue(0.0);
+    fadeOutAnimation->setEasingCurve(QEasingCurve::Linear);
 
     fadeOutAnimation->start();
-}
+
+    // Delete widget once transition is done
+    connect(fadeOutAnimation, &QPropertyAnimation::finished, this, [=]()
+    {
+    });
+}*/
+

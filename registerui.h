@@ -3,7 +3,9 @@
 
 #include "mainwindow.h"
 #include "usermodel.h"
+#include "transitions.h"
 #include <QWidget>
+#include <QThread>
 
 // RegisterAccount Class
 class RegisterUI : public QWidget
@@ -11,13 +13,18 @@ class RegisterUI : public QWidget
     Q_OBJECT
 public:
     explicit RegisterUI(MainWindow *parent = nullptr);
+    void removeText();
+    void setRedBorder(QWidget *fieldWidget);
 
 private:
     MainWindow *mainWindow;
     QVBoxLayout *widgetLayout;
+    QLabel *registerSuccess = nullptr;
     UserModel *usermodel;
-    QLineEdit *email;
-    QLineEdit *username;
+    QWidget *email;
+    QWidget *username;
+    QWidget *password;
+    Transitions *transition;
 
 private slots:
     void registerSlot();

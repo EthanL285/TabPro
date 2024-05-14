@@ -15,8 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowIcon(appIcon);
 
     // Set initial and minimum window size
-    this->resize(1600, 900);
-    this->setMinimumSize(1600, 900);
+    this->resize(1440, 900);
+    this->setMinimumSize(1440, 900);
 
     // Load background image
     backgroundImage = QPixmap(":/Background/background.png");
@@ -61,6 +61,9 @@ void MainWindow::redirectLogin()
     int currentIndex = stackedWidget->currentIndex();
     int nextIndex = (currentIndex + 1) % stackedWidget->count();   // Loop back if index exceeds total number of widgets
     transition->fadeInOut(stackedWidget->currentWidget(), stackedWidget->widget(nextIndex), stackedWidget);
+
+    // Remove success text
+    static_cast<RegisterUI*>(registerBox)->removeText();   // Convert type from *QWidget (Base) to *RegisterUI (Derived)
 }
 
 void MainWindow::redirectRegister()

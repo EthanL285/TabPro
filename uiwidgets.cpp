@@ -24,6 +24,7 @@ TextField::TextField(const QString &text, const QString &imagePath, QWidget *par
     icon = icon.scaled(iconSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     QLabel *imageLabel = new QLabel();
+    imageLabel->setObjectName("icon");
     imageLabel->setStyleSheet("background-color: rgba(0, 0, 0, 100);");
     imageLabel->setPixmap(icon);
     imageLabel->setFixedSize(50, 50);
@@ -42,32 +43,38 @@ TextField::TextField(const QString &text, const QString &imagePath, QWidget *par
 
         QHBoxLayout *visibilityLayout = new QHBoxLayout(field);
         QCheckBox *visibility = new QCheckBox();
+        visibility->setObjectName("visibility");
         visibility->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
         visibility->setCursor(Qt::ArrowCursor);
         visibility->setCursor(Qt::PointingHandCursor);
-        visibility->setStyleSheet
-        (
-            "QCheckBox { background: transparent; }"
-
-            "QCheckBox:indicator:unchecked {"
-            "border: none;"
-            "background: none;"
-            "image: url(:/FieldIcon/VisibilityUnchecked.png);"
-            "width: 35px;"
-            "height: 35px;"
-            "}"
-            "QCheckBox:indicator:checked {"
-            "border: none;"
-            "background: none;"
-            "image: url(:/FieldIcon/VisibilityChecked.png);"
-            "width: 35px;"
-            "height: 35px;"
-            "}"
-        );
+        setCheckBoxStylesheet(visibility);
         visibilityLayout->addWidget(visibility);
         visibilityLayout->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
         connect(visibility, &QCheckBox::stateChanged, this, &TextField::toggleVisibility);
     }
+}
+
+void TextField::setCheckBoxStylesheet(QCheckBox *checkbox)
+{
+    checkbox->setStyleSheet
+    (
+        "QCheckBox { background: transparent; }"
+
+        "QCheckBox:indicator:unchecked {"
+        "border: none;"
+        "background: none;"
+        "image: url(:/FieldIcon/VisibilityUnchecked.png);"
+        "width: 35px;"
+        "height: 35px;"
+        "}"
+        "QCheckBox:indicator:checked {"
+        "border: none;"
+        "background: none;"
+        "image: url(:/FieldIcon/VisibilityChecked.png);"
+        "width: 35px;"
+        "height: 35px;"
+        "}"
+    );
 }
 
 void TextField::toggleVisibility()

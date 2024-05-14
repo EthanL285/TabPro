@@ -17,6 +17,7 @@ public:
 
 public slots:
     void toggleVisibility();
+    void setCheckBoxStylesheet(QCheckBox *checkbox);
 
 private:
     QWidget *parentWidget;

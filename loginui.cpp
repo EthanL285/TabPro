@@ -16,7 +16,7 @@ loginUI::loginUI(MainWindow *parent) : QWidget(parent), mainWindow(parent)
     // Create text layout
     QVBoxLayout *textLayout = new QVBoxLayout(loginBox);
     textLayout->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
-    textLayout->setContentsMargins(40, 50, 40, 70);
+    textLayout->setContentsMargins(40, 30, 40, 70);
     textLayout->setSpacing(30);
 
     // Add icon
