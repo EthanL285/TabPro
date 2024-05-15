@@ -2129,7 +2129,6 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwindow.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/moc_predefs.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwindow.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/transitions.h
-C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/registerlogic.h
 C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/usermodel.cpp
 C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/transitions.cpp
 C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/registerui.h
@@ -3029,7 +3028,6 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/registerui.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/registerui.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/transitions.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/usermodel.h
-C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/usermodel.h
 C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/transitions.h
  mmc:Q_OBJECT
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/QObject
@@ -3395,10 +3393,10 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/transitions.h
  mdp:C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wchar.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/moc_predefs.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/transitions.h
+C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/usermodel.h
 C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/main.cpp
 C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/loginui.cpp
 C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwindow.cpp
  uic:./ui_mainwindow.h
-C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/registerlogic.cpp
 C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/registerui.cpp
 C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/uiwidgets.cpp

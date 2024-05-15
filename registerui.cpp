@@ -108,58 +108,110 @@ void RegisterUI::registerSlot()
     // Check if fields are empty
     bool fieldEmpty = false;
 
-    if (email->text() == "")
+    if (password->text() == "")
     {
-        setRedBorder(this->email);
+        setRedBorder(this->password, true);
+        password->setFocus();
         fieldEmpty = true;
+    }
+    else
+    {
+        setRedBorder(this->password, false);
     }
     if (username->text() == "")
     {
-        setRedBorder(this->username);
+        setRedBorder(this->username, true);
+        username->setFocus();
         fieldEmpty = true;
     }
-    if (password->text() == "")
+    else
     {
-        setRedBorder(this->password);
+        setRedBorder(this->username, false);
+    }
+    if (email->text() == "")
+    {
+        setRedBorder(this->email, true);
+        email->setFocus();
         fieldEmpty = true;
+    }
+    else
+    {
+        setRedBorder(this->email, false);
     }
 
     // If at least one field is empty
-    if (fieldEmpty)
+    if (fieldEmpty && registerIncomplete == nullptr)
     {
+        // Remove success text
+        if (registerSuccess != nullptr)
+        {
+            widgetLayout->removeWidget(registerSuccess);
+            delete registerSuccess;
+            registerSuccess = nullptr;
+        }
         // Create new layout containing password field, incomplete text and sign-in button
-        QVBoxLayout *textLayout = new QVBoxLayout();
+        incompleteLayout = new QVBoxLayout();
         QWidget *registerButton = widgetLayout->itemAt(7)->widget();
         QWidget *passwordField = widgetLayout->itemAt(5)->widget();
-        QSpacerItem *verticalSpacer = static_cast<QSpacerItem*>(widgetLayout->itemAt(6));
+        registerSpacer = static_cast<QSpacerItem*>(widgetLayout->itemAt(6));
 
-        QLabel *incompleteText = new QLabel(QString::fromUtf8("\u2717 ") + "Incomplete Fields");
-        incompleteText->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        incompleteText->setStyleSheet("color: rgb(237, 67, 55); font: 11pt Muli;");
-        incompleteText->setContentsMargins(0, 20, 0, 20);
+        registerIncomplete = new QLabel(QString::fromUtf8("\u2717 ") + "Incomplete Fields");
+        registerIncomplete->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        registerIncomplete->setStyleSheet("color: rgb(237, 67, 55); font: 11pt Muli;");
+        registerIncomplete->setContentsMargins(0, 20, 0, 20);
 
-        textLayout->addWidget(passwordField);
-        textLayout->addWidget(incompleteText);
-        textLayout->addWidget(registerButton);
-        textLayout->setContentsMargins(0, 0, 0, 0);
-        textLayout->setSpacing(0);
+        incompleteLayout->addWidget(passwordField);
+        incompleteLayout->addWidget(registerIncomplete);
+        incompleteLayout->addWidget(registerButton);
+        incompleteLayout->setContentsMargins(0, 0, 0, 0);
+        incompleteLayout->setSpacing(0);
 
         // Replace widgets with new layout
         widgetLayout->removeWidget(registerButton);
         widgetLayout->removeWidget(passwordField);
-        widgetLayout->removeItem(verticalSpacer);
-        widgetLayout->insertLayout(5, textLayout);
+        widgetLayout->removeItem(registerSpacer);
+        widgetLayout->insertLayout(5, incompleteLayout);
         widgetLayout->setContentsMargins(40, 30, 40, 71);
     }
     // If all fields are filled
-    else
+    if (!fieldEmpty)
     {
+        // Validate email
+        usermodel->validateEmail(email->text());
+
         // Add user to database
         usermodel->addUser(email->text(), username->text());
 
-        // Add success text
+        // If invalid attempt prior
+        if (registerIncomplete != nullptr)
+        {
+            QWidget *passwordField = incompleteLayout->itemAt(0)->widget();
+            QWidget *registerButton = incompleteLayout->itemAt(2)->widget();
+
+            // Remove text and red borders
+            incompleteLayout->removeWidget(passwordField);
+            incompleteLayout->removeWidget(registerIncomplete);
+            incompleteLayout->removeWidget(registerButton);
+            widgetLayout->removeItem(incompleteLayout);
+
+            delete registerIncomplete;
+            delete incompleteLayout;
+            registerIncomplete = nullptr;
+
+            setRedBorder(this->email, false);
+            setRedBorder(this->username, false);
+            setRedBorder(this->password, false);
+
+            // Restore to original layout
+            widgetLayout->insertWidget(5, passwordField);
+            widgetLayout->insertItem(6, registerSpacer);
+            widgetLayout->insertWidget(7, registerButton);
+        }
+
+        // If first time registering
         if (registerSuccess == nullptr)
         {
+            // Add success text
             registerSuccess = new QLabel(QString::fromUtf8("\u2713 ") + "Account successfully created");
             registerSuccess->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
             registerSuccess->setStyleSheet("color: rgb(114, 191, 106); font: 11pt Muli;");
@@ -167,6 +219,14 @@ void RegisterUI::registerSlot()
             widgetLayout->addWidget(registerSuccess);
             widgetLayout->setAlignment(registerSuccess, Qt::AlignHCenter);
         }
+
+        // Clear text from field
+        email->clear();
+        username->clear();
+        password->clear();
+
+        // Set focus
+        email->setFocus();
     }
 }
 
@@ -187,11 +247,22 @@ void RegisterUI::removeText()
 }
 
 // Set widget border to red
-void RegisterUI::setRedBorder(QWidget *fieldWidget)
+void RegisterUI::setRedBorder(QWidget *fieldWidget, bool setRed)
 {
     // Retrieve field and icon from widget
     QLineEdit *field = fieldWidget->findChild<QLineEdit*>("field");
     QLabel *fieldIcon = fieldWidget->findChild<QLabel*>("icon");
+
+    // Set border colour
+    QString borderColour;
+    if (setRed)
+    {
+        borderColour = "0.5px solid rgb(237, 67, 55)";
+    }
+    else
+    {
+        borderColour = "none";
+    }
 
     // Set field and icon border to red
     field->setStyleSheet
@@ -199,9 +270,9 @@ void RegisterUI::setRedBorder(QWidget *fieldWidget)
         "#" + field->objectName() +   // Change parent widget only (for fields with labels)
         " {"
         "background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(96, 94, 92, 100), stop: 1 rgba(32, 31, 30, 200));"
-        "border-top: 0.5px solid rgb(237, 67, 55);"
-        "border-right: 0.5px solid rgb(237, 67, 55);"
-        "border-bottom: 0.5px solid rgb(237, 67, 55);"
+        "border-top: " + borderColour + ";"
+        "border-right: " + borderColour + ";"
+        "border-bottom: " + borderColour + ";"
         "border-left: none;"
         "color: white;"
         "font: 12pt Muli;"
@@ -211,10 +282,10 @@ void RegisterUI::setRedBorder(QWidget *fieldWidget)
     fieldIcon->setStyleSheet
     (
         "background-color: rgba(0, 0, 0, 100);"
-        "border-top: 0.5px solid rgb(237, 67, 55);"
+        "border-top: " + borderColour + ";"
         "border-right: none;"
-        "border-bottom: 0.5px solid rgb(237, 67, 55);"
-        "border-left: 0.5px solid rgb(237, 67, 55);"
+        "border-bottom: " + borderColour + ";"
+        "border-left: " + borderColour + ";"
     );
 }
 

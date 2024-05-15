@@ -14,12 +14,15 @@ class RegisterUI : public QWidget
 public:
     explicit RegisterUI(MainWindow *parent = nullptr);
     void removeText();
-    void setRedBorder(QWidget *fieldWidget);
+    void setRedBorder(QWidget *fieldWidget, bool setRed);
 
 private:
     MainWindow *mainWindow;
     QVBoxLayout *widgetLayout;
     QLabel *registerSuccess = nullptr;
+    QLabel *registerIncomplete = nullptr;
+    QLayout *incompleteLayout = nullptr;
+    QSpacerItem *registerSpacer = nullptr;
     UserModel *usermodel;
     QWidget *email;
     QWidget *username;

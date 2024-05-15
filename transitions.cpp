@@ -38,28 +38,3 @@ void Transitions::fadeInOut(QWidget *fadeInWidget, QWidget *fadeOutWidget, QStac
         stack->setCurrentIndex(nextIndex);
     });
 }
-
-/*
-// Fade out a widget
-void Transitions::fadeOut(QWidget *fadeOutWidget)
-{
-    // Create opacity effect for widget
-    QGraphicsOpacityEffect *opacityEffect = new QGraphicsOpacityEffect(fadeOutWidget);
-    opacityEffect->setOpacity(0);
-    fadeOutWidget->setGraphicsEffect(opacityEffect);
-
-    // Fade out current widget
-    QPropertyAnimation *fadeOutAnimation = new QPropertyAnimation(opacityEffect, "opacity");
-    fadeOutAnimation->setDuration(500);
-    fadeOutAnimation->setStartValue(1.0);
-    fadeOutAnimation->setEndValue(0.0);
-    fadeOutAnimation->setEasingCurve(QEasingCurve::Linear);
-
-    fadeOutAnimation->start();
-
-    // Delete widget once transition is done
-    connect(fadeOutAnimation, &QPropertyAnimation::finished, this, [=]()
-    {
-    });
-}*/
-
