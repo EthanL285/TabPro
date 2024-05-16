@@ -75,9 +75,9 @@ RegisterUI::RegisterUI(MainWindow *parent) : QWidget(parent), mainWindow(parent)
     QSpacerItem *verticalSpacer2 = new QSpacerItem(0, 10, QSizePolicy::Fixed, QSizePolicy::Fixed);
     widgetLayout->addItem(verticalSpacer2);
 
-    QPushButton *loginButton = new MainButton("Sign Up", registerBox);
-    widgetLayout->addWidget(loginButton);
-    connect(loginButton, &QPushButton::clicked, this, &RegisterUI::registerSlot);
+    QPushButton *registerButton = new MainButton("Sign Up", registerBox);
+    widgetLayout->addWidget(registerButton);
+    connect(registerButton, &QPushButton::clicked, this, &RegisterUI::registerSlot);
 
     // Add login back button
     QHBoxLayout *loginLayout = new QHBoxLayout();
@@ -95,108 +95,214 @@ RegisterUI::RegisterUI(MainWindow *parent) : QWidget(parent), mainWindow(parent)
     login->setStyleSheet("color: white; font: 11pt Muli;");
     login->setCursor(Qt::PointingHandCursor);
     loginLayout->addWidget(login);
+
+    // Connect the returnPressed() signal of text fields to the click() signal of button
+    QLineEdit *email = this->email->findChild<QLineEdit*>("field");
+    QLineEdit *username = this->username->findChild<QLineEdit*>("field");
+    QLineEdit *password = this->password->findChild<QLineEdit*>("field");
+
+    connect(email, &QLineEdit::returnPressed, registerButton, &QPushButton::click);
+    connect(username, &QLineEdit::returnPressed, registerButton, &QPushButton::click);
+    connect(password, &QLineEdit::returnPressed, registerButton, &QPushButton::click);
 }
 
 // RegisterUI Slot
 void RegisterUI::registerSlot()
 {
-    // Retrieve QLineEdit from widget fields
+    // Retrieve fields from parent widgets
     QLineEdit *email = this->email->findChild<QLineEdit*>("field");
     QLineEdit *username = this->username->findChild<QLineEdit*>("field");
     QLineEdit *password = this->password->findChild<QLineEdit*>("field");
 
-    // Check if fields are empty
+    // Check for empty fields
     bool fieldEmpty = false;
+    fieldEmpty = emptyFieldCheck(this->password, password) || fieldEmpty;
+    fieldEmpty = emptyFieldCheck(this->username, username) || fieldEmpty;
+    fieldEmpty = emptyFieldCheck(this->email, email) || fieldEmpty;
 
-    if (password->text() == "")
+    // At least one field is empty
+    if (fieldEmpty)
     {
-        setRedBorder(this->password, true);
-        password->setFocus();
-        fieldEmpty = true;
-    }
-    else
-    {
-        setRedBorder(this->password, false);
-    }
-    if (username->text() == "")
-    {
-        setRedBorder(this->username, true);
-        username->setFocus();
-        fieldEmpty = true;
-    }
-    else
-    {
-        setRedBorder(this->username, false);
-    }
-    if (email->text() == "")
-    {
-        setRedBorder(this->email, true);
-        email->setFocus();
-        fieldEmpty = true;
-    }
-    else
-    {
-        setRedBorder(this->email, false);
+        addErrorMessage(QString::fromUtf8("\u2717 ") + "Please fill in all required fields");
     }
 
-    // If at least one field is empty
-    if (fieldEmpty && registerIncomplete == nullptr)
+    // All fields are filled
+    else
     {
-        // Remove success text
+        // Validate email
+        QString emailMessage = usermodel->isValidEmail(email->text());
+        QString passwordMessage = usermodel->isValidPassword(password->text());
+        QString usernameMessage = usermodel->isValidUsername(username->text());
+
+        // Invalid input
+        if (emailMessage != "Valid")
+        {
+            invalidInput(this->email, emailMessage); // Add error message and red border
+            email->setFocus();
+        }
+        else if (usernameMessage != "Valid")
+        {
+            invalidInput(this->username, usernameMessage);
+            username->setFocus();
+        }
+        else if (passwordMessage != "Valid")
+        {
+            invalidInput(this->password, passwordMessage);
+            password->setFocus();
+        }
+        // Valid Input
+        else
+        {
+            // Add user to database
+            usermodel->addUser(email->text(), username->text());
+
+            // Remove error message if invalid attempt prior
+            removeErrorMessage(0);
+
+            // If first time registering
+            if (registerSuccess == nullptr)
+            {
+                // Add success text
+                registerSuccess = new QLabel(QString::fromUtf8("\u2713 ") + "Account successfully created");
+                registerSuccess->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+                registerSuccess->setStyleSheet("color: rgb(114, 191, 106); font: 11pt Muli;");
+                widgetLayout->setContentsMargins(40, 30, 40, 31);
+                widgetLayout->addWidget(registerSuccess);
+                widgetLayout->setAlignment(registerSuccess, Qt::AlignHCenter);
+            }
+
+            // Clear text from field
+            email->clear();
+            username->clear();
+            password->clear();
+        }
+    }
+}
+
+// Creates error message for invalid inputs
+void RegisterUI::invalidInput(QWidget *fieldParent, QString &message)
+{
+    // Invalid input
+    if (message != "Valid")
+    {
+        // Set error message and border
+        setRedBorder(fieldParent, true);
+        addErrorMessage(message);
+    }
+}
+
+// Checks if fields are empty
+bool RegisterUI::emptyFieldCheck(QWidget *fieldParent, QLineEdit *field)
+{
+    if (field->text().isEmpty())
+    {
+        setRedBorder(fieldParent, true);
+        field->setFocus();
+        return true;
+    }
+    else
+    {
+        setRedBorder(fieldParent, false);
+        return false;
+    }
+}
+
+// Create new layout containing password field, failure text and sign-in button
+void RegisterUI::addErrorMessage(const QString &message)
+{
+    // Error message does not exist
+    if (errorMessage == nullptr)
+    {
+        // Remove success message
         if (registerSuccess != nullptr)
         {
             widgetLayout->removeWidget(registerSuccess);
             delete registerSuccess;
             registerSuccess = nullptr;
         }
-        // Create new layout containing password field, incomplete text and sign-in button
-        incompleteLayout = new QVBoxLayout();
+        // Create and add new layout with error message
+        errorLayout = new QVBoxLayout();
         QWidget *registerButton = widgetLayout->itemAt(7)->widget();
         QWidget *passwordField = widgetLayout->itemAt(5)->widget();
         registerSpacer = static_cast<QSpacerItem*>(widgetLayout->itemAt(6));
 
-        registerIncomplete = new QLabel(QString::fromUtf8("\u2717 ") + "Incomplete Fields");
-        registerIncomplete->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        registerIncomplete->setStyleSheet("color: rgb(237, 67, 55); font: 11pt Muli;");
-        registerIncomplete->setContentsMargins(0, 20, 0, 20);
+        errorMessage = new QLabel(message);
+        errorMessage->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        errorMessage->setStyleSheet("color: rgb(237, 67, 55); font: 11pt Muli;");
+        errorMessage->setContentsMargins(0, 20, 0, 20);
 
-        incompleteLayout->addWidget(passwordField);
-        incompleteLayout->addWidget(registerIncomplete);
-        incompleteLayout->addWidget(registerButton);
-        incompleteLayout->setContentsMargins(0, 0, 0, 0);
-        incompleteLayout->setSpacing(0);
+        errorLayout->addWidget(passwordField);
+        errorLayout->addWidget(errorMessage);
+        errorLayout->addWidget(registerButton);
+        errorLayout->setContentsMargins(0, 0, 0, 0);
+        errorLayout->setSpacing(0);
 
         // Replace widgets with new layout
         widgetLayout->removeWidget(registerButton);
         widgetLayout->removeWidget(passwordField);
         widgetLayout->removeItem(registerSpacer);
-        widgetLayout->insertLayout(5, incompleteLayout);
+        widgetLayout->insertLayout(5, errorLayout);
         widgetLayout->setContentsMargins(40, 30, 40, 71);
     }
-    // If all fields are filled
-    if (!fieldEmpty)
+    // Error message already exists
+    else
     {
-        // Validate email
-        usermodel->validateEmail(email->text());
+        errorMessage->setText(message);
+    }
+}
 
-        // Add user to database
-        usermodel->addUser(email->text(), username->text());
-
-        // If invalid attempt prior
-        if (registerIncomplete != nullptr)
+// Delete register success text
+void RegisterUI::removeText()
+{
+    if (registerSuccess != nullptr)
+    {
+        // Stop any active timer
+        if (successMessageTimer && successMessageTimer->isActive())
         {
-            QWidget *passwordField = incompleteLayout->itemAt(0)->widget();
-            QWidget *registerButton = incompleteLayout->itemAt(2)->widget();
+            successMessageTimer->stop();
+        }
+        // Create a new timer
+        successMessageTimer = new QTimer(this);
+        successMessageTimer->setSingleShot(true);
 
-            // Remove text and red borders
-            incompleteLayout->removeWidget(passwordField);
-            incompleteLayout->removeWidget(registerIncomplete);
-            incompleteLayout->removeWidget(registerButton);
-            widgetLayout->removeItem(incompleteLayout);
+        // Delete success message once transition ends (timer expires)
+        connect(successMessageTimer, &QTimer::timeout, this, [this]()
+        {
+            widgetLayout->removeWidget(registerSuccess);
+            widgetLayout->setContentsMargins(40, 30, 40, 80);
 
-            delete registerIncomplete;
-            delete incompleteLayout;
-            registerIncomplete = nullptr;
+            delete registerSuccess;
+            registerSuccess = nullptr;
+            successMessageTimer = nullptr;
+        });
+        successMessageTimer->start(500);
+    }
+}
+
+// Delete error message after 'wait' ms
+void RegisterUI::removeErrorMessage(int wait)
+{
+    // Error message exists and function is not currently processing
+    if (errorMessage != nullptr && errorLayout != nullptr)
+    {
+        // Stop any active timer
+        if (errorMessageTimer && errorMessageTimer->isActive())
+        {
+            errorMessageTimer->stop();
+        }
+        // Create a new timer
+        errorMessageTimer = new QTimer(this);
+        errorMessageTimer->setSingleShot(true);
+
+        // Remove error message from widget once transition ends (timer expires)
+        connect(errorMessageTimer, &QTimer::timeout, this, [this]() {
+            QWidget *passwordField = errorLayout->itemAt(0)->widget();
+            QWidget *registerButton = errorLayout->itemAt(2)->widget();
+
+            errorLayout->removeWidget(passwordField);
+            errorLayout->removeWidget(errorMessage);
+            errorLayout->removeWidget(registerButton);
+            widgetLayout->removeItem(errorLayout);
 
             setRedBorder(this->email, false);
             setRedBorder(this->username, false);
@@ -206,43 +312,18 @@ void RegisterUI::registerSlot()
             widgetLayout->insertWidget(5, passwordField);
             widgetLayout->insertItem(6, registerSpacer);
             widgetLayout->insertWidget(7, registerButton);
-        }
 
-        // If first time registering
-        if (registerSuccess == nullptr)
-        {
-            // Add success text
-            registerSuccess = new QLabel(QString::fromUtf8("\u2713 ") + "Account successfully created");
-            registerSuccess->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-            registerSuccess->setStyleSheet("color: rgb(114, 191, 106); font: 11pt Muli;");
-            widgetLayout->setContentsMargins(40, 30, 40, 31);
-            widgetLayout->addWidget(registerSuccess);
-            widgetLayout->setAlignment(registerSuccess, Qt::AlignHCenter);
-        }
+            delete errorMessage;
+            delete errorLayout;
+            errorMessage = nullptr;
+            errorLayout = nullptr;
 
-        // Clear text from field
-        email->clear();
-        username->clear();
-        password->clear();
-
-        // Set focus
-        email->setFocus();
-    }
-}
-
-// Delete register success text
-void RegisterUI::removeText()
-{
-    if (registerSuccess != nullptr)
-    {
-        widgetLayout->removeWidget(registerSuccess);
-        widgetLayout->setContentsMargins(40, 30, 40, 80);
-
-        // Delete text once fade transition ends
-        QTimer::singleShot(500, this, [this](){
-            delete registerSuccess;
-            registerSuccess = nullptr;
+            delete errorMessageTimer; // Delete the timer object
+            errorMessageTimer = nullptr; // Reset the timer pointer
         });
+
+        // Start the timer
+        errorMessageTimer->start(wait);
     }
 }
 

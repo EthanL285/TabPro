@@ -9,7 +9,9 @@ class UserModel // Destroy class when user logs in
 public:
     UserModel();
     void addUser(QString email, QString username);
-    bool validateEmail(const QString &email);
+    QString isValidEmail(const QString &email);
+    QString isValidPassword(const QString &password);
+    QString isValidUsername(const QString &username);
 
 private:
     QSqlDatabase userDatabase;

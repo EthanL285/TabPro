@@ -62,8 +62,9 @@ void MainWindow::redirectLogin()
     int nextIndex = (currentIndex + 1) % stackedWidget->count();   // Loop back if index exceeds total number of widgets
     transition->fadeInOut(stackedWidget->currentWidget(), stackedWidget->widget(nextIndex), stackedWidget);
 
-    // Remove success text
+    // Remove error/success text
     static_cast<RegisterUI*>(registerBox)->removeText();   // Convert type from *QWidget (Base) to *RegisterUI (Derived)
+    static_cast<RegisterUI*>(registerBox)->removeErrorMessage(500);
 }
 
 void MainWindow::redirectRegister()

@@ -115,5 +115,4 @@ MainButton::MainButton(const QString &text, QWidget *parent) : QPushButton(paren
     );
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     setCursor(Qt::PointingHandCursor);
-    setFocusPolicy(Qt::NoFocus);
 }

@@ -881,6 +881,11 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/loginui.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/transitions.h
 C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/uiwidgets.h
  mmc:Q_OBJECT
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/QList
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/QObject
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/QRect
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/QSize
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/QSizeF
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/QString
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/q20functional.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/q20memory.h
@@ -911,10 +916,16 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/uiwidgets.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qcontainerinfo.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qcontainertools_impl.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qcontiguouscache.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qcoreapplication.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qcoreapplication_platform.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qcoreevent.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qdarwinhelpers.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qdatastream.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qdeadlinetimer.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qdebug.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qelapsedtimer.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qendian.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qeventloop.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qexceptionhandling.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qflags.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qfloat16.h
@@ -933,6 +944,7 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/uiwidgets.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qlatin1stringview.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qline.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qlist.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qlocale.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qlogging.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qmalloc.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qmap.h
@@ -942,6 +954,7 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/uiwidgets.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qmetatype.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qminmax.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qnamespace.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qnativeinterface.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qnumeric.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qobject.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qobject_impl.h
@@ -1001,16 +1014,24 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/uiwidgets.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qversiontagging.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qxptype_traits.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qyieldcpu.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/QKeyEvent
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/QTransform
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qaction.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qbitmap.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qbrush.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qcolor.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qcursor.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qevent.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qeventpoint.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qfont.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qfontinfo.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qfontmetrics.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qguiapplication.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qguiapplication_platform.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qicon.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qimage.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qinputdevice.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qinputmethod.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qkeysequence.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpaintdevice.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpalette.h
@@ -1018,10 +1039,13 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/uiwidgets.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpicture.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpixelformat.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpixmap.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpointingdevice.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpolygon.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qregion.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qrgb.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qrgba64.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qscreen.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qscreen_platform.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qtextcursor.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qtextdocument.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qtextformat.h
@@ -1030,6 +1054,8 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/uiwidgets.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qtguiexports.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qtguiglobal.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qtransform.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qvector2d.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qvectornd.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs_win.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/QCheckBox

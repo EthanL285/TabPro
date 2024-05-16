@@ -103,6 +103,13 @@ loginUI::loginUI(MainWindow *parent) : QWidget(parent), mainWindow(parent)
     reg->setStyleSheet("color: white; font: 11pt Muli;");
     reg->setCursor(Qt::PointingHandCursor);
     registerLayout->addWidget(reg);
+
+    // Connect the returnPressed() signal of text fields to the click() signal of button
+    QLineEdit *usernameField = username->findChild<QLineEdit*>("field");
+    QLineEdit *passwordField = password->findChild<QLineEdit*>("field");
+
+    connect(usernameField, &QLineEdit::returnPressed, loginButton, &QPushButton::click);
+    connect(passwordField, &QLineEdit::returnPressed, loginButton, &QPushButton::click);
 }
 
 // loginUI Slots

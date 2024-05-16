@@ -15,13 +15,19 @@ public:
     explicit RegisterUI(MainWindow *parent = nullptr);
     void removeText();
     void setRedBorder(QWidget *fieldWidget, bool setRed);
+    void addErrorMessage(const QString &message);
+    void removeErrorMessage(int wait);
+    bool emptyFieldCheck(QWidget *fieldParent, QLineEdit *field);
+    void invalidInput(QWidget *fieldParent, QString &message);
 
 private:
     MainWindow *mainWindow;
     QVBoxLayout *widgetLayout;
     QLabel *registerSuccess = nullptr;
-    QLabel *registerIncomplete = nullptr;
-    QLayout *incompleteLayout = nullptr;
+    QTimer *successMessageTimer = nullptr;
+    QLabel *errorMessage = nullptr;
+    QTimer *errorMessageTimer = nullptr;
+    QLayout *errorLayout = nullptr;
     QSpacerItem *registerSpacer = nullptr;
     UserModel *usermodel;
     QWidget *email;

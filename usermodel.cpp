@@ -24,18 +24,27 @@ void UserModel::addUser(QString email, QString username)
 }
 
 // Checks if email is valid
-bool UserModel::validateEmail(const QString &email)
+QString UserModel::isValidEmail(const QString &email)
 {
     std::string stdEmail = email.toStdString();
+    QString message;
+
+    // Email exceeds character limit
+    if (email.length() > 255)
+    {
+        message = QString::fromUtf8("\u2717 ") + "Email address exceeds limit (255 characters)";
+        return message;
+    }
 
     // Compare email with regular expression pattern
     std::regex pattern("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
     bool match = regex_match(stdEmail, pattern);
 
+    // Invalid email format
     if (!match)
     {
-        qDebug() << "Invalid Email Format";
-        return false; // Invalid email format
+        message = QString::fromUtf8("\u2717 ") + "Please enter a valid email address";
+        return message;
     }
 
     // Retrieve domain name
@@ -57,21 +66,20 @@ bool UserModel::validateEmail(const QString &email)
     bool isValid = false;
     if (dnsLookup->error() == QDnsLookup::NoError && !dnsLookup->mailExchangeRecords().isEmpty())
     {
-        isValid = true; // Valid domain
+        isValid = true;
     }
 
     delete dnsLookup;
 
     if (isValid)
     {
-        qDebug() << "Valid Email";
+        return "Valid";
     }
     else
     {
-        qDebug() << "Invalid Email";
+        message = QString::fromUtf8("\u2717 ") + "Invalid domain. Please check email address";
+        return message; // Invalid domain
     }
-
-    return isValid;
 
     /* Email Validation Requirements:
      *
@@ -88,4 +96,28 @@ bool UserModel::validateEmail(const QString &email)
      * Length Limits:
      *    1. Should not exceed 255 characters
      */
+}
+
+// Checks if password is valid
+QString UserModel::isValidPassword(const QString &password)
+{
+    // Password should be at least 8 characters long
+    if (password.length() < 8)
+    {
+        QString message = QString::fromUtf8("\u2717 ") + "Password must be 8 characters minimum";
+        return message;
+    }
+    return "Valid";
+}
+
+// Checks if username is valid
+QString UserModel::isValidUsername(const QString &username)
+{
+    // Username must not exceed 20 characters
+    if (username.length() > 20)
+    {
+        QString message = QString::fromUtf8("\u2717 ") + "Username must not exceed 20 characters";
+        return message;
+    }
+    return "Valid";
 }
