@@ -4,6 +4,7 @@
 #include "mainwindow.h"
 #include "usermodel.h"
 #include "transitions.h"
+#include "uiwidgets.h"
 #include <QWidget>
 #include <QThread>
 
@@ -14,11 +15,9 @@ class RegisterUI : public QWidget
 public:
     explicit RegisterUI(MainWindow *parent = nullptr, UserModel *usermodel = nullptr);
     void removeText();
-    void setRedBorder(QWidget *fieldWidget, bool setRed);
     void addErrorMessage(const QString &message);
     void removeErrorMessage(int wait);
-    bool emptyFieldCheck(QWidget *fieldParent, QLineEdit *field);
-    void invalidInput(QWidget *fieldParent, QString &message);
+    void invalidInput(TextField *fieldParent, QString &message);
 
 private:
     MainWindow *mainWindow;
@@ -30,9 +29,9 @@ private:
     QLayout *errorLayout = nullptr;
     QSpacerItem *registerSpacer = nullptr;
     UserModel *usermodel;
-    QWidget *email;
-    QWidget *username;
-    QWidget *password;
+    TextField *email;
+    TextField *username;
+    TextField *password;
     Transitions *transition;
 
 private slots:

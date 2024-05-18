@@ -29,13 +29,12 @@ void Transitions::fadeInOut(QWidget *fadeInWidget, QWidget *fadeOutWidget, QStac
     fadeInAnimation->setEndValue(1.0);
     fadeInAnimation->setEasingCurve(QEasingCurve::Linear);
 
-    int currentIndex = stack->currentIndex();
-    int nextIndex = (currentIndex + 1) % stack->count(); // Loop back if index exceeds total number of widgets
+    int index = stack->indexOf(fadeOutWidget);
 
     connect(fadeOutAnimation, &QPropertyAnimation::finished, this, [=]()
     {
         fadeInAnimation->start();
-        stack->setCurrentIndex(nextIndex);
+        stack->setCurrentIndex(index);
 
         // (IMPORTANT) TRIGGER RESIZE EVENT!!!!!
         stack->currentWidget()->resize(0, 0);

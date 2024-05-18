@@ -28,6 +28,104 @@ void UserModel::addUser(QString email, QString username, QString password)
     userDatabase.close();
 }
 
+// Remember user's credentials for future sessions
+void UserModel::rememberUserCredentials(const QString &email)
+{
+    // Check if database connection is already open
+    if (!userDatabase.isOpen())
+    {
+        userDatabase.open();
+    }
+    QSqlQuery query;
+    userDatabase.transaction();
+
+    // Reset Remember value for all users
+    query.prepare("UPDATE registeredusers SET Remember = 0");
+    query.exec();
+
+    // Set user's Remember value in database to 1 (true)
+    query.prepare("UPDATE registeredusers SET Remember = 1 WHERE Email = :email");
+    query.bindValue(":email", email);
+    query.exec();
+
+    userDatabase.commit();
+}
+
+// Checks for any existing tokens
+bool UserModel::tokenExists(const QString &email) // Email is an optional parameter (assigned in declaration)
+{
+    // Check if database connection is already open
+    if (!userDatabase.isOpen())
+    {
+        userDatabase.open();
+    }
+    QSqlQuery query;
+
+    // Check for tokens in database for all users
+    if (email.isEmpty())
+    {
+        query.prepare("SELECT Remember FROM registeredusers WHERE Remember = 1");
+    }
+    // Check for tokens in database for specific user
+    else
+    {
+        query.prepare("SELECT Remember FROM registeredusers WHERE Remember = 1 AND Email = :email");
+        query.bindValue(":email", email);
+    }
+
+    // Return value
+    query.exec();
+    if (query.next())
+    {
+        return true;
+    }
+    return false;
+}
+
+void UserModel::removeToken()
+{
+    // Check if database connection is already open
+    if (!userDatabase.isOpen())
+    {
+        userDatabase.open();
+    }
+
+    // Remove token for all users
+    QSqlQuery query;
+    query.prepare("UPDATE registeredusers SET Remember = 0");
+    query.exec();
+}
+
+// Get credentials of user with existing token
+UserCredentials UserModel::getUserCredentials()
+{
+    UserCredentials usercredentials;
+
+    // Check if database connection is already open
+    if (!userDatabase.isOpen())
+    {
+        userDatabase.open();
+    }
+    // Get credentials of user with existing token
+    QSqlQuery query;
+    query.prepare("SELECT Email, Password FROM registeredusers WHERE Remember = 1");
+    query.exec();
+
+    // Token found
+    if (query.next())
+    {
+        usercredentials.email = query.value(0).toString();
+        usercredentials.password = query.value(1).toString();
+    }
+    // No token found
+    else
+    {
+        // Do nothing :)
+    }
+
+    return usercredentials;
+}
+
 // Hashes user's password
 QString UserModel::hashPassword(const QString &password)
 {
@@ -36,8 +134,12 @@ QString UserModel::hashPassword(const QString &password)
 }
 
 // Retrieve user's hashed password
-QString UserModel::verifyUser(const QString &email, const QString &password)
+QString UserModel::verifyUser(TextField *emailParent, TextField *passwordParent)
 {
+    // Retrieve fields from parent widgets
+    QLineEdit *email = emailParent->findChild<QLineEdit*>("field");
+    QLineEdit *password = passwordParent->findChild<QLineEdit*>("field");
+
     QString message;
 
     // Check if database connection is already open
@@ -49,7 +151,7 @@ QString UserModel::verifyUser(const QString &email, const QString &password)
     // Retrieve hashed password from database
     QSqlQuery query;
     query.prepare("SELECT Password FROM registeredusers WHERE Email = :email");
-    query.bindValue(":email", email);
+    query.bindValue(":email", email->text());
     query.exec();
 
     // Email is registered in database
@@ -58,19 +160,23 @@ QString UserModel::verifyUser(const QString &email, const QString &password)
         QString storedHashedPassword = query.value(0).toString(); // Retrieve hashed password from first column (0)
 
         // Compare hashed passwords
-        if (storedHashedPassword == hashPassword(password))
+        if (storedHashedPassword == hashPassword(password->text()))
         {
             message = "Valid";
         }
         else
         {
             message = QString::fromUtf8("\u2717 ") + "Incorrect password. Please check password";
+            passwordParent->setRedBorder(true);
+            password->setFocus();
         }
     }
     // Email is not registered in database
     else
     {
-        message = QString::fromUtf8("\u2717 ") + "Email not found. Please check email address or register";
+        message = QString::fromUtf8("\u2717 ") + "Email not found. Please check email address";
+        emailParent->setRedBorder(true);
+        email->setFocus();
     }
     return message;
 }

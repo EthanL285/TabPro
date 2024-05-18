@@ -3,6 +3,13 @@
 
 #include <QString>
 #include <QtSql>
+#include "uiwidgets.h"
+
+struct UserCredentials
+{
+    QString email;
+    QString password;
+};
 
 class UserModel // Destroy class when user logs in
 {
@@ -14,7 +21,11 @@ public:
     QString isValidUsername(const QString &username);
     bool isUniqueEmail(const QString &email);
     QString hashPassword(const QString &password);
-    QString verifyUser(const QString &email, const QString &password);
+    QString verifyUser(TextField *emailParent, TextField *passwordParent);
+    void rememberUserCredentials(const QString &email);
+    bool tokenExists(const QString &email = QString());
+    void removeToken();
+    UserCredentials getUserCredentials();
 
 private:
     QSqlDatabase userDatabase;

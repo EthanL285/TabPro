@@ -113,9 +113,9 @@ void RegisterUI::registerSlot()
 
     // Check for empty fields
     bool fieldEmpty = false;
-    fieldEmpty = emptyFieldCheck(this->password, password) || fieldEmpty;
-    fieldEmpty = emptyFieldCheck(this->username, username) || fieldEmpty;
-    fieldEmpty = emptyFieldCheck(this->email, email) || fieldEmpty;
+    fieldEmpty = this->password->emptyFieldCheck(password) || fieldEmpty;
+    fieldEmpty = this->username->emptyFieldCheck(username) || fieldEmpty;
+    fieldEmpty = this->email->emptyFieldCheck(email) || fieldEmpty;
 
     // At least one field is empty
     if (fieldEmpty)
@@ -177,30 +177,14 @@ void RegisterUI::registerSlot()
 }
 
 // Creates error message for invalid inputs
-void RegisterUI::invalidInput(QWidget *fieldParent, QString &message)
+void RegisterUI::invalidInput(TextField *fieldParent, QString &message)
 {
     // Invalid input
     if (message != "Valid")
     {
         // Set error message and border
-        setRedBorder(fieldParent, true);
+        fieldParent->setRedBorder(true);
         addErrorMessage(message);
-    }
-}
-
-// Checks if fields are empty
-bool RegisterUI::emptyFieldCheck(QWidget *fieldParent, QLineEdit *field)
-{
-    if (field->text().isEmpty())
-    {
-        setRedBorder(fieldParent, true);
-        field->setFocus();
-        return true;
-    }
-    else
-    {
-        setRedBorder(fieldParent, false);
-        return false;
     }
 }
 
@@ -301,14 +285,15 @@ void RegisterUI::removeErrorMessage(int wait)
             errorLayout->removeWidget(registerButton);
             widgetLayout->removeItem(errorLayout);
 
-            setRedBorder(this->email, false);
-            setRedBorder(this->username, false);
-            setRedBorder(this->password, false);
+            this->email->setRedBorder(false);
+            this->username->setRedBorder(false);
+            this->password->setRedBorder(false);
 
             // Restore to original layout
             widgetLayout->insertWidget(5, passwordField);
             widgetLayout->insertItem(6, registerSpacer);
             widgetLayout->insertWidget(7, registerButton);
+            widgetLayout->setContentsMargins(40, 30, 40, 80);
 
             delete errorMessage;
             delete errorLayout;
@@ -322,49 +307,6 @@ void RegisterUI::removeErrorMessage(int wait)
         // Start the timer
         errorMessageTimer->start(wait);
     }
-}
-
-// Set widget border to red
-void RegisterUI::setRedBorder(QWidget *fieldWidget, bool setRed)
-{
-    // Retrieve field and icon from widget
-    QLineEdit *field = fieldWidget->findChild<QLineEdit*>("field");
-    QLabel *fieldIcon = fieldWidget->findChild<QLabel*>("icon");
-
-    // Set border colour
-    QString borderColour;
-    if (setRed)
-    {
-        borderColour = "0.5px solid rgb(237, 67, 55)";
-    }
-    else
-    {
-        borderColour = "none";
-    }
-
-    // Set field and icon border to red
-    field->setStyleSheet
-    (
-        "#" + field->objectName() +   // Change parent widget only (for fields with labels)
-        " {"
-        "background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(96, 94, 92, 100), stop: 1 rgba(32, 31, 30, 200));"
-        "border-top: " + borderColour + ";"
-        "border-right: " + borderColour + ";"
-        "border-bottom: " + borderColour + ";"
-        "border-left: none;"
-        "color: white;"
-        "font: 12pt Muli;"
-        "padding-left: 6px;"
-        "}"
-    );
-    fieldIcon->setStyleSheet
-    (
-        "background-color: rgba(0, 0, 0, 100);"
-        "border-top: " + borderColour + ";"
-        "border-right: none;"
-        "border-bottom: " + borderColour + ";"
-        "border-left: " + borderColour + ";"
-    );
 }
 
 // ClickableLabel Class

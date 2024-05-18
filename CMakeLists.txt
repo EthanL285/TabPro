@@ -31,6 +31,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         uiwidgets.h uiwidgets.cpp
         usermodel.h usermodel.cpp
         transitions.h transitions.cpp
+        passwordui.h passwordui.cpp
 
 
     )

@@ -429,14 +429,18 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/6.7.0/mingw_64/include/QtSql/qtsqlexports.h \
   C:/Qt/6.7.0/mingw_64/include/QtSql/qtsqlglobal.h \
   C:/Qt/6.7.0/mingw_64/include/QtSql/qtsqlversion.h \
+  C:/Qt/6.7.0/mingw_64/include/QtWidgets/QCheckBox \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QCommonStyle \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QGraphicsColorizeEffect \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QGraphicsOpacityEffect \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QLabel \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QLayout \
+  C:/Qt/6.7.0/mingw_64/include/QtWidgets/QLineEdit \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QMainWindow \
+  C:/Qt/6.7.0/mingw_64/include/QtWidgets/QPushButton \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QScrollerProperties \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QStackedWidget \
+  C:/Qt/6.7.0/mingw_64/include/QtWidgets/QVBoxLayout \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QWidget \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QtWidgets \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QtWidgetsDepends \
@@ -890,4 +894,5 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wchar.h \
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wctype.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/transitions.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/uiwidgets.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/usermodel.h

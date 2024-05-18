@@ -33,6 +33,7 @@ protected:
 public slots:
     void redirectRegister();
     void redirectLogin();
+    void redirectPassword();
 
 private:
     Ui::MainWindow *ui;
@@ -40,6 +41,7 @@ private:
     QLabel *backgroundLabel;
     QWidget *loginBox;
     QWidget *registerBox = nullptr;
+    QWidget *passwordBox = nullptr;
     QStackedWidget *stackedWidget = nullptr;
     Transitions *transition = nullptr;
     UserModel *usermodel = nullptr;

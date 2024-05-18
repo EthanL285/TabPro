@@ -1124,6 +1124,8 @@ TabPro_autogen/timestamp: \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwindow.cpp \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwindow.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwindow.ui \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/passwordui.cpp \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/passwordui.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/registerui.cpp \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/registerui.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/transitions.cpp \

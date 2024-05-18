@@ -1,5 +1,4 @@
 #include "loginui.h"
-#include "uiwidgets.h"
 
 loginUI::loginUI(MainWindow *parent, UserModel *usermodel) : QWidget(parent), mainWindow(parent), usermodel(usermodel)
 {
@@ -14,7 +13,7 @@ loginUI::loginUI(MainWindow *parent, UserModel *usermodel) : QWidget(parent), ma
     layout->addWidget(loginBox);
 
     // Create text layout
-    QVBoxLayout *textLayout = new QVBoxLayout(loginBox);
+    textLayout = new QVBoxLayout(loginBox);
     textLayout->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
     textLayout->setContentsMargins(40, 30, 40, 70);
     textLayout->setSpacing(30);
@@ -119,24 +118,142 @@ void loginUI::loginSlot()
     QLineEdit *emailField = this->emailParent->findChild<QLineEdit*>("field");
     QLineEdit *passwordField = this->passwordParent->findChild<QLineEdit*>("field");
 
-    // Verify user
-    QString message = usermodel->verifyUser(emailField->text(), passwordField->text());
+    // Check for empty fields
+    bool fieldEmpty = false;
 
-    // Invalid input
-    if (message != "Valid")
+    fieldEmpty = this->passwordParent->emptyFieldCheck(passwordField) || fieldEmpty;
+    fieldEmpty = this->emailParent->emptyFieldCheck(emailField) || fieldEmpty;
+
+    // At least one field is empty
+    if (fieldEmpty)
     {
-        qDebug() << message;
+         addErrorMessage(QString::fromUtf8("\u2717 ") + "Please fill in all required fields");
     }
-    // Valid Input
+    // All fields are filled
     else
     {
-        qDebug() << message;
+        // Verify user
+        QString message = usermodel->verifyUser(emailParent, passwordParent); // Also sets border and focus
+
+        // Invalid input
+        if (message != "Valid")
+        {
+            // Add error message
+            addErrorMessage(message);
+        }
+        // Valid Input
+        else
+        {
+            // Remember user credentials
+            if (remember)
+            {
+                usermodel->rememberUserCredentials(emailField->text());
+            }
+            // Forget user credentials if email has existing token
+            else
+            {
+                // Remove user's existing token
+                if (usermodel->tokenExists(emailField->text()))
+                {
+                    usermodel->removeToken();
+                }
+            }
+            // Remove error message if invalid attempt prior
+            removeErrorMessage(0);
+
+            // Clear text from field
+            emailField->clear();
+            passwordField->clear();
+
+            qDebug() << message;
+        }
+    }
+}
+
+// Remove error message from UI
+void loginUI::removeErrorMessage(int wait)
+{
+    // Error message exists and function is not currently processing
+    if (errorMessage != nullptr && errorLayout != nullptr)
+    {
+        if (errorMessageTimer && errorMessageTimer->isActive())
+        {
+            errorMessageTimer->stop();
+        }
+        // Create a new timer
+        errorMessageTimer = new QTimer(this);
+        errorMessageTimer->setSingleShot(true);
+
+        // Remove error message from widget once transition ends (timer expires)
+        connect(errorMessageTimer, &QTimer::timeout, this, [this]() {
+            QWidget *passwordField = errorLayout->itemAt(0)->widget();
+            QLayout *layout = errorLayout->itemAt(2)->layout();
+
+            errorLayout->removeWidget(passwordField);
+            errorLayout->removeWidget(errorMessage);
+            errorLayout->removeItem(layout);
+            textLayout->removeItem(errorLayout);
+
+            emailParent->setRedBorder(false);
+            passwordParent->setRedBorder(false);
+
+            // Restore to original layout
+            textLayout->insertWidget(5, passwordField);
+            textLayout->insertItem(6, layout);
+            textLayout->setContentsMargins(40, 30, 40, 70);
+
+            delete errorMessage;
+            delete errorLayout;
+            errorMessage = nullptr;
+            errorLayout = nullptr;
+
+            delete errorMessageTimer; // Delete the timer object
+            errorMessageTimer = nullptr; // Reset the timer pointer
+        });
+        // Start the timer
+        errorMessageTimer->start(wait);
+    }
+}
+
+// Add error message to UI
+void loginUI::addErrorMessage(const QString &message)
+{
+    // Error message does not exist
+    if (errorMessage == nullptr)
+    {
+        // Create and add new layout with error message
+        errorLayout = new QVBoxLayout();
+        QWidget *passwordField = textLayout->itemAt(5)->widget();
+        QLayout *layout = textLayout->itemAt(6)->layout();
+
+        errorMessage = new QLabel(message);
+        errorMessage->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        errorMessage->setStyleSheet("color: rgb(237, 67, 55); font: 11pt Muli;");
+
+        textLayout->removeItem(layout);
+        textLayout->removeWidget(passwordField);
+
+        errorLayout->addWidget(passwordField);
+        errorLayout->addWidget(errorMessage);
+        errorLayout->addLayout(layout);
+
+        errorLayout->setContentsMargins(0, 0, 0, 0);
+        errorLayout->setSpacing(20);
+
+        // Replace widgets with new layout
+        textLayout->insertLayout(5, errorLayout);
+        textLayout->setContentsMargins(40, 30, 40, 51);
+    }
+    // Error message already exists
+    else
+    {
+        errorMessage->setText(message);
     }
 }
 
 void loginUI::rememberSlot()
 {
-    qDebug() << "Tick Successful";
+    remember = !remember;
 }
 
 // ResizeableImageLabel Class
@@ -159,7 +276,7 @@ ClickableLabel::ClickableLabel(const QString &text, MainWindow *mainWindow) : QL
 
 void ClickableLabel::forgotSlot()
 {
-    qDebug() << "Forgot Password Successful";
+    mainWindow->redirectPassword();
 }
 
 void ClickableLabel::registerAccount()

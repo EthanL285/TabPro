@@ -54,6 +54,65 @@ TextField::TextField(const QString &text, const QString &imagePath, QWidget *par
     }
 }
 
+// Checks if fields are empty
+bool TextField::emptyFieldCheck(QLineEdit *field)
+{
+    if (field->text().isEmpty())
+    {
+        setRedBorder(true);
+        field->setFocus();
+        return true;
+    }
+    else
+    {
+        setRedBorder(false);
+        return false;
+    }
+}
+
+// Set widget border to red
+void TextField::setRedBorder(bool setRed)
+{
+    // Retrieve field and icon from widget
+    QLineEdit *field = this->findChild<QLineEdit*>("field");
+    QLabel *fieldIcon = this->findChild<QLabel*>("icon");
+
+    // Set border colour
+    QString borderColour;
+    if (setRed)
+    {
+        borderColour = "0.5px solid rgb(237, 67, 55)";
+    }
+    else
+    {
+        borderColour = "none";
+    }
+
+    // Set field and icon border to red
+    field->setStyleSheet
+        (
+            "#" + field->objectName() +   // Change parent widget only (for fields with labels)
+            " {"
+            "background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(96, 94, 92, 100), stop: 1 rgba(32, 31, 30, 200));"
+            "border-top: " + borderColour + ";"
+                             "border-right: " + borderColour + ";"
+                             "border-bottom: " + borderColour + ";"
+                             "border-left: none;"
+                             "color: white;"
+                             "font: 12pt Muli;"
+                             "padding-left: 6px;"
+                             "}"
+            );
+    fieldIcon->setStyleSheet
+        (
+            "background-color: rgba(0, 0, 0, 100);"
+            "border-top: " + borderColour + ";"
+                             "border-right: none;"
+                             "border-bottom: " + borderColour + ";"
+                             "border-left: " + borderColour + ";"
+            );
+}
+
 void TextField::setCheckBoxStylesheet(QCheckBox *checkbox)
 {
     checkbox->setStyleSheet

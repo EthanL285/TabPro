@@ -14,6 +14,8 @@ class TextField : public QWidget
     Q_OBJECT
 public:
     explicit TextField(const QString &text, const QString &imagePath, QWidget *parent = nullptr);
+    bool emptyFieldCheck(QLineEdit *field);
+    void setRedBorder(bool setRed);
 
 public slots:
     void toggleVisibility();

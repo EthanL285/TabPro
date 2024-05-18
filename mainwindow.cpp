@@ -3,6 +3,7 @@
 #include "loginui.h"
 #include "registerui.h"
 #include "transitions.h"
+#include "passwordui.h"
 #include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -57,19 +58,28 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Create Transitiosn object
     transition = new Transitions(this);
+
+    // Automatically login user if token exists
+    if (usermodel->tokenExists())
+    {
+        qDebug() << "Token exists. Logging in";
+        // UserCredentials usercredentials = usermodel->getUserCredentials();
+    }
 }
 
 // MainWindow slots
 void MainWindow::redirectLogin()
 {
     // Add transition and change widgets
-    int currentIndex = stackedWidget->currentIndex();
-    int nextIndex = (currentIndex + 1) % stackedWidget->count();   // Loop back if index exceeds total number of widgets
-    transition->fadeInOut(stackedWidget->currentWidget(), stackedWidget->widget(nextIndex), stackedWidget);
+    int index = stackedWidget->indexOf(loginBox);
+    transition->fadeInOut(stackedWidget->currentWidget(), stackedWidget->widget(index), stackedWidget);
 
-    // Remove error/success text
-    static_cast<RegisterUI*>(registerBox)->removeText();   // Convert type from *QWidget (Base) to *RegisterUI (Derived)
-    static_cast<RegisterUI*>(registerBox)->removeErrorMessage(500);
+    // Remove error/success message if RegisterUI object exists
+    if (registerBox != nullptr)
+    {
+        static_cast<RegisterUI*>(registerBox)->removeText();   // Convert type from *QWidget (Base) to *RegisterUI (Derived)
+        static_cast<RegisterUI*>(registerBox)->removeErrorMessage(500);
+    }
 }
 
 void MainWindow::redirectRegister()
@@ -81,9 +91,24 @@ void MainWindow::redirectRegister()
         stackedWidget->addWidget(registerBox);
     }
     // Add transition and change widgets
-    int currentIndex = stackedWidget->currentIndex();
-    int nextIndex = (currentIndex + 1) % stackedWidget->count();
-    transition->fadeInOut(stackedWidget->currentWidget(), stackedWidget->widget(nextIndex), stackedWidget);
+    int index = stackedWidget->indexOf(registerBox);
+    transition->fadeInOut(stackedWidget->currentWidget(), stackedWidget->widget(index), stackedWidget);
+
+    // Remove error message
+    static_cast<loginUI*>(loginBox)->removeErrorMessage(500);
+}
+
+void MainWindow::redirectPassword()
+{
+    // Create passwordUI object if first time
+    if (passwordBox == nullptr)
+    {
+        passwordBox = new PasswordUI(this, usermodel);
+        stackedWidget->addWidget(passwordBox);
+    }
+    // Add transition and change widgets
+    int index = stackedWidget->indexOf(passwordBox);
+    transition->fadeInOut(stackedWidget->currentWidget(), stackedWidget->widget(index), stackedWidget);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
@@ -98,12 +123,6 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     // Resize background image from centre position
     backgroundLabel->setPixmap(scaledBgImage);
     backgroundLabel->setGeometry(x, y, scaledBgImage.size().width(), scaledBgImage.size().height());
-
-    if (registerBox != nullptr)
-    {
-        registerBox->update();
-    }
-    loginBox->update();
 }
 
 MainWindow::~MainWindow()

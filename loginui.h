@@ -3,6 +3,7 @@
 
 #include "mainwindow.h"
 #include "usermodel.h"
+#include "uiwidgets.h"
 #include <QWidget>
 #include <QLabel>
 #include <QVBoxLayout>
@@ -17,14 +18,21 @@ class loginUI : public QWidget
     Q_OBJECT
 public:
     explicit loginUI(MainWindow *parent = nullptr, UserModel *usermodel = nullptr);
+    void addErrorMessage(const QString &message);
+    void removeErrorMessage(int wait);
 
 protected:
     MainWindow *mainWindow;
 
 private:
     UserModel *usermodel;
-    QWidget *emailParent;
-    QWidget *passwordParent;
+    QVBoxLayout *textLayout;
+    TextField *emailParent;
+    TextField *passwordParent;
+    QLabel *errorMessage = nullptr;
+    QVBoxLayout *errorLayout = nullptr;
+    QTimer *errorMessageTimer = nullptr;
+    bool remember = false;
 
 private slots:
     void loginSlot();
