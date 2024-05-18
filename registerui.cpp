@@ -2,11 +2,8 @@
 #include "uiwidgets.h"
 #include "loginui.h"
 
-RegisterUI::RegisterUI(MainWindow *parent) : QWidget(parent), mainWindow(parent)
+RegisterUI::RegisterUI(MainWindow *parent, UserModel *usermodel) : QWidget(parent), mainWindow(parent), usermodel(usermodel)
 {
-    // Create UserModel object to add users to database
-    usermodel = new UserModel;
-
     // Create Transitions object
     transition = new Transitions(this);
 
@@ -154,7 +151,7 @@ void RegisterUI::registerSlot()
         else
         {
             // Add user to database
-            usermodel->addUser(email->text(), username->text());
+            usermodel->addUser(email->text(), username->text(), password->text());
 
             // Remove error message if invalid attempt prior
             removeErrorMessage(0);

@@ -2,6 +2,7 @@
 #define LOGINUI_H
 
 #include "mainwindow.h"
+#include "usermodel.h"
 #include <QWidget>
 #include <QLabel>
 #include <QVBoxLayout>
@@ -15,10 +16,15 @@ class loginUI : public QWidget
 {
     Q_OBJECT
 public:
-    explicit loginUI(MainWindow *parent = nullptr);
+    explicit loginUI(MainWindow *parent = nullptr, UserModel *usermodel = nullptr);
 
 protected:
     MainWindow *mainWindow;
+
+private:
+    UserModel *usermodel;
+    QWidget *emailParent;
+    QWidget *passwordParent;
 
 private slots:
     void loginSlot();

@@ -3,12 +3,16 @@
 #include "loginui.h"
 #include "registerui.h"
 #include "transitions.h"
+#include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    // Create UserModel object for database-related operations
+    usermodel = new UserModel;
 
     // Set app icon
     QIcon appIcon(":/AppIcon/Icon1.png");
@@ -45,9 +49,10 @@ MainWindow::MainWindow(QWidget *parent)
     QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
     mainLayout->addWidget(stackedWidget);
     mainLayout->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    mainLayout->setContentsMargins(0, 0, 0, 0); // Remove any margins
 
     // Create loginUI object
-    loginBox = new loginUI(this);
+    loginBox = new loginUI(this, usermodel);
     stackedWidget->addWidget(loginBox);
 
     // Create Transitiosn object
@@ -72,7 +77,7 @@ void MainWindow::redirectRegister()
     // Create registerUI object if first time
     if (registerBox == nullptr)
     {
-        registerBox = new RegisterUI(this);
+        registerBox = new RegisterUI(this, usermodel);
         stackedWidget->addWidget(registerBox);
     }
     // Add transition and change widgets
@@ -93,9 +98,16 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     // Resize background image from centre position
     backgroundLabel->setPixmap(scaledBgImage);
     backgroundLabel->setGeometry(x, y, scaledBgImage.size().width(), scaledBgImage.size().height());
+
+    if (registerBox != nullptr)
+    {
+        registerBox->update();
+    }
+    loginBox->update();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "transitions.h"
+#include "usermodel.h"
 #include <QMainWindow>
 #include <QIcon>
 #include <QPixmap>
@@ -41,5 +42,6 @@ private:
     QWidget *registerBox = nullptr;
     QStackedWidget *stackedWidget = nullptr;
     Transitions *transition = nullptr;
+    UserModel *usermodel = nullptr;
 };
 #endif // MAINWINDOW_H

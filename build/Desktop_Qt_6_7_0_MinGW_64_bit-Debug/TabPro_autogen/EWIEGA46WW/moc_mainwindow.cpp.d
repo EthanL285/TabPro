@@ -410,6 +410,25 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs_win.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowsmimeconverter.h \
+  C:/Qt/6.7.0/mingw_64/include/QtSql/QtSql \
+  C:/Qt/6.7.0/mingw_64/include/QtSql/QtSqlDepends \
+  C:/Qt/6.7.0/mingw_64/include/QtSql/qsqldatabase.h \
+  C:/Qt/6.7.0/mingw_64/include/QtSql/qsqldriver.h \
+  C:/Qt/6.7.0/mingw_64/include/QtSql/qsqldriverplugin.h \
+  C:/Qt/6.7.0/mingw_64/include/QtSql/qsqlerror.h \
+  C:/Qt/6.7.0/mingw_64/include/QtSql/qsqlfield.h \
+  C:/Qt/6.7.0/mingw_64/include/QtSql/qsqlindex.h \
+  C:/Qt/6.7.0/mingw_64/include/QtSql/qsqlquery.h \
+  C:/Qt/6.7.0/mingw_64/include/QtSql/qsqlquerymodel.h \
+  C:/Qt/6.7.0/mingw_64/include/QtSql/qsqlrecord.h \
+  C:/Qt/6.7.0/mingw_64/include/QtSql/qsqlrelationaldelegate.h \
+  C:/Qt/6.7.0/mingw_64/include/QtSql/qsqlrelationaltablemodel.h \
+  C:/Qt/6.7.0/mingw_64/include/QtSql/qsqlresult.h \
+  C:/Qt/6.7.0/mingw_64/include/QtSql/qsqltablemodel.h \
+  C:/Qt/6.7.0/mingw_64/include/QtSql/qtsql-config.h \
+  C:/Qt/6.7.0/mingw_64/include/QtSql/qtsqlexports.h \
+  C:/Qt/6.7.0/mingw_64/include/QtSql/qtsqlglobal.h \
+  C:/Qt/6.7.0/mingw_64/include/QtSql/qtsqlversion.h \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QCommonStyle \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QGraphicsColorizeEffect \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QGraphicsOpacityEffect \
@@ -870,4 +889,5 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/vadefs.h \
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wchar.h \
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wctype.h \
-  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/transitions.h
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/transitions.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/usermodel.h

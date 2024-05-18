@@ -8,19 +8,93 @@ UserModel::UserModel() {
 }
 
 // Add user to database
-void UserModel::addUser(QString email, QString username)
+void UserModel::addUser(QString email, QString username, QString password)
 {
+    // Hash password
+    QString hashedPassword = hashPassword(password);
+
+    // Add user
     userDatabase.open();
     userDatabase.transaction();
 
     QSqlQuery QueryInsertData(userDatabase);
-    QueryInsertData.prepare("INSERT INTO registeredusers(Email, Username) VALUES(:email, :username)");
+    QueryInsertData.prepare("INSERT INTO registeredusers(Email, Username, Password) VALUES(:email, :username, :password)");
     QueryInsertData.bindValue(":email", email);
     QueryInsertData.bindValue(":username", username);
+    QueryInsertData.bindValue(":password", hashedPassword);
     QueryInsertData.exec();
 
     userDatabase.commit();
     userDatabase.close();
+}
+
+// Hashes user's password
+QString UserModel::hashPassword(const QString &password)
+{
+    QByteArray hash = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256); // Compute hash of password
+    return QString(hash.toHex()); // Convert binary hash value to a hexadecimal string (Human-readable representaiton)
+}
+
+// Retrieve user's hashed password
+QString UserModel::verifyUser(const QString &email, const QString &password)
+{
+    QString message;
+
+    // Check if database connection is already open
+    if (!userDatabase.isOpen())
+    {
+        userDatabase.open();
+    }
+
+    // Retrieve hashed password from database
+    QSqlQuery query;
+    query.prepare("SELECT Password FROM registeredusers WHERE Email = :email");
+    query.bindValue(":email", email);
+    query.exec();
+
+    // Email is registered in database
+    if (query.next())
+    {
+        QString storedHashedPassword = query.value(0).toString(); // Retrieve hashed password from first column (0)
+
+        // Compare hashed passwords
+        if (storedHashedPassword == hashPassword(password))
+        {
+            message = "Valid";
+        }
+        else
+        {
+            message = QString::fromUtf8("\u2717 ") + "Incorrect password. Please check password";
+        }
+    }
+    // Email is not registered in database
+    else
+    {
+        message = QString::fromUtf8("\u2717 ") + "Email not found. Please check email address or register";
+    }
+    return message;
+}
+
+// Checks if email is unique
+bool UserModel::isUniqueEmail(const QString &email)
+{
+    bool isUnique = false;
+
+    // Check if database connection is already open
+    if (!userDatabase.isOpen())
+    {
+        userDatabase.open();
+    }
+
+    QSqlQuery query;
+    query.prepare("SELECT 1 FROM registeredusers WHERE Email = :email LIMIT 1");
+    query.bindValue(":email", email);
+    query.exec();
+
+    // Check if there is at least one result that matches
+    isUnique = !query.next();
+
+    return isUnique;
 }
 
 // Checks if email is valid
@@ -44,6 +118,13 @@ QString UserModel::isValidEmail(const QString &email)
     if (!match)
     {
         message = QString::fromUtf8("\u2717 ") + "Please enter a valid email address";
+        return message;
+    }
+
+    // Email is not unique
+    if (!isUniqueEmail(email))
+    {
+        message = QString::fromUtf8("\u2717 ") + "Email address already in use";
         return message;
     }
 

@@ -1,7 +1,7 @@
 #include "loginui.h"
 #include "uiwidgets.h"
 
-loginUI::loginUI(MainWindow *parent) : QWidget(parent), mainWindow(parent)
+loginUI::loginUI(MainWindow *parent, UserModel *usermodel) : QWidget(parent), mainWindow(parent), usermodel(usermodel)
 {
     // Create layout
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -59,13 +59,13 @@ loginUI::loginUI(MainWindow *parent) : QWidget(parent), mainWindow(parent)
     textLayout->setAlignment(phrase, Qt::AlignHCenter);
 
     // Create text fields
-    QWidget *username = new TextField("Username", ":/FieldIcon/user.png", loginBox);
-    QWidget *password = new TextField("Password", ":/FieldIcon/lock.png", loginBox);
-    username->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    password->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    emailParent = new TextField("Email", ":/FieldIcon/user.png", loginBox);
+    passwordParent = new TextField("Password", ":/FieldIcon/lock.png", loginBox);
+    emailParent->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    passwordParent->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
-    textLayout->addWidget(username);
-    textLayout->addWidget(password);
+    textLayout->addWidget(emailParent);
+    textLayout->addWidget(passwordParent);
 
     // Add 'remember me' and 'forgot password'
     QHBoxLayout *accountLayout = new QHBoxLayout();
@@ -105,17 +105,33 @@ loginUI::loginUI(MainWindow *parent) : QWidget(parent), mainWindow(parent)
     registerLayout->addWidget(reg);
 
     // Connect the returnPressed() signal of text fields to the click() signal of button
-    QLineEdit *usernameField = username->findChild<QLineEdit*>("field");
-    QLineEdit *passwordField = password->findChild<QLineEdit*>("field");
+    QLineEdit *emailField = emailParent->findChild<QLineEdit*>("field");
+    QLineEdit *passwordField = passwordParent->findChild<QLineEdit*>("field");
 
-    connect(usernameField, &QLineEdit::returnPressed, loginButton, &QPushButton::click);
+    connect(emailField, &QLineEdit::returnPressed, loginButton, &QPushButton::click);
     connect(passwordField, &QLineEdit::returnPressed, loginButton, &QPushButton::click);
 }
 
 // loginUI Slots
 void loginUI::loginSlot()
 {
-    qDebug() << "Login Successful";
+    // Retrieve fields from parent widgets
+    QLineEdit *emailField = this->emailParent->findChild<QLineEdit*>("field");
+    QLineEdit *passwordField = this->passwordParent->findChild<QLineEdit*>("field");
+
+    // Verify user
+    QString message = usermodel->verifyUser(emailField->text(), passwordField->text());
+
+    // Invalid input
+    if (message != "Valid")
+    {
+        qDebug() << message;
+    }
+    // Valid Input
+    else
+    {
+        qDebug() << message;
+    }
 }
 
 void loginUI::rememberSlot()

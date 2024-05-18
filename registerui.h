@@ -12,7 +12,7 @@ class RegisterUI : public QWidget
 {
     Q_OBJECT
 public:
-    explicit RegisterUI(MainWindow *parent = nullptr);
+    explicit RegisterUI(MainWindow *parent = nullptr, UserModel *usermodel = nullptr);
     void removeText();
     void setRedBorder(QWidget *fieldWidget, bool setRed);
     void addErrorMessage(const QString &message);
