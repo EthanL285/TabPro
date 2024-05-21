@@ -1,6 +1,7 @@
 TabPro_autogen/timestamp: \
   C:/Qt/6.7.0/mingw_64/include/QtCore/QDeadlineTimer \
   C:/Qt/6.7.0/mingw_64/include/QtCore/QEvent \
+  C:/Qt/6.7.0/mingw_64/include/QtCore/QFlags \
   C:/Qt/6.7.0/mingw_64/include/QtCore/QHash \
   C:/Qt/6.7.0/mingw_64/include/QtCore/QList \
   C:/Qt/6.7.0/mingw_64/include/QtCore/QMap \
@@ -410,6 +411,17 @@ TabPro_autogen/timestamp: \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs_win.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowsmimeconverter.h \
+  C:/Qt/6.7.0/mingw_64/include/QtNetwork/QSslSocket \
+  C:/Qt/6.7.0/mingw_64/include/QtNetwork/qabstractsocket.h \
+  C:/Qt/6.7.0/mingw_64/include/QtNetwork/qhostaddress.h \
+  C:/Qt/6.7.0/mingw_64/include/QtNetwork/qssl.h \
+  C:/Qt/6.7.0/mingw_64/include/QtNetwork/qsslcertificate.h \
+  C:/Qt/6.7.0/mingw_64/include/QtNetwork/qsslerror.h \
+  C:/Qt/6.7.0/mingw_64/include/QtNetwork/qsslsocket.h \
+  C:/Qt/6.7.0/mingw_64/include/QtNetwork/qtcpsocket.h \
+  C:/Qt/6.7.0/mingw_64/include/QtNetwork/qtnetwork-config.h \
+  C:/Qt/6.7.0/mingw_64/include/QtNetwork/qtnetworkexports.h \
+  C:/Qt/6.7.0/mingw_64/include/QtNetwork/qtnetworkglobal.h \
   C:/Qt/6.7.0/mingw_64/include/QtSql/QtSql \
   C:/Qt/6.7.0/mingw_64/include/QtSql/QtSqlDepends \
   C:/Qt/6.7.0/mingw_64/include/QtSql/qsqldatabase.h \
@@ -675,6 +687,14 @@ TabPro_autogen/timestamp: \
   C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsTargets-relwithdebinfo.cmake \
   C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsTargets.cmake \
   C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsVersionlessTargets.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6HttpServer/Qt6HttpServerAdditionalTargetInfo.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6HttpServer/Qt6HttpServerConfig.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6HttpServer/Qt6HttpServerConfigVersion.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6HttpServer/Qt6HttpServerConfigVersionImpl.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6HttpServer/Qt6HttpServerDependencies.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6HttpServer/Qt6HttpServerTargets-relwithdebinfo.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6HttpServer/Qt6HttpServerTargets.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6HttpServer/Qt6HttpServerVersionlessTargets.cmake \
   C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Network/Qt6NetworkAdditionalTargetInfo.cmake \
   C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Network/Qt6NetworkConfig.cmake \
   C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Network/Qt6NetworkConfigVersion.cmake \
@@ -700,6 +720,14 @@ TabPro_autogen/timestamp: \
   C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginConfig.cmake \
   C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginTargets-relwithdebinfo.cmake \
   C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginTargets.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6NetworkAuth/Qt6NetworkAuthAdditionalTargetInfo.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6NetworkAuth/Qt6NetworkAuthConfig.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6NetworkAuth/Qt6NetworkAuthConfigVersion.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6NetworkAuth/Qt6NetworkAuthConfigVersionImpl.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6NetworkAuth/Qt6NetworkAuthDependencies.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6NetworkAuth/Qt6NetworkAuthTargets-relwithdebinfo.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6NetworkAuth/Qt6NetworkAuthTargets.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6NetworkAuth/Qt6NetworkAuthVersionlessTargets.cmake \
   C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Sql/Qt6QMimerSQLDriverPluginAdditionalTargetInfo.cmake \
   C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Sql/Qt6QMimerSQLDriverPluginConfig.cmake \
   C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Sql/Qt6QMimerSQLDriverPluginTargets-relwithdebinfo.cmake \
@@ -725,6 +753,14 @@ TabPro_autogen/timestamp: \
   C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Sql/Qt6SqlTargets-relwithdebinfo.cmake \
   C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Sql/Qt6SqlTargets.cmake \
   C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Sql/Qt6SqlVersionlessTargets.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6WebSockets/Qt6WebSocketsAdditionalTargetInfo.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6WebSockets/Qt6WebSocketsConfig.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6WebSockets/Qt6WebSocketsConfigVersion.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6WebSockets/Qt6WebSocketsConfigVersionImpl.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6WebSockets/Qt6WebSocketsDependencies.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6WebSockets/Qt6WebSocketsTargets-relwithdebinfo.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6WebSockets/Qt6WebSocketsTargets.cmake \
+  C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6WebSockets/Qt6WebSocketsVersionlessTargets.cmake \
   C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Widgets/Qt6QModernWindowsStylePluginAdditionalTargetInfo.cmake \
   C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Widgets/Qt6QModernWindowsStylePluginConfig.cmake \
   C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Widgets/Qt6QModernWindowsStylePluginTargets-relwithdebinfo.cmake \

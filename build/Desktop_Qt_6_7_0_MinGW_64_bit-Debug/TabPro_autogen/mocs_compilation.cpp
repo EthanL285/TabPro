@@ -5,3 +5,4 @@
 #include "EWIEGA46WW/moc_registerui.cpp"
 #include "EWIEGA46WW/moc_transitions.cpp"
 #include "EWIEGA46WW/moc_uiwidgets.cpp"
+#include "EWIEGA46WW/moc_usermodel.cpp"

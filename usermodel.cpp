@@ -1,8 +1,12 @@
 #include "usermodel.h"
 #include <regex>
 #include <QDnsLookup>
+#include <QtNetworkAuth>
+#include <QDesktopServices>
+#include <QNetworkAccessManager>
 
-UserModel::UserModel() {
+UserModel::UserModel()
+{
     userDatabase = QSqlDatabase::addDatabase("QSQLITE");
     userDatabase.setDatabaseName("users.db"); // Database stored in project file
 }
@@ -19,7 +23,7 @@ void UserModel::addUser(QString email, QString username, QString password)
 
     QSqlQuery QueryInsertData(userDatabase);
     QueryInsertData.prepare("INSERT INTO registeredusers(Email, Username, Password) VALUES(:email, :username, :password)");
-    QueryInsertData.bindValue(":email", email);
+    QueryInsertData.bindValue(":email", email.toLower());
     QueryInsertData.bindValue(":username", username);
     QueryInsertData.bindValue(":password", hashedPassword);
     QueryInsertData.exec();
@@ -134,12 +138,10 @@ QString UserModel::hashPassword(const QString &password)
 }
 
 // Retrieve user's hashed password
-QString UserModel::verifyUser(TextField *emailParent, TextField *passwordParent)
+QString UserModel::verifyUser(TextField *emailParent, TextField *passwordParent) // Optional password parameter
 {
     // Retrieve fields from parent widgets
     QLineEdit *email = emailParent->findChild<QLineEdit*>("field");
-    QLineEdit *password = passwordParent->findChild<QLineEdit*>("field");
-
     QString message;
 
     // Check if database connection is already open
@@ -150,25 +152,35 @@ QString UserModel::verifyUser(TextField *emailParent, TextField *passwordParent)
 
     // Retrieve hashed password from database
     QSqlQuery query;
-    query.prepare("SELECT Password FROM registeredusers WHERE Email = :email");
-    query.bindValue(":email", email->text());
+    query.prepare("SELECT Password FROM registeredusers WHERE LOWER(Email) = LOWER(:email)");
+    query.bindValue(":email", email->text().toLower());
     query.exec();
 
     // Email is registered in database
     if (query.next())
     {
-        QString storedHashedPassword = query.value(0).toString(); // Retrieve hashed password from first column (0)
-
-        // Compare hashed passwords
-        if (storedHashedPassword == hashPassword(password->text()))
+        // Password parameter is provided
+        if (passwordParent != nullptr)
         {
-            message = "Valid";
+            QLineEdit *password = passwordParent->findChild<QLineEdit*>("field");
+            QString storedHashedPassword = query.value(0).toString(); // Retrieve hashed password from first column (0)
+
+            // Compare hashed passwords
+            if (storedHashedPassword == hashPassword(password->text()))
+            {
+                message = "Valid";
+            }
+            else
+            {
+                message = QString::fromUtf8("\u2717 ") + "Incorrect password. Please check password";
+                passwordParent->setRedBorder(true);
+                password->setFocus();
+            }
         }
+        // Password parameter is not provided
         else
         {
-            message = QString::fromUtf8("\u2717 ") + "Incorrect password. Please check password";
-            passwordParent->setRedBorder(true);
-            password->setFocus();
+            message = "Valid";
         }
     }
     // Email is not registered in database
@@ -193,8 +205,8 @@ bool UserModel::isUniqueEmail(const QString &email)
     }
 
     QSqlQuery query;
-    query.prepare("SELECT 1 FROM registeredusers WHERE Email = :email LIMIT 1");
-    query.bindValue(":email", email);
+    query.prepare("SELECT 1 FROM registeredusers WHERE LOWER(Email) = LOWER(:email) LIMIT 1");
+    query.bindValue(":email", email.toLower());
     query.exec();
 
     // Check if there is at least one result that matches
@@ -308,3 +320,135 @@ QString UserModel::isValidUsername(const QString &username)
     }
     return "Valid";
 }
+
+// Send verrification code to user's email by connecting to Gmail SMTP servers
+void UserModel::sendVerificationEmail(const QString &userEmail, const QString &verificationCode)
+{
+    // Uncomment this ----------------------------------------------------------------
+    this->userEmail = userEmail;
+    this->verificationCode = verificationCode;
+
+    // Initialize a secure TCP socket for connecting to the SMTP server
+    if (socket == nullptr) {
+        socket = new QSslSocket(this);
+
+        // Connect socket signal to slot to avoid blocking program
+        connect(socket, &QSslSocket::readyRead, this, &UserModel::socketReadyRead); // Read response from server
+        connect(socket, &QSslSocket::errorOccurred, this, &UserModel::socketError); // Socket error
+    }
+
+    // Connect to the Gmail SMTP server
+    socket->connectToHostEncrypted("smtp.gmail.com", 465);
+}
+
+// Converts a QString to Base64
+QString UserModel::encodeBase64(const QByteArray &byteArray)
+{
+    return QString(byteArray.toBase64());
+}
+
+// Handles socket errors
+void UserModel::socketError(QAbstractSocket::SocketError error)
+{
+    qDebug() << "Socket error:" << socket->errorString(); // "Host not found" if no internet
+    socket->close();
+}
+
+// Reads SMTP responses from socket and handles different responses accordingly
+void UserModel::socketReadyRead()
+{
+    QString encodedEmail = encodeBase64(qgetenv("TabProEmail"));
+    QString encodedPassword = encodeBase64(qgetenv("TabProKey"));
+
+    // Read data from the socket
+    QByteArray response = socket->readAll();
+    qDebug() << response;
+
+    // Handle different SMTP responses (numbers indicate the calling order)
+    if (response.startsWith("220"))
+    {
+        // Server is ready for EHLO command  (1)
+        socket->write("EHLO localhost\r\n");
+    }
+    else if (response.startsWith("250"))
+    {
+        // Server has accepted EHLO command, proceed with authentication (2)
+        if (response.startsWith("250-smtp.gmail.com at your service"))
+        {
+            socket->write("AUTH LOGIN\r\n");
+        }
+        // Server has accepted MAIL FROM command, proceed with RCPT TO (6)
+        else if (response.startsWith("250 2.1.0 OK"))
+        {
+            socket->write("RCPT TO:<" + userEmail.toUtf8() + ">\r\n");
+        }
+        // Send DATA command (7)
+        else if (response.startsWith("250 2.1.5 OK"))
+        {
+            socket->write("DATA\r\n");
+        }
+        // Server has accepted email data, proceed with QUIT (9)
+        else
+        {
+            socket->write("QUIT\r\n");
+        }
+    }
+    else if (response.startsWith("334"))
+    {
+        // Server is requesting base64-encoded email (3)
+        if (response.startsWith("334 VXNlcm5hbWU6"))
+        {
+            socket->write(encodedEmail.toUtf8() + "\r\n");
+        }
+        // Server is requesting base64-encoded email (4)
+        else
+        {
+            socket->write(encodedPassword.toUtf8() + "\r\n");
+        }
+    }
+    else if (response.startsWith("235"))
+    {
+        // Authentication successful, proceed with MAILFROM (5)
+        socket->write("MAIL FROM:<tech.tabproapp@gmail.com>\r\n");
+    }
+    else if (response.startsWith("354"))
+    {
+        // Server is ready to receive email data, send the email (8)
+        QString emailHeaders = "From: \"TabPro\" <tech.tabproapp@gmail.com>\r\n";
+        emailHeaders += "To: <" + userEmail + ">\r\n";
+
+        socket->write(emailHeaders.toUtf8());
+        socket->write("Subject: Verification Code\r\n");
+        socket->write("\r\n");
+        socket->write("Your verification code is: " + verificationCode.toUtf8() + "\r\n");
+        socket->write(".\r\n");
+    }
+    else if (response.startsWith("221"))
+    {
+        // Close the connection (10)
+        socket->close();
+        delete socket;
+        socket = nullptr;
+    }
+    else
+    {
+        // Unexpected response from server, print error message
+        qDebug() << "Error: Unexpected response from server: " << response;
+    }
+}
+
+/*
+ * For Reference, below is the log of a successful SMTP communication session with Gmail's SMTP server:
+ *
+ * (1) "220 smtp.gmail.com ESMTP 41be03b00d2f7-6340a632725sm17786173a12.12 - gsmtp\r\n"
+ * (2) "250-smtp.gmail.com at your service, [61.68.176.27]\r\n250-SIZE 35882577\r\n250-8BITMIME\r\n250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH\r\n250-ENHANCEDSTATUSCODES\r\n250-PIPELINING\r\n250-CHUNKING\r\n250 SMTPUTF8\r\n"
+ * (3) "334 VXNlcm5hbWU6\r\n"
+ * (4) "334 UGFzc3dvcmQ6\r\n"
+ * (5) "235 2.7.0 Accepted\r\n"
+ * (6) "250 2.1.0 OK 41be03b00d2f7-6340a632725sm17786173a12.12 - gsmtp\r\n"
+ * (7) "250 2.1.5 OK 41be03b00d2f7-6340a632725sm17786173a12.12 - gsmtp\r\n"
+ * (8) "354  Go ahead 41be03b00d2f7-6340a632725sm17786173a12.12 - gsmtp\r\n"
+ * (9) "250 2.0.0 OK  1716281641 41be03b00d2f7-6340a632725sm17786173a12.12 - gsmtp\r\n"
+ * (10) "221 2.0.0 closing connection 41be03b00d2f7-6340a632725sm17786173a12.12 - gsmtp\r\n"
+ */
+

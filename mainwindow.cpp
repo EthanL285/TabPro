@@ -74,11 +74,15 @@ void MainWindow::redirectLogin()
     int index = stackedWidget->indexOf(loginBox);
     transition->fadeInOut(stackedWidget->currentWidget(), stackedWidget->widget(index), stackedWidget);
 
-    // Remove error/success message if RegisterUI object exists
+    // Remove error messages of existing pages
     if (registerBox != nullptr)
     {
         static_cast<RegisterUI*>(registerBox)->removeText();   // Convert type from *QWidget (Base) to *RegisterUI (Derived)
         static_cast<RegisterUI*>(registerBox)->removeErrorMessage(500);
+    }
+    if (passwordBox != nullptr)
+    {
+        static_cast<PasswordUI*>(passwordBox)->removeErrorMessage(500);
     }
 }
 
@@ -94,7 +98,7 @@ void MainWindow::redirectRegister()
     int index = stackedWidget->indexOf(registerBox);
     transition->fadeInOut(stackedWidget->currentWidget(), stackedWidget->widget(index), stackedWidget);
 
-    // Remove error message
+    // Remove login error message
     static_cast<loginUI*>(loginBox)->removeErrorMessage(500);
 }
 
@@ -109,6 +113,9 @@ void MainWindow::redirectPassword()
     // Add transition and change widgets
     int index = stackedWidget->indexOf(passwordBox);
     transition->fadeInOut(stackedWidget->currentWidget(), stackedWidget->widget(index), stackedWidget);
+
+    // Remove login error message
+    static_cast<loginUI*>(loginBox)->removeErrorMessage(500);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)

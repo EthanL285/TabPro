@@ -1,8 +1,9 @@
 #include "passwordui.h"
 #include "loginui.h"
+#include <QTime>
 
 PasswordUI::PasswordUI(MainWindow *parent, UserModel *usermodel) : QWidget(parent), mainWindow(parent), usermodel(usermodel)
-{
+{      
     // Add rectangle layout
     QVBoxLayout *rectangleLayout = new QVBoxLayout(this);
     rectangleLayout->setAlignment(Qt::AlignHCenter);
@@ -53,8 +54,8 @@ PasswordUI::PasswordUI(MainWindow *parent, UserModel *usermodel) : QWidget(paren
     titleLayout->addWidget(lineFrameRight);
 
     // Add information
-    QLabel *info = new QLabel("Enter your account email address and we will share a 4 digit<br>verification code to reset your password");
-    info->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    info = new QLabel("Enter your account email address and we will share a 6 digit<br>verification code to reset your password");
+    info->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     info->setStyleSheet("color: gray; font: 11pt Muli;");
     info->setAlignment(Qt::AlignCenter);
     widgetLayout->addWidget(info);
@@ -95,7 +96,146 @@ PasswordUI::PasswordUI(MainWindow *parent, UserModel *usermodel) : QWidget(paren
     connect(email, &QLineEdit::returnPressed, sendButton, &QPushButton::click);
 }
 
+// Send reset email to user
 void PasswordUI::sendResetEmail()
 {
-    qDebug() << "Email Sent";
+    // Retrieve email field from parent widget
+    email = emailParent->findChild<QLineEdit*>("field");
+
+    // Check for empty fields
+    bool fieldEmpty = false;
+    fieldEmpty = emailParent->emptyFieldCheck(email) || fieldEmpty;
+
+    // Empty email field
+    if (fieldEmpty)
+    {
+        addErrorMessage(QString::fromUtf8("\u2717 ") + "Please fill in all required fields");
+    }
+    // Filled email field
+    else
+    {
+        // Verify user
+        QString message = usermodel->verifyUser(emailParent); // Also sets border and focus
+
+        // Email not found in database
+        if (message != "Valid")
+        {
+            // Add error message
+            addErrorMessage(message);
+        }
+        // Email is found in database
+        else
+        {
+            // Remove error message if invalid attempt prior
+            removeErrorMessage(0);
+
+            // Send verification code to user email
+            QString code = generateVerificationCode();
+            usermodel->sendVerificationEmail(email->text(), code);
+
+            // Clear text from field
+            email->clear();
+        }
+    }
+}
+
+// Email successfully delivered
+void PasswordUI::onEmailSentSuccess()
+{
+    info->setText("A 6 digit verification code has been sent to " + email->text());
+}
+
+// Add error message to UI
+void PasswordUI::addErrorMessage(const QString &message)
+{
+    // Error message does not exist
+    if (errorMessage == nullptr)
+    {
+        // Create and add new layout with error message
+        errorLayout = new QVBoxLayout();
+        QWidget *emailField = widgetLayout->itemAt(4)->widget();
+        QWidget *sendButton = widgetLayout->itemAt(6)->widget();
+        verticalSpacer = static_cast<QSpacerItem*>(widgetLayout->itemAt(5));
+
+        errorMessage = new QLabel(message);
+        errorMessage->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        errorMessage->setStyleSheet("color: rgb(237, 67, 55); font: 11pt Muli;");
+
+        widgetLayout->removeWidget(emailField);
+        widgetLayout->removeWidget(sendButton);
+        widgetLayout->removeItem(verticalSpacer);
+
+        errorLayout->addWidget(emailField);
+        errorLayout->addWidget(errorMessage);
+        errorLayout->addWidget(sendButton);
+
+        errorLayout->setContentsMargins(0, 0, 0, 0);
+        errorLayout->setSpacing(20);
+
+        // Replace widgets with new layout
+        widgetLayout->insertLayout(4, errorLayout);
+        widgetLayout->setContentsMargins(40, 30, 40, 164);
+    }
+    // Error message already exists
+    else
+    {
+        errorMessage->setText(message);
+    }
+}
+
+// Delete error message after 'wait' ms
+void PasswordUI::removeErrorMessage(int wait)
+{
+    // Error message exists and function is not currently processing
+    if (errorMessage != nullptr && errorLayout != nullptr)
+    {
+        // Stop any active timer
+        if (errorMessageTimer && errorMessageTimer->isActive())
+        {
+            errorMessageTimer->stop();
+        }
+        // Create a new timer
+        errorMessageTimer = new QTimer(this);
+        errorMessageTimer->setSingleShot(true);
+
+        // Remove error message from widget once transition ends (timer expires)
+        connect(errorMessageTimer, &QTimer::timeout, this, [this]() {
+            QWidget *emailField = errorLayout->itemAt(0)->widget();
+            QWidget *sendButton = errorLayout->itemAt(2)->widget();
+
+            errorLayout->removeWidget(emailField);
+            errorLayout->removeWidget(errorMessage);
+            errorLayout->removeWidget(sendButton);
+            widgetLayout->removeItem(errorLayout);
+
+            emailParent->setRedBorder(false);
+
+            // Restore to original layout
+            widgetLayout->insertWidget(4, emailField);
+            widgetLayout->insertItem(5, verticalSpacer);
+            widgetLayout->insertWidget(6, sendButton);
+            widgetLayout->setContentsMargins(40, 30, 40, 172);
+
+            delete errorMessage;
+            delete errorLayout;
+            errorMessage = nullptr;
+            errorLayout = nullptr;
+
+            delete errorMessageTimer; // Delete the timer object
+            errorMessageTimer = nullptr; // Reset the timer pointer
+        });
+        // Start the timer
+        errorMessageTimer->start(wait);
+    }
+}
+
+// Generates a verification code
+QString PasswordUI::generateVerificationCode()
+{
+    // Generate random 6 digit code
+    QString code;
+    for (int i = 0; i < 6; ++i) {
+        code.append(QString::number(QRandomGenerator::global()->bounded(10))); // Generates number between 0-9 and appends it
+    }
+    return code;
 }

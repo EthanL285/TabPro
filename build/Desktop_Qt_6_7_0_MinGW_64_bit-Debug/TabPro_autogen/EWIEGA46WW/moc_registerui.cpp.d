@@ -2,6 +2,7 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/moc_predefs.h \
   C:/Qt/6.7.0/mingw_64/include/QtCore/QDeadlineTimer \
   C:/Qt/6.7.0/mingw_64/include/QtCore/QEvent \
+  C:/Qt/6.7.0/mingw_64/include/QtCore/QFlags \
   C:/Qt/6.7.0/mingw_64/include/QtCore/QHash \
   C:/Qt/6.7.0/mingw_64/include/QtCore/QList \
   C:/Qt/6.7.0/mingw_64/include/QtCore/QMap \
@@ -411,6 +412,17 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs_win.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowsmimeconverter.h \
+  C:/Qt/6.7.0/mingw_64/include/QtNetwork/QSslSocket \
+  C:/Qt/6.7.0/mingw_64/include/QtNetwork/qabstractsocket.h \
+  C:/Qt/6.7.0/mingw_64/include/QtNetwork/qhostaddress.h \
+  C:/Qt/6.7.0/mingw_64/include/QtNetwork/qssl.h \
+  C:/Qt/6.7.0/mingw_64/include/QtNetwork/qsslcertificate.h \
+  C:/Qt/6.7.0/mingw_64/include/QtNetwork/qsslerror.h \
+  C:/Qt/6.7.0/mingw_64/include/QtNetwork/qsslsocket.h \
+  C:/Qt/6.7.0/mingw_64/include/QtNetwork/qtcpsocket.h \
+  C:/Qt/6.7.0/mingw_64/include/QtNetwork/qtnetwork-config.h \
+  C:/Qt/6.7.0/mingw_64/include/QtNetwork/qtnetworkexports.h \
+  C:/Qt/6.7.0/mingw_64/include/QtNetwork/qtnetworkglobal.h \
   C:/Qt/6.7.0/mingw_64/include/QtSql/QtSql \
   C:/Qt/6.7.0/mingw_64/include/QtSql/QtSqlDepends \
   C:/Qt/6.7.0/mingw_64/include/QtSql/qsqldatabase.h \
