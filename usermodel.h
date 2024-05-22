@@ -3,14 +3,17 @@
 
 #include <QString>
 #include <QtSql>
-#include "uiwidgets.h"
 #include <QSslSocket>
+#include "uiwidgets.h"
 
 struct UserCredentials
 {
     QString email;
     QString password;
 };
+
+// Forward declarations
+class PasswordUI;
 
 // Handles all user information (destroy when user logs in)
 class UserModel : public QObject
@@ -30,7 +33,7 @@ public:
     bool tokenExists(const QString &email = QString());
     void removeToken();
     UserCredentials getUserCredentials();
-    void sendVerificationEmail(const QString &userEmail, const QString &verificationCode);
+    void sendVerificationEmail(const QString &userEmail, const QString &verificationCode, PasswordUI *passwordui);
     QString encodeBase64(const QByteArray &byteArray);
 
 protected slots:
@@ -43,6 +46,7 @@ private:
     QSslSocket *socket = nullptr;
     QString userEmail;
     QString verificationCode;
+    PasswordUI *passwordui = nullptr;
 };
 
 #endif // USERMODEL_H

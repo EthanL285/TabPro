@@ -8,6 +8,8 @@
 #include <QLabel>
 #include <QCheckBox>
 #include <QPushButton>
+#include <QKeyEvent>
+#include <QTimer>
 
 class TextField : public QWidget
 {
@@ -33,6 +35,9 @@ class MainButton: public QPushButton
     Q_OBJECT
 public:
     explicit MainButton(const QString &text, QWidget *parent = nullptr);
+
+private slots:
+    void emitEnterKeyPressEvent();
 };
 
 #endif // UIWIDGETS_H

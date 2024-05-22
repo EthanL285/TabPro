@@ -18,6 +18,7 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/6.7.0/mingw_64/include/QtCore/QSizeF \
   C:/Qt/6.7.0/mingw_64/include/QtCore/QString \
   C:/Qt/6.7.0/mingw_64/include/QtCore/QStringList \
+  C:/Qt/6.7.0/mingw_64/include/QtCore/QTimer \
   C:/Qt/6.7.0/mingw_64/include/QtCore/QVariant \
   C:/Qt/6.7.0/mingw_64/include/QtCore/QtCore \
   C:/Qt/6.7.0/mingw_64/include/QtCore/QtCoreDepends \
@@ -285,6 +286,7 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/6.7.0/mingw_64/include/QtGui/QFileSystemModel \
   C:/Qt/6.7.0/mingw_64/include/QtGui/QIcon \
   C:/Qt/6.7.0/mingw_64/include/QtGui/QImage \
+  C:/Qt/6.7.0/mingw_64/include/QtGui/QKeyEvent \
   C:/Qt/6.7.0/mingw_64/include/QtGui/QMatrix4x4 \
   C:/Qt/6.7.0/mingw_64/include/QtGui/QPaintDevice \
   C:/Qt/6.7.0/mingw_64/include/QtGui/QPaintDeviceWindow \

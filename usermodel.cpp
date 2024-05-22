@@ -1,4 +1,5 @@
 #include "usermodel.h"
+#include "passwordui.h"
 #include <regex>
 #include <QDnsLookup>
 #include <QtNetworkAuth>
@@ -322,8 +323,13 @@ QString UserModel::isValidUsername(const QString &username)
 }
 
 // Send verrification code to user's email by connecting to Gmail SMTP servers
-void UserModel::sendVerificationEmail(const QString &userEmail, const QString &verificationCode)
+void UserModel::sendVerificationEmail(const QString &userEmail, const QString &verificationCode, PasswordUI *passwordui)
 {
+    this->passwordui = passwordui;
+    passwordui->onEmailSentSuccess();
+
+
+    /*
     // Uncomment this ----------------------------------------------------------------
     this->userEmail = userEmail;
     this->verificationCode = verificationCode;
@@ -338,7 +344,7 @@ void UserModel::sendVerificationEmail(const QString &userEmail, const QString &v
     }
 
     // Connect to the Gmail SMTP server
-    socket->connectToHostEncrypted("smtp.gmail.com", 465);
+    socket->connectToHostEncrypted("smtp.gmail.com", 465); */
 }
 
 // Converts a QString to Base64
@@ -350,7 +356,8 @@ QString UserModel::encodeBase64(const QByteArray &byteArray)
 // Handles socket errors
 void UserModel::socketError(QAbstractSocket::SocketError error)
 {
-    qDebug() << "Socket error:" << socket->errorString(); // "Host not found" if no internet
+    // Print error message
+    passwordui->addErrorMessage(QString::fromUtf8("\u2717 ") + "Error: " + socket->errorString(), 153);
     socket->close();
 }
 
@@ -432,8 +439,11 @@ void UserModel::socketReadyRead()
     }
     else
     {
-        // Unexpected response from server, print error message
-        qDebug() << "Error: Unexpected response from server: " << response;
+        // Unexpected response from server, print error message (most likely environment variables are incorrect)
+        passwordui->addErrorMessage(QString::fromUtf8("\u2717 ") + "Error: Unexpected response from server", 153);
+        socket->close();
+        delete socket;
+        socket = nullptr;
     }
 }
 

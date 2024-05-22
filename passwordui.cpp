@@ -70,7 +70,7 @@ PasswordUI::PasswordUI(MainWindow *parent, UserModel *usermodel) : QWidget(paren
     QSpacerItem *verticalSpacer2 = new QSpacerItem(0, 10, QSizePolicy::Fixed, QSizePolicy::Fixed);
     widgetLayout->addItem(verticalSpacer2);
 
-    QPushButton *sendButton = new MainButton("Send", passwordBox);
+    sendButton = new MainButton("Send", passwordBox);
     widgetLayout->addWidget(sendButton);
     connect(sendButton, &QPushButton::clicked, this, &PasswordUI::sendResetEmail);
 
@@ -91,7 +91,7 @@ PasswordUI::PasswordUI(MainWindow *parent, UserModel *usermodel) : QWidget(paren
     reg->setCursor(Qt::PointingHandCursor);
     registerLayout->addWidget(reg);
 
-    // Connect the returnPressed() signal of text fields to the click() signal of button
+    // Connect returnPressed() signal to the click() slot of button
     QLineEdit *email = emailParent->findChild<QLineEdit*>("field");
     connect(email, &QLineEdit::returnPressed, sendButton, &QPushButton::click);
 }
@@ -109,7 +109,7 @@ void PasswordUI::sendResetEmail()
     // Empty email field
     if (fieldEmpty)
     {
-        addErrorMessage(QString::fromUtf8("\u2717 ") + "Please fill in all required fields");
+        addErrorMessage(QString::fromUtf8("\u2717 ") + "Please fill in all required fields", 153);
     }
     // Filled email field
     else
@@ -121,7 +121,7 @@ void PasswordUI::sendResetEmail()
         if (message != "Valid")
         {
             // Add error message
-            addErrorMessage(message);
+            addErrorMessage(message, 153);
         }
         // Email is found in database
         else
@@ -131,7 +131,7 @@ void PasswordUI::sendResetEmail()
 
             // Send verification code to user email
             QString code = generateVerificationCode();
-            usermodel->sendVerificationEmail(email->text(), code);
+            usermodel->sendVerificationEmail(email->text(), code, this);
 
             // Clear text from field
             email->clear();
@@ -142,11 +142,73 @@ void PasswordUI::sendResetEmail()
 // Email successfully delivered
 void PasswordUI::onEmailSentSuccess()
 {
-    info->setText("A 6 digit verification code has been sent to " + email->text());
+    // Remove error message if invalid attempt prior
+    removeErrorMessage(0);
+
+    // Display verification page
+    displayVerificationPage();
+    info->setText("Please enter the 6 digit verification code that has been sent to<br><span style=\"color:white;\">" + email->text() + "</span>");
+}
+
+// Displays the verification page
+void PasswordUI::displayVerificationPage()
+{
+    // Create continue button
+    continueButton = new MainButton("Continue");
+    connect(continueButton, &QPushButton::clicked, this, &PasswordUI::displayResetPassword);
+
+    // Create code fields
+    QWidget *codeParent = new QWidget(this);
+    QHBoxLayout *codeLayout = new QHBoxLayout(codeParent);
+
+    codeParent->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    codeLayout->setSpacing(20);
+
+    QLineEdit *firstField;
+
+    for (int i = 0; i < 6; ++i) {
+        bool isLastField = (i == 5);
+        QLineEdit* field = createCodeField(isLastField);
+        codeLayout->addWidget(field);
+
+        // Save reference to the first field
+        if (i == 0) {
+            firstField = field;
+        }
+
+        // Add field to the list
+        codeFields.append(field);
+    }
+
+    // Add widgets to layout
+    widgetLayout->removeWidget(emailParent);
+    widgetLayout->removeWidget(sendButton);
+    widgetLayout->insertWidget(4, codeParent);
+    widgetLayout->insertWidget(6, continueButton);
+    widgetLayout->setAlignment(codeParent, Qt::AlignHCenter);
+    widgetLayout->setContentsMargins(40, 30, 40, 144);
+
+    emailParent->setVisible(false);
+    sendButton->setVisible(false);
+    firstField->setFocus();
+}
+
+// Displays the reset password page
+void PasswordUI::displayResetPassword()
+{
+    if (allCodeFieldsFilled())
+    {
+        qDebug() << "Switch successful!";
+    }
+    else
+    {
+        qDebug() << "Fields are empty";
+        addErrorMessage(QString::fromUtf8("\u2717 ") + "Please fill in all required fields", 125);
+    }
 }
 
 // Add error message to UI
-void PasswordUI::addErrorMessage(const QString &message)
+void PasswordUI::addErrorMessage(const QString &message, int bottomMargin)
 {
     // Error message does not exist
     if (errorMessage == nullptr)
@@ -174,13 +236,71 @@ void PasswordUI::addErrorMessage(const QString &message)
 
         // Replace widgets with new layout
         widgetLayout->insertLayout(4, errorLayout);
-        widgetLayout->setContentsMargins(40, 30, 40, 164);
+        widgetLayout->setContentsMargins(40, 30, 40, bottomMargin);
+
+        // Bottom margin for 1st page: 153
+        // Bottom margin for 2nd Page: 125
     }
     // Error message already exists
     else
     {
         errorMessage->setText(message);
     }
+}
+
+// Creates a field for code input
+QLineEdit *PasswordUI::createCodeField(bool isLastField)
+{
+    QLineEdit *codefield = new QLineEdit(this);
+    codefield->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    codefield->setAlignment(Qt::AlignCenter);
+    codefield->setFixedSize(55, 60);
+    codefield->setMaxLength(1);
+    codefield->setStyleSheet
+    (
+        "background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(96, 94, 92, 100), stop: 1 rgba(32, 31, 30, 200));"
+        "border: none;"
+        "border-radius: 5px;"
+        "color: white;"
+        "font: bold 20pt Muli;"
+        "padding-left: 6px;"
+        "padding-right: 6px;"
+    );
+
+    // Set validator to accept only integers
+    QIntValidator *validator = new QIntValidator(0, 9, this);
+    codefield->setValidator(validator);
+
+    // Connect textChanged signal to a lambda function that sets focus to the next QLineEdit
+    connect(codefield, &QLineEdit::textChanged, this, [codefield, this, isLastField](const QString &text)
+    {
+        if (!text.isEmpty() && !isLastField)
+        {
+            // Set focus on next QLineEdit
+            QWidget *nextWidget = codefield->nextInFocusChain();
+            if (nextWidget && nextWidget->isWidgetType())
+            {
+                nextWidget->setFocus();
+            }
+        }
+    });
+    // Connect returnPressed() signal to click() slot of button
+    connect(codefield, &QLineEdit::returnPressed, continueButton, &QPushButton::click);
+
+    return codefield;
+}
+
+// Checks if all code fields have been filled
+bool PasswordUI::allCodeFieldsFilled()
+{
+    for (QLineEdit* field : codeFields)
+    {
+        if (field->text().isEmpty())
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 // Delete error message after 'wait' ms
