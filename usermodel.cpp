@@ -326,11 +326,8 @@ QString UserModel::isValidUsername(const QString &username)
 void UserModel::sendVerificationEmail(const QString &userEmail, const QString &verificationCode, PasswordUI *passwordui)
 {
     this->passwordui = passwordui;
-    passwordui->onEmailSentSuccess();
 
-
-    /*
-    // Uncomment this ----------------------------------------------------------------
+    // Uncomment rest to test ----------------------------------------------------------------
     this->userEmail = userEmail;
     this->verificationCode = verificationCode;
 
@@ -343,8 +340,13 @@ void UserModel::sendVerificationEmail(const QString &userEmail, const QString &v
         connect(socket, &QSslSocket::errorOccurred, this, &UserModel::socketError); // Socket error
     }
 
-    // Connect to the Gmail SMTP server
-    socket->connectToHostEncrypted("smtp.gmail.com", 465); */
+    // Connect to the Gmail SMTP server if socket is inactive
+    if (socket->state() == QAbstractSocket::UnconnectedState)
+    {
+        passwordui->disableEmailField(true);
+        passwordui->addErrorMessage("⏳ Connecting to SMTP server...", 152, "gray");
+        socket->connectToHostEncrypted("smtp.gmail.com", 465);
+    }
 }
 
 // Converts a QString to Base64
@@ -357,8 +359,11 @@ QString UserModel::encodeBase64(const QByteArray &byteArray)
 void UserModel::socketError(QAbstractSocket::SocketError error)
 {
     // Print error message
-    passwordui->addErrorMessage(QString::fromUtf8("\u2717 ") + "Error: " + socket->errorString(), 153);
+    passwordui->disableEmailField(false);
+    passwordui->addErrorMessage(QString::fromUtf8("\u2717 ") + "Error: " + socket->errorString(), 153, "rgb(237, 67, 55)");
     socket->close();
+    socket->deleteLater();
+    socket = nullptr;
 }
 
 // Reads SMTP responses from socket and handles different responses accordingly
@@ -434,15 +439,32 @@ void UserModel::socketReadyRead()
     {
         // Close the connection (10)
         socket->close();
-        delete socket;
+        socket->deleteLater();
         socket = nullptr;
+
+        // Email Successful, remove connecting to SMTP server message
+        passwordui->removeErrorMessage(0, 172);  // Error message doesn't delete before onEmailSentSuccess() since there is timer in removeErrorMessage()
+
+        // Add timer to transition once error message is removed
+
+        QTimer *timer = new QTimer(this);
+        timer->setSingleShot(true);
+
+        connect(timer, &QTimer::timeout, this, [this, timer]()
+        {
+            passwordui->disableEmailField(false);
+            passwordui->onEmailSentSuccess();
+            delete timer;
+        });
+        timer->start(0);
     }
     else
     {
         // Unexpected response from server, print error message (most likely environment variables are incorrect)
-        passwordui->addErrorMessage(QString::fromUtf8("\u2717 ") + "Error: Unexpected response from server", 153);
+        passwordui->disableEmailField(false);
+        passwordui->addErrorMessage(QString::fromUtf8("\u2717 ") + "Error: Unexpected response from server", 153, "rgb(237, 67, 55)");
         socket->close();
-        delete socket;
+        socket->deleteLater();
         socket = nullptr;
     }
 }

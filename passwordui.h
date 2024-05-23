@@ -11,14 +11,17 @@ class PasswordUI : public QWidget
     Q_OBJECT
 public:
     explicit PasswordUI(MainWindow *parent = nullptr, UserModel *usermodel = nullptr);
-    void addErrorMessage(const QString &message, int bottomMargin);
-    void removeErrorMessage(int wait);
+    void addErrorMessage(const QString &message, int bottomMargin, const QString &colour);
+    void removeErrorMessage(int wait, int bottomMargin);
     QString generateVerificationCode();
     void onEmailSentSuccess();
     void displayVerificationPage();
     void displayResetPassword();
+    void removeVerificationPage();
     QLineEdit *createCodeField(bool isLastField = false);
     bool allCodeFieldsFilled();
+    int getPageNumber();
+    void disableEmailField(bool disable);
 
 private:
     MainWindow *mainWindow;
@@ -34,6 +37,8 @@ private:
     QPushButton *sendButton;
     QPushButton *continueButton;
     QList<QLineEdit*> codeFields;
+    QWidget *codeParent;
+    int pageNumber = 0;
 
 public slots:
     void sendResetEmail();

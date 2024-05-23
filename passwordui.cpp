@@ -109,7 +109,7 @@ void PasswordUI::sendResetEmail()
     // Empty email field
     if (fieldEmpty)
     {
-        addErrorMessage(QString::fromUtf8("\u2717 ") + "Please fill in all required fields", 153);
+        addErrorMessage(QString::fromUtf8("\u2717 ") + "Please fill in all required fields", 153, "rgb(237, 67, 55)");
     }
     // Filled email field
     else
@@ -121,20 +121,16 @@ void PasswordUI::sendResetEmail()
         if (message != "Valid")
         {
             // Add error message
-            addErrorMessage(message, 153);
+            addErrorMessage(message, 153, "rgb(237, 67, 55)");
         }
         // Email is found in database
         else
         {
-            // Remove error message if invalid attempt prior
-            removeErrorMessage(0);
-
             // Send verification code to user email
             QString code = generateVerificationCode();
             usermodel->sendVerificationEmail(email->text(), code, this);
 
-            // Clear text from field
-            email->clear();
+            // No need to remove error message if invalid attempt prior
         }
     }
 }
@@ -142,12 +138,13 @@ void PasswordUI::sendResetEmail()
 // Email successfully delivered
 void PasswordUI::onEmailSentSuccess()
 {
-    // Remove error message if invalid attempt prior
-    removeErrorMessage(0);
-
     // Display verification page
+    pageNumber = 1;
     displayVerificationPage();
     info->setText("Please enter the 6 digit verification code that has been sent to<br><span style=\"color:white;\">" + email->text() + "</span>");
+
+    // Clear text from field
+    email->clear();
 }
 
 // Displays the verification page
@@ -158,11 +155,12 @@ void PasswordUI::displayVerificationPage()
     connect(continueButton, &QPushButton::clicked, this, &PasswordUI::displayResetPassword);
 
     // Create code fields
-    QWidget *codeParent = new QWidget(this);
+    codeParent = new QWidget(this);
     QHBoxLayout *codeLayout = new QHBoxLayout(codeParent);
 
     codeParent->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     codeLayout->setSpacing(20);
+    codeLayout->setAlignment(Qt::AlignHCenter);
 
     QLineEdit *firstField;
 
@@ -203,12 +201,29 @@ void PasswordUI::displayResetPassword()
     else
     {
         qDebug() << "Fields are empty";
-        addErrorMessage(QString::fromUtf8("\u2717 ") + "Please fill in all required fields", 125);
+        addErrorMessage(QString::fromUtf8("\u2717 ") + "Please fill in all required fields", 125, "rgb(237, 67, 55)");
     }
 }
 
+// Changes verification page back to send email page
+void PasswordUI::removeVerificationPage()
+{
+    widgetLayout->removeWidget(codeParent);
+    widgetLayout->removeWidget(continueButton);
+    widgetLayout->insertWidget(4, emailParent);
+    widgetLayout->insertWidget(6, sendButton);
+    widgetLayout->setContentsMargins(40, 30, 40, 172);
+
+    emailParent->setVisible(true);
+    sendButton->setVisible(true);
+    codeParent->setVisible(false);
+    continueButton->setVisible(false);
+
+    pageNumber = 0;
+}
+
 // Add error message to UI
-void PasswordUI::addErrorMessage(const QString &message, int bottomMargin)
+void PasswordUI::addErrorMessage(const QString &message, int bottomMargin, const QString &colour)
 {
     // Error message does not exist
     if (errorMessage == nullptr)
@@ -221,7 +236,7 @@ void PasswordUI::addErrorMessage(const QString &message, int bottomMargin)
 
         errorMessage = new QLabel(message);
         errorMessage->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        errorMessage->setStyleSheet("color: rgb(237, 67, 55); font: 11pt Muli;");
+        errorMessage->setStyleSheet("color: " + colour + "; font: 11pt Muli;");
 
         widgetLayout->removeWidget(emailField);
         widgetLayout->removeWidget(sendButton);
@@ -234,7 +249,12 @@ void PasswordUI::addErrorMessage(const QString &message, int bottomMargin)
         errorLayout->setContentsMargins(0, 0, 0, 0);
         errorLayout->setSpacing(20);
 
-        // Replace widgets with new layout
+        // This doesn't matter for text fields, but for code field it does since it does not expand horizontally
+        if (pageNumber == 1)
+        {
+            errorLayout->setAlignment(emailField, Qt::AlignHCenter);
+        }
+
         widgetLayout->insertLayout(4, errorLayout);
         widgetLayout->setContentsMargins(40, 30, 40, bottomMargin);
 
@@ -245,6 +265,7 @@ void PasswordUI::addErrorMessage(const QString &message, int bottomMargin)
     else
     {
         errorMessage->setText(message);
+        errorMessage->setStyleSheet("color: " + colour + "; font: 11pt Muli;");
     }
 }
 
@@ -304,7 +325,7 @@ bool PasswordUI::allCodeFieldsFilled()
 }
 
 // Delete error message after 'wait' ms
-void PasswordUI::removeErrorMessage(int wait)
+void PasswordUI::removeErrorMessage(int wait, int bottomMargin)
 {
     // Error message exists and function is not currently processing
     if (errorMessage != nullptr && errorLayout != nullptr)
@@ -319,7 +340,7 @@ void PasswordUI::removeErrorMessage(int wait)
         errorMessageTimer->setSingleShot(true);
 
         // Remove error message from widget once transition ends (timer expires)
-        connect(errorMessageTimer, &QTimer::timeout, this, [this]() {
+        connect(errorMessageTimer, &QTimer::timeout, this, [this, bottomMargin]() {
             QWidget *emailField = errorLayout->itemAt(0)->widget();
             QWidget *sendButton = errorLayout->itemAt(2)->widget();
 
@@ -334,7 +355,10 @@ void PasswordUI::removeErrorMessage(int wait)
             widgetLayout->insertWidget(4, emailField);
             widgetLayout->insertItem(5, verticalSpacer);
             widgetLayout->insertWidget(6, sendButton);
-            widgetLayout->setContentsMargins(40, 30, 40, 172);
+            widgetLayout->setContentsMargins(40, 30, 40, bottomMargin);
+
+            // Bottom margin for 1st page: 172
+            // Bottom margin for 2nd Page: 144
 
             delete errorMessage;
             delete errorLayout;
@@ -358,4 +382,22 @@ QString PasswordUI::generateVerificationCode()
         code.append(QString::number(QRandomGenerator::global()->bounded(10))); // Generates number between 0-9 and appends it
     }
     return code;
+}
+
+// Returns the current page of PasswordUI
+int PasswordUI::getPageNumber()
+{
+    return pageNumber;
+
+    /* Page Numbers
+     * 0: Send email page
+     * 1: Input code page
+     * 2: Reset password page
+     */
+}
+
+// Disables email field such that user's cannot edit
+void PasswordUI::disableEmailField(bool disable)
+{
+    email->setReadOnly(disable);
 }

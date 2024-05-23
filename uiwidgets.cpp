@@ -175,18 +175,5 @@ MainButton::MainButton(const QString &text, QWidget *parent) : QPushButton(paren
     );
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     setCursor(Qt::PointingHandCursor);
-
-    // Connect the clicked() signal to the custom slot
-    connect(this, &QPushButton::clicked, this, &MainButton::emitEnterKeyPressEvent); // Set QPushButton to pressed state when user presses return key
 }
 
-// Sets QPushButton to pressed state
-void MainButton::emitEnterKeyPressEvent()
-{
-    setDown(true);
-
-    // Delay for a short duration before releasing the button
-    QTimer::singleShot(100, this, [this]() {
-        setDown(false);
-    });
-}

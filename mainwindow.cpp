@@ -82,7 +82,28 @@ void MainWindow::redirectLogin()
     }
     if (passwordBox != nullptr)
     {
-        static_cast<PasswordUI*>(passwordBox)->removeErrorMessage(500);
+        int pageNumber = static_cast<PasswordUI*>(passwordBox)->getPageNumber();
+
+        // Verification page
+        if (pageNumber == 0)
+        {
+            static_cast<PasswordUI*>(passwordBox)->removeErrorMessage(500, 172);
+        }
+        // Code input page
+        else if (pageNumber == 1)
+        {
+            static_cast<PasswordUI*>(passwordBox)->removeErrorMessage(500, 144);
+
+            QTimer::singleShot(500, this, [this]()
+            {
+                static_cast<PasswordUI*>(passwordBox)->removeVerificationPage();
+            });
+        }
+        // Reset password pahe
+        else
+        {
+            qDebug() << "Page 3";
+        }
     }
 }
 

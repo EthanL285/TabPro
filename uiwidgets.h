@@ -35,9 +35,6 @@ class MainButton: public QPushButton
     Q_OBJECT
 public:
     explicit MainButton(const QString &text, QWidget *parent = nullptr);
-
-private slots:
-    void emitEnterKeyPressEvent();
 };
 
 #endif // UIWIDGETS_H
