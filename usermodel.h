@@ -35,6 +35,8 @@ public:
     UserCredentials getUserCredentials();
     void sendVerificationEmail(const QString &userEmail, const QString &verificationCode, PasswordUI *passwordui);
     QString encodeBase64(const QByteArray &byteArray);
+    void disconnectFromSMTPServer();
+    void updateUserPassword(const QString &email, const QString &password);
 
 protected slots:
     void socketError(QAbstractSocket::SocketError error);

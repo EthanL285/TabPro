@@ -122,7 +122,6 @@ void RegisterUI::registerSlot()
     {
         addErrorMessage(QString::fromUtf8("\u2717 ") + "Please fill in all required fields");
     }
-
     // All fields are filled
     else
     {

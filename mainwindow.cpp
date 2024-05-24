@@ -77,7 +77,7 @@ void MainWindow::redirectLogin()
     // Remove error messages of existing pages
     if (registerBox != nullptr)
     {
-        static_cast<RegisterUI*>(registerBox)->removeText();   // Convert type from *QWidget (Base) to *RegisterUI (Derived)
+        static_cast<RegisterUI*>(registerBox)->removeText(); // Convert type from *QWidget (Base) to *RegisterUI (Derived)
         static_cast<RegisterUI*>(registerBox)->removeErrorMessage(500);
     }
     if (passwordBox != nullptr)
@@ -88,6 +88,7 @@ void MainWindow::redirectLogin()
         if (pageNumber == 0)
         {
             static_cast<PasswordUI*>(passwordBox)->removeErrorMessage(500, 172);
+            usermodel->disconnectFromSMTPServer(); // Disconnect from socket if active still
         }
         // Code input page
         else if (pageNumber == 1)
@@ -99,10 +100,15 @@ void MainWindow::redirectLogin()
                 static_cast<PasswordUI*>(passwordBox)->removeVerificationPage();
             });
         }
-        // Reset password pahe
+        // Reset password page
         else
         {
-            qDebug() << "Page 3";
+            static_cast<PasswordUI*>(passwordBox)->removeErrorMessage(500, 160);
+
+            QTimer::singleShot(500, this, [this]()
+           {
+               static_cast<PasswordUI*>(passwordBox)->removeResetPasswordPage();
+           });
         }
     }
 }

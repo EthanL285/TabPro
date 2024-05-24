@@ -37,7 +37,7 @@ TextField::TextField(const QString &text, const QString &imagePath, QWidget *par
     layout->setSpacing(0);
 
     // Add visibility feature if password
-    if (text == "Password")
+    if (text == "Password" || text == "New Password" || text == "Confirm Password")
     {
         passwordField = field;
         field->setEchoMode(QLineEdit::Password);
@@ -48,6 +48,7 @@ TextField::TextField(const QString &text, const QString &imagePath, QWidget *par
         visibility->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
         visibility->setCursor(Qt::ArrowCursor);
         visibility->setCursor(Qt::PointingHandCursor);
+        visibility->setFocusPolicy(Qt::NoFocus);
         setCheckBoxStylesheet(visibility);
         visibilityLayout->addWidget(visibility);
         visibilityLayout->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
@@ -175,5 +176,6 @@ MainButton::MainButton(const QString &text, QWidget *parent) : QPushButton(paren
     );
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     setCursor(Qt::PointingHandCursor);
+    setFocusPolicy(Qt::NoFocus);
 }
 

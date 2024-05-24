@@ -122,12 +122,6 @@ UserCredentials UserModel::getUserCredentials()
         usercredentials.email = query.value(0).toString();
         usercredentials.password = query.value(1).toString();
     }
-    // No token found
-    else
-    {
-        // Do nothing :)
-    }
-
     return usercredentials;
 }
 
@@ -136,6 +130,25 @@ QString UserModel::hashPassword(const QString &password)
 {
     QByteArray hash = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256); // Compute hash of password
     return QString(hash.toHex()); // Convert binary hash value to a hexadecimal string (Human-readable representaiton)
+}
+
+// Updates the users passwords
+void UserModel::updateUserPassword(const QString &email, const QString &password)
+{
+    // Check if database connection is already open
+    if (!userDatabase.isOpen())
+    {
+        userDatabase.open();
+    }
+    // Hash password
+    QString hashedPassword = hashPassword(password);
+
+    // Update users password
+    QSqlQuery query;
+    query.prepare("UPDATE registeredusers SET Password = :password WHERE Email = :email");
+    query.bindValue(":email", email);
+    query.bindValue(":password", hashedPassword);
+    query.exec();
 }
 
 // Retrieve user's hashed password
@@ -361,9 +374,7 @@ void UserModel::socketError(QAbstractSocket::SocketError error)
     // Print error message
     passwordui->disableEmailField(false);
     passwordui->addErrorMessage(QString::fromUtf8("\u2717 ") + "Error: " + socket->errorString(), 153, "rgb(237, 67, 55)");
-    socket->close();
-    socket->deleteLater();
-    socket = nullptr;
+    disconnectFromSMTPServer();
 }
 
 // Reads SMTP responses from socket and handles different responses accordingly
@@ -438,9 +449,7 @@ void UserModel::socketReadyRead()
     else if (response.startsWith("221"))
     {
         // Close the connection (10)
-        socket->close();
-        socket->deleteLater();
-        socket = nullptr;
+        disconnectFromSMTPServer();
 
         // Email Successful, remove connecting to SMTP server message
         passwordui->removeErrorMessage(0, 172);  // Error message doesn't delete before onEmailSentSuccess() since there is timer in removeErrorMessage()
@@ -463,9 +472,7 @@ void UserModel::socketReadyRead()
         // Unexpected response from server, print error message (most likely environment variables are incorrect)
         passwordui->disableEmailField(false);
         passwordui->addErrorMessage(QString::fromUtf8("\u2717 ") + "Error: Unexpected response from server", 153, "rgb(237, 67, 55)");
-        socket->close();
-        socket->deleteLater();
-        socket = nullptr;
+        disconnectFromSMTPServer();
     }
 }
 
@@ -484,3 +491,12 @@ void UserModel::socketReadyRead()
  * (10) "221 2.0.0 closing connection 41be03b00d2f7-6340a632725sm17786173a12.12 - gsmtp\r\n"
  */
 
+// Disconnects user from SMTP server
+void UserModel::disconnectFromSMTPServer()
+{
+    if (socket != nullptr && socket->state() != QAbstractSocket::UnconnectedState) {
+        socket->close();
+        socket->deleteLater();
+        socket = nullptr;
+    }
+}

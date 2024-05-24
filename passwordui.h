@@ -16,12 +16,16 @@ public:
     QString generateVerificationCode();
     void onEmailSentSuccess();
     void displayVerificationPage();
-    void displayResetPassword();
+    void displayResetPasswordPage();
     void removeVerificationPage();
+    void removeResetPasswordPage();
     QLineEdit *createCodeField(bool isLastField = false);
     bool allCodeFieldsFilled();
     int getPageNumber();
     void disableEmailField(bool disable);
+    QString getUserInputCode();
+    void checkUserInput();
+    void checkUserPassword();
 
 private:
     MainWindow *mainWindow;
@@ -36,9 +40,16 @@ private:
     QLabel *info;
     QPushButton *sendButton;
     QPushButton *continueButton;
+    QPushButton *confirmButton;
     QList<QLineEdit*> codeFields;
     QWidget *codeParent;
     int pageNumber = 0;
+    QString verificationCode;
+    TextField *newPasswordParent;
+    TextField *confirmNewPasswordParent;
+    QLabel *resetSuccess = nullptr;
+    bool userHasResetPassword = false;
+    QString userEmail;
 
 public slots:
     void sendResetEmail();
