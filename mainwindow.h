@@ -34,6 +34,7 @@ public slots:
     void redirectRegister();
     void redirectLogin();
     void redirectPassword();
+    void redirectMainWidget();
 
 private:
     Ui::MainWindow *ui;
@@ -42,6 +43,7 @@ private:
     QWidget *loginBox;
     QWidget *registerBox = nullptr;
     QWidget *passwordBox = nullptr;
+    QWidget *mainWidget = nullptr;
     QStackedWidget *stackedWidget = nullptr;
     Transitions *transition = nullptr;
     UserModel *usermodel = nullptr;

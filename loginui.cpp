@@ -165,7 +165,8 @@ void loginUI::loginSlot()
             emailField->clear();
             passwordField->clear();
 
-            qDebug() << message;
+            // Redirect to main widget
+            mainWindow->redirectMainWidget();
         }
     }
 }

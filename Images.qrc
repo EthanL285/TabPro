@@ -13,4 +13,7 @@
         <file>VisibilityUnchecked.png</file>
         <file>email.png</file>
     </qresource>
+    <qresource prefix="/Sidebar">
+        <file>Icons/Sidebar/SideBarIcon.png</file>
+    </qresource>
 </RCC>

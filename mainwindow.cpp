@@ -4,6 +4,7 @@
 #include "registerui.h"
 #include "transitions.h"
 #include "passwordui.h"
+#include "mainwidget.h"
 #include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -41,9 +42,8 @@ MainWindow::MainWindow(QWidget *parent)
     backgroundLabel->setGraphicsEffect(colorize);
 
     // Create central and stacked widget to manage pages
-    QWidget *centralWidget = new QWidget(this);
+    QWidget *centralWidget = new QWidget();
     setCentralWidget(centralWidget);
-
     stackedWidget = new QStackedWidget(centralWidget);
 
     // Create main layout
@@ -63,6 +63,7 @@ MainWindow::MainWindow(QWidget *parent)
     if (usermodel->tokenExists())
     {
         qDebug() << "Token exists. Logging in";
+        redirectMainWidget();
         // UserCredentials usercredentials = usermodel->getUserCredentials();
     }
 }
@@ -145,6 +146,16 @@ void MainWindow::redirectPassword()
     static_cast<loginUI*>(loginBox)->removeErrorMessage(500);
 }
 
+void MainWindow::redirectMainWidget()
+{
+    // Create MainWidget object if first time
+    if (mainWidget == nullptr)
+    {
+        mainWidget = new MainWidget(this);
+        // Don't add to stacked widget since it does not take up all the window space for some reason
+    }
+}
+
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
     // Resize background image to fit window size
@@ -157,6 +168,12 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     // Resize background image from centre position
     backgroundLabel->setPixmap(scaledBgImage);
     backgroundLabel->setGeometry(x, y, scaledBgImage.size().width(), scaledBgImage.size().height());
+
+    // Resize MainWidget to fit window size
+    if (mainWidget != nullptr)
+    {
+        mainWidget->setGeometry(0, 0, this->width(), this->size().height());
+    }
 }
 
 MainWindow::~MainWindow()

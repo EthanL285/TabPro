@@ -1159,6 +1159,8 @@ TabPro_autogen/timestamp: \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/loginui.cpp \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/loginui.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/main.cpp \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwidget.cpp \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwidget.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwindow.cpp \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwindow.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwindow.ui \
