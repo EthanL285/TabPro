@@ -447,6 +447,7 @@ TabPro_autogen/timestamp: \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QCommonStyle \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QGraphicsColorizeEffect \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QGraphicsOpacityEffect \
+  C:/Qt/6.7.0/mingw_64/include/QtWidgets/QHBoxLayout \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QLabel \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QLayout \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QLineEdit \
@@ -1156,6 +1157,8 @@ TabPro_autogen/timestamp: \
   CMakeFiles/3.27.7/CMakeRCCompiler.cmake \
   CMakeFiles/3.27.7/CMakeSystem.cmake \
   TabPro_autogen/moc_predefs.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/guitar.cpp \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/guitar.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/loginui.cpp \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/loginui.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/main.cpp \
@@ -1168,6 +1171,8 @@ TabPro_autogen/timestamp: \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/passwordui.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/registerui.cpp \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/registerui.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/sidebar.cpp \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/sidebar.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/transitions.cpp \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/transitions.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/uiwidgets.cpp \

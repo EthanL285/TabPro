@@ -3,21 +3,22 @@
 
 #include <QWidget>
 #include "mainwindow.h"
+#include "sidebar.h"
+#include "guitar.h"
 
 class MainWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit MainWidget(MainWindow *parent = nullptr);
-    void toggleSidebar();
 
 protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
     MainWindow *mainWindow;
-    QWidget *sidebar;
-    QPropertyAnimation *sidebarAnimation;
+    Sidebar *sidebar;
+    Guitar *guitar;
 
 signals:
 };

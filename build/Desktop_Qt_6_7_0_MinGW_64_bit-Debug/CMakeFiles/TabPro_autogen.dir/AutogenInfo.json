@@ -439,6 +439,12 @@
 	"HEADERS" : 
 	[
 		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/guitar.h",
+			"MU",
+			"EWIEGA46WW/moc_guitar.cpp",
+			null
+		],
+		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/loginui.h",
 			"MU",
 			"EWIEGA46WW/moc_loginui.cpp",
@@ -466,6 +472,12 @@
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/registerui.h",
 			"MU",
 			"EWIEGA46WW/moc_registerui.cpp",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/sidebar.h",
+			"MU",
+			"EWIEGA46WW/moc_sidebar.cpp",
 			null
 		],
 		[
@@ -569,6 +581,11 @@
 	"SOURCES" : 
 	[
 		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/guitar.cpp",
+			"MU",
+			null
+		],
+		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/loginui.cpp",
 			"MU",
 			null
@@ -595,6 +612,11 @@
 		],
 		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/registerui.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/sidebar.cpp",
 			"MU",
 			null
 		],

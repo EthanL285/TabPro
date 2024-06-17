@@ -1,0 +1,21 @@
+# ninja log v5
+2	9997	7403384908519392	TabPro_autogen/timestamp	a7274de2f6bc3fe3
+2	9997	7403384908519392	TabPro_autogen/mocs_compilation.cpp	a7274de2f6bc3fe3
+2	9997	7403384908519392	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Release/TabPro_autogen/timestamp	a7274de2f6bc3fe3
+2	9997	7403384908519392	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Release/TabPro_autogen/mocs_compilation.cpp	a7274de2f6bc3fe3
+9998	10516	7403384916139242	TabPro_autogen/EWIEGA46WW/qrc_Images.cpp	28c0d7e6cb063048
+9998	10516	7403384916139242	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Release/TabPro_autogen/EWIEGA46WW/qrc_Images.cpp	28c0d7e6cb063048
+10541	15433	7403384963982334	CMakeFiles/TabPro.dir/uiwidgets.cpp.obj	1b8b468280802d18
+10565	15504	7403384964117748	CMakeFiles/TabPro.dir/guitar.cpp.obj	a998fdb609bca63d
+10573	15675	7403384964453442	CMakeFiles/TabPro.dir/sidebar.cpp.obj	640be2f4234de910
+10555	15867	7403384964999582	CMakeFiles/TabPro.dir/transitions.cpp.obj	7e07287ae0ae95c0
+10569	16441	7403384975774359	CMakeFiles/TabPro.dir/TabPro_autogen/EWIEGA46WW/qrc_Images.cpp.obj	51675e787d0b5118
+10522	23644	7403385047965567	CMakeFiles/TabPro.dir/main.cpp.obj	c9905a845a55cebe
+10560	24397	7403385055611685	CMakeFiles/TabPro.dir/passwordui.cpp.obj	cc76b8b25a3fb3de
+10551	24560	7403385057145632	CMakeFiles/TabPro.dir/mainwidget.cpp.obj	e8e585a6dc6f2be1
+10546	25078	7403385062447131	CMakeFiles/TabPro.dir/registerui.cpp.obj	e7a6a9a4b0c8b57e
+10531	25143	7403385063104013	CMakeFiles/TabPro.dir/mainwindow.cpp.obj	7a0739539d5d72c5
+10516	25317	7403385064834437	CMakeFiles/TabPro.dir/TabPro_autogen/mocs_compilation.cpp.obj	2139a39d70e23088
+10526	25722	7403385068875843	CMakeFiles/TabPro.dir/loginui.cpp.obj	e5cad58de924f184
+10536	31735	7403385128862195	CMakeFiles/TabPro.dir/usermodel.cpp.obj	d65350b3eeb3b240
+31737	32283	7403385134370334	TabPro.exe	de5dbb41d4c9f4c0

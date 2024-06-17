@@ -35,6 +35,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         transitions.h transitions.cpp
         passwordui.h passwordui.cpp
         mainwidget.h mainwidget.cpp
+        sidebar.h sidebar.cpp
+        guitar.h guitar.cpp
+
+
 
 
 
