@@ -1,77 +1,29 @@
 # ninja log v5
 5007	15364	7384118424760014	CMakeFiles/TabPro.dir/registerui.cpp.obj	1aad30240ff984e3
-16	355	7403382156215588	TabPro_autogen/timestamp	ca5b56d9de603d4f
-16	355	7403382156215588	TabPro_autogen/mocs_compilation.cpp	ca5b56d9de603d4f
+24	473	7409445019690127	TabPro_autogen/timestamp	ca5b56d9de603d4f
+24	473	7409445019690127	TabPro_autogen/mocs_compilation.cpp	ca5b56d9de603d4f
 285	360	7372976350669585	CMakeFiles/TabPro.dir/TabPro_autogen/EWIEGA46WW/qrc_Databases.cpp.obj	271827aa576cea86
-16	355	7403382156215588	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/timestamp	ca5b56d9de603d4f
+24	473	7409445019690127	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/timestamp	ca5b56d9de603d4f
 4334	7772	7378970178625679	CMakeFiles/TabPro.dir/transitions.cpp.obj	c70bb38707bc386b
 620	5081	7382526611403689	CMakeFiles/TabPro.dir/uiwidgets.cpp.obj	c8fdb3de6d87dbf0
 355	512	7390331811894953	TabPro_autogen/EWIEGA46WW/qrc_Images.cpp	f8bd4524ba1ccd90
-16	355	7403382156215588	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/mocs_compilation.cpp	ca5b56d9de603d4f
 515	4382	7390331850574912	CMakeFiles/TabPro.dir/TabPro_autogen/EWIEGA46WW/qrc_Images.cpp.obj	744151edaddef01f
+24	473	7409445019690127	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/mocs_compilation.cpp	ca5b56d9de603d4f
 3222	3279	7372450652389710	CMakeFiles/TabPro.dir/registerlogic.cpp.obj	3a834b2e62a410ec
-5015	18326	7384118454309937	CMakeFiles/TabPro.dir/usermodel.cpp.obj	4321f75099316d97
-27	37	0	clean	577b940aee94fbd7
 355	512	7390331811894953	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/EWIEGA46WW/qrc_Images.cpp	f8bd4524ba1ccd90
+27	37	0	clean	577b940aee94fbd7
+5015	18326	7384118454309937	CMakeFiles/TabPro.dir/usermodel.cpp.obj	4321f75099316d97
 442	6559	7403370241440014	CMakeFiles/TabPro.dir/main.cpp.obj	c385935589c4450
-2324	9493	7403363390623220	CMakeFiles/TabPro.dir/TabPro_autogen/mocs_compilation.cpp.obj	1bc10cdffd0d5cb4
-227	282	7372976349849677	TabPro_autogen/EWIEGA46WW/qrc_Databases.cpp	121f650c0f040df
+2208	9259	7409438692220290	CMakeFiles/TabPro.dir/TabPro_autogen/mocs_compilation.cpp.obj	1bc10cdffd0d5cb4
 5001	15464	7384118425759930	CMakeFiles/TabPro.dir/loginui.cpp.obj	7dac7069d307d8ff
-378	6596	7403382218631283	CMakeFiles/TabPro.dir/mainwindow.cpp.obj	25eaf5e0484e9de0
+227	282	7372976349849677	TabPro_autogen/EWIEGA46WW/qrc_Databases.cpp	121f650c0f040df
+505	7306	7409445088013277	CMakeFiles/TabPro.dir/mainwindow.cpp.obj	25eaf5e0484e9de0
+7307	10709	7409445121971982	TabPro.exe	da2af76b99994556
 0	27	0	CMakeFiles/clean.additional	baedbe210acaa455
-6597	10138	7403382253924151	TabPro.exe	212978ff78825f15
-2330	9150	7403363387278459	CMakeFiles/TabPro.dir/mainwidget.cpp.obj	bfe88b23ca3b4941
+7	977	7409364490335043	build.ninja	84fc95cd361704f8
 5011	15597	7384118427079934	CMakeFiles/TabPro.dir/passwordui.cpp.obj	341ce32af9f68ad0
-7	977	7393660855409437	build.ninja	84fc95cd361704f8
+2215	9023	7409438689972110	CMakeFiles/TabPro.dir/mainwidget.cpp.obj	bfe88b23ca3b4941
 227	282	7372976349849677	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/EWIEGA46WW/qrc_Databases.cpp	121f650c0f040df
-383	2934	7403382182011344	CMakeFiles/TabPro.dir/sidebar.cpp.obj	f8f2759f5989a005
-313	2433	7403364017530393	CMakeFiles/TabPro.dir/guitar.cpp.obj	84dfb0745e1ba8f1
-12	316	7403382920814272	TabPro_autogen/timestamp	ca5b56d9de603d4f
-12	316	7403382920814272	TabPro_autogen/mocs_compilation.cpp	ca5b56d9de603d4f
-12	316	7403382920814272	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/timestamp	ca5b56d9de603d4f
-12	316	7403382920814272	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/mocs_compilation.cpp	ca5b56d9de603d4f
-341	2796	7403382945625932	CMakeFiles/TabPro.dir/sidebar.cpp.obj	f8f2759f5989a005
-337	7364	7403382991291800	CMakeFiles/TabPro.dir/mainwindow.cpp.obj	25eaf5e0484e9de0
-7364	10754	7403383025120846	TabPro.exe	212978ff78825f15
-17	340	7403383293407076	TabPro_autogen/timestamp	ca5b56d9de603d4f
-17	340	7403383293407076	TabPro_autogen/mocs_compilation.cpp	ca5b56d9de603d4f
-17	340	7403383293407076	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/timestamp	ca5b56d9de603d4f
-17	340	7403383293407076	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/mocs_compilation.cpp	ca5b56d9de603d4f
-364	2905	7403383319065947	CMakeFiles/TabPro.dir/sidebar.cpp.obj	f8f2759f5989a005
-360	6410	7403383354092520	CMakeFiles/TabPro.dir/mainwindow.cpp.obj	25eaf5e0484e9de0
-6411	9859	7403383388520791	TabPro.exe	212978ff78825f15
-11	326	7403387264391633	TabPro_autogen/timestamp	ca5b56d9de603d4f
-11	326	7403387264391633	TabPro_autogen/mocs_compilation.cpp	ca5b56d9de603d4f
-11	326	7403387264391633	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/timestamp	ca5b56d9de603d4f
-11	326	7403387264391633	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/mocs_compilation.cpp	ca5b56d9de603d4f
-352	2900	7403387290153545	CMakeFiles/TabPro.dir/sidebar.cpp.obj	f8f2759f5989a005
-348	6706	7403387328193939	CMakeFiles/TabPro.dir/mainwindow.cpp.obj	25eaf5e0484e9de0
-6706	10170	7403387362753540	TabPro.exe	212978ff78825f15
-9	322	7403392930530590	TabPro_autogen/timestamp	ca5b56d9de603d4f
-9	322	7403392930530590	TabPro_autogen/mocs_compilation.cpp	ca5b56d9de603d4f
-9	322	7403392930530590	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/timestamp	ca5b56d9de603d4f
-9	322	7403392930530590	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/mocs_compilation.cpp	ca5b56d9de603d4f
-346	2846	7403392955725482	CMakeFiles/TabPro.dir/sidebar.cpp.obj	f8f2759f5989a005
-342	6515	7403392992461652	CMakeFiles/TabPro.dir/mainwindow.cpp.obj	25eaf5e0484e9de0
-6515	9923	7403393026478250	TabPro.exe	212978ff78825f15
-17	356	7403393421363455	TabPro_autogen/timestamp	ca5b56d9de603d4f
-17	356	7403393421363455	TabPro_autogen/mocs_compilation.cpp	ca5b56d9de603d4f
-17	356	7403393421363455	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/timestamp	ca5b56d9de603d4f
-17	356	7403393421363455	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/mocs_compilation.cpp	ca5b56d9de603d4f
-384	2967	7403393447482618	CMakeFiles/TabPro.dir/sidebar.cpp.obj	f8f2759f5989a005
-379	6702	7403393484814925	CMakeFiles/TabPro.dir/mainwindow.cpp.obj	25eaf5e0484e9de0
-6702	10122	7403393518949389	TabPro.exe	212978ff78825f15
-15	341	7403393708781396	TabPro_autogen/timestamp	ca5b56d9de603d4f
-15	341	7403393708781396	TabPro_autogen/mocs_compilation.cpp	ca5b56d9de603d4f
-15	341	7403393708781396	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/timestamp	ca5b56d9de603d4f
-15	341	7403393708781396	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/mocs_compilation.cpp	ca5b56d9de603d4f
-370	2628	7403393731359025	CMakeFiles/TabPro.dir/sidebar.cpp.obj	f8f2759f5989a005
-366	6768	7403393773047143	CMakeFiles/TabPro.dir/mainwindow.cpp.obj	25eaf5e0484e9de0
-6769	10322	7403393808509662	TabPro.exe	212978ff78825f15
-15	317	7403394033723040	TabPro_autogen/timestamp	ca5b56d9de603d4f
-15	317	7403394033723040	TabPro_autogen/mocs_compilation.cpp	ca5b56d9de603d4f
-15	317	7403394033723040	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/timestamp	ca5b56d9de603d4f
-15	317	7403394033723040	C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/mocs_compilation.cpp	ca5b56d9de603d4f
 344	3066	7403394061229454	CMakeFiles/TabPro.dir/sidebar.cpp.obj	f8f2759f5989a005
-340	7114	7403394101618846	CMakeFiles/TabPro.dir/mainwindow.cpp.obj	25eaf5e0484e9de0
-7114	10689	7403394137382148	TabPro.exe	212978ff78825f15
+510	3631	7409445051285186	CMakeFiles/TabPro.dir/guitar.cpp.obj	84dfb0745e1ba8f1
+483	3627	7409402276934446	CMakeFiles/TabPro.dir/tablature.cpp.obj	9268cce477c6698c

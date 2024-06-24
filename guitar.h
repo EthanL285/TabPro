@@ -13,12 +13,14 @@ public:
     QLabel *createStrings(QString note);
     void createFretBoard();
     void createFretButtons();
+    void createPlayingTechniqueButtons();
 
 signals:
 
 private:
     QWidget *rectangle;
     QHBoxLayout *guitarLayout;
+    QWidget *playingTechniques;
 };
 
 // Class for drawing rectangle
@@ -26,10 +28,14 @@ class Rectangle : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Rectangle(QWidget *parent = nullptr);
+    explicit Rectangle(int width, int height, QWidget *parent = nullptr);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+
+private:
+    int width;
+    int height;
 
 };
 

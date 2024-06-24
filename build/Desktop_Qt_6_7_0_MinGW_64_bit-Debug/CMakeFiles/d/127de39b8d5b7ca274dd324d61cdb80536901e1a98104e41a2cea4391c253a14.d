@@ -1173,6 +1173,8 @@ TabPro_autogen/timestamp: \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/registerui.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/sidebar.cpp \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/sidebar.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/tablature.cpp \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/tablature.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/transitions.cpp \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/transitions.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/uiwidgets.cpp \

@@ -145,6 +145,14 @@ build CMakeFiles/TabPro.dir/guitar.cpp.obj: CXX_COMPILER__TabPro_unscanned_Debug
   OBJECT_DIR = CMakeFiles\TabPro.dir
   OBJECT_FILE_DIR = CMakeFiles\TabPro.dir
 
+build CMakeFiles/TabPro.dir/tablature.cpp.obj: CXX_COMPILER__TabPro_unscanned_Debug C$:/Users/Ethan$ Leffers/Desktop/Coding/Projects/TabPro/TabPro/tablature.cpp || cmake_object_order_depends_target_TabPro
+  DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_HTTPSERVER_LIB -DQT_NEEDS_QMAIN -DQT_NETWORKAUTH_LIB -DQT_NETWORK_LIB -DQT_SQL_LIB -DQT_WEBSOCKETS_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
+  DEP_FILE = CMakeFiles\TabPro.dir\tablature.cpp.obj.d
+  FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/include" -isystem C:/Qt/6.7.0/mingw_64/include/QtCore -isystem C:/Qt/6.7.0/mingw_64/include -isystem C:/Qt/6.7.0/mingw_64/mkspecs/win32-g++ -isystem C:/Qt/6.7.0/mingw_64/include/QtWidgets -isystem C:/Qt/6.7.0/mingw_64/include/QtGui -isystem C:/Qt/6.7.0/mingw_64/include/QtSql -isystem C:/Qt/6.7.0/mingw_64/include/QtNetwork -isystem C:/Qt/6.7.0/mingw_64/include/QtNetworkAuth -isystem C:/Qt/6.7.0/mingw_64/include/QtHttpServer -isystem C:/Qt/6.7.0/mingw_64/include/QtWebSockets
+  OBJECT_DIR = CMakeFiles\TabPro.dir
+  OBJECT_FILE_DIR = CMakeFiles\TabPro.dir
+
 build CMakeFiles/TabPro.dir/TabPro_autogen/EWIEGA46WW/qrc_Images.cpp.obj: CXX_COMPILER__TabPro_unscanned_Debug C$:/Users/Ethan$ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/EWIEGA46WW/qrc_Images.cpp || cmake_object_order_depends_target_TabPro
   DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_HTTPSERVER_LIB -DQT_NEEDS_QMAIN -DQT_NETWORKAUTH_LIB -DQT_NETWORK_LIB -DQT_SQL_LIB -DQT_WEBSOCKETS_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
   DEP_FILE = CMakeFiles\TabPro.dir\TabPro_autogen\EWIEGA46WW\qrc_Images.cpp.obj.d
@@ -161,7 +169,7 @@ build CMakeFiles/TabPro.dir/TabPro_autogen/EWIEGA46WW/qrc_Images.cpp.obj: CXX_CO
 #############################################
 # Link the executable TabPro.exe
 
-build TabPro.exe: CXX_EXECUTABLE_LINKER__TabPro_Debug CMakeFiles/TabPro.dir/TabPro_autogen/mocs_compilation.cpp.obj CMakeFiles/TabPro.dir/main.cpp.obj CMakeFiles/TabPro.dir/mainwindow.cpp.obj CMakeFiles/TabPro.dir/loginui.cpp.obj CMakeFiles/TabPro.dir/registerui.cpp.obj CMakeFiles/TabPro.dir/uiwidgets.cpp.obj CMakeFiles/TabPro.dir/usermodel.cpp.obj CMakeFiles/TabPro.dir/transitions.cpp.obj CMakeFiles/TabPro.dir/passwordui.cpp.obj CMakeFiles/TabPro.dir/mainwidget.cpp.obj CMakeFiles/TabPro.dir/sidebar.cpp.obj CMakeFiles/TabPro.dir/guitar.cpp.obj CMakeFiles/TabPro.dir/TabPro_autogen/EWIEGA46WW/qrc_Images.cpp.obj | C$:/Qt/6.7.0/mingw_64/lib/libQt6Widgets.a C$:/Qt/6.7.0/mingw_64/lib/libQt6Sql.a C$:/Qt/6.7.0/mingw_64/lib/libQt6NetworkAuth.a C$:/Qt/6.7.0/mingw_64/lib/libQt6HttpServer.a C$:/Qt/6.7.0/mingw_64/lib/libQt6Gui.a C$:/Qt/6.7.0/mingw_64/lib/libQt6WebSockets.a C$:/Qt/6.7.0/mingw_64/lib/libQt6Network.a C$:/Qt/6.7.0/mingw_64/lib/libQt6Core.a C$:/Qt/6.7.0/mingw_64/lib/libQt6EntryPoint.a || TabPro_autogen TabPro_autogen_timestamp_deps
+build TabPro.exe: CXX_EXECUTABLE_LINKER__TabPro_Debug CMakeFiles/TabPro.dir/TabPro_autogen/mocs_compilation.cpp.obj CMakeFiles/TabPro.dir/main.cpp.obj CMakeFiles/TabPro.dir/mainwindow.cpp.obj CMakeFiles/TabPro.dir/loginui.cpp.obj CMakeFiles/TabPro.dir/registerui.cpp.obj CMakeFiles/TabPro.dir/uiwidgets.cpp.obj CMakeFiles/TabPro.dir/usermodel.cpp.obj CMakeFiles/TabPro.dir/transitions.cpp.obj CMakeFiles/TabPro.dir/passwordui.cpp.obj CMakeFiles/TabPro.dir/mainwidget.cpp.obj CMakeFiles/TabPro.dir/sidebar.cpp.obj CMakeFiles/TabPro.dir/guitar.cpp.obj CMakeFiles/TabPro.dir/tablature.cpp.obj CMakeFiles/TabPro.dir/TabPro_autogen/EWIEGA46WW/qrc_Images.cpp.obj | C$:/Qt/6.7.0/mingw_64/lib/libQt6Widgets.a C$:/Qt/6.7.0/mingw_64/lib/libQt6Sql.a C$:/Qt/6.7.0/mingw_64/lib/libQt6NetworkAuth.a C$:/Qt/6.7.0/mingw_64/lib/libQt6HttpServer.a C$:/Qt/6.7.0/mingw_64/lib/libQt6Gui.a C$:/Qt/6.7.0/mingw_64/lib/libQt6WebSockets.a C$:/Qt/6.7.0/mingw_64/lib/libQt6Network.a C$:/Qt/6.7.0/mingw_64/lib/libQt6Core.a C$:/Qt/6.7.0/mingw_64/lib/libQt6EntryPoint.a || TabPro_autogen TabPro_autogen_timestamp_deps
   FLAGS = -DQT_QML_DEBUG -g
   LINK_FLAGS = -mwindows
   LINK_LIBRARIES = C:/Qt/6.7.0/mingw_64/lib/libQt6Widgets.a  C:/Qt/6.7.0/mingw_64/lib/libQt6Sql.a  C:/Qt/6.7.0/mingw_64/lib/libQt6NetworkAuth.a  C:/Qt/6.7.0/mingw_64/lib/libQt6HttpServer.a  C:/Qt/6.7.0/mingw_64/lib/libQt6Gui.a  -ld3d11  -ldxgi  -ldxguid  -ld3d12  C:/Qt/6.7.0/mingw_64/lib/libQt6WebSockets.a  C:/Qt/6.7.0/mingw_64/lib/libQt6Network.a  C:/Qt/6.7.0/mingw_64/lib/libQt6Core.a  -lmpr  -luserenv  -lmingw32  C:/Qt/6.7.0/mingw_64/lib/libQt6EntryPoint.a  -lshell32  -lws2_32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
@@ -273,7 +281,7 @@ build TabPro_autogen/EWIEGA46WW/qrc_Images.cpp | ${cmake_ninja_workdir}TabPro_au
 #############################################
 # Phony custom command for CMakeFiles\TabPro_autogen_timestamp_deps
 
-build CMakeFiles/TabPro_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/TabPro_autogen_timestamp_deps: phony C$:/Qt/6.7.0/mingw_64/./bin/uic.exe C$:/Qt/6.7.0/mingw_64/./bin/moc.exe C$:/Qt/6.7.0/mingw_64/lib/libQt6Widgets.a C$:/Qt/6.7.0/mingw_64/lib/libQt6HttpServer.a C$:/Qt/6.7.0/mingw_64/lib/libQt6Core.a C$:/Qt/6.7.0/mingw_64/lib/libQt6Sql.a C$:/Qt/6.7.0/mingw_64/lib/libQt6NetworkAuth.a C$:/Qt/6.7.0/mingw_64/lib/libQt6Network.a
+build CMakeFiles/TabPro_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/TabPro_autogen_timestamp_deps: phony C$:/Qt/6.7.0/mingw_64/./bin/moc.exe C$:/Qt/6.7.0/mingw_64/./bin/uic.exe C$:/Qt/6.7.0/mingw_64/lib/libQt6Sql.a C$:/Qt/6.7.0/mingw_64/lib/libQt6Core.a C$:/Qt/6.7.0/mingw_64/lib/libQt6Widgets.a C$:/Qt/6.7.0/mingw_64/lib/libQt6NetworkAuth.a C$:/Qt/6.7.0/mingw_64/lib/libQt6HttpServer.a C$:/Qt/6.7.0/mingw_64/lib/libQt6Network.a
 
 
 #############################################

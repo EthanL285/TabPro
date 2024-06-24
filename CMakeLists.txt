@@ -37,6 +37,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         mainwidget.h mainwidget.cpp
         sidebar.h sidebar.cpp
         guitar.h guitar.cpp
+        tablature.h tablature.cpp
 
 
 
