@@ -5,7 +5,7 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <QPainterPath>
-#include "tablature.h"
+#include <QToolTip>
 
 Guitar::Guitar(QWidget *parent)
     : QWidget{parent}
@@ -20,7 +20,7 @@ Guitar::Guitar(QWidget *parent)
     mainLayout->addLayout(viewArea);
 
     // Add Tablature
-    QLabel *tab = new Tablature();
+    tab = new Tablature();
     viewArea->addWidget(tab);
     viewArea->setAlignment(tab, Qt::AlignHCenter);
 
@@ -32,6 +32,7 @@ Guitar::Guitar(QWidget *parent)
     // Add Playing Technique Buttons
     playingTechniques = new QWidget();
     playingTechniques->setMaximumHeight(60);
+    playingTechniques->setMinimumWidth(1250);
     playingTechniques->setStyleSheet("background-color: rgb(27,27,27); border-top-left-radius: 15px; border-top-right-radius: 15px;");
     interfaceLayout->addWidget(playingTechniques);
     createPlayingTechniqueButtons();
@@ -105,10 +106,13 @@ void Guitar::createFretBoard()
 void Guitar::createPlayingTechniqueButtons()
 {
     QGridLayout *buttonLayout = new QGridLayout(playingTechniques);
+    QString symbols[] = {"/", "\\", "h", "p", "b", "r", "x", "~", "-", "|"};
+    QString name[] = {"Slide Up", "Slide Down", "Hammer On", "Pull Off", "Bend", "Release", "Muted Hit", "Vibrato", "Rest", "Bar Line"};
 
     for (int col = 0; col < 10; col++)
     {
-        QPushButton *button = new QPushButton(QString("%1").arg(col + 1));
+        QPushButton *button = new QPushButton(QString("%1").arg(symbols[col]));
+        button->setToolTip(name[col]);
         button->setFixedSize(40, 40);
         button->setCursor(Qt::PointingHandCursor);
         button->setStyleSheet
@@ -117,7 +121,8 @@ void Guitar::createPlayingTechniqueButtons()
             "   border-radius: 5px;"
             "   border: 0.5px solid rgb(25,25,25);"
             "   background-color: rgb(45,45,45);"
-            "   font-size: 14px;"
+            "   font-size: 16px;"
+            "   font-weight: bold;"
             "}"
             "QPushButton:hover { "
             "   background-color: rgb(75,75,75);"
@@ -143,13 +148,13 @@ void Guitar::createFretButtons()
         for (int col = 0; col < 25; ++col)
         {
             QPushButton *button = new QPushButton(QString("%1").arg(col));
+            button->setObjectName(QString("%1 %2").arg(row).arg(col));
             button->setFixedSize(40, 40);
             button->setCursor(Qt::PointingHandCursor);
             button->setStyleSheet
             (
                 "QPushButton { "
                 "   border-radius: 20px;"
-                "   border: 0.5px solid rgb(25,25,25);"
                 "   background-color: rgb(33,33,33);"
                 "   font-size: 14px;"
                 "}"
@@ -161,6 +166,7 @@ void Guitar::createFretButtons()
                 "}"
             );
             fretButtonLayout->addWidget(button, row, col);
+            connect(button, &QPushButton::clicked, tab, &Tablature::addFretNumber);
         }
     }
 }

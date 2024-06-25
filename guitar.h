@@ -1,6 +1,8 @@
 #ifndef GUITAR_H
 #define GUITAR_H
 
+#include "tablature.h"
+
 #include <QWidget>
 #include <QLabel>
 #include <QHBoxLayout>
@@ -21,6 +23,7 @@ private:
     QWidget *rectangle;
     QHBoxLayout *guitarLayout;
     QWidget *playingTechniques;
+    Tablature *tab;
 };
 
 // Class for drawing rectangle

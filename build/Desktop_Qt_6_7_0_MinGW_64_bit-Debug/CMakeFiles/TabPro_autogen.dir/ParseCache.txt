@@ -6430,6 +6430,7 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwidget.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwidget.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwindow.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/sidebar.h
+ mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/tablature.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/transitions.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/uiwidgets.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/usermodel.h
@@ -6585,13 +6586,16 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/guitar.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs_win.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/QHBoxLayout
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/QLabel
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/QPushButton
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/QWidget
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/qabstractbutton.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/qboxlayout.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/qframe.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/qgridlayout.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/qlabel.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/qlayout.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/qlayoutitem.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/qpushbutton.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/qsizepolicy.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/qtwidgets-config.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/qtwidgetsexports.h
@@ -6798,6 +6802,7 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/guitar.h
  mdp:C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wchar.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/moc_predefs.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/guitar.h
+ mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/tablature.h
 C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/guitar.cpp
 C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/tablature.h
  mmc:Q_OBJECT
@@ -6947,10 +6952,18 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/tablature.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qtransform.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs_win.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/QHBoxLayout
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/QLabel
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/QPushButton
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/QWidget
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/qabstractbutton.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/qboxlayout.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/qframe.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/qgridlayout.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/qlabel.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/qlayout.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/qlayoutitem.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/qpushbutton.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/qsizepolicy.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/qtwidgets-config.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/qtwidgetsexports.h
