@@ -16,6 +16,7 @@ public:
     void createFretBoard();
     void createFretButtons();
     void createPlayingTechniqueButtons();
+    void createPlaybackButtons();
 
 signals:
 
@@ -24,6 +25,7 @@ private:
     QHBoxLayout *guitarLayout;
     QWidget *playingTechniques;
     Tablature *tab;
+    QVBoxLayout *tabLayout;
 };
 
 // Class for drawing rectangle

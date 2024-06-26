@@ -16,4 +16,12 @@
     <qresource prefix="/Sidebar">
         <file>Icons/Sidebar/SideBarIcon.png</file>
     </qresource>
+    <qresource prefix="/Playback">
+        <file>Icons/Playback/play.png</file>
+        <file>Icons/Playback/right chevron.png</file>
+        <file>Icons/Playback/left chevron.png</file>
+        <file>Icons/Playback/left chevron hover.png</file>
+        <file>Icons/Playback/right chevron hover.png</file>
+        <file>Icons/Playback/play hover.png</file>
+    </qresource>
 </RCC>

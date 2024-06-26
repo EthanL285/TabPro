@@ -16,6 +16,9 @@ public:
 
 public slots:
     void addFretNumber();
+    void goLeft();
+    void goRight();
+    void play();
 
 private slots:
     void selectColumn(bool checked);

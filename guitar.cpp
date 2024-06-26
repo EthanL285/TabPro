@@ -19,12 +19,19 @@ Guitar::Guitar(QWidget *parent)
     QVBoxLayout *viewArea = new QVBoxLayout();
     mainLayout->addLayout(viewArea);
 
-    // Add Tablature
-    tab = new Tablature();
-    viewArea->addWidget(tab);
-    viewArea->setAlignment(tab, Qt::AlignHCenter);
+    // Tab Layout (includes both tablature and playback)
+    tabLayout = new QVBoxLayout();
+    tabLayout->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
+    tabLayout->setSpacing(20);
+    viewArea->addLayout(tabLayout);
 
-    // Interface layout (Includes both playing techniques and guitar interface)
+    // Add tablature and playback buttons
+    tab = new Tablature();
+    tabLayout->addWidget(tab);
+
+    createPlaybackButtons();
+
+    // Interface layout (includes both playing techniques and guitar interface)
     QVBoxLayout *interfaceLayout = new QVBoxLayout();
     interfaceLayout->setSpacing(0);
     viewArea->addLayout(interfaceLayout);
@@ -69,6 +76,71 @@ Guitar::Guitar(QWidget *parent)
     // Create fretboard and fret buttons
     createFretBoard();
     createFretButtons();
+}
+
+// Creates buttons for playback
+void Guitar::createPlaybackButtons()
+{
+    QHBoxLayout *playbackLayout = new QHBoxLayout();
+    playbackLayout->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    tabLayout->addLayout(playbackLayout);
+
+    // Go left button
+    QPushButton *left = new QPushButton();
+    left->setFixedSize(26, 26);
+    left->setCursor(Qt::PointingHandCursor);
+    left->setToolTip("Move selection to the left");
+    left->setStyleSheet
+    (
+        "QPushButton {"
+        "image: url(:/Playback/Icons/Playback/left chevron.png);"
+        "background-color: transparent;"
+        "border: none;"
+        "}"
+        "QPushButton:hover {"
+        "image: url(:/Playback/Icons/Playback/left chevron hover.png)"
+        "}"
+    );
+    playbackLayout->addWidget(left);
+    connect(left, &QPushButton::clicked, tab, &Tablature::goLeft);
+
+    // Play button
+    QPushButton *play = new QPushButton();
+    play->setFixedSize(31, 31);
+    play->setCursor(Qt::PointingHandCursor);
+    play->setToolTip("Play the tablature");
+    play->setStyleSheet
+    (
+        "QPushButton {"
+        "image: url(:/Playback/Icons/Playback/play.png);"
+        "background-color: transparent;"
+        "border: none;"
+        "}"
+        "QPushButton:hover {"
+        "image: url(:/Playback/Icons/Playback/play hover.png)"
+        "}"
+    );
+    playbackLayout->addWidget(play);
+    connect(play, &QPushButton::clicked, tab, &Tablature::play);
+
+    // Go right button
+    QPushButton *right = new QPushButton();
+    right->setFixedSize(26, 26);
+    right->setCursor(Qt::PointingHandCursor);
+    right->setToolTip("Move selection to the right");
+    right->setStyleSheet
+    (
+        "QPushButton {"
+        "image: url(:/Playback/Icons/Playback/right chevron.png);"
+        "background-color: transparent;"
+        "border: none;"
+        "}"
+        "QPushButton:hover {"
+        "image: url(:/Playback/Icons/Playback/right chevron hover.png)"
+        "}"
+    );
+    playbackLayout->addWidget(right);
+    connect(right, &QPushButton::clicked, tab, &Tablature::goRight);
 }
 
 // Labels the guitar string with its corresponding note

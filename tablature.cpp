@@ -33,6 +33,40 @@ Tablature::Tablature(QWidget *parent)
     addRest(); */
 }
 
+// Selects the previous column
+void Tablature::goLeft()
+{
+    // Retrieve index of selected column
+    auto it = std::find(columns.begin(), columns.end(), selectedColumn);
+    int index = std::distance(columns.begin(), it);
+
+    // Select previous column
+    if (index != 0)
+    {
+        columns[index - 1]->setChecked(true); // selectColumn() handles the rest
+    }
+}
+
+// Selects the next column
+void Tablature::goRight()
+{
+    // Retrieve index of selected column
+    auto it = std::find(columns.begin(), columns.end(), selectedColumn);
+    int index = std::distance(columns.begin(), it);
+
+    // Select next column
+    if (index != columns.size() - 1)
+    {
+        columns[index + 1]->setChecked(true);
+    }
+}
+
+// Plays the tab
+void Tablature::play()
+{
+    qDebug() << "Play Successful";
+}
+
 // Adds fret number to tab
 void Tablature::addFretNumber()
 {
