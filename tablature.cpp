@@ -1,7 +1,12 @@
 #include "tablature.h"
 
-Tablature::Tablature(QWidget *parent)
-    : QWidget{parent}
+#include <QTimer>
+#include <QRegularExpression>
+#include <QRegularExpressionMatch>
+#include <QRegularExpressionMatchIterator>
+
+Tablature::Tablature(Sound *sound, QWidget *parent)
+    : sound{sound}, QWidget{parent}
 {
     tabLayout = new QHBoxLayout(this);
     tabLayout->setAlignment(Qt::AlignVCenter);
@@ -20,25 +25,22 @@ Tablature::Tablature(QWidget *parent)
         "E|\u2015"
     );
     tabLayout->addWidget(strings);
+    addRest();
+}
 
-    // TEST: Add rest
-    addRest();
-    /*
-    addRest();
-    addRest();
-    addRest();
-    addRest();
-    addRest();
-    addRest();
-    addRest(); */
+// Retrieve index of the selected column
+int Tablature::getSelectedColumnIndex()
+{
+    auto it = std::find(columns.begin(), columns.end(), selectedColumn);
+    int index = std::distance(columns.begin(), it);
+
+    return index;
 }
 
 // Selects the previous column
 void Tablature::goLeft()
 {
-    // Retrieve index of selected column
-    auto it = std::find(columns.begin(), columns.end(), selectedColumn);
-    int index = std::distance(columns.begin(), it);
+    int index = getSelectedColumnIndex();
 
     // Select previous column
     if (index != 0)
@@ -50,9 +52,7 @@ void Tablature::goLeft()
 // Selects the next column
 void Tablature::goRight()
 {
-    // Retrieve index of selected column
-    auto it = std::find(columns.begin(), columns.end(), selectedColumn);
-    int index = std::distance(columns.begin(), it);
+    int index = getSelectedColumnIndex();
 
     // Select next column
     if (index != columns.size() - 1)
@@ -61,10 +61,87 @@ void Tablature::goRight()
     }
 }
 
-// Plays the tab
-void Tablature::play()
+// Plays the entire tab
+void Tablature::playTab(double ms)
 {
-    qDebug() << "Play Successful";
+    // Play tab from the selected column onwards OR beginning if the last column is selected
+    index = getSelectedColumnIndex();
+    if (index == columns.size() - 1)
+    {
+        index = 0;
+    }
+
+    // Initialise tempo timer
+    tempo = new QTimer();
+    tempo->setInterval(200);
+    tempo->start();
+    QObject::connect(tempo, &QTimer::timeout, this, &Tablature::playColumn);
+
+    // Play the first column
+    playColumn();
+}
+
+// Plays the notes of a column
+void Tablature::playColumn()
+{
+    // Iterate through tab
+    if (index < columns.size())
+    {
+        // Retrieve the notes in the column and store in hashmap
+        getColumnInfo();
+        columns[index]->setChecked(true);
+
+        // Access hashmap and play note
+        for (auto it = fretPositions->constBegin(); it != fretPositions->constEnd(); it++)
+        {
+            if (it.value() != "-")
+            {
+                sound->playNote(QString("%1 %2").arg(it.key()).arg(it.value()));
+            }
+        }
+        index++;
+    }
+    // End of tab
+    else
+    {
+        tempo->stop();
+        tempo->deleteLater();
+    }
+}
+
+// Stores the notes of a column in a hash map
+void Tablature::getColumnInfo()
+{
+    // Initialise hashmap
+    if (fretPositions != nullptr)
+    {
+        delete fretPositions;
+    }
+    fretPositions = new QHash<int, QString>;
+    fretPositions->insert(0, "-");
+    fretPositions->insert(1, "-");
+    fretPositions->insert(2, "-");
+    fretPositions->insert(3, "-");
+    fretPositions->insert(4, "-");
+    fretPositions->insert(5, "-");
+
+    // Parse column to retrieve fret numbers and strings
+    QString notes = columns[index]->text();
+    QStringList lines = notes.split("\n");
+    static QRegularExpression numRegex("\\d+"); // Regular expression pattern to match digits
+
+    for (int stringNumber = 0; stringNumber < lines.size(); stringNumber++)
+    {
+        QRegularExpressionMatchIterator it = numRegex.globalMatch(lines[stringNumber]); // Iterator for searching through string
+
+        // Store fret number and string in hashmap
+        while (it.hasNext())
+        {
+            QRegularExpressionMatch match = it.next();
+            QString fretNumber = match.captured();
+            (*fretPositions)[stringNumber] = fretNumber;
+        }
+    }
 }
 
 // Adds fret number to tab

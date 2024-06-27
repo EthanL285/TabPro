@@ -41,7 +41,11 @@ constexpr auto qt_meta_stringdata_CLASSTablatureENDCLASS = QtMocHelpers::stringD
     "",
     "goLeft",
     "goRight",
-    "play",
+    "playTab",
+    "ms",
+    "playColumn",
+    "getColumnInfo",
+    "getSelectedColumnIndex",
     "selectColumn",
     "checked"
 );
@@ -56,7 +60,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSTablatureENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -64,18 +68,24 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSTablatureENDCLASS[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   44,    2, 0x0a,    1 /* Public */,
-       3,    0,   45,    2, 0x0a,    2 /* Public */,
-       4,    0,   46,    2, 0x0a,    3 /* Public */,
-       5,    0,   47,    2, 0x0a,    4 /* Public */,
-       6,    1,   48,    2, 0x08,    5 /* Private */,
+       1,    0,   62,    2, 0x0a,    1 /* Public */,
+       3,    0,   63,    2, 0x0a,    2 /* Public */,
+       4,    0,   64,    2, 0x0a,    3 /* Public */,
+       5,    1,   65,    2, 0x0a,    4 /* Public */,
+       7,    0,   68,    2, 0x0a,    6 /* Public */,
+       8,    0,   69,    2, 0x0a,    7 /* Public */,
+       9,    0,   70,    2, 0x0a,    8 /* Public */,
+      10,    1,   71,    2, 0x08,    9 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Double,    6,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Bool,    7,
+    QMetaType::Void,
+    QMetaType::Int,
+    QMetaType::Void, QMetaType::Bool,   11,
 
        0        // eod
 };
@@ -95,8 +105,15 @@ Q_CONSTINIT const QMetaObject Tablature::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'goRight'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'play'
+        // method 'playTab'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<double, std::false_type>,
+        // method 'playColumn'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'getColumnInfo'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'getSelectedColumnIndex'
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
         // method 'selectColumn'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<bool, std::false_type>
@@ -113,8 +130,12 @@ void Tablature::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 0: _t->addFretNumber(); break;
         case 1: _t->goLeft(); break;
         case 2: _t->goRight(); break;
-        case 3: _t->play(); break;
-        case 4: _t->selectColumn((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
+        case 3: _t->playTab((*reinterpret_cast< std::add_pointer_t<double>>(_a[1]))); break;
+        case 4: _t->playColumn(); break;
+        case 5: _t->getColumnInfo(); break;
+        case 6: { int _r = _t->getSelectedColumnIndex();
+            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
+        case 7: _t->selectColumn((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
         default: ;
         }
     }
@@ -139,13 +160,13 @@ int Tablature::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
+        if (_id < 8)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 5;
+        _id -= 8;
     }
     return _id;
 }

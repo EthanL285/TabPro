@@ -25,10 +25,12 @@ Guitar::Guitar(QWidget *parent)
     tabLayout->setSpacing(20);
     viewArea->addLayout(tabLayout);
 
-    // Add tablature and playback buttons
-    tab = new Tablature();
-    tabLayout->addWidget(tab);
+    // Initialise sound object
+    sound = new Sound(this);
 
+    // Add tablature and playback buttons
+    tab = new Tablature(sound);
+    tabLayout->addWidget(tab);
     createPlaybackButtons();
 
     // Interface layout (includes both playing techniques and guitar interface)
@@ -121,7 +123,10 @@ void Guitar::createPlaybackButtons()
         "}"
     );
     playbackLayout->addWidget(play);
-    connect(play, &QPushButton::clicked, tab, &Tablature::play);
+    connect(play, &QPushButton::clicked, tab, [=]()
+    {
+        tab->playTab(1000);
+    });
 
     // Go right button
     QPushButton *right = new QPushButton();
@@ -239,6 +244,10 @@ void Guitar::createFretButtons()
             );
             fretButtonLayout->addWidget(button, row, col);
             connect(button, &QPushButton::clicked, tab, &Tablature::addFretNumber);
+            connect(button, &QPushButton::clicked, this, [=]()
+            {
+                sound->playNote(button->objectName());
+            });
         }
     }
 }

@@ -413,6 +413,16 @@ TabPro_autogen/timestamp: \
 	C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs.h \
 	C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs_win.h \
 	C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowsmimeconverter.h \
+	C:/Qt/6.7.0/mingw_64/include/QtMultimedia/QAudioOutput \
+	C:/Qt/6.7.0/mingw_64/include/QtMultimedia/QMediaPlayer \
+	C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qaudio.h \
+	C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qaudiooutput.h \
+	C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qmediaenumdebug.h \
+	C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qmediaplayer.h \
+	C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtaudio.h \
+	C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtmultimedia-config.h \
+	C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtmultimediaexports.h \
+	C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtmultimediaglobal.h \
 	C:/Qt/6.7.0/mingw_64/include/QtNetwork/QSslSocket \
 	C:/Qt/6.7.0/mingw_64/include/QtNetwork/qabstractsocket.h \
 	C:/Qt/6.7.0/mingw_64/include/QtNetwork/qhostaddress.h \
@@ -698,6 +708,23 @@ TabPro_autogen/timestamp: \
 	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6HttpServer/Qt6HttpServerTargets-relwithdebinfo.cmake \
 	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6HttpServer/Qt6HttpServerTargets.cmake \
 	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6HttpServer/Qt6HttpServerVersionlessTargets.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6MultimediaAdditionalTargetInfo.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6MultimediaConfig.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6MultimediaConfigVersion.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6MultimediaConfigVersionImpl.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6MultimediaDependencies.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6MultimediaPlugins.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6MultimediaTargets-relwithdebinfo.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6MultimediaTargets.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6MultimediaVersionlessTargets.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6QFFmpegMediaPluginAdditionalTargetInfo.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6QFFmpegMediaPluginConfig.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6QFFmpegMediaPluginTargets-relwithdebinfo.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6QFFmpegMediaPluginTargets.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6QWindowsMediaPluginAdditionalTargetInfo.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6QWindowsMediaPluginConfig.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6QWindowsMediaPluginTargets-relwithdebinfo.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6QWindowsMediaPluginTargets.cmake \
 	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Network/Qt6NetworkAdditionalTargetInfo.cmake \
 	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Network/Qt6NetworkConfig.cmake \
 	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Network/Qt6NetworkConfigVersion.cmake \
@@ -792,38 +819,38 @@ TabPro_autogen/timestamp: \
 	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6ZlibPrivate/Qt6ZlibPrivateConfigVersionImpl.cmake \
 	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6ZlibPrivate/Qt6ZlibPrivateTargets.cmake \
 	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6ZlibPrivate/Qt6ZlibPrivateVersionlessTargets.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/CMakeCXXInformation.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/CMakeCommonLanguageInclude.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/CMakeFindDependencyMacro.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/CMakeGenericSystem.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/CMakeInitializeConfigs.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/CMakeLanguageInformation.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/CMakeRCInformation.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/CMakeSystemSpecificInformation.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/CMakeSystemSpecificInitialize.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/CheckCXXCompilerFlag.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/CheckCXXSourceCompiles.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/CheckIncludeFileCXX.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/CheckLibraryExists.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/Compiler/CMakeCommonCompilerMacros.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/Compiler/GNU-CXX.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/Compiler/GNU.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/FindPackageHandleStandardArgs.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/FindPackageMessage.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/FindThreads.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/FindVulkan.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/GNUInstallDirs.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/Internal/CheckCompilerFlag.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/Internal/CheckFlagCommonConfig.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/Internal/CheckSourceCompiles.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/Platform/Windows-GNU-CXX-ABI.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/Platform/Windows-GNU-CXX.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/Platform/Windows-GNU.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/Platform/Windows-Initialize.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/Platform/Windows-windres.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/Platform/Windows.cmake \
-	C:/Qt/Tools/CMake_64/share/cmake-3.27/Modules/Platform/WindowsPaths.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CMakeCXXInformation.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CMakeCommonLanguageInclude.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CMakeFindDependencyMacro.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CMakeGenericSystem.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CMakeInitializeConfigs.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CMakeLanguageInformation.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CMakeRCInformation.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CMakeSystemSpecificInformation.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CheckCXXCompilerFlag.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CheckCXXSourceCompiles.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CheckIncludeFileCXX.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/CheckLibraryExists.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/Compiler/CMakeCommonCompilerMacros.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/Compiler/GNU-CXX.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/Compiler/GNU.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/FindPackageHandleStandardArgs.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/FindPackageMessage.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/FindThreads.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/FindVulkan.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/GNUInstallDirs.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/Internal/CheckCompilerFlag.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/Internal/CheckFlagCommonConfig.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/Internal/CheckSourceCompiles.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/Platform/Windows-GNU-CXX-ABI.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/Platform/Windows-GNU-CXX.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/Platform/Windows-GNU.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/Platform/Windows-Initialize.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/Platform/Windows-windres.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/Platform/Windows.cmake \
+	C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/Platform/WindowsPaths.cmake \
 	C:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed/limits.h \
 	C:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed/syslimits.h \
 	C:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/adxintrin.h \
@@ -1151,10 +1178,11 @@ TabPro_autogen/timestamp: \
 	C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wctype.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/CMakeLists.txt \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/Images.qrc \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/Sound.qrc \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/.qtc/package-manager/auto-setup.cmake \
-	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/CMakeFiles/3.27.7/CMakeCXXCompiler.cmake \
-	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/CMakeFiles/3.27.7/CMakeRCCompiler.cmake \
-	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/CMakeFiles/3.27.7/CMakeSystem.cmake \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/CMakeFiles/3.29.3/CMakeCXXCompiler.cmake \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/CMakeFiles/3.29.3/CMakeRCCompiler.cmake \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/CMakeFiles/3.29.3/CMakeSystem.cmake \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/moc_predefs.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/guitar.cpp \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/guitar.h \
@@ -1171,6 +1199,8 @@ TabPro_autogen/timestamp: \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/registerui.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/sidebar.cpp \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/sidebar.h \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/sound.cpp \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/sound.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/tablature.cpp \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/tablature.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/transitions.cpp \

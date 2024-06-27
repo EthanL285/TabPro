@@ -17,7 +17,7 @@ MainWidget::MainWidget(MainWindow *parent)
     mainLayout->addWidget(sidebar);
 
     // Add guitar widget
-    guitar = new Guitar();
+    guitar = new Guitar(this);
     mainLayout->addWidget(guitar, Qt::AlignHCenter);
 }
 

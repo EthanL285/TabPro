@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/E">
+        <file>Sound/E/E0.wav</file>
+        <file>Sound/E/E1.wav</file>
+        <file>Sound/E/E2.wav</file>
+        <file>Sound/E/E3.wav</file>
+        <file>Sound/E/E4.wav</file>
+        <file>Sound/E/E5.wav</file>
+        <file>Sound/E/E6.wav</file>
+        <file>Sound/E/E7.wav</file>
+        <file>Sound/E/E8.wav</file>
+        <file>Sound/E/E9.wav</file>
+        <file>Sound/E/E10.wav</file>
+        <file>Sound/E/E11.wav</file>
+        <file>Sound/E/E12.wav</file>
+        <file>Sound/E/E13.wav</file>
+        <file>Sound/E/E14.wav</file>
+        <file>Sound/E/E15.wav</file>
+        <file>Sound/E/E16.wav</file>
+        <file>Sound/E/E17.wav</file>
+        <file>Sound/E/E18.wav</file>
+        <file>Sound/E/E19.wav</file>
+        <file>Sound/E/E20.wav</file>
+    </qresource>
+</RCC>

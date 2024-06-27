@@ -4,6 +4,8 @@
 	"CMAKE_CURRENT_BINARY_DIR" : "C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug",
 	"CMAKE_CURRENT_SOURCE_DIR" : "C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro",
 	"CMAKE_SOURCE_DIR" : "C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro",
+	"CROSS_CONFIG" : false,
+	"GENERATOR" : "Ninja",
 	"INCLUDE_DIR" : "C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/include",
 	"INPUTS" : 
 	[
@@ -32,5 +34,6 @@
 	"RCC_LIST_OPTIONS" : [ "--list" ],
 	"SETTINGS_FILE" : "C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/CMakeFiles/TabPro_autogen.dir/AutoRcc_Images_EWIEGA46WW_Used.txt",
 	"SOURCE" : "C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/Images.qrc",
+	"USE_BETTER_GRAPH" : false,
 	"VERBOSITY" : 0
 }

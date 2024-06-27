@@ -2,6 +2,7 @@
 #define GUITAR_H
 
 #include "tablature.h"
+#include "sound.h"
 
 #include <QWidget>
 #include <QLabel>
@@ -26,6 +27,7 @@ private:
     QWidget *playingTechniques;
     Tablature *tab;
     QVBoxLayout *tabLayout;
+    Sound *sound;
 };
 
 // Class for drawing rectangle

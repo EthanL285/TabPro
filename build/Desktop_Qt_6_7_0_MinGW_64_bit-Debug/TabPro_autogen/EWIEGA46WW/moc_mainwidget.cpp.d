@@ -413,6 +413,16 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs_win.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowsmimeconverter.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/QAudioOutput \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/QMediaPlayer \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qaudio.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qaudiooutput.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qmediaenumdebug.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qmediaplayer.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtaudio.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtmultimedia-config.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtmultimediaexports.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtmultimediaglobal.h \
   C:/Qt/6.7.0/mingw_64/include/QtNetwork/QSslSocket \
   C:/Qt/6.7.0/mingw_64/include/QtNetwork/qabstractsocket.h \
   C:/Qt/6.7.0/mingw_64/include/QtNetwork/qhostaddress.h \
@@ -911,6 +921,7 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/guitar.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwindow.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/sidebar.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/sound.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/tablature.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/transitions.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/uiwidgets.h \

@@ -1,5 +1,6 @@
 C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/EWIEGA46WW/moc_guitar.cpp: C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/guitar.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/moc_predefs.h \
+  C:/Qt/6.7.0/mingw_64/include/QtCore/QObject \
   C:/Qt/6.7.0/mingw_64/include/QtCore/q20functional.h \
   C:/Qt/6.7.0/mingw_64/include/QtCore/q20memory.h \
   C:/Qt/6.7.0/mingw_64/include/QtCore/q20type_traits.h \
@@ -57,6 +58,7 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/6.7.0/mingw_64/include/QtCore/qmargins.h \
   C:/Qt/6.7.0/mingw_64/include/QtCore/qmath.h \
   C:/Qt/6.7.0/mingw_64/include/QtCore/qmetacontainer.h \
+  C:/Qt/6.7.0/mingw_64/include/QtCore/qmetaobject.h \
   C:/Qt/6.7.0/mingw_64/include/QtCore/qmetatype.h \
   C:/Qt/6.7.0/mingw_64/include/QtCore/qminmax.h \
   C:/Qt/6.7.0/mingw_64/include/QtCore/qnamespace.h \
@@ -146,6 +148,16 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/6.7.0/mingw_64/include/QtGui/qtransform.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs_win.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/QAudioOutput \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/QMediaPlayer \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qaudio.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qaudiooutput.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qmediaenumdebug.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qmediaplayer.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtaudio.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtmultimedia-config.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtmultimediaexports.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtmultimediaglobal.h \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QHBoxLayout \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QLabel \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QPushButton \
@@ -362,4 +374,5 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/time.h \
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/vadefs.h \
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wchar.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/sound.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/tablature.h
