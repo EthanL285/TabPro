@@ -29,19 +29,19 @@ Guitar::Guitar(QWidget *parent)
     sound = new Sound(this);
 
     // Add tablature and playback buttons
-    tab = new Tablature(sound);
+    tab = new Tablature(sound, this);
     tabLayout->addWidget(tab);
     createPlaybackButtons();
 
     // Interface layout (includes both playing techniques and guitar interface)
     QVBoxLayout *interfaceLayout = new QVBoxLayout();
     interfaceLayout->setSpacing(0);
+    interfaceLayout->setAlignment(Qt::AlignHCenter);
     viewArea->addLayout(interfaceLayout);
 
     // Add Playing Technique Buttons
     playingTechniques = new QWidget();
-    playingTechniques->setMaximumHeight(60);
-    playingTechniques->setMinimumWidth(1250);
+    playingTechniques->setFixedSize(1250, 60);
     playingTechniques->setStyleSheet("background-color: rgb(27,27,27); border-top-left-radius: 15px; border-top-right-radius: 15px;");
     interfaceLayout->addWidget(playingTechniques);
     createPlayingTechniqueButtons();
@@ -108,6 +108,7 @@ void Guitar::createPlaybackButtons()
 
     // Play button
     QPushButton *play = new QPushButton();
+    play->setCheckable(true);
     play->setFixedSize(31, 31);
     play->setCursor(Qt::PointingHandCursor);
     play->setToolTip("Play the tablature");
@@ -121,11 +122,17 @@ void Guitar::createPlaybackButtons()
         "QPushButton:hover {"
         "image: url(:/Playback/Icons/Playback/play hover.png)"
         "}"
+        "QPushButton:checked {"
+        "    image: url(:/Playback/Icons/Playback/pause.png);"
+        "}"
+        "QPushButton:checked:hover {"
+        "    image: url(:/Playback/Icons/Playback/pause hover.png);"
+        "}"
     );
     playbackLayout->addWidget(play);
     connect(play, &QPushButton::clicked, tab, [=]()
     {
-        tab->playTab(1000);
+        tab->playTab(1000, play);
     });
 
     // Go right button
@@ -183,10 +190,11 @@ void Guitar::createFretBoard()
 void Guitar::createPlayingTechniqueButtons()
 {
     QGridLayout *buttonLayout = new QGridLayout(playingTechniques);
-    QString symbols[] = {"/", "\\", "h", "p", "b", "r", "x", "~", "-", "|"};
-    QString name[] = {"Slide Up", "Slide Down", "Hammer On", "Pull Off", "Bend", "Release", "Muted Hit", "Vibrato", "Rest", "Bar Line"};
+    QString symbols[] = {"/", "\\", "h", "p", "b", "r", "x", "~", "\u2015", "|", "\u2716"};
+    QString name[] = {"Slide Up", "Slide Down", "Hammer On", "Pull Off", "Bend", "Release", "Muted Hit", "Vibrato", "Rest", "Bar Line", "Remove Notes"};
 
-    for (int col = 0; col < 10; col++)
+    // Assign each button a name and symbol
+    for (int col = 0; col < 11; col++)
     {
         QPushButton *button = new QPushButton(QString("%1").arg(symbols[col]));
         button->setToolTip(name[col]);
@@ -209,6 +217,25 @@ void Guitar::createPlayingTechniqueButtons()
             "}"
         );
         buttonLayout->addWidget(button, 0, col);
+
+        // Assign each button to a function
+        connect(button, &QPushButton::clicked, this, [=]()
+        {
+            switch (col)
+            {
+                case 0: tab->insertSlideUp(); break;
+                case 1: tab->insertSlideDown(); break;
+                case 2: tab->insertHammerOn(); break;
+                case 3: tab->insertPullOff(); break;
+                case 4: tab->insertBend(); break;
+                case 5: tab->insertRelease(); break;
+                case 6: tab->insertMutedHit(); break;
+                case 7: tab->insertVibrato(); break;
+                case 8: tab->insertRest(); break;
+                case 9: tab->insertBarLine(); break;
+                case 10: tab->remove(); break;
+            }
+        });
     }
 }
 

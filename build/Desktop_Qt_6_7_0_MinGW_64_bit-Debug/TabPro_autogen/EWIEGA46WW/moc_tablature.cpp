@@ -37,15 +37,29 @@ namespace {
 struct qt_meta_stringdata_CLASSTablatureENDCLASS_t {};
 constexpr auto qt_meta_stringdata_CLASSTablatureENDCLASS = QtMocHelpers::stringData(
     "Tablature",
-    "addFretNumber",
+    "getSelectedColumnIndex",
     "",
+    "addFretNumber",
     "goLeft",
     "goRight",
     "playTab",
     "ms",
+    "QPushButton*",
+    "play",
     "playColumn",
     "getColumnInfo",
-    "getSelectedColumnIndex",
+    "stopTempoTimer",
+    "insertSlideUp",
+    "insertSlideDown",
+    "insertHammerOn",
+    "insertPullOff",
+    "insertBend",
+    "insertRelease",
+    "insertVibrato",
+    "insertMutedHit",
+    "insertRest",
+    "insertBarLine",
+    "remove",
     "selectColumn",
     "checked"
 );
@@ -60,7 +74,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSTablatureENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+      20,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -68,24 +82,48 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSTablatureENDCLASS[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   62,    2, 0x0a,    1 /* Public */,
-       3,    0,   63,    2, 0x0a,    2 /* Public */,
-       4,    0,   64,    2, 0x0a,    3 /* Public */,
-       5,    1,   65,    2, 0x0a,    4 /* Public */,
-       7,    0,   68,    2, 0x0a,    6 /* Public */,
-       8,    0,   69,    2, 0x0a,    7 /* Public */,
-       9,    0,   70,    2, 0x0a,    8 /* Public */,
-      10,    1,   71,    2, 0x08,    9 /* Private */,
+       1,    0,  134,    2, 0x0a,    1 /* Public */,
+       3,    0,  135,    2, 0x0a,    2 /* Public */,
+       4,    0,  136,    2, 0x0a,    3 /* Public */,
+       5,    0,  137,    2, 0x0a,    4 /* Public */,
+       6,    2,  138,    2, 0x0a,    5 /* Public */,
+      10,    0,  143,    2, 0x0a,    8 /* Public */,
+      11,    0,  144,    2, 0x0a,    9 /* Public */,
+      12,    0,  145,    2, 0x0a,   10 /* Public */,
+      13,    0,  146,    2, 0x0a,   11 /* Public */,
+      14,    0,  147,    2, 0x0a,   12 /* Public */,
+      15,    0,  148,    2, 0x0a,   13 /* Public */,
+      16,    0,  149,    2, 0x0a,   14 /* Public */,
+      17,    0,  150,    2, 0x0a,   15 /* Public */,
+      18,    0,  151,    2, 0x0a,   16 /* Public */,
+      19,    0,  152,    2, 0x0a,   17 /* Public */,
+      20,    0,  153,    2, 0x0a,   18 /* Public */,
+      21,    0,  154,    2, 0x0a,   19 /* Public */,
+      22,    0,  155,    2, 0x0a,   20 /* Public */,
+      23,    0,  156,    2, 0x0a,   21 /* Public */,
+      24,    1,  157,    2, 0x08,   22 /* Private */,
 
  // slots: parameters
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, QMetaType::Double,    6,
-    QMetaType::Void,
-    QMetaType::Void,
     QMetaType::Int,
-    QMetaType::Void, QMetaType::Bool,   11,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Double, 0x80000000 | 8,    7,    9,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Bool,   25,
 
        0        // eod
 };
@@ -99,6 +137,8 @@ Q_CONSTINIT const QMetaObject Tablature::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSTablatureENDCLASS_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<Tablature, std::true_type>,
+        // method 'getSelectedColumnIndex'
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
         // method 'addFretNumber'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'goLeft'
@@ -108,12 +148,35 @@ Q_CONSTINIT const QMetaObject Tablature::staticMetaObject = { {
         // method 'playTab'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<double, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QPushButton *, std::false_type>,
         // method 'playColumn'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'getColumnInfo'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'getSelectedColumnIndex'
-        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        // method 'stopTempoTimer'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'insertSlideUp'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'insertSlideDown'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'insertHammerOn'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'insertPullOff'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'insertBend'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'insertRelease'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'insertVibrato'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'insertMutedHit'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'insertRest'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'insertBarLine'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'remove'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'selectColumn'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<bool, std::false_type>
@@ -127,16 +190,39 @@ void Tablature::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         auto *_t = static_cast<Tablature *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->addFretNumber(); break;
-        case 1: _t->goLeft(); break;
-        case 2: _t->goRight(); break;
-        case 3: _t->playTab((*reinterpret_cast< std::add_pointer_t<double>>(_a[1]))); break;
-        case 4: _t->playColumn(); break;
-        case 5: _t->getColumnInfo(); break;
-        case 6: { int _r = _t->getSelectedColumnIndex();
+        case 0: { int _r = _t->getSelectedColumnIndex();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
-        case 7: _t->selectColumn((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
+        case 1: _t->addFretNumber(); break;
+        case 2: _t->goLeft(); break;
+        case 3: _t->goRight(); break;
+        case 4: _t->playTab((*reinterpret_cast< std::add_pointer_t<double>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[2]))); break;
+        case 5: _t->playColumn(); break;
+        case 6: _t->getColumnInfo(); break;
+        case 7: _t->stopTempoTimer(); break;
+        case 8: _t->insertSlideUp(); break;
+        case 9: _t->insertSlideDown(); break;
+        case 10: _t->insertHammerOn(); break;
+        case 11: _t->insertPullOff(); break;
+        case 12: _t->insertBend(); break;
+        case 13: _t->insertRelease(); break;
+        case 14: _t->insertVibrato(); break;
+        case 15: _t->insertMutedHit(); break;
+        case 16: _t->insertRest(); break;
+        case 17: _t->insertBarLine(); break;
+        case 18: _t->remove(); break;
+        case 19: _t->selectColumn((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
         default: ;
+        }
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+        case 4:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+            case 1:
+                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QPushButton* >(); break;
+            }
+            break;
         }
     }
 }
@@ -160,13 +246,13 @@ int Tablature::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 20)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 20;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 8)
-            *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 8;
+        if (_id < 20)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 20;
     }
     return _id;
 }

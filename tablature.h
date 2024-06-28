@@ -13,29 +13,47 @@ class Tablature : public QWidget
     Q_OBJECT
 public:
     explicit Tablature(Sound *sound, QWidget *parent = nullptr);
-    void addBarLine();
+    QPushButton *createRest();
     void addRest();
 
 public slots:
+    int getSelectedColumnIndex();
     void addFretNumber();
     void goLeft();
     void goRight();
-    void playTab(double ms);
+    void playTab(double ms, QPushButton *play);
     void playColumn();
     void getColumnInfo();
-    int getSelectedColumnIndex();
+    void stopTempoTimer();
+
+    // Techniques
+    void insertSlideUp();
+    void insertSlideDown();
+    void insertHammerOn();
+    void insertPullOff();
+    void insertBend();
+    void insertRelease();
+    void insertVibrato();
+    void insertMutedHit();
+    void insertRest();
+    void insertBarLine();
+    void remove();
 
 private slots:
     void selectColumn(bool checked);
 
 private:
+    QHBoxLayout *columnLayout;
+    QVBoxLayout *rowLayout;
     QHBoxLayout *tabLayout;
     QPushButton *selectedColumn = nullptr;
     QVector<QPushButton*> columns;
     Sound *sound;
     QVector<int> *notes;
     QHash<int, QString> *fretPositions = nullptr;
-    QTimer *tempo;
+    QTimer *tempo = nullptr;
+    QPushButton *playButton = nullptr;
+    bool playSwitch = true;
     int index; // Index of column
 };
 

@@ -16,9 +16,6 @@ public:
 
 signals:
 
-private:
-    QMediaPlayer *player = nullptr;
-    QAudioOutput *output = nullptr;
 };
 
 #endif // SOUND_H

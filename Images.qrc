@@ -23,5 +23,7 @@
         <file>Icons/Playback/left chevron hover.png</file>
         <file>Icons/Playback/right chevron hover.png</file>
         <file>Icons/Playback/play hover.png</file>
+        <file>Icons/Playback/pause hover.png</file>
+        <file>Icons/Playback/pause.png</file>
     </qresource>
 </RCC>

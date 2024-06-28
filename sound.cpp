@@ -4,16 +4,16 @@
 
 Sound::Sound(QObject *parent)
     : QObject{parent}
-{
-    player = new QMediaPlayer();
-    output = new QAudioOutput();
-    player->setAudioOutput(output);
-    output->setVolume(1);
-}
+{}
 
 // Plays the given note
 void Sound::playNote(QString note)
 {
+    QMediaPlayer *player = new QMediaPlayer();
+    QAudioOutput *output = new QAudioOutput();
+    player->setAudioOutput(output);
+    output->setVolume(1);
+
     // Retrieve string and fret number
     QStringList parts = note.split(" ");
     int string = parts[0].toInt();
@@ -30,6 +30,16 @@ void Sound::playNote(QString note)
     };
     player->setSource(QUrl(QString("qrc:/E/Sound/E/%1%2.wav").arg(map.value(string)).arg(fret)));
     player->play();
+
+    // Delete player and output once finished
+    connect(player, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus status)
+    {
+        if (status == QMediaPlayer::EndOfMedia)
+        {
+            player->deleteLater();
+            output->deleteLater();
+        }
+    });
 }
 
 

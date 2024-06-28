@@ -9,11 +9,12 @@ Tablature::Tablature(Sound *sound, QWidget *parent)
     : sound{sound}, QWidget{parent}
 {
     tabLayout = new QHBoxLayout(this);
-    tabLayout->setAlignment(Qt::AlignVCenter);
+    tabLayout->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
     tabLayout->setSpacing(0);
 
     // Create Tablature
     QLabel *strings = new QLabel();
+    strings->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     strings->setStyleSheet("color: white; font: 20pt Consolas; letter-spacing: 10px;");
     strings->setText
     (
@@ -25,6 +26,15 @@ Tablature::Tablature(Sound *sound, QWidget *parent)
         "E|\u2015"
     );
     tabLayout->addWidget(strings);
+
+    // Row Layout
+    rowLayout = new QVBoxLayout();
+    tabLayout->addLayout(rowLayout);
+
+    // Column layout
+    columnLayout = new QHBoxLayout();
+    rowLayout->addLayout(columnLayout);
+
     addRest();
 }
 
@@ -37,9 +47,26 @@ int Tablature::getSelectedColumnIndex()
     return index;
 }
 
+// Stops the tempo timer
+void Tablature::stopTempoTimer()
+{
+    playSwitch = true;
+    tempo->stop();
+    tempo->deleteLater();
+    tempo = nullptr;
+}
+
 // Selects the previous column
 void Tablature::goLeft()
 {
+    // Stop tempo timer
+    if (tempo != nullptr)
+    {
+        stopTempoTimer();
+        playButton->setChecked(false);
+        return;
+    }
+
     int index = getSelectedColumnIndex();
 
     // Select previous column
@@ -52,6 +79,14 @@ void Tablature::goLeft()
 // Selects the next column
 void Tablature::goRight()
 {
+    // Stop tempo timer
+    if (tempo != nullptr)
+    {
+        stopTempoTimer();
+        playButton->setChecked(false);
+        return;
+    }
+
     int index = getSelectedColumnIndex();
 
     // Select next column
@@ -62,8 +97,21 @@ void Tablature::goRight()
 }
 
 // Plays the entire tab
-void Tablature::playTab(double ms)
+void Tablature::playTab(double ms, QPushButton *play)
 {
+    // Stop timer if user pauses the tab
+    if (tempo != nullptr)
+    {
+        stopTempoTimer();
+        return;
+    }
+
+    // Assign play button
+    if (playButton == nullptr)
+    {
+        playButton = play;
+    }
+
     // Play tab from the selected column onwards OR beginning if the last column is selected
     index = getSelectedColumnIndex();
     if (index == columns.size() - 1)
@@ -73,23 +121,27 @@ void Tablature::playTab(double ms)
 
     // Initialise tempo timer
     tempo = new QTimer();
-    tempo->setInterval(200);
+    tempo->setInterval(600);
     tempo->start();
     QObject::connect(tempo, &QTimer::timeout, this, &Tablature::playColumn);
 
     // Play the first column
+    playSwitch = true;
     playColumn();
 }
 
 // Plays the notes of a column
 void Tablature::playColumn()
 {
+    playSwitch = true;
+
     // Iterate through tab
     if (index < columns.size())
     {
         // Retrieve the notes in the column and store in hashmap
         getColumnInfo();
         columns[index]->setChecked(true);
+        playSwitch = false; // selectColumn() identifies user intervention whilst play is active by seeing if playSwitch is false
 
         // Access hashmap and play note
         for (auto it = fretPositions->constBegin(); it != fretPositions->constEnd(); it++)
@@ -104,8 +156,9 @@ void Tablature::playColumn()
     // End of tab
     else
     {
-        tempo->stop();
-        tempo->deleteLater();
+        // Stop timer and revert button state to play
+        stopTempoTimer();
+        playButton->setChecked(false);
     }
 }
 
@@ -181,11 +234,11 @@ void Tablature::addFretNumber()
     }
 }
 
-// Adds rest line to tab
-void Tablature::addRest()
+// Creates the rest QPushButton
+QPushButton *Tablature::createRest()
 {
     QPushButton *rest = new QPushButton("\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015");
-    rest->setFixedSize(35, 180);
+    rest->setFixedSize(35, 205);
     rest->setCheckable(true);
     rest->setCursor(Qt::PointingHandCursor);
     rest->setStyleSheet
@@ -199,23 +252,50 @@ void Tablature::addRest()
         "   background-color: rgb(75,75,75);"
         "}"
     );
-    tabLayout->addWidget(rest);
-    columns.push_back(rest);
-
     connect(rest, &QPushButton::toggled, this, &Tablature::selectColumn); // Automatically passes parameter 'checked' to slot
 
-    // Set rest to selected column
-    rest->setChecked(true); // Activates the signal above
+    return rest;
 }
 
-// Adds bar line to tab
-void Tablature::addBarLine()
+// Adds rest line to tab
+void Tablature::addRest()
 {
+    /*
+    // Maximum width of tab exceeded
+    int tabWidth = columns.size() * 35;
+    int parentWidth = parentWidget()->width(); // Width of guitar widget in mainWidget.cpp (window area excluding side bar)
+    int windowWidth = window()->width();
+
+    int maxWidth = 0.75 * windowWidth;
+
+    qDebug() << "Tab Width: " << tabWidth;
+    qDebug() << "Parent Width: " << parentWidth;
+    qDebug() << "Window Width: " << windowWidth;
+
+    if (tabWidth > maxWidth)
+    {
+        qDebug() << "Exceeded";
+    }
+    */
+
+    QPushButton *rest = createRest();
+    columnLayout->addWidget(rest);
+    columns.push_back(rest);
+
+    // Set rest to selected column
+    rest->setChecked(true);
 }
 
 // Selects the tab column
 void Tablature::selectColumn(bool checked)
 {
+    // User selects a column whilst play is active
+    if (!playSwitch)
+    {
+        stopTempoTimer(); // Sets playSwitch back to true
+        playButton->setChecked(false);
+    }
+
     // Retrieve pointer to the QPushButton that emitted the signal
     QPushButton *column = qobject_cast<QPushButton*>(sender());
 
@@ -253,6 +333,86 @@ void Tablature::selectColumn(bool checked)
     }
 }
 
+
+// ==================================== TECHNIQUES ====================================
+
+// Inserts rest after selected column
+void Tablature::insertRest()
+{
+    if (selectedColumn == columns.last())
+    {
+        addRest();
+    }
+    else
+    {
+        int index = getSelectedColumnIndex();
+        QPushButton *rest = createRest();
+        columns.insert(index + 1, rest);
+        columnLayout->insertWidget(index + 1, rest);
+    }
+}
+
+void Tablature::insertSlideUp()
+{
+
+}
+void Tablature::insertSlideDown()
+{
+
+}
+void Tablature::insertHammerOn()
+{
+
+}
+void Tablature::insertPullOff()
+{
+
+}
+void Tablature::insertBend()
+{
+
+}
+void Tablature::insertRelease()
+{
+
+}
+void Tablature::insertVibrato()
+{
+
+}
+void Tablature::insertMutedHit()
+{
+
+}
+void Tablature::insertBarLine()
+{
+
+}
+// Removes the notes of a column or the column itself if empty
+void Tablature::remove()
+{
+    // Remove empty column
+    if (selectedColumn->text() == "\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015")
+    {
+        QPushButton *temp = selectedColumn;
+        int index = getSelectedColumnIndex();
+
+        // Column is not the last
+        if (index != columns.size() - 1)
+        {
+            columns[index + 1]->setChecked(true);
+
+            columns.remove(index);
+            columnLayout->removeWidget(temp);
+            delete temp;
+        }
+    }
+    // Remove notes in column
+    else
+    {
+        selectedColumn->setText("\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015");
+    }
+}
 
 /*
     "E|------------------------|\n"
