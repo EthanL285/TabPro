@@ -18,6 +18,10 @@ public:
     void createFretButtons();
     void createPlayingTechniqueButtons();
     void createPlaybackButtons();
+    QWidget *createTempoButton();
+
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 
 signals:
 

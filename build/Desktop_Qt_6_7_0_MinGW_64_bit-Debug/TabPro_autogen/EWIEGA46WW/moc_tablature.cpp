@@ -43,12 +43,17 @@ constexpr auto qt_meta_stringdata_CLASSTablatureENDCLASS = QtMocHelpers::stringD
     "goLeft",
     "goRight",
     "playTab",
-    "ms",
     "QPushButton*",
     "play",
     "playColumn",
     "getColumnInfo",
     "stopTempoTimer",
+    "changeTempoButton",
+    "QLineEdit*",
+    "field",
+    "increase",
+    "decrease",
+    "changeTempoEdit",
     "insertSlideUp",
     "insertSlideDown",
     "insertHammerOn",
@@ -59,6 +64,7 @@ constexpr auto qt_meta_stringdata_CLASSTablatureENDCLASS = QtMocHelpers::stringD
     "insertMutedHit",
     "insertRest",
     "insertBarLine",
+    "undo",
     "remove",
     "selectColumn",
     "checked"
@@ -74,7 +80,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSTablatureENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-      20,   14, // methods
+      23,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -82,33 +88,41 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSTablatureENDCLASS[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,  134,    2, 0x0a,    1 /* Public */,
-       3,    0,  135,    2, 0x0a,    2 /* Public */,
-       4,    0,  136,    2, 0x0a,    3 /* Public */,
-       5,    0,  137,    2, 0x0a,    4 /* Public */,
-       6,    2,  138,    2, 0x0a,    5 /* Public */,
-      10,    0,  143,    2, 0x0a,    8 /* Public */,
-      11,    0,  144,    2, 0x0a,    9 /* Public */,
-      12,    0,  145,    2, 0x0a,   10 /* Public */,
-      13,    0,  146,    2, 0x0a,   11 /* Public */,
-      14,    0,  147,    2, 0x0a,   12 /* Public */,
-      15,    0,  148,    2, 0x0a,   13 /* Public */,
-      16,    0,  149,    2, 0x0a,   14 /* Public */,
-      17,    0,  150,    2, 0x0a,   15 /* Public */,
-      18,    0,  151,    2, 0x0a,   16 /* Public */,
-      19,    0,  152,    2, 0x0a,   17 /* Public */,
-      20,    0,  153,    2, 0x0a,   18 /* Public */,
-      21,    0,  154,    2, 0x0a,   19 /* Public */,
-      22,    0,  155,    2, 0x0a,   20 /* Public */,
-      23,    0,  156,    2, 0x0a,   21 /* Public */,
-      24,    1,  157,    2, 0x08,   22 /* Private */,
+       1,    0,  152,    2, 0x0a,    1 /* Public */,
+       3,    0,  153,    2, 0x0a,    2 /* Public */,
+       4,    0,  154,    2, 0x0a,    3 /* Public */,
+       5,    0,  155,    2, 0x0a,    4 /* Public */,
+       6,    1,  156,    2, 0x0a,    5 /* Public */,
+       9,    0,  159,    2, 0x0a,    7 /* Public */,
+      10,    0,  160,    2, 0x0a,    8 /* Public */,
+      11,    0,  161,    2, 0x0a,    9 /* Public */,
+      12,    3,  162,    2, 0x0a,   10 /* Public */,
+      17,    3,  169,    2, 0x0a,   14 /* Public */,
+      18,    0,  176,    2, 0x0a,   18 /* Public */,
+      19,    0,  177,    2, 0x0a,   19 /* Public */,
+      20,    0,  178,    2, 0x0a,   20 /* Public */,
+      21,    0,  179,    2, 0x0a,   21 /* Public */,
+      22,    0,  180,    2, 0x0a,   22 /* Public */,
+      23,    0,  181,    2, 0x0a,   23 /* Public */,
+      24,    0,  182,    2, 0x0a,   24 /* Public */,
+      25,    0,  183,    2, 0x0a,   25 /* Public */,
+      26,    0,  184,    2, 0x0a,   26 /* Public */,
+      27,    0,  185,    2, 0x0a,   27 /* Public */,
+      28,    0,  186,    2, 0x0a,   28 /* Public */,
+      29,    0,  187,    2, 0x0a,   29 /* Public */,
+      30,    1,  188,    2, 0x08,   30 /* Private */,
 
  // slots: parameters
     QMetaType::Int,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Double, 0x80000000 | 8,    7,    9,
+    QMetaType::Void, 0x80000000 | 7,    8,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 13, 0x80000000 | 7, 0x80000000 | 7,   14,   15,   16,
+    QMetaType::Void, 0x80000000 | 13, 0x80000000 | 7, 0x80000000 | 7,   14,   15,   16,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -121,9 +135,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSTablatureENDCLASS[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, QMetaType::Bool,   25,
+    QMetaType::Void, QMetaType::Bool,   31,
 
        0        // eod
 };
@@ -147,7 +159,6 @@ Q_CONSTINIT const QMetaObject Tablature::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'playTab'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<double, std::false_type>,
         QtPrivate::TypeAndForceComplete<QPushButton *, std::false_type>,
         // method 'playColumn'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
@@ -155,6 +166,16 @@ Q_CONSTINIT const QMetaObject Tablature::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'stopTempoTimer'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'changeTempoButton'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QLineEdit *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QPushButton *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QPushButton *, std::false_type>,
+        // method 'changeTempoEdit'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QLineEdit *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QPushButton *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QPushButton *, std::false_type>,
         // method 'insertSlideUp'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'insertSlideDown'
@@ -174,6 +195,8 @@ Q_CONSTINIT const QMetaObject Tablature::staticMetaObject = { {
         // method 'insertRest'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'insertBarLine'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'undo'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'remove'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
@@ -195,22 +218,25 @@ void Tablature::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 1: _t->addFretNumber(); break;
         case 2: _t->goLeft(); break;
         case 3: _t->goRight(); break;
-        case 4: _t->playTab((*reinterpret_cast< std::add_pointer_t<double>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[2]))); break;
+        case 4: _t->playTab((*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[1]))); break;
         case 5: _t->playColumn(); break;
         case 6: _t->getColumnInfo(); break;
         case 7: _t->stopTempoTimer(); break;
-        case 8: _t->insertSlideUp(); break;
-        case 9: _t->insertSlideDown(); break;
-        case 10: _t->insertHammerOn(); break;
-        case 11: _t->insertPullOff(); break;
-        case 12: _t->insertBend(); break;
-        case 13: _t->insertRelease(); break;
-        case 14: _t->insertVibrato(); break;
-        case 15: _t->insertMutedHit(); break;
-        case 16: _t->insertRest(); break;
-        case 17: _t->insertBarLine(); break;
-        case 18: _t->remove(); break;
-        case 19: _t->selectColumn((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
+        case 8: _t->changeTempoButton((*reinterpret_cast< std::add_pointer_t<QLineEdit*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[3]))); break;
+        case 9: _t->changeTempoEdit((*reinterpret_cast< std::add_pointer_t<QLineEdit*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[3]))); break;
+        case 10: _t->insertSlideUp(); break;
+        case 11: _t->insertSlideDown(); break;
+        case 12: _t->insertHammerOn(); break;
+        case 13: _t->insertPullOff(); break;
+        case 14: _t->insertBend(); break;
+        case 15: _t->insertRelease(); break;
+        case 16: _t->insertVibrato(); break;
+        case 17: _t->insertMutedHit(); break;
+        case 18: _t->insertRest(); break;
+        case 19: _t->insertBarLine(); break;
+        case 20: _t->undo(); break;
+        case 21: _t->remove(); break;
+        case 22: _t->selectColumn((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -219,6 +245,26 @@ void Tablature::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 4:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+            case 0:
+                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QPushButton* >(); break;
+            }
+            break;
+        case 8:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+            case 0:
+                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QLineEdit* >(); break;
+            case 2:
+            case 1:
+                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QPushButton* >(); break;
+            }
+            break;
+        case 9:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+            case 0:
+                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QLineEdit* >(); break;
+            case 2:
             case 1:
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QPushButton* >(); break;
             }
@@ -246,13 +292,13 @@ int Tablature::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 20)
+        if (_id < 23)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 20;
+        _id -= 23;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 20)
+        if (_id < 23)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 20;
+        _id -= 23;
     }
     return _id;
 }

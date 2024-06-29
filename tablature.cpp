@@ -12,7 +12,24 @@ Tablature::Tablature(Sound *sound, QWidget *parent)
     tabLayout->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
     tabLayout->setSpacing(0);
 
+    // Row Layout
+    rowLayout = new QVBoxLayout();
+    tabLayout->addLayout(rowLayout);
+
+    // Column layout
+    columnLayout = new QHBoxLayout();
+    rowLayout->addLayout(columnLayout);
+
     // Create Tablature
+    QLabel *strings = createNewTabLine();
+    columnLayout->addWidget(strings);
+
+    addRest();
+}
+
+// Creates new tab line with strings
+QLabel *Tablature::createNewTabLine()
+{
     QLabel *strings = new QLabel();
     strings->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     strings->setStyleSheet("color: white; font: 20pt Consolas; letter-spacing: 10px;");
@@ -25,17 +42,7 @@ Tablature::Tablature(Sound *sound, QWidget *parent)
         "A|\u2015\n"
         "E|\u2015"
     );
-    tabLayout->addWidget(strings);
-
-    // Row Layout
-    rowLayout = new QVBoxLayout();
-    tabLayout->addLayout(rowLayout);
-
-    // Column layout
-    columnLayout = new QHBoxLayout();
-    rowLayout->addLayout(columnLayout);
-
-    addRest();
+    return strings;
 }
 
 // Retrieve index of the selected column
@@ -97,7 +104,7 @@ void Tablature::goRight()
 }
 
 // Plays the entire tab
-void Tablature::playTab(double ms, QPushButton *play)
+void Tablature::playTab(QPushButton *play)
 {
     // Stop timer if user pauses the tab
     if (tempo != nullptr)
@@ -120,8 +127,9 @@ void Tablature::playTab(double ms, QPushButton *play)
     }
 
     // Initialise tempo timer
+    int ms = 60000 / BPM;
     tempo = new QTimer();
-    tempo->setInterval(600);
+    tempo->setInterval(ms);
     tempo->start();
     QObject::connect(tempo, &QTimer::timeout, this, &Tablature::playColumn);
 
@@ -241,12 +249,14 @@ QPushButton *Tablature::createRest()
     rest->setFixedSize(35, 205);
     rest->setCheckable(true);
     rest->setCursor(Qt::PointingHandCursor);
+    rest->setFocusPolicy(Qt::NoFocus);
     rest->setStyleSheet
     (
         "QPushButton { "
         "   border-radius: 1px;"
         "   background-color: rgb(33,33,33);"
         "   font: 20pt Consolas;"
+        "   outline: none;"
         "}"
         "QPushButton:hover { "
         "   background-color: rgb(75,75,75);"
@@ -260,24 +270,6 @@ QPushButton *Tablature::createRest()
 // Adds rest line to tab
 void Tablature::addRest()
 {
-    /*
-    // Maximum width of tab exceeded
-    int tabWidth = columns.size() * 35;
-    int parentWidth = parentWidget()->width(); // Width of guitar widget in mainWidget.cpp (window area excluding side bar)
-    int windowWidth = window()->width();
-
-    int maxWidth = 0.75 * windowWidth;
-
-    qDebug() << "Tab Width: " << tabWidth;
-    qDebug() << "Parent Width: " << parentWidth;
-    qDebug() << "Window Width: " << windowWidth;
-
-    if (tabWidth > maxWidth)
-    {
-        qDebug() << "Exceeded";
-    }
-    */
-
     QPushButton *rest = createRest();
     columnLayout->addWidget(rest);
     columns.push_back(rest);
@@ -333,8 +325,60 @@ void Tablature::selectColumn(bool checked)
     }
 }
 
+// Resizes the tablature whenever the window size is changed
+void Tablature::resizeTab(int width)
+{
+    // Note: width is the width of guitar widget (parent) in mainWidget.cpp (window area excluding side bar)
+    int tabWidth = columns.size() * 35;
+    int maxWidth = 0.82 * window()->width();
+
+    // Window gets smaller -> Start new tab line
+    if (tabWidth > maxWidth)
+    {
+        /*
+        QLabel *strings = createNewTabLine();
+        columnLayout = new QHBoxLayout();
+        columnLayout->addWidget(strings);
+        rowLayout->addLayout(columnLayout); */
+
+        qDebug() << "Exceeded";
+    }
+}
 
 // ==================================== TECHNIQUES ====================================
+
+// Changes the BPM of the tab via buttons
+void Tablature::changeTempoButton(QLineEdit *field, QPushButton *increase, QPushButton *decrease)
+{
+    int tempo = field->text().toInt();
+    int changeAmount = (qobject_cast<QPushButton*>(sender())->text() == "+") ? 10 : -10;
+    tempo += changeAmount;
+
+    // Disable or enable buttons based on tempo limits
+    increase->setEnabled(tempo <= 250);
+    decrease->setEnabled(tempo >= 30);
+
+    field->setText(QString::number(tempo));
+    BPM = tempo;
+}
+
+// Changes the BPM of the tab via manual editing
+void Tablature::changeTempoEdit(QLineEdit *field, QPushButton *increase, QPushButton *decrease)
+{
+    int tempo = field->text().toInt();
+
+    // Ensure tempo is within the valid range
+    if (tempo > 260) tempo = 260;
+    if (tempo < 20) tempo = 20;
+
+    // Update the button states
+    increase->setEnabled(tempo <= 250);
+    decrease->setEnabled(tempo >= 30);
+
+    field->setText(QString::number(tempo));
+    field->clearFocus();
+    BPM = tempo;
+}
 
 // Inserts rest after selected column
 void Tablature::insertRest()
@@ -348,46 +392,51 @@ void Tablature::insertRest()
         int index = getSelectedColumnIndex();
         QPushButton *rest = createRest();
         columns.insert(index + 1, rest);
-        columnLayout->insertWidget(index + 1, rest);
+        columnLayout->insertWidget(index + 2, rest); // +2 since layout contains strings (0) and first column (1)
     }
 }
 
 void Tablature::insertSlideUp()
 {
-
+    qDebug() << "Inserted Slide Up";
 }
 void Tablature::insertSlideDown()
 {
-
+    qDebug() << "Inserted Slide Down";
 }
 void Tablature::insertHammerOn()
 {
-
+    qDebug() << "Inserted Hammer On";
 }
 void Tablature::insertPullOff()
 {
-
+    qDebug() << "Inserted Pull Off";
 }
 void Tablature::insertBend()
 {
-
+    qDebug() << "Inserted Bend";
 }
 void Tablature::insertRelease()
 {
-
+    qDebug() << "Inserted Release";
 }
 void Tablature::insertVibrato()
 {
-
+    qDebug() << "Inserted Vibrato";
 }
 void Tablature::insertMutedHit()
 {
-
+    qDebug() << "Inserted Muted Hit";
 }
 void Tablature::insertBarLine()
 {
-
+    qDebug() << "Inserted Bar Line";
 }
+void Tablature::undo()
+{
+    qDebug() << "Reverted Last Change";
+}
+
 // Removes the notes of a column or the column itself if empty
 void Tablature::remove()
 {

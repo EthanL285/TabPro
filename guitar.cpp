@@ -6,6 +6,10 @@
 #include <QPushButton>
 #include <QPainterPath>
 #include <QToolTip>
+#include <QShortcut>
+#include <QKeySequence>
+#include <QLineEdit>
+#include <QIntValidator>
 
 Guitar::Guitar(QWidget *parent)
     : QWidget{parent}
@@ -30,6 +34,7 @@ Guitar::Guitar(QWidget *parent)
 
     // Add tablature and playback buttons
     tab = new Tablature(sound, this);
+    tab->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     tabLayout->addWidget(tab);
     createPlaybackButtons();
 
@@ -95,16 +100,20 @@ void Guitar::createPlaybackButtons()
     left->setStyleSheet
     (
         "QPushButton {"
-        "image: url(:/Playback/Icons/Playback/left chevron.png);"
-        "background-color: transparent;"
-        "border: none;"
+        "   image: url(:/Playback/Icons/Playback/left chevron.png);"
+        "   background-color: transparent;"
+        "   border: none;"
+        "   outline: none;"
         "}"
         "QPushButton:hover {"
-        "image: url(:/Playback/Icons/Playback/left chevron hover.png)"
+        "   image: url(:/Playback/Icons/Playback/left chevron hover.png)"
         "}"
     );
     playbackLayout->addWidget(left);
     connect(left, &QPushButton::clicked, tab, &Tablature::goLeft);
+
+    QShortcut *leftShortcut = new QShortcut(Qt::Key_Left, this);
+    connect(leftShortcut, &QShortcut::activated, left, &QPushButton::click);
 
     // Play button
     QPushButton *play = new QPushButton();
@@ -115,12 +124,13 @@ void Guitar::createPlaybackButtons()
     play->setStyleSheet
     (
         "QPushButton {"
-        "image: url(:/Playback/Icons/Playback/play.png);"
-        "background-color: transparent;"
-        "border: none;"
+        "   image: url(:/Playback/Icons/Playback/play.png);"
+        "   background-color: transparent;"
+        "   border: none;"
+        "   outline: none;"
         "}"
         "QPushButton:hover {"
-        "image: url(:/Playback/Icons/Playback/play hover.png)"
+        "   image: url(:/Playback/Icons/Playback/play hover.png)"
         "}"
         "QPushButton:checked {"
         "    image: url(:/Playback/Icons/Playback/pause.png);"
@@ -132,7 +142,7 @@ void Guitar::createPlaybackButtons()
     playbackLayout->addWidget(play);
     connect(play, &QPushButton::clicked, tab, [=]()
     {
-        tab->playTab(1000, play);
+        tab->playTab(play);
     });
 
     // Go right button
@@ -143,16 +153,20 @@ void Guitar::createPlaybackButtons()
     right->setStyleSheet
     (
         "QPushButton {"
-        "image: url(:/Playback/Icons/Playback/right chevron.png);"
-        "background-color: transparent;"
-        "border: none;"
+        "   image: url(:/Playback/Icons/Playback/right chevron.png);"
+        "   background-color: transparent;"
+        "   border: none;"
+        "   outline: none;"
         "}"
         "QPushButton:hover {"
-        "image: url(:/Playback/Icons/Playback/right chevron hover.png)"
+        "   image: url(:/Playback/Icons/Playback/right chevron hover.png)"
         "}"
     );
     playbackLayout->addWidget(right);
     connect(right, &QPushButton::clicked, tab, &Tablature::goRight);
+
+    QShortcut *rightShortcut = new QShortcut(Qt::Key_Right, this);
+    connect(rightShortcut, &QShortcut::activated, right, &QPushButton::click);
 }
 
 // Labels the guitar string with its corresponding note
@@ -190,12 +204,27 @@ void Guitar::createFretBoard()
 void Guitar::createPlayingTechniqueButtons()
 {
     QGridLayout *buttonLayout = new QGridLayout(playingTechniques);
-    QString symbols[] = {"/", "\\", "h", "p", "b", "r", "x", "~", "\u2015", "|", "\u2716"};
-    QString name[] = {"Slide Up", "Slide Down", "Hammer On", "Pull Off", "Bend", "Release", "Muted Hit", "Vibrato", "Rest", "Bar Line", "Remove Notes"};
+    buttonLayout->setAlignment(Qt::AlignHCenter);
+    buttonLayout->setContentsMargins(0, 0, 0, 0);
+    buttonLayout->setSpacing(42);
+
+    QString symbols[] = {"/", "\\", "h", "p", "b", "r", "TEMPO", "x", "~", "\u2015", "|", QChar(8634), "\u2715"};
+    QString name[] =
+    {   "Slide Up (/)", "Slide Down (\\)", "Hammer On (h)", "Pull Off (p)", "Bend (b)", "Release (r)",
+        "TEMPO", "Muted Hit (x)", "Vibrato (v)", "Rest (-)", "Bar Line (Shift + \\) ", "Undo (Ctrl + z)", "Remove Notes (Backspace)"
+    };
 
     // Assign each button a name and symbol
-    for (int col = 0; col < 11; col++)
+    for (int col = 0; col < 13; col++)
     {
+        // Create tempo button
+        if (col == 6)
+        {
+            QWidget *tempoButton = createTempoButton();
+            buttonLayout->addWidget(tempoButton, 0, col, Qt::AlignVCenter);
+            continue;
+        }
+
         QPushButton *button = new QPushButton(QString("%1").arg(symbols[col]));
         button->setToolTip(name[col]);
         button->setFixedSize(40, 40);
@@ -208,6 +237,7 @@ void Guitar::createPlayingTechniqueButtons()
             "   background-color: rgb(45,45,45);"
             "   font-size: 16px;"
             "   font-weight: bold;"
+            "   outline: none;"
             "}"
             "QPushButton:hover { "
             "   background-color: rgb(75,75,75);"
@@ -229,14 +259,147 @@ void Guitar::createPlayingTechniqueButtons()
                 case 3: tab->insertPullOff(); break;
                 case 4: tab->insertBend(); break;
                 case 5: tab->insertRelease(); break;
-                case 6: tab->insertMutedHit(); break;
-                case 7: tab->insertVibrato(); break;
-                case 8: tab->insertRest(); break;
-                case 9: tab->insertBarLine(); break;
-                case 10: tab->remove(); break;
+                case 6: break;
+                case 7: tab->insertMutedHit(); break;
+                case 8: tab->insertVibrato(); break;
+                case 9: tab->insertRest(); break;
+                case 10: tab->insertBarLine(); break;
+                case 11: tab->undo(); break;
+                case 12: tab->remove(); break;
             }
         });
+        // Assign each button to a shortcut
+        QKeySequence keySequence;
+        switch (col)
+        {
+            case 0: keySequence = QKeySequence(Qt::Key_Slash); break;
+            case 1: keySequence = QKeySequence(Qt::Key_Backslash); break;
+            case 2: keySequence = QKeySequence("h"); break;
+            case 3: keySequence = QKeySequence("p"); break;
+            case 4: keySequence = QKeySequence("b"); break;
+            case 5: keySequence = QKeySequence("r"); break;
+            case 6: break;
+            case 7: keySequence = QKeySequence("x"); break;
+            case 8: keySequence = QKeySequence("v"); break;
+            case 9: keySequence = QKeySequence("-"); break;
+            case 10: keySequence = QKeySequence(Qt::Key_Bar); break;
+            case 11: keySequence = QKeySequence(Qt::CTRL | Qt::Key_Z);
+                {
+                    QString newStyleSheet = button->styleSheet();
+                    newStyleSheet.replace("font-size: 16px", "font-size: 20px");
+                    button->setStyleSheet(newStyleSheet);
+                }
+                break;
+            case 12: keySequence = QKeySequence(Qt::Key_Backspace); break;
+        }
+        QShortcut *keyShortcut = new QShortcut(keySequence, this);
+        connect(keyShortcut, &QShortcut::activated, button, &QPushButton::click);
     }
+}
+
+// Creates the tempo button for changing BPM
+QWidget *Guitar::createTempoButton()
+{
+    QWidget *tempoWidget = new QWidget();
+    tempoWidget->setContentsMargins(0, 0, 0, 0);
+    tempoWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
+    QHBoxLayout *tempoLayout = new QHBoxLayout(tempoWidget);
+    tempoLayout->setContentsMargins(0, 0, 0, 0);
+    tempoLayout->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    tempoLayout->setSpacing(0);
+
+    // Decrease button
+    QPushButton *decrease = new QPushButton("-");
+    decrease->setFixedSize(40, 40);
+    decrease->setToolTip("Decrease BPM");
+    decrease->setCursor(Qt::PointingHandCursor);
+    decrease->setStyleSheet
+    (
+        "QPushButton { "
+        "   border-top-left-radius: 5px;"
+        "   border-bottom-left-radius: 5px;"
+        "   border-top-right-radius: 0px;"
+        "   border-bottom-right-radius: 0px;"
+        "   background-color: rgb(20,20,20);"
+        "   font-size: 22px;"
+        "   font-weight: bold;"
+        "   text-align: center;"
+        "   outline: none;"
+        "   padding-bottom: 5px;"
+        "}"
+        "QPushButton:hover { "
+        "   background-color: rgb(75,75,75);"
+        "}"
+        "QPushButton:pressed { "
+        "   background-color: rgb(25,25,25);"
+        "}"
+    );
+
+    // Edit field
+    QLineEdit *field = new QLineEdit();
+    field->setText("60");
+    field->setAlignment(Qt::AlignHCenter);
+    field->setFixedSize(80, 40);
+    field->setFocusPolicy(Qt::ClickFocus);
+    field->setStyleSheet
+    (
+        "background: rgb(45,45,45);"
+        "border: none;"
+        "color: white;"
+        "font: 15pt Muli;"
+        "font-weight: bold;"
+        "border-radius: 0px;"
+        "padding-left: 2px;"
+    );
+    field->setMaxLength(3);
+
+    // Increase button
+    QPushButton *increase = new QPushButton("+");
+    increase->setFixedSize(40, 40);
+    increase->setToolTip("Increase BPM");
+    increase->setCursor(Qt::PointingHandCursor);
+    increase->setStyleSheet
+    (
+        "QPushButton { "
+        "   border-top-left-radius: 0px;"
+        "   border-bottom-left-radius: 0px;"
+        "   border-top-right-radius: 5px;"
+        "   border-bottom-right-radius: 5px;"
+        "   background-color: rgb(20,20,20);"
+        "   font-size: 22px;"
+        "   font-weight: bold;"
+        "   text-align: center;"
+        "   outline: none;"
+        "   padding-bottom: 5px;"
+        "}"
+        "QPushButton:hover { "
+        "   background-color: rgb(75,75,75);"
+        "}"
+        "QPushButton:pressed { "
+        "   background-color: rgb(25,25,25);"
+        "}"
+    );
+
+    // Add widgets to layout
+    tempoLayout->addWidget(decrease);
+    tempoLayout->addWidget(field);
+    tempoLayout->addWidget(increase);
+
+    // Connect buttons to slots
+    auto changeTempoButton = [=]()
+    {
+        tab->changeTempoButton(field, increase, decrease);
+    };
+    auto changeTempoEdit = [=]()
+    {
+        tab->changeTempoEdit(field, increase, decrease);
+    };
+    connect(increase, &QPushButton::clicked, tab, changeTempoButton);
+    connect(decrease, &QPushButton::clicked, tab, changeTempoButton);
+    connect(field, &QLineEdit::editingFinished, tab, changeTempoEdit);
+
+    return tempoWidget;
 }
 
 // Creates buttons that serve as frets
@@ -261,6 +424,7 @@ void Guitar::createFretButtons()
                 "   border-radius: 20px;"
                 "   background-color: rgb(33,33,33);"
                 "   font-size: 14px;"
+                "   outline: none;"
                 "}"
                 "QPushButton:hover { "
                 "   background-color: rgb(75,75,75);"
@@ -277,6 +441,13 @@ void Guitar::createFretButtons()
             });
         }
     }
+}
+
+// Resize event for Guitar
+void Guitar::resizeEvent(QResizeEvent *event)
+{
+    QWidget::resizeEvent(event);
+    tab->resizeTab(width());
 }
 
 Rectangle::Rectangle(int width, int height, QWidget *parent)

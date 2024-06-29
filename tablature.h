@@ -7,6 +7,7 @@
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QPushButton>
+#include <QLineEdit>
 
 class Tablature : public QWidget
 {
@@ -14,19 +15,23 @@ class Tablature : public QWidget
 public:
     explicit Tablature(Sound *sound, QWidget *parent = nullptr);
     QPushButton *createRest();
+    QLabel *createNewTabLine();
     void addRest();
+    void resizeTab(int width);
 
 public slots:
     int getSelectedColumnIndex();
     void addFretNumber();
     void goLeft();
     void goRight();
-    void playTab(double ms, QPushButton *play);
+    void playTab(QPushButton *play);
     void playColumn();
     void getColumnInfo();
     void stopTempoTimer();
 
     // Techniques
+    void changeTempoButton(QLineEdit *field, QPushButton *increase, QPushButton *decrease);
+    void changeTempoEdit(QLineEdit *field, QPushButton *increase, QPushButton *decrease);
     void insertSlideUp();
     void insertSlideDown();
     void insertHammerOn();
@@ -37,6 +42,7 @@ public slots:
     void insertMutedHit();
     void insertRest();
     void insertBarLine();
+    void undo();
     void remove();
 
 private slots:
@@ -55,6 +61,7 @@ private:
     QPushButton *playButton = nullptr;
     bool playSwitch = true;
     int index; // Index of column
+    int BPM = 60;
 };
 
 #endif // TABLATURE_H
