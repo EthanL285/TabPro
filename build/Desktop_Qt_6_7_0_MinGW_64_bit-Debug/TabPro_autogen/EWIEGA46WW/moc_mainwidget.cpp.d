@@ -463,6 +463,7 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QLineEdit \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QMainWindow \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QPushButton \
+  C:/Qt/6.7.0/mingw_64/include/QtWidgets/QScrollArea \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QScrollerProperties \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QStackedWidget \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QVBoxLayout \

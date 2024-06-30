@@ -8,6 +8,7 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QLineEdit>
+#include <QScrollArea>
 
 class Tablature : public QWidget
 {
@@ -15,6 +16,7 @@ class Tablature : public QWidget
 public:
     explicit Tablature(Sound *sound, QWidget *parent = nullptr);
     QPushButton *createRest();
+    QScrollArea *createScrollArea();
     QLabel *createNewTabLine();
     void addRest();
     void resizeTab(int width);
@@ -53,6 +55,7 @@ private:
     QVBoxLayout *rowLayout;
     QHBoxLayout *tabLayout;
     QPushButton *selectedColumn = nullptr;
+    QVector<QVector<QPushButton*>> tab;
     QVector<QPushButton*> columns;
     Sound *sound;
     QVector<int> *notes;

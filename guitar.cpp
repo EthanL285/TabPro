@@ -17,7 +17,7 @@ Guitar::Guitar(QWidget *parent)
     // Main Layout
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
     mainLayout->setAlignment(Qt::AlignBottom | Qt::AlignHCenter);
-    mainLayout->setContentsMargins(0, 0, 50, 50);   // Right margin is 50 since spacing in mainWidget is 50
+    mainLayout->setContentsMargins(0, 0, 50, 55);   // Right margin is 50 since spacing in mainWidget is 50
 
     // View Area Layout (excludes sidebar)
     QVBoxLayout *viewArea = new QVBoxLayout();
@@ -35,6 +35,7 @@ Guitar::Guitar(QWidget *parent)
     // Add tablature and playback buttons
     tab = new Tablature(sound, this);
     tab->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    tab->setContentsMargins(10, 0, 10, 0);
     tabLayout->addWidget(tab);
     createPlaybackButtons();
 

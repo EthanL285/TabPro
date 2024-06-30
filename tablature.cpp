@@ -4,6 +4,7 @@
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
 #include <QRegularExpressionMatchIterator>
+#include <QScrollArea>
 
 Tablature::Tablature(Sound *sound, QWidget *parent)
     : sound{sound}, QWidget{parent}
@@ -12,19 +13,57 @@ Tablature::Tablature(Sound *sound, QWidget *parent)
     tabLayout->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
     tabLayout->setSpacing(0);
 
+    // Create tablature display box
+    QFrame *frame = new QFrame();
+    frame->setStyleSheet("background-color: rgb(23,23,23)");
+    frame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding); // Size policy is handled in guitar.cpp
+    frame->setFrameShape(QFrame::Box);
+    frame->setFrameShadow(QFrame::Sunken);
+    frame->setLineWidth(3);
+    frame->setMinimumHeight(310);
+    tabLayout->addWidget(frame);
+
+    // Create scroll area
+    QScrollArea *scrollArea = createScrollArea();
+
     // Row Layout
-    rowLayout = new QVBoxLayout();
-    tabLayout->addLayout(rowLayout);
+    rowLayout = new QVBoxLayout(frame);
+    rowLayout->setSpacing(50);
+    rowLayout->setAlignment(Qt::AlignHCenter);
 
     // Column layout
     columnLayout = new QHBoxLayout();
-    rowLayout->addLayout(columnLayout);
+    columnLayout->setAlignment(Qt::AlignHCenter);
+    columnLayout->setSpacing(0);
+    columnLayout->setContentsMargins(0, 0, 0, 18); // Bottom margin is space between tab and scroll bar
 
-    // Create Tablature
+    // Create a margin widget for the scroll area inside the frame
+    QWidget *tabMargin = new QWidget();
+    tabMargin->setContentsMargins(25, 0, 25, 0);
+    rowLayout->addWidget(tabMargin);
+
+    QVBoxLayout *tabMarginLayout = new QVBoxLayout(tabMargin);
+    tabMarginLayout->setAlignment(Qt::AlignCenter);
+
+    // Set scroll area
+    scrollArea->setWidget(new QWidget());
+    scrollArea->widget()->setLayout(columnLayout);
+    tabMarginLayout->addWidget(scrollArea, Qt::AlignCenter);
+
+    // Create tablature
     QLabel *strings = createNewTabLine();
     columnLayout->addWidget(strings);
 
+    tab.push_back(columns);
     addRest();
+
+    /*
+     * LAYOUT (-> means the widget has the specified layout)
+     * 1. TabLayout                                             - Contains ALL of the tab
+     * 2. Frame -> rowLayout                                    - The display box of the tab
+     * 3. tabLeftRightMargin -> tabMarginLayout                 - Serves as left and right margins for the scroll area in the frame (bottom as well due to scroll bar)
+     * 4. scrollArea set to a widget -> columnLayout            - Scroll area is set to a new widget that has the layout we want to scroll (columnLayout)
+     */
 }
 
 // Creates new tab line with strings
@@ -220,18 +259,10 @@ void Tablature::addFretNumber()
     QString fretNumber;
     for (int i = 0; i < 6; i++)
     {
-        if (i == row)
-        {
-            fretNumber+= QString("%1").arg(col);
-        }
-        else
-        {
-            fretNumber += "\u2015";
-        }
-        if (i < 5)
-        {
-            fretNumber += "\n";
-        }
+        if (i == row) fretNumber+= QString("%1").arg(col);
+        else fretNumber += "\u2015";
+
+        if (i < 5) fretNumber += "\n";
     }
     selectedColumn->setText(fretNumber);
 
@@ -254,16 +285,14 @@ QPushButton *Tablature::createRest()
     (
         "QPushButton { "
         "   border-radius: 1px;"
-        "   background-color: rgb(33,33,33);"
+        "   background-color: rgb(23,23,23);"
         "   font: 20pt Consolas;"
-        "   outline: none;"
         "}"
         "QPushButton:hover { "
         "   background-color: rgb(75,75,75);"
         "}"
     );
     connect(rest, &QPushButton::toggled, this, &Tablature::selectColumn); // Automatically passes parameter 'checked' to slot
-
     return rest;
 }
 
@@ -273,6 +302,9 @@ void Tablature::addRest()
     QPushButton *rest = createRest();
     columnLayout->addWidget(rest);
     columns.push_back(rest);
+
+    // Update tab vector with current column
+    tab[tab.size() - 1] = columns;
 
     // Set rest to selected column
     rest->setChecked(true);
@@ -298,8 +330,8 @@ void Tablature::selectColumn(bool checked)
         (
             "QPushButton { "
             "   border-radius: 1px;"
-            "   background-color: rgb(50,50,50);;"
-            "   font: 20pt Consolas"
+            "   background-color: rgb(50,50,50);"
+            "   font: 20pt Consolas;"
             "}"
             "QPushButton:hover { "
             "   background-color: rgb(75,75,75);"
@@ -312,8 +344,8 @@ void Tablature::selectColumn(bool checked)
             (
                 "QPushButton { "
                 "   border-radius: 1px;"
-                "   background-color: rgb(33,33,33);"
-                "   font: 20pt Consolas"
+                "   background-color: rgb(23,23,23);" // was 33,33,33
+                "   font: 20pt Consolas;"
                 "}"
                 "QPushButton:hover { "
                 "   background-color: rgb(75,75,75);"
@@ -326,25 +358,108 @@ void Tablature::selectColumn(bool checked)
 }
 
 // Resizes the tablature whenever the window size is changed
+// Note: width is the width of the guitar widget (parent) in mainWidget.cpp (window area excluding side bar)
 void Tablature::resizeTab(int width)
 {
-    // Note: width is the width of guitar widget (parent) in mainWidget.cpp (window area excluding side bar)
+    /*
+    // Calculate widths
     int tabWidth = columns.size() * 35;
-    int maxWidth = 0.82 * window()->width();
+    int maxWidth = 0.8 * window()->width();
 
     // Window gets smaller -> Start new tab line
     if (tabWidth > maxWidth)
     {
-        /*
-        QLabel *strings = createNewTabLine();
-        columnLayout = new QHBoxLayout();
-        columnLayout->addWidget(strings);
-        rowLayout->addLayout(columnLayout); */
+        // Calculate how many buttons should be added to a new row
+        int diff = tabWidth - maxWidth;
+        int num = diff / 35;
 
-        qDebug() << "Exceeded";
+        if (num > 0)
+        {
+            // LOGIC: Move the last 'num' buttons to a new row
+            QVector<QPushButton*> lastNumButtons = columns.mid(columns.size() - num, num);
+            columns.remove(columns.size() - num, num);
+            tab.push_back(lastNumButtons);
+
+            // UI: Create a new row layout
+            QHBoxLayout *newRowLayout = new QHBoxLayout();
+            newRowLayout->setSpacing(0);
+            newRowLayout->setAlignment(Qt::AlignHCenter);
+            rowLayout->addLayout(newRowLayout);
+
+            // Add string labels for the new tab line
+            QLabel *strings = createNewTabLine();
+            newRowLayout->addWidget(strings);
+
+            // Move buttons from the old layout to the new layout
+            for (auto button : lastNumButtons)
+            {
+                columnLayout->removeWidget(button);
+                newRowLayout->addWidget(button);
+            }
+
+            // Update current column vector and layout
+            columns = lastNumButtons;
+            columnLayout = newRowLayout;
+        }
     }
-}
+    // Window gets bigger -> Combine into one tab line
+    else
+    {
+        // Calculate tab width of last row
+        tabWidth = tab[0].size() * 35;
 
+        // Calculate available space for combining tabs
+        int diff = maxWidth - tabWidth;
+        int num = diff / 35;
+
+        // Check conditions for combining tabs
+        if (tab.size() > 1 && tabWidth < maxWidth && num > 0)
+        {
+            // Last column is empty after combining
+            if (num >= columns.size())
+            {
+                // LOGIC: Merge columns into the first tab row
+                tab[0].append(columns);
+                tab.removeLast();
+                columns = tab[0];
+
+                // UI: Update layout to reflect merged columns
+                QLayout *layout = rowLayout->itemAt(0)->layout();
+                for (auto button : columns)
+                {
+                    layout->addWidget(button);
+                }
+                rowLayout->removeItem(columnLayout);
+
+                // Delete all widgets in the old layout
+                QLayoutItem *item;
+                while ((item = columnLayout->takeAt(0)) != nullptr)
+                {
+                    delete item->widget();
+                    delete item;
+                }
+                delete columnLayout;
+                columnLayout = qobject_cast<QHBoxLayout*>(layout);
+            }
+            // Last column is not empty after combining
+            else
+            {
+                qDebug() << "FUCK LOOK AT THIS, IT SCREWS UP HERE!";
+                // LOGIC: Move last 'num' buttons from 'columns' to the first tab row
+                QVector<QPushButton*> lastNumButtons = columns.mid(columns.size() - num, num);
+                columns.remove(columns.size() - num, num);
+                tab[0].append(lastNumButtons);
+
+                // UI: Move buttons to the beggining of the row layout
+                for (auto button : lastNumButtons)
+                {
+                    columnLayout->removeWidget(button);
+                    rowLayout->insertWidget(0, button);
+                }
+            }
+        }
+    } */
+}
 // ==================================== TECHNIQUES ====================================
 
 // Changes the BPM of the tab via buttons
@@ -440,28 +555,115 @@ void Tablature::undo()
 // Removes the notes of a column or the column itself if empty
 void Tablature::remove()
 {
-    // Remove empty column
-    if (selectedColumn->text() == "\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015")
-    {
-        QPushButton *temp = selectedColumn;
-        int index = getSelectedColumnIndex();
+    QPushButton *temp = selectedColumn;
+    int index = getSelectedColumnIndex();
 
-        // Column is not the last
-        if (index != columns.size() - 1)
+    // Selected column is the last column in the tab
+    if (selectedColumn == columns.last())
+    {
+        // Empty column
+        if (columns.size() > 1 && columns[index - 1]->text() == "\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015")
         {
-            columns[index + 1]->setChecked(true);
+            columns[index - 1]->setChecked(true);
+
+            columns.remove(index);
+            columnLayout->removeWidget(temp);
+            delete temp;
+        }
+        // Non-Empty column
+        else if (columns.size() > 1)
+        {
+            columns[index - 1]->setText("\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015");
+            columns[index - 1]->setChecked(true);
 
             columns.remove(index);
             columnLayout->removeWidget(temp);
             delete temp;
         }
     }
-    // Remove notes in column
+    // Empty column
+    else if (selectedColumn->text() == "\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015")
+    {
+        columns[index + 1]->setChecked(true);
+
+        columns.remove(index);
+        columnLayout->removeWidget(temp);
+        delete temp;
+    }
+    // Non-empty column
     else
     {
         selectedColumn->setText("\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015");
     }
 }
+
+// Creates the scroll area for the tab
+QScrollArea *Tablature::createScrollArea()
+{
+    QScrollArea *scrollArea = new QScrollArea();
+    scrollArea->setWidgetResizable(true);
+    scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    scrollArea->setStyleSheet
+    (
+        "QScrollBar:horizontal {" // Horizontal scrollbar
+        "    border: 1px solid #222222;"
+        "    background: #333333;"
+        "    height: 15px;"
+        "    margin: 0 22px 0 22px;"
+        "}"
+        "QScrollBar::handle:horizontal {" // Scrollbar handle
+        "    background: rgb(80,80,80);"
+        "    min-width: 20px;"
+        "    border: 1px solid rgb(70,70,70);"
+        "    border-right: 1px solid rgb(40,40,40);"
+        "    border-left: 1px solid rgb(40,40,40);"
+        "    border-radius: 1px;"
+        "}"
+        "QScrollBar::handle:horizontal:hover {"
+        "    background: rgb(100,100,100);"
+        "}"
+        "QScrollBar::handle:horizontal:pressed {"
+        "    background: rgb(85,85,85);"
+        "}"
+        "QScrollBar::add-line:horizontal {" // Buttons at the end of the scrollbar
+        "    border-right: 1px solid rgb(15,15,15);"
+        "    border-bottom: 1px solid rgb(15,15,15);"
+        "    background: rgb(25,25,25);"
+        "    width: 20px;"
+        "    subcontrol-position: right;"
+        "    subcontrol-origin: margin;"
+        "}"
+        "QScrollBar::sub-line:horizontal {"
+        "    border-left: 1px solid rgb(15,15,15);"
+        "    border-bottom: 1px solid rgb(15,15,15);"
+        "    background: rgb(25,25,25);"
+        "    width: 20px;"
+        "    subcontrol-position: left;"
+        "    subcontrol-origin: margin;"
+        "}"
+        "QScrollBar::add-line:horizontal:hover, QScrollBar::sub-line:horizontal:hover {"
+        "    background: rgb(80,80,80);"
+        "}"
+        "QScrollBar::add-line:horizontal:pressed, QScrollBar::sub-line:horizontal:pressed {"
+        "    background: rgb(40,40,40);"
+        "}"
+        "QScrollBar::left-arrow:horizontal {" // Arrows of the end buttons
+        "    width: 8px;"
+        "    height: 8px;"
+        "    image: url(:/Scroll/Icons/Scroll/scroll left.png);"
+        "}"
+        "QScrollBar::right-arrow:horizontal {"
+        "    width: 8px;"
+        "    height: 8px;"
+        "    image: url(:/Scroll/Icons/Scroll/scroll right.png);"
+        "}"
+        "QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {" // Regions to the left and right of the handle
+        "    background: none;"
+        "}"
+    );
+    return scrollArea;
+}
+
 
 /*
     "E|------------------------|\n"

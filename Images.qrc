@@ -26,4 +26,8 @@
         <file>Icons/Playback/pause hover.png</file>
         <file>Icons/Playback/pause.png</file>
     </qresource>
+    <qresource prefix="/Scroll">
+        <file>Icons/Scroll/scroll left.png</file>
+        <file>Icons/Scroll/scroll right.png</file>
+    </qresource>
 </RCC>
