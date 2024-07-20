@@ -19,7 +19,7 @@ public:
     QScrollArea *createScrollArea();
     QLabel *createNewTabLine();
     void addRest();
-    void resizeTab(int width);
+    void adjustScrollBarPosition(QPushButton *button, QString alignment);
 
 public slots:
     int getSelectedColumnIndex();
@@ -62,6 +62,7 @@ private:
     QHash<int, QString> *fretPositions = nullptr;
     QTimer *tempo = nullptr;
     QPushButton *playButton = nullptr;
+    QScrollArea *scrollArea = nullptr;
     bool playSwitch = true;
     int index; // Index of column
     int BPM = 60;

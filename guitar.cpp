@@ -444,13 +444,6 @@ void Guitar::createFretButtons()
     }
 }
 
-// Resize event for Guitar
-void Guitar::resizeEvent(QResizeEvent *event)
-{
-    QWidget::resizeEvent(event);
-    tab->resizeTab(width());
-}
-
 Rectangle::Rectangle(int width, int height, QWidget *parent)
     : QWidget(parent), width(width), height(height)
 {

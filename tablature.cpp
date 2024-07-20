@@ -5,6 +5,7 @@
 #include <QRegularExpressionMatch>
 #include <QRegularExpressionMatchIterator>
 #include <QScrollArea>
+#include <QScrollBar>
 
 Tablature::Tablature(Sound *sound, QWidget *parent)
     : sound{sound}, QWidget{parent}
@@ -24,7 +25,7 @@ Tablature::Tablature(Sound *sound, QWidget *parent)
     tabLayout->addWidget(frame);
 
     // Create scroll area
-    QScrollArea *scrollArea = createScrollArea();
+    scrollArea = createScrollArea();
 
     // Row Layout
     rowLayout = new QVBoxLayout(frame);
@@ -61,7 +62,7 @@ Tablature::Tablature(Sound *sound, QWidget *parent)
      * LAYOUT (-> means the widget has the specified layout)
      * 1. TabLayout                                             - Contains ALL of the tab
      * 2. Frame -> rowLayout                                    - The display box of the tab
-     * 3. tabLeftRightMargin -> tabMarginLayout                 - Serves as left and right margins for the scroll area in the frame (bottom as well due to scroll bar)
+     * 3. tabLeftRightMargin -> tabMarginLayout                 - Serves as left and right margins for the scroll area in the frame
      * 4. scrollArea set to a widget -> columnLayout            - Scroll area is set to a new widget that has the layout we want to scroll (columnLayout)
      */
 }
@@ -119,6 +120,7 @@ void Tablature::goLeft()
     if (index != 0)
     {
         columns[index - 1]->setChecked(true); // selectColumn() handles the rest
+        adjustScrollBarPosition(columns[index - 1], "right");
     }
 }
 
@@ -139,6 +141,7 @@ void Tablature::goRight()
     if (index != columns.size() - 1)
     {
         columns[index + 1]->setChecked(true);
+        adjustScrollBarPosition(columns[index + 1], "left");
     }
 }
 
@@ -198,6 +201,9 @@ void Tablature::playColumn()
                 sound->playNote(QString("%1 %2").arg(it.key()).arg(it.value()));
             }
         }
+        // Adjust scroll bar position
+        adjustScrollBarPosition(columns[index], "left");
+
         index++;
     }
     // End of tab
@@ -206,6 +212,41 @@ void Tablature::playColumn()
         // Stop timer and revert button state to play
         stopTempoTimer();
         playButton->setChecked(false);
+    }
+}
+
+// Adjusts the scrollbar position such that the button is aligned to either edge of the viewport
+void Tablature::adjustScrollBarPosition(QPushButton *button, QString alignment)
+{
+    QWidget *viewport = scrollArea->viewport();
+    QRect viewportRect = viewport->rect();
+
+    // Convert button's rect to the viewport's coordinate system
+    QRect buttonRect = button->geometry();
+    QPoint buttonPos = button->mapTo(viewport, QPoint(0, 0));
+    buttonRect.moveTo(buttonPos);
+
+    if (!viewportRect.contains(buttonRect))
+    {
+        // Set the scrollbar value
+        QScrollBar *hScrollBar = scrollArea->horizontalScrollBar();
+
+        if (button == columns.first())
+        {
+            hScrollBar->setValue(0);
+        }
+        else if (alignment == "left")
+        {
+            int scrollbarValue = buttonPos.x();
+            hScrollBar->setValue(hScrollBar->value() + scrollbarValue);
+        }
+        else
+        {
+            int buttonRightEdge = buttonPos.x() + buttonRect.width();
+            int viewPortRightEdge = viewportRect.width();
+            int scrollbarValue = buttonRightEdge - viewPortRightEdge;
+            hScrollBar->setValue(hScrollBar->value() + scrollbarValue);
+        }
     }
 }
 
@@ -357,109 +398,6 @@ void Tablature::selectColumn(bool checked)
     }
 }
 
-// Resizes the tablature whenever the window size is changed
-// Note: width is the width of the guitar widget (parent) in mainWidget.cpp (window area excluding side bar)
-void Tablature::resizeTab(int width)
-{
-    /*
-    // Calculate widths
-    int tabWidth = columns.size() * 35;
-    int maxWidth = 0.8 * window()->width();
-
-    // Window gets smaller -> Start new tab line
-    if (tabWidth > maxWidth)
-    {
-        // Calculate how many buttons should be added to a new row
-        int diff = tabWidth - maxWidth;
-        int num = diff / 35;
-
-        if (num > 0)
-        {
-            // LOGIC: Move the last 'num' buttons to a new row
-            QVector<QPushButton*> lastNumButtons = columns.mid(columns.size() - num, num);
-            columns.remove(columns.size() - num, num);
-            tab.push_back(lastNumButtons);
-
-            // UI: Create a new row layout
-            QHBoxLayout *newRowLayout = new QHBoxLayout();
-            newRowLayout->setSpacing(0);
-            newRowLayout->setAlignment(Qt::AlignHCenter);
-            rowLayout->addLayout(newRowLayout);
-
-            // Add string labels for the new tab line
-            QLabel *strings = createNewTabLine();
-            newRowLayout->addWidget(strings);
-
-            // Move buttons from the old layout to the new layout
-            for (auto button : lastNumButtons)
-            {
-                columnLayout->removeWidget(button);
-                newRowLayout->addWidget(button);
-            }
-
-            // Update current column vector and layout
-            columns = lastNumButtons;
-            columnLayout = newRowLayout;
-        }
-    }
-    // Window gets bigger -> Combine into one tab line
-    else
-    {
-        // Calculate tab width of last row
-        tabWidth = tab[0].size() * 35;
-
-        // Calculate available space for combining tabs
-        int diff = maxWidth - tabWidth;
-        int num = diff / 35;
-
-        // Check conditions for combining tabs
-        if (tab.size() > 1 && tabWidth < maxWidth && num > 0)
-        {
-            // Last column is empty after combining
-            if (num >= columns.size())
-            {
-                // LOGIC: Merge columns into the first tab row
-                tab[0].append(columns);
-                tab.removeLast();
-                columns = tab[0];
-
-                // UI: Update layout to reflect merged columns
-                QLayout *layout = rowLayout->itemAt(0)->layout();
-                for (auto button : columns)
-                {
-                    layout->addWidget(button);
-                }
-                rowLayout->removeItem(columnLayout);
-
-                // Delete all widgets in the old layout
-                QLayoutItem *item;
-                while ((item = columnLayout->takeAt(0)) != nullptr)
-                {
-                    delete item->widget();
-                    delete item;
-                }
-                delete columnLayout;
-                columnLayout = qobject_cast<QHBoxLayout*>(layout);
-            }
-            // Last column is not empty after combining
-            else
-            {
-                qDebug() << "FUCK LOOK AT THIS, IT SCREWS UP HERE!";
-                // LOGIC: Move last 'num' buttons from 'columns' to the first tab row
-                QVector<QPushButton*> lastNumButtons = columns.mid(columns.size() - num, num);
-                columns.remove(columns.size() - num, num);
-                tab[0].append(lastNumButtons);
-
-                // UI: Move buttons to the beggining of the row layout
-                for (auto button : lastNumButtons)
-                {
-                    columnLayout->removeWidget(button);
-                    rowLayout->insertWidget(0, button);
-                }
-            }
-        }
-    } */
-}
 // ==================================== TECHNIQUES ====================================
 
 // Changes the BPM of the tab via buttons
@@ -661,6 +599,24 @@ QScrollArea *Tablature::createScrollArea()
         "    background: none;"
         "}"
     );
+
+    // Connect scroll bar signals to slots
+    QScrollBar *hScrollBar = scrollArea->horizontalScrollBar();
+    hScrollBar->setSingleStep(35);
+
+    connect(hScrollBar, &QScrollBar::rangeChanged, [hScrollBar](int min, int max)
+    {
+        if (max > 0) hScrollBar->setValue(max);
+    });
+    connect(hScrollBar, &QScrollBar::sliderPressed, this, [this]()
+    {
+        if (tempo != nullptr)
+        {
+            stopTempoTimer();
+            playButton->setChecked(false);
+        }
+    });
+
     return scrollArea;
 }
 

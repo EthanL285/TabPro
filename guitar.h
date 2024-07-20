@@ -20,9 +20,6 @@ public:
     void createPlaybackButtons();
     QWidget *createTempoButton();
 
-protected:
-    void resizeEvent(QResizeEvent *event) override;
-
 signals:
 
 private:
