@@ -7,8 +7,8 @@
 #include <QScrollArea>
 #include <QScrollBar>
 
-Tablature::Tablature(Sound *sound, QWidget *parent)
-    : sound{sound}, QWidget{parent}
+Tablature::Tablature(Sound *sound, Note *note, QWidget *parent)
+    : sound{sound}, note{note}, QWidget{parent}
 {
     tabLayout = new QHBoxLayout(this);
     tabLayout->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
@@ -23,9 +23,6 @@ Tablature::Tablature(Sound *sound, QWidget *parent)
     frame->setLineWidth(3);
     frame->setMinimumHeight(310);
     tabLayout->addWidget(frame);
-
-    // Create scroll area
-    scrollArea = createScrollArea();
 
     // Row Layout
     rowLayout = new QVBoxLayout(frame);
@@ -47,6 +44,7 @@ Tablature::Tablature(Sound *sound, QWidget *parent)
     tabMarginLayout->setAlignment(Qt::AlignCenter);
 
     // Set scroll area
+    scrollArea = createScrollArea();
     scrollArea->setWidget(new QWidget());
     scrollArea->widget()->setLayout(columnLayout);
     tabMarginLayout->addWidget(scrollArea, Qt::AlignCenter);
@@ -349,6 +347,9 @@ void Tablature::addRest()
 
     // Set rest to selected column
     rest->setChecked(true);
+
+    // TEST ========================================
+    note->updateLineLength(true);
 }
 
 // Selects the tab column
@@ -513,9 +514,9 @@ void Tablature::remove()
         {
             columns[index - 1]->setText("\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015");
             columns[index - 1]->setChecked(true);
+            note->updateLineLength(false);
 
             columns.remove(index);
-            columnLayout->removeWidget(temp);
             delete temp;
         }
     }
@@ -523,6 +524,7 @@ void Tablature::remove()
     else if (selectedColumn->text() == "\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015")
     {
         columns[index + 1]->setChecked(true);
+        note->updateLineLength(false);
 
         columns.remove(index);
         columnLayout->removeWidget(temp);

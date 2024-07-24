@@ -29,5 +29,7 @@
     <qresource prefix="/Scroll">
         <file>Icons/Scroll/scroll left.png</file>
         <file>Icons/Scroll/scroll right.png</file>
+        <file>Icons/Scroll/scroll up.png</file>
+        <file>Icons/Scroll/scroll down.png</file>
     </qresource>
 </RCC>

@@ -1,4 +1,5 @@
 #include "guitar.h"
+#include "note.h"
 
 #include <QPainter>
 #include <QGraphicsDropShadowEffect>
@@ -11,18 +12,38 @@
 #include <QKeySequence>
 #include <QLineEdit>
 #include <QIntValidator>
+#include <QScrollArea>
 
 Guitar::Guitar(QWidget *parent)
     : QWidget{parent}
 {
     // Main Layout
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
-    mainLayout->setAlignment(Qt::AlignBottom | Qt::AlignHCenter);
-    mainLayout->setContentsMargins(50, 0, 50, 55); // Set left to 0 if adding sidebar
+    mainLayout->setAlignment(Qt::AlignCenter);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
 
     // View Area Layout (excludes sidebar)
     QVBoxLayout *viewArea = new QVBoxLayout();
-    mainLayout->addLayout(viewArea);
+
+    // Add scroll area
+    QScrollArea *scrollArea = createScrollArea();
+    scrollArea->setWidget(new QWidget());
+    scrollArea->widget()->setLayout(viewArea);
+    mainLayout->addWidget(scrollArea, Qt::AlignCenter);
+
+    // Add Note line
+    QVBoxLayout *noteLayout = new QVBoxLayout();
+    noteLayout->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
+    viewArea->addLayout(noteLayout);
+
+    QSpacerItem *vSpacer1 = new QSpacerItem(0, 50, QSizePolicy::Fixed, QSizePolicy::Fixed);
+    noteLayout->addItem(vSpacer1);
+
+    Note *noteLine = new Note(this);
+    noteLayout->addWidget(noteLine);
+
+    QSpacerItem *vSpacer2 = new QSpacerItem(0, 25, QSizePolicy::Fixed, QSizePolicy::Fixed);
+    noteLayout->addItem(vSpacer2);
 
     // Tab Layout (includes both tablature and playback)
     tabLayout = new QVBoxLayout();
@@ -34,14 +55,15 @@ Guitar::Guitar(QWidget *parent)
     sound = new Sound(this);
 
     // Add tablature and playback buttons
-    tab = new Tablature(sound, this);
+    tab = new Tablature(sound, noteLine);
     tab->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    tab->setContentsMargins(10, 0, 10, 0);
+    tab->setContentsMargins(28, 0, 28, 0);
     tabLayout->addWidget(tab);
     createPlaybackButtons();
 
     // Interface layout (includes both playing techniques and guitar interface)
     QVBoxLayout *interfaceLayout = new QVBoxLayout();
+    interfaceLayout->setContentsMargins(0, 0, 0, 50);
     interfaceLayout->setSpacing(0);
     interfaceLayout->setAlignment(Qt::AlignHCenter);
     viewArea->addLayout(interfaceLayout);
@@ -91,6 +113,7 @@ Guitar::Guitar(QWidget *parent)
 void Guitar::createPlaybackButtons()
 {
     QHBoxLayout *playbackLayout = new QHBoxLayout();
+    playbackLayout->setContentsMargins(0, 0, 0, 50);
     playbackLayout->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     tabLayout->addLayout(playbackLayout);
 
@@ -184,6 +207,7 @@ QLabel* Guitar::createStrings(QString note)
 void Guitar::createFretBoard()
 {
     QWidget *fretBoard = new QWidget(rectangle);
+    fretBoard->setStyleSheet("background-color: rgb(45,45,45);");
     fretBoard->setFixedSize(1200, 310);
     fretBoard->move(50, 0);
 
@@ -198,6 +222,7 @@ void Guitar::createFretBoard()
         line->setLineWidth(5);
         line->setFrameShape(QFrame::HLine);
         line->setFrameShadow(QFrame::Sunken);
+        line->setStyleSheet("background-color: gray;");
         fretBoardLayout->addWidget(line);
     }
 }
@@ -443,6 +468,74 @@ void Guitar::createFretButtons()
             });
         }
     }
+}
+
+// Creates the scroll area for the entire viewing area
+QScrollArea *Guitar::createScrollArea()
+{
+    QScrollArea *scrollArea = new QScrollArea();
+    scrollArea->setWidgetResizable(true);
+    scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    scrollArea->viewport()->setStyleSheet("background-color: rgb(33,33,33);");
+    scrollArea->setStyleSheet
+    (
+        "QScrollBar:vertical {" // Vertical scrollbar
+        "    border: 1px solid #222222;"
+        "    background: #333333;"
+        "    width: 15px;"
+        "    margin: 22px 0 22px 0;"
+        "}"
+        "QScrollBar::handle:vertical {" // Scrollbar handle
+        "    background: rgb(80,80,80);"
+        "    min-height: 20px;"
+        "    border: 1px solid rgb(70,70,70);"
+        "    border-top: 1px solid rgb(40,40,40);"
+        "    border-bottom: 1px solid rgb(40,40,40);"
+        "    border-radius: 1px;"
+        "}"
+        "QScrollBar::handle:vertical:hover {"
+        "    background: rgb(100,100,100);"
+        "}"
+        "QScrollBar::handle:vertical:pressed {"
+        "    background: rgb(85,85,85);"
+        "}"
+        "QScrollBar::add-line:vertical {" // Buttons at the end of the scrollbar
+        "    border-top: 1px solid rgb(15,15,15);"
+        "    border-right: 1px solid rgb(15,15,15);"
+        "    background: rgb(25,25,25);"
+        "    height: 20px;"
+        "    subcontrol-position: bottom;"
+        "    subcontrol-origin: margin;"
+        "}"
+        "QScrollBar::sub-line:vertical {"
+        "    border-bottom: 1px solid rgb(15,15,15);"
+        "    border-right: 1px solid rgb(15,15,15);"
+        "    background: rgb(25,25,25);"
+        "    height: 20px;"
+        "    subcontrol-position: top;"
+        "    subcontrol-origin: margin;"
+        "}"
+        "QScrollBar::add-line:vertical:hover, QScrollBar::sub-line:vertical:hover {"
+        "    background: rgb(80,80,80);"
+        "}"
+        "QScrollBar::add-line:vertical:pressed, QScrollBar::sub-line:vertical:pressed {"
+        "    background: rgb(40,40,40);"
+        "}"
+        "QScrollBar::up-arrow:vertical {" // Arrows of the end buttons
+        "    width: 8px;"
+        "    height: 8px;"
+        "    image: url(:/Scroll/Icons/Scroll/scroll up.png);"
+        "}"
+        "QScrollBar::down-arrow:vertical {"
+        "    width: 8px;"
+        "    height: 8px;"
+        "    image: url(:/Scroll/Icons/Scroll/scroll down.png);"
+        "}"
+        "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {" // Regions above and below the handle
+        "    background: none;"
+        "}"
+    );
+    return scrollArea;
 }
 
 Rectangle::Rectangle(int width, int height, QWidget *parent)

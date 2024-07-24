@@ -19,6 +19,7 @@ public:
     void createPlayingTechniqueButtons();
     void createPlaybackButtons();
     QWidget *createTempoButton();
+    QScrollArea *createScrollArea();
 
 signals:
 

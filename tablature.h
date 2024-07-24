@@ -2,6 +2,7 @@
 #define TABLATURE_H
 
 #include "sound.h"
+#include "note.h"
 
 #include <QWidget>
 #include <QLabel>
@@ -14,7 +15,7 @@ class Tablature : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Tablature(Sound *sound, QWidget *parent = nullptr);
+    explicit Tablature(Sound *sound, Note *note, QWidget *parent = nullptr);
     QPushButton *createRest();
     QScrollArea *createScrollArea();
     QLabel *createNewTabLine();
@@ -63,6 +64,7 @@ private:
     QTimer *tempo = nullptr;
     QPushButton *playButton = nullptr;
     QScrollArea *scrollArea = nullptr;
+    Note *note = nullptr;
     bool playSwitch = true;
     int index; // Index of column
     int BPM = 60;
