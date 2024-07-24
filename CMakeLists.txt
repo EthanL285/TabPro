@@ -41,6 +41,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         tablature.h tablature.cpp
         sound.h sound.cpp
         Sound.qrc
+        menubar.h menubar.cpp
 
 
 

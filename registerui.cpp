@@ -4,6 +4,8 @@
 
 RegisterUI::RegisterUI(MainWindow *parent, UserModel *usermodel) : QWidget(parent), mainWindow(parent), usermodel(usermodel)
 {
+    setContentsMargins(0, 0, 0, 22);
+
     // Create Transitions object
     transition = new Transitions(this);
 

@@ -3,7 +3,9 @@
 #include <QTime>
 
 PasswordUI::PasswordUI(MainWindow *parent, UserModel *usermodel) : QWidget(parent), mainWindow(parent), usermodel(usermodel)
-{      
+{
+    setContentsMargins(0, 0, 0, 22);
+
     // Add rectangle layout
     QVBoxLayout *rectangleLayout = new QVBoxLayout(this);
     rectangleLayout->setAlignment(Qt::AlignHCenter);

@@ -2,11 +2,13 @@
 
 loginUI::loginUI(MainWindow *parent, UserModel *usermodel) : QWidget(parent), mainWindow(parent), usermodel(usermodel)
 {
+    setContentsMargins(0, 0, 0, 22);
+
     // Create layout
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setAlignment(Qt::AlignHCenter);
     layout->setSpacing(20);
-    layout->setContentsMargins(0, 70, 0, 50);                               // left, top, right, bottom
+    layout->setContentsMargins(0, 70, 0, 50);
 
     // Create login box
     RectangleWidget *loginBox = new RectangleWidget(this);

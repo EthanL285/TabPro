@@ -6,13 +6,12 @@
 #include "passwordui.h"
 #include "mainwidget.h"
 #include <QTimer>
+#include "menubar.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
-
     // Create UserModel object for database-related operations
     usermodel = new UserModel;
 
@@ -49,15 +48,19 @@ MainWindow::MainWindow(QWidget *parent)
     // Create main layout
     QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
     mainLayout->addWidget(stackedWidget);
-    mainLayout->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    mainLayout->setContentsMargins(0, 0, 0, 0); // Remove any margins
+    mainLayout->setAlignment(Qt::AlignCenter);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
 
     // Create loginUI object
     loginBox = new loginUI(this, usermodel);
     stackedWidget->addWidget(loginBox);
 
-    // Create Transitiosn object
+    // Create Transitions object
     transition = new Transitions(this);
+
+    // Add menu bar
+    MenuBar *menubar = new MenuBar();
+    setMenuWidget(menubar);
 
     // Automatically login user if token exists
     if (usermodel->tokenExists())
@@ -151,8 +154,9 @@ void MainWindow::redirectMainWidget()
     // Create MainWidget object if first time
     if (mainWidget == nullptr)
     {
-        mainWidget = new MainWidget(this);
-        // Don't add to stacked widget since it does not take up all the window space for some reason
+        mainWidget = new MainWidget();
+        stackedWidget->addWidget(mainWidget);
+        stackedWidget->setCurrentWidget(mainWidget);
     }
 }
 
@@ -168,12 +172,6 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     // Resize background image from centre position
     backgroundLabel->setPixmap(scaledBgImage);
     backgroundLabel->setGeometry(x, y, scaledBgImage.size().width(), scaledBgImage.size().height());
-
-    // Resize MainWidget to fit window size
-    if (mainWidget != nullptr)
-    {
-        mainWidget->setGeometry(0, 0, this->width(), this->size().height());
-    }
 }
 
 MainWindow::~MainWindow()

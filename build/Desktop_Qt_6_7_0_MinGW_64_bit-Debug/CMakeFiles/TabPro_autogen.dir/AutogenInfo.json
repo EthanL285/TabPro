@@ -510,6 +510,12 @@
 			null
 		],
 		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/menubar.h",
+			"MU",
+			"EWIEGA46WW/moc_menubar.cpp",
+			null
+		],
+		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/passwordui.h",
 			"MU",
 			"EWIEGA46WW/moc_passwordui.cpp",
@@ -663,6 +669,11 @@
 		],
 		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwindow.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/menubar.cpp",
 			"MU",
 			null
 		],

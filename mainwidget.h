@@ -5,6 +5,7 @@
 #include "mainwindow.h"
 #include "sidebar.h"
 #include "guitar.h"
+#include "menubar.h"
 
 class MainWidget : public QWidget
 {
@@ -19,6 +20,7 @@ private:
     MainWindow *mainWindow;
     Sidebar *sidebar;
     Guitar *guitar;
+    MenuBar *menubar;
 
 signals:
 };

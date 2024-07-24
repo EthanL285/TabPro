@@ -462,6 +462,7 @@ TabPro_autogen/timestamp: \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/QLayout \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/QLineEdit \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/QMainWindow \
+	C:/Qt/6.7.0/mingw_64/include/QtWidgets/QMenuBar \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/QPushButton \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/QScrollArea \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/QScrollerProperties \
@@ -1194,6 +1195,8 @@ TabPro_autogen/timestamp: \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwidget.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwindow.cpp \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwindow.h \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/menubar.cpp \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/menubar.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/passwordui.cpp \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/passwordui.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/registerui.cpp \

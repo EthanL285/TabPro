@@ -1,4 +1,5 @@
 #include "guitar.h"
+
 #include <QPainter>
 #include <QGraphicsDropShadowEffect>
 #include <QScrollArea>
@@ -17,7 +18,7 @@ Guitar::Guitar(QWidget *parent)
     // Main Layout
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
     mainLayout->setAlignment(Qt::AlignBottom | Qt::AlignHCenter);
-    mainLayout->setContentsMargins(0, 0, 50, 55);   // Right margin is 50 since spacing in mainWidget is 50
+    mainLayout->setContentsMargins(50, 0, 50, 55); // Set left to 0 if adding sidebar
 
     // View Area Layout (excludes sidebar)
     QVBoxLayout *viewArea = new QVBoxLayout();

@@ -13,8 +13,8 @@ MainWidget::MainWidget(MainWindow *parent)
     mainLayout->setSpacing(50);
 
     // Add sidebar
-    sidebar = new Sidebar();
-    mainLayout->addWidget(sidebar);
+    // sidebar = new Sidebar(this);
+    // mainLayout->addWidget(sidebar);
 
     // Add guitar widget
     guitar = new Guitar(this);
