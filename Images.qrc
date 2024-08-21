@@ -32,4 +32,8 @@
         <file>Icons/Scroll/scroll up.png</file>
         <file>Icons/Scroll/scroll down.png</file>
     </qresource>
+    <qresource prefix="/Notes">
+        <file>Icons/Notes/Treble Clef.png</file>
+        <file>Icons/Notes/crotchet.png</file>
+    </qresource>
 </RCC>

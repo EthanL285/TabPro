@@ -18,6 +18,7 @@ MenuBar::MenuBar(QWidget *parent)
     menuBar->setStyleSheet("QMenuBar { background-color: rgb(23,23,23); border-bottom: 1px solid rgb(18,18,18); }");
     mainLayout->addWidget(menuBar);
 
+    /*
     // Create bottom widget
     QWidget *bottomWidget = new QWidget();
     bottomWidget->setFixedHeight(32);
@@ -36,5 +37,5 @@ MenuBar::MenuBar(QWidget *parent)
     button1->setStyleSheet("QPushButton { border: none; }");
     button2->setStyleSheet("QPushButton { border: none; }");
     bottomLayout->addWidget(button1);
-    bottomLayout->addWidget(button2);
+    bottomLayout->addWidget(button2); */
 }

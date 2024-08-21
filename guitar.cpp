@@ -1,5 +1,5 @@
 #include "guitar.h"
-#include "note.h"
+#include "staff.h"
 
 #include <QPainter>
 #include <QGraphicsDropShadowEffect>
@@ -39,8 +39,8 @@ Guitar::Guitar(QWidget *parent)
     QSpacerItem *vSpacer1 = new QSpacerItem(0, 50, QSizePolicy::Fixed, QSizePolicy::Fixed);
     noteLayout->addItem(vSpacer1);
 
-    Note *noteLine = new Note(this);
-    noteLayout->addWidget(noteLine);
+    Staff *staff = new Staff(this);
+    noteLayout->addWidget(staff);
 
     QSpacerItem *vSpacer2 = new QSpacerItem(0, 25, QSizePolicy::Fixed, QSizePolicy::Fixed);
     noteLayout->addItem(vSpacer2);
@@ -55,7 +55,7 @@ Guitar::Guitar(QWidget *parent)
     sound = new Sound(this);
 
     // Add tablature and playback buttons
-    tab = new Tablature(sound, noteLine);
+    tab = new Tablature(sound, staff);
     tab->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     tab->setContentsMargins(28, 0, 28, 0);
     tabLayout->addWidget(tab);
@@ -71,7 +71,7 @@ Guitar::Guitar(QWidget *parent)
     // Add Playing Technique Buttons
     playingTechniques = new QWidget();
     playingTechniques->setFixedSize(1250, 60);
-    playingTechniques->setStyleSheet("background-color: rgb(27,27,27); border-top-left-radius: 15px; border-top-right-radius: 15px;");
+    playingTechniques->setStyleSheet("background-color: rgb(25,25,25); border-top-left-radius: 15px; border-top-right-radius: 15px;");
     interfaceLayout->addWidget(playingTechniques);
     createPlayingTechniqueButtons();
 
@@ -476,7 +476,11 @@ QScrollArea *Guitar::createScrollArea()
     QScrollArea *scrollArea = new QScrollArea();
     scrollArea->setWidgetResizable(true);
     scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    scrollArea->viewport()->setStyleSheet("background-color: rgb(33,33,33);");
+    scrollArea->viewport()->setStyleSheet
+    (
+        "background: qradialgradient(cx: 0.5, cy: 0, radius: 0.7, "
+        "fx: 0.5, fy: 0, stop: 0 rgb(50,50,50), stop: 1 rgb(25,25,25));"
+    );
     scrollArea->setStyleSheet
     (
         "QScrollBar:vertical {" // Vertical scrollbar

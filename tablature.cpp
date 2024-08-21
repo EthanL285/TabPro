@@ -7,8 +7,8 @@
 #include <QScrollArea>
 #include <QScrollBar>
 
-Tablature::Tablature(Sound *sound, Note *note, QWidget *parent)
-    : sound{sound}, note{note}, QWidget{parent}
+Tablature::Tablature(Sound *sound, Staff *staff, QWidget *parent)
+    : sound{sound}, staff{staff}, QWidget{parent}
 {
     tabLayout = new QHBoxLayout(this);
     tabLayout->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
@@ -310,6 +310,9 @@ void Tablature::addFretNumber()
     {
         addRest();
     }
+
+    // Add currently selected note to the staff
+    staff->addNote("crotchet", row, col);
 }
 
 // Creates the rest QPushButton
@@ -348,8 +351,8 @@ void Tablature::addRest()
     // Set rest to selected column
     rest->setChecked(true);
 
-    // TEST ========================================
-    note->updateLineLength(true);
+    // Update note line length
+    staff->updateLineLength(true);
 }
 
 // Selects the tab column
@@ -514,7 +517,7 @@ void Tablature::remove()
         {
             columns[index - 1]->setText("\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015");
             columns[index - 1]->setChecked(true);
-            note->updateLineLength(false);
+            staff->updateLineLength(false);
 
             columns.remove(index);
             delete temp;
@@ -524,7 +527,7 @@ void Tablature::remove()
     else if (selectedColumn->text() == "\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015")
     {
         columns[index + 1]->setChecked(true);
-        note->updateLineLength(false);
+        staff->updateLineLength(false);
 
         columns.remove(index);
         columnLayout->removeWidget(temp);

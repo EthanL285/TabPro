@@ -45,7 +45,6 @@ protected:
 private:
     int width;
     int height;
-
 };
 
 #endif // GUITAR_H
