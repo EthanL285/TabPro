@@ -145,3 +145,5 @@ void Staff::addBlank(int index)
     notes.insert(index, blank);
     mainLayout->insertWidget(index + 1, blank);
 }
+
+// test
