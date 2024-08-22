@@ -1,4 +1,5 @@
 #include "staff.h"
+#include "notes.h"
 
 #include <QFrame>
 #include <QLabel>
@@ -7,6 +8,7 @@
 Staff::Staff(QWidget *parent)
     : QWidget{parent}
 {
+    setFixedHeight(185);
     mainLayout = new QHBoxLayout(this);
     mainLayout->setAlignment(Qt::AlignLeft);
     mainLayout->setContentsMargins(0,0,0,0);
@@ -100,18 +102,6 @@ QPixmap Staff::getNotePixmap(QString note)
 // Adds the selected note to the staff
 void Staff::addNote(QString note, int string, int fretNumber)
 {
-    QPixmap notePixmap = getNotePixmap(note);
-    QSize size(67,67);
-    notePixmap = notePixmap.scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-    QLabel *noteLabel = new QLabel();
-    noteLabel->setPixmap(notePixmap);
-    noteLabel->setAlignment(Qt::AlignCenter);
-    noteLabel->setFixedSize(35,150);
-    noteLabel->setStyleSheet("background: transparent;");
-    noteLabel->setContentsMargins(0, 0, 0, 2);
-    mainLayout->addWidget(noteLabel, Qt::AlignVCenter);
-
     // Determine which staff line to place the note on
     QPair<int, int> stringInfo = stringMap[string];
     int staffLine = stringInfo.first;
@@ -124,13 +114,34 @@ void Staff::addNote(QString note, int string, int fretNumber)
         if (!noteMap[key].contains("#")) staffLine++;
     }
 
-    qDebug() << "Staff Line is: " << staffLine;
+    // Add note to the staff
+    QWidget *noteHead = new Crotchet(staffLine);
+    notes.append(noteHead);
+    mainLayout->addWidget(noteHead, Qt::AlignVCenter);
 }
 
 // Updates the length of the note line to be the same as the tab length
 void Staff::updateLineLength(bool add)
 {
-    // Add/Subtract the length of a tab column
     length += (add ? 35 : -35);
     setFixedWidth(length);
+}
+
+// Removes the note at the given index
+void Staff::removeNote(int index)
+{
+    QWidget *temp = notes[index];
+    notes.remove(index);
+    mainLayout->removeWidget(temp);
+    delete temp;
+}
+
+// Replaces the note at the given index with a blank
+void Staff::addBlank(int index)
+{
+    if (notes[index] != nullptr) removeNote(index);
+
+    QWidget *blank = new Blank();
+    notes.insert(index, blank);
+    mainLayout->insertWidget(index + 1, blank);
 }

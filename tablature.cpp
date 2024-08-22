@@ -507,36 +507,41 @@ void Tablature::remove()
         if (columns.size() > 1 && columns[index - 1]->text() == "\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015")
         {
             columns[index - 1]->setChecked(true);
-
             columns.remove(index);
             columnLayout->removeWidget(temp);
             delete temp;
+
+            staff->updateLineLength(false);
+            staff->removeNote(index - 1);
         }
         // Non-Empty column
         else if (columns.size() > 1)
         {
             columns[index - 1]->setText("\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015");
             columns[index - 1]->setChecked(true);
-            staff->updateLineLength(false);
-
             columns.remove(index);
             delete temp;
+
+            staff->updateLineLength(false);
+            staff->removeNote(index - 1);
         }
     }
     // Empty column
     else if (selectedColumn->text() == "\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015")
     {
         columns[index + 1]->setChecked(true);
-        staff->updateLineLength(false);
-
         columns.remove(index);
         columnLayout->removeWidget(temp);
         delete temp;
+
+        staff->updateLineLength(false);
+        staff->removeNote(index);
     }
     // Non-empty column
     else
     {
         selectedColumn->setText("\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015");
+        staff->addBlank(index);
     }
 }
 

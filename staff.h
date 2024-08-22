@@ -13,8 +13,10 @@ public:
     void updateLineLength(bool add);
     QMap<int, QPair<int, int>> createStringMap();
     QMap<int, QString> createNoteMap();
-    void addNote(QString note, int string, int fretNumber);
     QPixmap getNotePixmap(QString note);
+    void addNote(QString note, int string, int fretNumber);
+    void removeNote(int index);
+    void addBlank(int index);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -26,6 +28,7 @@ private:
     QMap<QString, QPixmap> notePixmaps;
     QMap<int, QString> noteMap;
     QMap<int, QPair<int, int>> stringMap;
+    QVector<QWidget*> notes;
 
 signals:
 

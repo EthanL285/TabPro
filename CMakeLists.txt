@@ -43,6 +43,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Sound.qrc
         menubar.h menubar.cpp
         staff.h staff.cpp
+        notes.h notes.cpp
 
 
 
