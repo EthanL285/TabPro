@@ -100,7 +100,7 @@ QPixmap Staff::getNotePixmap(QString note)
 }
 
 // Adds the selected note to the staff
-void Staff::addNote(QString note, int string, int fretNumber)
+void Staff::addNote(QString note, int string, int fretNumber, int index)
 {
     // Determine which staff line to place the note on
     QPair<int, int> stringInfo = stringMap[string];
@@ -116,8 +116,19 @@ void Staff::addNote(QString note, int string, int fretNumber)
 
     // Add note to the staff
     QWidget *noteHead = new Crotchet(staffLine);
-    notes.append(noteHead);
-    mainLayout->addWidget(noteHead, Qt::AlignVCenter);
+
+    // Insertion is not at last index
+    if (index != notes.size())
+    {
+        removeNote(index);
+        notes.insert(index, noteHead);
+        mainLayout->insertWidget(index + 1, noteHead);
+    }
+    else
+    {
+        notes.append(noteHead);
+        mainLayout->addWidget(noteHead, Qt::AlignVCenter);
+    }
 }
 
 // Updates the length of the note line to be the same as the tab length

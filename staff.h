@@ -14,7 +14,7 @@ public:
     QMap<int, QPair<int, int>> createStringMap();
     QMap<int, QString> createNoteMap();
     QPixmap getNotePixmap(QString note);
-    void addNote(QString note, int string, int fretNumber);
+    void addNote(QString note, int string, int fretNumber, int index);
     void removeNote(int index);
     void addBlank(int index);
 

@@ -305,14 +305,14 @@ void Tablature::addFretNumber()
     }
     selectedColumn->setText(fretNumber);
 
+    // Add currently selected note to the staff
+    staff->addNote("crotchet", row, col, getSelectedColumnIndex());
+
     // Create new rest if inserted into last column
     if (selectedColumn == columns.last())
     {
         addRest();
     }
-
-    // Add currently selected note to the staff
-    staff->addNote("crotchet", row, col);
 }
 
 // Creates the rest QPushButton
