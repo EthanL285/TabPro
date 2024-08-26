@@ -71,6 +71,7 @@ Guitar::Guitar(QWidget *parent)
 
     // Bottom Layout (Includes techniques, guitar interface and chords)
     QHBoxLayout *bottomLayout = new QHBoxLayout();
+    bottomLayout->setContentsMargins(0,0,0,0);
     bottomLayout->setSpacing(0);
     interfaceLayout->addLayout(bottomLayout);
 
