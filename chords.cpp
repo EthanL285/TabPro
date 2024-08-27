@@ -23,7 +23,7 @@ Chords::Chords(QWidget *parent)
     header->setFixedHeight(60);
     header->setMaximumWidth(0);
     header->setMinimumWidth(0);
-    header->setStyleSheet("background: rgb(23,23,23); border-top: 2px solid rgb(20,20,20);");
+    header->setStyleSheet("background: rgb(23,23,23); border-top: 2px solid rgb(20,20,20); border-left: 1px solid rgb(20,20,20);");
     header->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     boxLayout->addWidget(header);
 
@@ -41,7 +41,7 @@ Chords::Chords(QWidget *parent)
     setGraphicsEffect(shadowEffect);
 
     // Add button
-    button = new QPushButton(">>");
+    button = new QPushButton();
     button->setCheckable(true);
     button->setFixedWidth(20);
     button->setCursor(Qt::PointingHandCursor);
@@ -49,23 +49,31 @@ Chords::Chords(QWidget *parent)
     button->setStyleSheet
     (
         "QPushButton {"
-        "background: rgb(17,17,17);"
-        "border: none;"
-        "color: white;"
-        "font: 15pt Moon;"
-        "font-weight: semi-bold;"
+        "   background: rgb(17,17,17);"
+        "   border: none;"
+        "   color: white;"
+        "   font: 15pt Moon;"
+        "   font-weight: semi-bold;"
         "}"
         "QPushButton:hover {"
-        "background: rgb(22,22,22);"
-        "border: 1px solid rgb(17,17,17);"
+        "   background: rgb(22,22,22);"
+        "   border: 1px solid rgb(17,17,17);"
         "}"
         "QPushButton:pressed {"
-        "background: rgb(70,70,70);"
-        "font: 15pt Moon;"
+        "   background: rgb(70,70,70);"
+        "   font: 15pt Moon;"
         "}"
     );
     mainLayout->addWidget(button);
     connect(button, &QPushButton::toggled, this, &Chords::toggleContent);
+
+    // Set button icon
+    expandIcon = QIcon(":/Playback/Icons/Playback/right chevron.png");
+    collapseIcon = QIcon(":/Playback/Icons/Playback/left chevron.png");
+
+    QPixmap pixmap = expandIcon.pixmap(QSize(16, 16));
+    button->setIcon(QIcon(pixmap));
+    button->setIconSize(QSize(16, 16));
 
     // Header layout
     QHBoxLayout *headerLayout = new QHBoxLayout(header);
@@ -78,16 +86,21 @@ Chords::Chords(QWidget *parent)
     modeText->setText("Chord Mode");
     headerLayout->addWidget(modeText);
 
-    QWidget *toggleSwitch = new ToggleSwitch(this);
+    QWidget *toggleSwitch = new ToggleSwitch();
     headerLayout->addWidget(toggleSwitch);
 }
 
 // Toggles the chord content
-void Chords::toggleContent(bool checked)
+void Chords::toggleContent()
 {
+    // Handle animation
     animateAccordion(header);
     animateAccordion(content);
     contentToggled = !contentToggled;
+
+    // Change button icon
+    if (contentToggled) button->setIcon(collapseIcon);
+    else button->setIcon(expandIcon);
 }
 
 // Animates the accordion

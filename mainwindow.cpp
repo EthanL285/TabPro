@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     // Create UserModel object for database-related operations
-    usermodel = new UserModel;
+    usermodel = new UserModel(this);
 
     // Set app icon
     QIcon appIcon(":/AppIcon/Icon1.png");

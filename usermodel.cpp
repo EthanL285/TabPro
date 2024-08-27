@@ -6,7 +6,8 @@
 #include <QDesktopServices>
 #include <QNetworkAccessManager>
 
-UserModel::UserModel()
+UserModel::UserModel(QWidget *parent)
+    : QObject{parent}
 {
     userDatabase = QSqlDatabase::addDatabase("QSQLITE");
     userDatabase.setDatabaseName("users.db"); // Database stored in project file

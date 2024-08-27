@@ -9,8 +9,8 @@ Sound::Sound(QObject *parent)
 // Plays the given note
 void Sound::playNote(QString note)
 {
-    QMediaPlayer *player = new QMediaPlayer();
-    QAudioOutput *output = new QAudioOutput();
+    QMediaPlayer *player = new QMediaPlayer(this);
+    QAudioOutput *output = new QAudioOutput(this);
     player->setAudioOutput(output);
     output->setVolume(1);
 

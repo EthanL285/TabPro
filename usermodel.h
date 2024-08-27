@@ -21,7 +21,7 @@ class UserModel : public QObject
     Q_OBJECT
 
 public:
-    UserModel();
+    explicit UserModel(QWidget *parent = nullptr);
     void addUser(QString email, QString username, QString password);
     QString isValidEmail(const QString &email);
     QString isValidPassword(const QString &password);

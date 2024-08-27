@@ -60,7 +60,7 @@ private:
     QVector<QPushButton*> columns;
     Sound *sound;
     QVector<int> *notes;
-    QHash<int, QString> *fretPositions = nullptr;
+    QHash<int, QString> fretPositions;
     QTimer *tempo = nullptr;
     QPushButton *playButton = nullptr;
     QScrollArea *scrollArea = nullptr;

@@ -168,7 +168,7 @@ void Tablature::playTab(QPushButton *play)
 
     // Initialise tempo timer
     int ms = 60000 / BPM;
-    tempo = new QTimer();
+    tempo = new QTimer(this);
     tempo->setInterval(ms);
     tempo->start();
     QObject::connect(tempo, &QTimer::timeout, this, &Tablature::playColumn);
@@ -192,7 +192,7 @@ void Tablature::playColumn()
         playSwitch = false; // selectColumn() identifies user intervention whilst play is active by seeing if playSwitch is false
 
         // Access hashmap and play note
-        for (auto it = fretPositions->constBegin(); it != fretPositions->constEnd(); it++)
+        for (auto it = fretPositions.constBegin(); it != fretPositions.constEnd(); it++)
         {
             if (it.value() != "-")
             {
@@ -252,17 +252,12 @@ void Tablature::adjustScrollBarPosition(QPushButton *button, QString alignment)
 void Tablature::getColumnInfo()
 {
     // Initialise hashmap
-    if (fretPositions != nullptr)
-    {
-        delete fretPositions;
-    }
-    fretPositions = new QHash<int, QString>;
-    fretPositions->insert(0, "-");
-    fretPositions->insert(1, "-");
-    fretPositions->insert(2, "-");
-    fretPositions->insert(3, "-");
-    fretPositions->insert(4, "-");
-    fretPositions->insert(5, "-");
+    fretPositions.insert(0, "-");
+    fretPositions.insert(1, "-");
+    fretPositions.insert(2, "-");
+    fretPositions.insert(3, "-");
+    fretPositions.insert(4, "-");
+    fretPositions.insert(5, "-");
 
     // Parse column to retrieve fret numbers and strings
     QString notes = columns[index]->text();
@@ -278,7 +273,7 @@ void Tablature::getColumnInfo()
         {
             QRegularExpressionMatch match = it.next();
             QString fretNumber = match.captured();
-            (*fretPositions)[stringNumber] = fretNumber;
+            (fretPositions)[stringNumber] = fretNumber;
         }
     }
 }

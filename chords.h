@@ -9,7 +9,7 @@ class Chords : public QWidget
     Q_OBJECT
 public:
     explicit Chords(QWidget *parent = nullptr);
-    void toggleContent(bool checked);
+    void toggleContent();
     void animateAccordion(QWidget *widget);
 
 private:
@@ -17,6 +17,8 @@ private:
     QWidget *header;
     QPushButton *button;
     bool contentToggled = false;
+    QIcon expandIcon;
+    QIcon collapseIcon;
 };
 
 //////////////////// Toggle Switch Class ////////////////////
