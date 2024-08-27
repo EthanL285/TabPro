@@ -5,6 +5,7 @@
 #include <QPropertyAnimation>
 #include <QLabel>
 #include <QGraphicsEffect>
+#include <QlineEdit>
 
 Chords::Chords(QWidget *parent)
     : QWidget{parent}
@@ -29,8 +30,9 @@ Chords::Chords(QWidget *parent)
 
     // Add box
     content = new QWidget();
+    content->setFixedHeight(310);
     content->setMinimumWidth(0);
-    content->setStyleSheet("background: rgb(45,45,45); border-left: 2px solid gray;");
+    content->setStyleSheet("background: rgb(45,45,45); border: none;");
     content->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     boxLayout->addWidget(content);
 
@@ -46,6 +48,7 @@ Chords::Chords(QWidget *parent)
     button->setFixedWidth(20);
     button->setCursor(Qt::PointingHandCursor);
     button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    button->setFocusPolicy(Qt::NoFocus);
     button->setStyleSheet
     (
         "QPushButton {"
@@ -79,15 +82,90 @@ Chords::Chords(QWidget *parent)
     QHBoxLayout *headerLayout = new QHBoxLayout(header);
     headerLayout->setAlignment(Qt::AlignLeft);
 
-    // Chord mode section
-    QLabel *modeText = new QLabel();
-    modeText->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    modeText->setStyleSheet("color: white; font: 11pt Muli; font-weight: semi-bold; border: none;");
-    modeText->setText("Chord Mode");
-    headerLayout->addWidget(modeText);
+    // Header section
+    QLabel *chordMode = new QLabel("Chord Mode");
+    chordMode->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    chordMode->setStyleSheet("color: white; font: 11pt Muli; font-weight: semi-bold; border: none;");
+    headerLayout->addWidget(chordMode);
 
     QWidget *toggleSwitch = new ToggleSwitch();
     headerLayout->addWidget(toggleSwitch);
+
+    QLineEdit *searchField = new QLineEdit(this);
+    searchField->setPlaceholderText("Chord Finder");
+    searchField->setFixedSize(150, 35);
+    searchField->setStyleSheet
+    (
+        "background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(96, 94, 92, 100), stop: 1 rgba(40,40,40, 200));"
+        "border: 1px solid rgb(20,20,20);"
+        "border-radius: 5px;"
+        "color: white;"
+        "font: 11pt Muli;"
+        "padding-left: 6px;"
+    );
+    headerLayout->addWidget(searchField);
+
+    // Content layout
+    QVBoxLayout *contentLayout = new QVBoxLayout(content);
+    contentLayout->setContentsMargins(0,0,0,0);
+    contentLayout->setAlignment(Qt::AlignLeft);
+
+    // Content section
+    stackedWidget = new QStackedWidget();
+    stackedWidget->setMinimumWidth(0);
+    stackedWidget->setMaximumWidth(0);
+    contentLayout->addWidget(stackedWidget);
+
+    QWidget *chordList = new QWidget();
+    chordList->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    chordList->setStyleSheet("background: rgb(33,33,33); border-left: 1px solid rgb(20,20,20);");
+
+    scrollArea = new QScrollArea();
+    scrollArea->setWidget(chordList);
+    scrollArea->setWidgetResizable(true);
+    stackedWidget->addWidget(scrollArea);
+
+    // Chord list section
+    QVBoxLayout *listLayout = new QVBoxLayout(chordList);
+    listLayout->setContentsMargins(0,0,0,0);
+    listLayout->setSpacing(0);
+    listLayout->setAlignment(Qt::AlignTop);
+
+    QPushButton *addChord = new QPushButton("+");
+    addChord->setFixedHeight(40);
+    addChord->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    addChord->setCursor(Qt::PointingHandCursor);
+    addChord->setFocusPolicy(Qt::NoFocus);
+    addChord->setToolTip("Add New Chord");
+    addChord->setStyleSheet
+    (
+        "QPushButton {"
+            "background: rgb(45,45,45);"
+            "border-left: 1px solid rgb(20,20,20);"
+            "color: gray;"
+            "font: 25pt Muli;"
+            "padding-bottom: 5px;"
+        "}"
+        "QPushButton:hover {"
+            "background: rgb(60,60,60);"
+            "color: white;"
+        "}"
+        "QPushButton:pressed {"
+            "background: rgb(50,50,50);"
+            "color: gray;"
+        "}"
+    );
+    listLayout->addWidget(addChord);
+    connect(addChord, &QPushButton::clicked, this, &Chords::addChord);
+
+    for (int i = 0; i < 20; i++)
+    {
+        QWidget *chord = new QWidget();
+        chord->setFixedHeight(50);
+        // chord->setStyleSheet("background: transparent;");
+        chord->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        listLayout->addWidget(chord);
+    }
 }
 
 // Toggles the chord content
@@ -96,6 +174,7 @@ void Chords::toggleContent()
     // Handle animation
     animateAccordion(header);
     animateAccordion(content);
+    animateAccordion(stackedWidget);
     contentToggled = !contentToggled;
 
     // Change button icon
@@ -114,6 +193,31 @@ void Chords::animateAccordion(QWidget *widget)
     animation->setDuration(250);
     animation->setEasingCurve(QEasingCurve::OutQuad);
     animation->start(QAbstractAnimation::DeleteWhenStopped);
+}
+
+// Adds a new chord to the list
+void Chords::addChord()
+{
+    QWidget *chordWindow = new QWidget();
+    chordWindow->setStyleSheet("background: rgb(33,33,33); border-left: 1px solid rgb(20,20,20);");
+    stackedWidget->addWidget(chordWindow);
+    stackedWidget->setCurrentWidget(chordWindow);
+
+    QHBoxLayout *windowLayout = new QHBoxLayout(chordWindow);
+    windowLayout->setAlignment(Qt::AlignLeft);
+
+    QWidget *chordDiagram = new QWidget();
+    chordDiagram->setFixedWidth(250);
+    chordDiagram->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    chordDiagram->setStyleSheet("background: red;");
+    windowLayout->addWidget(chordDiagram);
+
+    /* Features to be implemented:
+     * Snap buttons to grids when widget is hovered on
+     * Set Chord Name
+     * Bar Option
+     * Open and closed strings
+     */
 }
 
 //////////////////// Toggle Switch Class ////////////////////

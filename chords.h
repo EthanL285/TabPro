@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QPushButton>
+#include <QScrollArea>
+#include <QStackedWidget>
 
 class Chords : public QWidget
 {
@@ -12,6 +14,9 @@ public:
     void toggleContent();
     void animateAccordion(QWidget *widget);
 
+private slots:
+    void addChord();
+
 private:
     QWidget *content;
     QWidget *header;
@@ -19,6 +24,8 @@ private:
     bool contentToggled = false;
     QIcon expandIcon;
     QIcon collapseIcon;
+    QScrollArea *scrollArea;
+    QStackedWidget *stackedWidget;
 };
 
 //////////////////// Toggle Switch Class ////////////////////
