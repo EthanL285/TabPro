@@ -36,6 +36,10 @@ class ChordDiagram : public QWidget {
 public:
     ChordDiagram(QWidget *parent = nullptr);
     QPointF snapToGrid(const QPointF &pos);
+    bool onSameFret(QPointF point);
+    bool onSameString(QPointF point);
+    int getCircleNum();
+    int getCircleIndex(QPointF point);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -45,11 +49,12 @@ protected:
 
 private:
     bool isHovering = false;
+    bool placeMode = true;
     bool snap = false;
     bool circlePositionsFound = false;
     QVector<QPointF> circlePositions;
-    QVector<QPointF> placedCirclePos;
-    QPointF currentCirclePos = QPointF(-1,-1);
+    QVector<QPair<QPointF, int>> placedCircles;
+    QPointF currCirclePos = QPointF(-1,-1);
 };
 
 //////////////////// Toggle Switch Class ////////////////////

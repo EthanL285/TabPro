@@ -225,10 +225,12 @@ void Chords::addChord()
     }
 
     /* Features to be implemented:
-     * Snap buttons to grids when widget is hovered on
      * Set Chord Name
      * Bar Option
      * Open and closed strings
+     * Two Modes
+     *      - Place mode
+     *      - Drag mode (automatically enter drag mode when all circles have been placed)
      */
 }
 
@@ -300,30 +302,35 @@ void ChordDiagram::paintEvent(QPaintEvent *event)
     painter.setPen(QPen(QColor(45,45,45), 1));
 
     // Draw currently placed circles
-    for (const auto &point : placedCirclePos)
+    for (const auto pair : placedCircles)
     {
         painter.save();
-        painter.drawEllipse(point, 14, 14);
+        painter.drawEllipse(pair.first, 14, 14);
 
         QRectF textRect(QPoint(10, 10), QSize(20, 20));
-        textRect.moveCenter(point);
+        textRect.moveCenter(pair.first);
         painter.setPen(Qt::white);
-        painter.drawText(textRect, Qt::AlignCenter, "1");
+        painter.drawText(textRect, Qt::AlignCenter, QString::number(pair.second));
         painter.restore();
     }
 
     // Draw the circle while hovering
-    if (isHovering && !currentCirclePos.isNull())
+    if (isHovering && placeMode && !currCirclePos.isNull())
     {
-        painter.drawEllipse(currentCirclePos, 14, 14);
+        painter.drawEllipse(currCirclePos, 14, 14);
+
+        QRectF textRect(QPoint(10, 10), QSize(20, 20));
+        textRect.moveCenter(currCirclePos);
+        painter.setPen(Qt::white);
+        painter.drawText(textRect, Qt::AlignCenter, QString::number(getCircleNum()));
     }
 }
 
 // Hover event (enable mouse tracking)
 void ChordDiagram::mouseMoveEvent(QMouseEvent *event)
 {
-    currentCirclePos = snapToGrid(event->pos());
-    if (!snap) currentCirclePos = event->pos();
+    currCirclePos = snapToGrid(event->pos());
+    if (!snap) currCirclePos = event->pos();
 
     isHovering = true;
     update();
@@ -340,11 +347,30 @@ void ChordDiagram::leaveEvent(QEvent *event)
 // Press Event
 void ChordDiagram::mousePressEvent(QMouseEvent *event)
 {
-    // Place circle if snapped
-    if (event->button() == Qt::LeftButton && snap)
+    // Place circle if snapped and in place mode
+    if (event->button() == Qt::LeftButton && snap && placeMode)
     {
-        placedCirclePos.append(currentCirclePos);
+        int idx = getCircleIndex(currCirclePos);
+
+        // Circle is placed on the same fret as an already existing circle
+        if (onSameString(currCirclePos))
+        {
+            int num = getCircleNum();
+            placedCircles.remove(idx);
+            placedCircles.insert(idx, qMakePair(currCirclePos, num));
+        }
+        else
+        {
+            placedCircles.append(qMakePair(currCirclePos, getCircleNum()));
+        }
         update();
+
+        // Placed circles exceeds the limit
+        if (placedCircles.size() >= 4)
+        {
+            placeMode = false;
+            setCursor(Qt::ArrowCursor);
+        }
     }
 }
 
@@ -364,10 +390,61 @@ QPointF ChordDiagram::snapToGrid(const QPointF &pos)
             nearestPoint = point;
         }
     }
-    // Snap if minimum distance is less than 10
     snap = (minDistance > 13) ? false : true;
 
     return nearestPoint;
+}
+
+// Checks whether a point is on the same string as a placed circle
+bool ChordDiagram::onSameString(QPointF point)
+{
+    for (auto pair : placedCircles)
+    {
+        if (pair.first.x() == point.x()) return true;
+    }
+    return false;
+}
+
+// Checks whether a point is on the same fret as a placed circle
+bool ChordDiagram::onSameFret(QPointF point)
+{
+    for (auto pair : placedCircles)
+    {
+        if (pair.first == point) return true;
+    }
+    return false;
+}
+
+// Return Priority
+// 1. Returns the index of the circle given its coordinates
+// 2. Returns the index of the circle on the same string
+// 3. Returns -1 if no circle is found that matches cases (1) & (2)
+int ChordDiagram::getCircleIndex(QPointF point)
+{
+    int idx = -1;
+    for (int i = 0; i < placedCircles.size(); i++)
+    {
+        if (placedCircles[i].first == point) return i;
+        else if (placedCircles[i].first.x() == point.x()) idx = i;
+    }
+    return idx;
+}
+
+// Returns the next circle number to be placed
+int ChordDiagram::getCircleNum()
+{
+    int n = placedCircles.size() + 1;
+    int expectedSum = n * (n + 1) / 2;
+    int actualSum = 0;
+
+    for (auto pair : placedCircles)
+    {
+        actualSum += pair.second;
+    }
+
+    int result = expectedSum - actualSum;
+    if (result == 0) return placedCircles.size();
+    else return result;
 }
 
 //////////////////// Toggle Switch Class ////////////////////
