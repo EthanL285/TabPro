@@ -28,6 +28,30 @@ private:
     QStackedWidget *stackedWidget;
 };
 
+//////////////////// Chord Diagram Class ////////////////////
+
+class ChordDiagram : public QWidget {
+    Q_OBJECT
+
+public:
+    ChordDiagram(QWidget *parent = nullptr);
+    QPointF snapToGrid(const QPointF &pos);
+
+protected:
+    void paintEvent(QPaintEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void leaveEvent(QEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
+
+private:
+    bool isHovering = false;
+    bool snap = false;
+    bool circlePositionsFound = false;
+    QVector<QPointF> circlePositions;
+    QVector<QPointF> placedCirclePos;
+    QPointF currentCirclePos = QPointF(-1,-1);
+};
+
 //////////////////// Toggle Switch Class ////////////////////
 
 class ToggleSwitch : public QWidget {

@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QGraphicsEffect>
 #include <QlineEdit>
+#include <QMouseEvent>
 
 Chords::Chords(QWidget *parent)
     : QWidget{parent}
@@ -206,11 +207,22 @@ void Chords::addChord()
     QHBoxLayout *windowLayout = new QHBoxLayout(chordWindow);
     windowLayout->setAlignment(Qt::AlignLeft);
 
-    QWidget *chordDiagram = new QWidget();
+    QWidget *chordDiagram = new ChordDiagram();
     chordDiagram->setFixedWidth(250);
     chordDiagram->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-    chordDiagram->setStyleSheet("background: red;");
     windowLayout->addWidget(chordDiagram);
+
+    QHBoxLayout *stringLayout = new QHBoxLayout(chordDiagram);
+    stringLayout->setAlignment(Qt::AlignBottom | Qt::AlignHCenter);
+    stringLayout->setSpacing(34);
+
+    QVector<QString> strings = {"E","A","D","G","B","E"};
+    for (int i = 0; i < 6; i++)
+    {
+        QLabel *letter = new QLabel(strings[i]);
+        letter->setStyleSheet("color: white; font: 10pt Muli; border: none;");
+        stringLayout->addWidget(letter);
+    }
 
     /* Features to be implemented:
      * Snap buttons to grids when widget is hovered on
@@ -218,6 +230,144 @@ void Chords::addChord()
      * Bar Option
      * Open and closed strings
      */
+}
+
+//////////////////// Chord Diagram Class ////////////////////
+
+ChordDiagram::ChordDiagram(QWidget *parent)
+    : QWidget{parent}
+{
+    setMouseTracking(true);
+    setCursor(Qt::PointingHandCursor);
+}
+
+// Paint event
+void ChordDiagram::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setPen(QPen(Qt::white, 0.5));
+    painter.save();
+
+    int rows = 4;
+    int cols = 5;
+    int paddingLeftRight = 15;
+    int paddingTop = 30;
+    int paddingBottom = 35;
+    int cellWidth = (width() - 2 * paddingLeftRight) / cols;
+    int cellHeight = (height() - paddingTop - paddingBottom) / rows;
+
+    // Draw horizontal lines
+    for (int i = 0; i < rows; i++)
+    {
+        int y = i * cellHeight + paddingTop;
+        if (i == 0)
+        {
+            painter.setPen(QPen(Qt::white, 5, Qt::SolidLine, Qt::RoundCap));
+            painter.drawLine(paddingLeftRight, y, width() - paddingLeftRight, y);
+            painter.restore();
+        }
+        else
+        {
+            painter.drawLine(paddingLeftRight, y, width() - paddingLeftRight, y);
+        }
+    }
+    // Explicitly draw the bottom line at the bottom of the grid due to rounding errors
+    painter.drawLine(paddingLeftRight, height() - paddingBottom, width() - paddingLeftRight, height() - paddingBottom);
+
+    // Draw vertical lines
+    for (int i = 0; i <= cols; i++)
+    {
+        int x = i * cellWidth + paddingLeftRight;
+        painter.drawLine(x, paddingTop, x, height() - paddingBottom);
+
+        // Find circle positions
+        if (!circlePositionsFound)
+        {
+            for (int j = 0; j < rows; j++)
+            {
+                int y = j * cellHeight + (cellHeight);
+                circlePositions.append(QPointF(x, y));
+            }
+        }
+    }
+    circlePositionsFound = true;
+
+    QFont font("Muli", 10);
+    font.setBold(true);
+    painter.setFont(font);
+    painter.setBrush(QBrush(QColor(80,80,80), Qt::SolidPattern));
+    painter.setPen(QPen(QColor(45,45,45), 1));
+
+    // Draw currently placed circles
+    for (const auto &point : placedCirclePos)
+    {
+        painter.save();
+        painter.drawEllipse(point, 14, 14);
+
+        QRectF textRect(QPoint(10, 10), QSize(20, 20));
+        textRect.moveCenter(point);
+        painter.setPen(Qt::white);
+        painter.drawText(textRect, Qt::AlignCenter, "1");
+        painter.restore();
+    }
+
+    // Draw the circle while hovering
+    if (isHovering && !currentCirclePos.isNull())
+    {
+        painter.drawEllipse(currentCirclePos, 14, 14);
+    }
+}
+
+// Hover event (enable mouse tracking)
+void ChordDiagram::mouseMoveEvent(QMouseEvent *event)
+{
+    currentCirclePos = snapToGrid(event->pos());
+    if (!snap) currentCirclePos = event->pos();
+
+    isHovering = true;
+    update();
+}
+
+// Leave event
+void ChordDiagram::leaveEvent(QEvent *event)
+{
+    Q_UNUSED(event);
+    isHovering = false;
+    update();
+}
+
+// Press Event
+void ChordDiagram::mousePressEvent(QMouseEvent *event)
+{
+    // Place circle if snapped
+    if (event->button() == Qt::LeftButton && snap)
+    {
+        placedCirclePos.append(currentCirclePos);
+        update();
+    }
+}
+
+// Snaps the circle to a position on the grid
+QPointF ChordDiagram::snapToGrid(const QPointF &pos)
+{
+    // Calculate the shortest euclidean distance
+    QPointF nearestPoint;
+    double minDistance = std::numeric_limits<double>::max();
+
+    for (const auto &point : circlePositions)
+    {
+        double distance = std::sqrt(std::pow(point.x() - pos.x(), 2) + std::pow(point.y() - pos.y(), 2));
+        if (distance < minDistance)
+        {
+            minDistance = distance;
+            nearestPoint = point;
+        }
+    }
+    // Snap if minimum distance is less than 10
+    snap = (minDistance > 13) ? false : true;
+
+    return nearestPoint;
 }
 
 //////////////////// Toggle Switch Class ////////////////////
