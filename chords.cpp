@@ -3,9 +3,7 @@
 #include <QHBoxLayout>
 #include <QPainter>
 #include <QPropertyAnimation>
-#include <QLabel>
 #include <QGraphicsEffect>
-#include <QlineEdit>
 #include <QMouseEvent>
 
 Chords::Chords(QWidget *parent)
@@ -89,21 +87,9 @@ Chords::Chords(QWidget *parent)
     chordMode->setStyleSheet("color: white; font: 11pt Muli; font-weight: semi-bold; border: none;");
     headerLayout->addWidget(chordMode);
 
-    QWidget *toggleSwitch = new ToggleSwitch();
+    QWidget *toggleSwitch = new ToggleSwitch(QColor(45,45,45));
+    QLineEdit *searchField = new Field("Chord Finder", false, 150);
     headerLayout->addWidget(toggleSwitch);
-
-    QLineEdit *searchField = new QLineEdit(this);
-    searchField->setPlaceholderText("Chord Finder");
-    searchField->setFixedSize(150, 35);
-    searchField->setStyleSheet
-    (
-        "background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(96, 94, 92, 100), stop: 1 rgba(40,40,40, 200));"
-        "border: 1px solid rgb(20,20,20);"
-        "border-radius: 5px;"
-        "color: white;"
-        "font: 11pt Muli;"
-        "padding-left: 6px;"
-    );
     headerLayout->addWidget(searchField);
 
     // Content layout
@@ -141,19 +127,19 @@ Chords::Chords(QWidget *parent)
     addChord->setStyleSheet
     (
         "QPushButton {"
-            "background: rgb(45,45,45);"
-            "border-left: 1px solid rgb(20,20,20);"
-            "color: gray;"
-            "font: 25pt Muli;"
-            "padding-bottom: 5px;"
+        "   background: rgb(45,45,45);"
+        "   border-left: 1px solid rgb(20,20,20);"
+        "   color: gray;"
+        "   font: 25pt Muli;"
+        "   padding-bottom: 5px;"
         "}"
         "QPushButton:hover {"
-            "background: rgb(60,60,60);"
-            "color: white;"
+        "   background: rgb(60,60,60);"
+        "   color: white;"
         "}"
         "QPushButton:pressed {"
-            "background: rgb(50,50,50);"
-            "color: gray;"
+        "   background: rgb(50,50,50);"
+        "   color: gray;"
         "}"
     );
     listLayout->addWidget(addChord);
@@ -207,31 +193,85 @@ void Chords::addChord()
     QHBoxLayout *windowLayout = new QHBoxLayout(chordWindow);
     windowLayout->setAlignment(Qt::AlignLeft);
 
-    QWidget *chordDiagram = new ChordDiagram();
+    // Chord diagram
+    chordDiagram = new ChordDiagram();
     chordDiagram->setFixedWidth(250);
     chordDiagram->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     windowLayout->addWidget(chordDiagram);
 
-    QHBoxLayout *stringLayout = new QHBoxLayout(chordDiagram);
-    stringLayout->setAlignment(Qt::AlignBottom | Qt::AlignHCenter);
-    stringLayout->setSpacing(34);
+    // Diagram Options
+    QGridLayout *buttonLayout = new QGridLayout();
+    buttonLayout->setAlignment(Qt::AlignCenter);
+    windowLayout->addLayout(buttonLayout);
 
-    QVector<QString> strings = {"E","A","D","G","B","E"};
-    for (int i = 0; i < 6; i++)
-    {
-        QLabel *letter = new QLabel(strings[i]);
-        letter->setStyleSheet("color: white; font: 10pt Muli; border: none;");
-        stringLayout->addWidget(letter);
-    }
+    QLabel *chordName = new QLabel("Chord Name");
+    chordName->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    chordName->setStyleSheet("color: white; font: 11pt Muli; font-weight: semi-bold; border: none;");
+    buttonLayout->addWidget(chordName, 0, 0);
 
-    /* Features to be implemented:
-     * Set Chord Name
-     * Bar Option
-     * Open and closed strings
-     * Two Modes
-     *      - Place mode
-     *      - Drag mode (automatically enter drag mode when all circles have been placed)
-     */
+    QLineEdit *nameField = new Field("Name", true);
+    buttonLayout->addWidget(nameField, 0, 1);
+
+    // Labels
+    QLabel *placeMode = new Label("Place Mode");
+    QLabel *dragMode = new Label("Drag Mode");
+    QLabel *deleteMode = new Label("Delete Mode");
+    buttonLayout->addWidget(placeMode, 1, 0);
+    buttonLayout->addWidget(dragMode, 2, 0);
+    buttonLayout->addWidget(deleteMode, 3, 0);
+
+    // Toggle switches
+    ToggleSwitch *placeSwitch = new ToggleSwitch(QColor(23,23,23));
+    ToggleSwitch *dragSwitch = new ToggleSwitch(QColor(23,23,23));
+    ToggleSwitch *deleteSwitch = new ToggleSwitch(QColor(23,23,23));
+    placeSwitch->setObjectName("place");
+    dragSwitch->setObjectName("drag");
+    deleteSwitch->setObjectName("delete");
+    connect(placeSwitch, &ToggleSwitch::clicked, this, &Chords::toggleMode);
+    connect(dragSwitch, &ToggleSwitch::clicked, this, &Chords::toggleMode);
+    connect(deleteSwitch, &ToggleSwitch::clicked, this, &Chords::toggleMode);
+    buttonLayout->addWidget(placeSwitch, 1, 1, Qt::AlignRight);
+    buttonLayout->addWidget(dragSwitch, 2, 1, Qt::AlignRight);
+    buttonLayout->addWidget(deleteSwitch, 3, 1, Qt::AlignRight);
+
+    // Add button
+    QPushButton *addButton = new QPushButton("Add Chord");
+    addButton->setMinimumSize(0, 30);
+    addButton->setStyleSheet
+    (
+        "QPushButton {"
+        "   background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(255, 255, 255, 200), stop: 1 rgba(96, 94, 92, 200));"
+        "   border: none;"
+        "   border-radius: 5px;"
+        "   color: black;"
+        "   font: 11pt Muli;"
+        "   font-weight: semi-bold;"
+        "}"
+        "QPushButton:hover {"
+        "   background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(255, 255, 255, 200), stop: 0.2 rgba(243, 242, 241, 200));"
+        "}"
+        "QPushButton:pressed {"
+        "   background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgba(32, 31, 30, 200), stop: 0.3 rgba(59, 58, 57, 200));"
+        "   color: white;"
+        "   font: 11pt Muli;"
+        "}"
+    );
+    addButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    addButton->setCursor(Qt::PointingHandCursor);
+    addButton->setFocusPolicy(Qt::NoFocus);
+    buttonLayout->addWidget(addButton, 4, 0, 1, 2);
+}
+
+// Toggles the corresponding mode
+void Chords::toggleMode()
+{
+    ChordDiagram *diagram = qobject_cast<ChordDiagram*>(chordDiagram);
+    ToggleSwitch* senderSwitch = qobject_cast<ToggleSwitch*>(sender());
+
+    QString name = senderSwitch->objectName();
+    if (name == "place") diagram->placeMode = !diagram->placeMode;
+    else if (name == "drag") diagram->dragMode = !diagram->dragMode;
+    else if (name == "delete") diagram->deleteMode = !diagram->deleteMode;
 }
 
 //////////////////// Chord Diagram Class ////////////////////
@@ -239,8 +279,61 @@ void Chords::addChord()
 ChordDiagram::ChordDiagram(QWidget *parent)
     : QWidget{parent}
 {
+    QVBoxLayout *diagramLayout = new QVBoxLayout(this);
     setMouseTracking(true);
     setCursor(Qt::PointingHandCursor);
+
+    // Open and close string buttons
+    QHBoxLayout *openCloseLayout = new QHBoxLayout();
+    openCloseLayout->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
+    openCloseLayout->setSpacing(30);
+    diagramLayout->addLayout(openCloseLayout);
+
+    for (int i = 0; i < 6; i++)
+    {
+        QPushButton *openClose = new QPushButton();
+        openClose->setCheckable(true);
+        openClose->setFixedSize(14,14);
+        openClose->setCursor(Qt::PointingHandCursor);
+        openClose->setStyleSheet
+        (
+            "QPushButton {"
+            "    border: 1px solid white;"
+            "    border-radius: 7px;"
+            "    background-color: transparent;"
+            "}"
+            "QPushButton:hover {"
+            "    border: 1.5px solid white;"
+            "    font-weight: bold;"
+            "}"
+            "QPushButton:checked {"
+            "    border: none;"
+            "    font-family: Muli;"
+            "    font-size: 13pt;"
+            "}"
+        );
+        openCloseLayout->addWidget(openClose);
+        stringButtons.append(openClose);
+        connect(openClose, &QPushButton::clicked, this, [openClose]()
+        {
+            if (openClose->isChecked()) openClose->setText("X");
+            else openClose->setText("");
+        });
+    }
+
+    // String labels
+    QHBoxLayout *stringLayout = new QHBoxLayout();
+    stringLayout->setAlignment(Qt::AlignBottom | Qt::AlignHCenter);
+    stringLayout->setSpacing(32);
+    diagramLayout->addLayout(stringLayout);
+
+    QVector<QString> strings = {"E","A","D","G","B","E"};
+    for (int i = 0; i < 6; i++)
+    {
+        QLabel *letter = new QLabel(strings[i]);
+        letter->setStyleSheet("color: white; font: 11pt Muli; border: none;");
+        stringLayout->addWidget(letter);
+    }
 }
 
 // Paint event
@@ -254,7 +347,7 @@ void ChordDiagram::paintEvent(QPaintEvent *event)
     int rows = 4;
     int cols = 5;
     int paddingLeftRight = 15;
-    int paddingTop = 30;
+    int paddingTop = 35;
     int paddingBottom = 35;
     int cellWidth = (width() - 2 * paddingLeftRight) / cols;
     int cellHeight = (height() - paddingTop - paddingBottom) / rows;
@@ -288,7 +381,7 @@ void ChordDiagram::paintEvent(QPaintEvent *event)
         {
             for (int j = 0; j < rows; j++)
             {
-                int y = j * cellHeight + (cellHeight);
+                int y = j * cellHeight + paddingTop + (cellHeight / 2);
                 circlePositions.append(QPointF(x, y));
             }
         }
@@ -312,10 +405,16 @@ void ChordDiagram::paintEvent(QPaintEvent *event)
         painter.setPen(Qt::white);
         painter.drawText(textRect, Qt::AlignCenter, QString::number(pair.second));
         painter.restore();
+
+        // Change string to closed
+        int stringNum = std::trunc(static_cast<int>(pair.first.x()) / cellWidth);
+        QPushButton *string = stringButtons[stringNum];
+        if (string->isChecked()) string->click();
+        string->setChecked(true);
     }
 
     // Draw the circle while hovering
-    if (isHovering && placeMode && !currCirclePos.isNull())
+    if (isHovering && placeMode && !limitReached && !currCirclePos.isNull())
     {
         painter.drawEllipse(currCirclePos, 14, 14);
 
@@ -332,7 +431,10 @@ void ChordDiagram::mouseMoveEvent(QMouseEvent *event)
     currCirclePos = snapToGrid(event->pos());
     if (!snap) currCirclePos = event->pos();
 
-    isHovering = true;
+    // Cursor hovers above or below the fretboard
+    isHovering = !(currCirclePos.y() < 35 || currCirclePos.y() > height() - 35);
+    setCursor(isHovering && placeMode && !limitReached ? Qt::PointingHandCursor : Qt::ArrowCursor);
+
     update();
 }
 
@@ -348,11 +450,11 @@ void ChordDiagram::leaveEvent(QEvent *event)
 void ChordDiagram::mousePressEvent(QMouseEvent *event)
 {
     // Place circle if snapped and in place mode
-    if (event->button() == Qt::LeftButton && snap && placeMode)
+    if (event->button() == Qt::LeftButton && snap && placeMode && !limitReached)
     {
         int idx = getCircleIndex(currCirclePos);
 
-        // Circle is placed on the same fret as an already existing circle
+        // Circle is placed on the same string as an already existing circle
         if (onSameString(currCirclePos))
         {
             int num = getCircleNum();
@@ -366,11 +468,7 @@ void ChordDiagram::mousePressEvent(QMouseEvent *event)
         update();
 
         // Placed circles exceeds the limit
-        if (placedCircles.size() >= 4)
-        {
-            placeMode = false;
-            setCursor(Qt::ArrowCursor);
-        }
+        limitReached = (placedCircles.size() >= 4);
     }
 }
 
@@ -401,16 +499,6 @@ bool ChordDiagram::onSameString(QPointF point)
     for (auto pair : placedCircles)
     {
         if (pair.first.x() == point.x()) return true;
-    }
-    return false;
-}
-
-// Checks whether a point is on the same fret as a placed circle
-bool ChordDiagram::onSameFret(QPointF point)
-{
-    for (auto pair : placedCircles)
-    {
-        if (pair.first == point) return true;
     }
     return false;
 }
@@ -449,8 +537,8 @@ int ChordDiagram::getCircleNum()
 
 //////////////////// Toggle Switch Class ////////////////////
 
-ToggleSwitch::ToggleSwitch(QWidget *parent)
-    : QWidget{parent}
+ToggleSwitch::ToggleSwitch(QColor background, QWidget *parent)
+    : background{background}, QWidget{parent}
 {
     setFixedSize(60, 40);
     setCursor(Qt::PointingHandCursor);
@@ -477,7 +565,7 @@ void ToggleSwitch::paintEvent(QPaintEvent *event)
     int x = (width() - rectWidth) / 2;
     int y = (height() - rectHeight) / 2;
     QRect rect(x, y, rectWidth, rectHeight);
-    QColor backgroundColor = toggled ? QColor(0, 175, 0) : QColor(45, 45, 45);
+    QColor backgroundColor = toggled ? QColor(0, 175, 0) : background;
     painter.setBrush(QBrush(backgroundColor));
     painter.setPen(QPen(QColor(20,20,20), 1));
     painter.drawRoundedRect(rect, 15,15);
@@ -491,6 +579,7 @@ void ToggleSwitch::mousePressEvent(QMouseEvent *event)
     QWidget::mousePressEvent(event);
     animateHandle();
     toggled = !toggled;
+    emit clicked();
 }
 
 // Animates the switch handle
@@ -509,5 +598,46 @@ void ToggleSwitch::animateHandle()
     animation->setEasingCurve(QEasingCurve::Linear);
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
+
+// Returns the toggle state of the switch
+bool ToggleSwitch::isToggled()
+{
+    return toggled;
+}
+
+//////////////////// Field Class ////////////////////
+
+Field::Field(QString text, bool dark, int width, QWidget *parent)
+    : QLineEdit{parent}
+{
+    if (width == 0) setMinimumSize(0, 35);
+    else setFixedSize(width, 35);
+
+    QString background = (dark) ? "rgba(23,23,23,200)" : "rgba(45,45,45,200)";
+    QString stylesheet = QString
+    (
+        "background: %1;"
+        "border: 1px solid rgb(20,20,20);"
+        "border-radius: 5px;"
+        "color: white;"
+        "font: 11pt Muli;"
+        "padding-left: 6px;"
+    ).arg(background);
+
+    setStyleSheet(stylesheet);
+    setPlaceholderText(text);
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+}
+
+//////////////////// Label Class ////////////////////
+
+Label::Label(QString text, QWidget *parent)
+    : QLabel{parent}
+{
+    setText(text);
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    setStyleSheet("color: white; font: 11pt Muli; font-weight: semi-bold; border: none;");
+}
+
 
 
