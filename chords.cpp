@@ -221,9 +221,9 @@ void Chords::addChord()
     buttonLayout->addWidget(deleteMode, 3, 0);
 
     // Toggle switches
-    ToggleSwitch *placeSwitch = new ToggleSwitch(QColor(23,23,23));
-    ToggleSwitch *dragSwitch = new ToggleSwitch(QColor(23,23,23));
-    ToggleSwitch *deleteSwitch = new ToggleSwitch(QColor(23,23,23));
+    placeSwitch = new ToggleSwitch(QColor(23,23,23));
+    dragSwitch = new ToggleSwitch(QColor(23,23,23));
+    deleteSwitch = new ToggleSwitch(QColor(23,23,23));
     placeSwitch->setObjectName("place");
     dragSwitch->setObjectName("drag");
     deleteSwitch->setObjectName("delete");
@@ -268,10 +268,24 @@ void Chords::toggleMode()
     ChordDiagram *diagram = qobject_cast<ChordDiagram*>(chordDiagram);
     ToggleSwitch* senderSwitch = qobject_cast<ToggleSwitch*>(sender());
 
+    // Toggle sender switch
     QString name = senderSwitch->objectName();
     if (name == "place") diagram->placeMode = !diagram->placeMode;
     else if (name == "drag") diagram->dragMode = !diagram->dragMode;
     else if (name == "delete") diagram->deleteMode = !diagram->deleteMode;
+
+    // Untoggle other switches
+    auto toggleSwitch = [&](ToggleSwitch *switchWidget, bool &mode)
+    {
+        if (name != switchWidget->objectName() && switchWidget->isToggled())
+        {
+            mode = false;
+            switchWidget->toggle();
+        }
+    };
+    toggleSwitch(placeSwitch, diagram->placeMode);
+    toggleSwitch(dragSwitch, diagram->dragMode);
+    toggleSwitch(deleteSwitch, diagram->deleteMode);
 }
 
 //////////////////// Chord Diagram Class ////////////////////
@@ -349,8 +363,8 @@ void ChordDiagram::paintEvent(QPaintEvent *event)
     int paddingLeftRight = 15;
     int paddingTop = 35;
     int paddingBottom = 35;
-    int cellWidth = (width() - 2 * paddingLeftRight) / cols;
-    int cellHeight = (height() - paddingTop - paddingBottom) / rows;
+    cellWidth = (width() - 2 * paddingLeftRight) / cols;
+    cellHeight = (height() - paddingTop - paddingBottom) / rows;
 
     // Draw horizontal lines
     for (int i = 0; i < rows; i++)
@@ -397,43 +411,59 @@ void ChordDiagram::paintEvent(QPaintEvent *event)
     // Draw currently placed circles
     for (const auto pair : placedCircles)
     {
+        // Ignore circle if grabbed
+        if (pair.first == grabbedCircle) continue;
+
         painter.save();
         painter.drawEllipse(pair.first, 14, 14);
-
-        QRectF textRect(QPoint(10, 10), QSize(20, 20));
-        textRect.moveCenter(pair.first);
-        painter.setPen(Qt::white);
-        painter.drawText(textRect, Qt::AlignCenter, QString::number(pair.second));
+        drawCircle(painter, pair.first, pair.second);
         painter.restore();
 
         // Change string to closed
-        int stringNum = std::trunc(static_cast<int>(pair.first.x()) / cellWidth);
-        QPushButton *string = stringButtons[stringNum];
-        if (string->isChecked()) string->click();
-        string->setChecked(true);
+        int stringNum = getStringNum(pair.first);
+        closeString(stringNum);
     }
 
     // Draw the circle while hovering
-    if (isHovering && placeMode && !limitReached && !currCirclePos.isNull())
+    if (isHoveringWidget && !currCirclePos.isNull())
     {
-        painter.drawEllipse(currCirclePos, 14, 14);
-
-        QRectF textRect(QPoint(10, 10), QSize(20, 20));
-        textRect.moveCenter(currCirclePos);
-        painter.setPen(Qt::white);
-        painter.drawText(textRect, Qt::AlignCenter, QString::number(getCircleNum()));
+        // Place mode
+        if (placeMode && !limitReached)
+        {
+            drawCircle(painter, currCirclePos, getNextCircleNum());
+        }
+        // Drag mode
+        else if (dragMode && isPressed)
+        {
+            drawCircle(painter, currCirclePos, getCircleNum(grabbedCircle));
+        }
     }
+}
+
+// Draws a circle with the given number
+void ChordDiagram::drawCircle(QPainter &painter, QPointF center, int circleNum)
+{
+    QRectF textRect(QPoint(10, 10), QSize(20, 20));
+    textRect.moveCenter(center);
+    painter.drawEllipse(center, 14, 14);
+    painter.setPen(Qt::white);
+    painter.drawText(textRect, Qt::AlignCenter, QString::number(circleNum));
 }
 
 // Hover event (enable mouse tracking)
 void ChordDiagram::mouseMoveEvent(QMouseEvent *event)
 {
+    // Get position of mouse
     currCirclePos = snapToGrid(event->pos());
     if (!snap) currCirclePos = event->pos();
+    isHoveringWidget = !(currCirclePos.y() < 35 || currCirclePos.y() > height() - 35);
+    isHoveringCircle = circleHover(currCirclePos);
 
-    // Cursor hovers above or below the fretboard
-    isHovering = !(currCirclePos.y() < 35 || currCirclePos.y() > height() - 35);
-    setCursor(isHovering && placeMode && !limitReached ? Qt::PointingHandCursor : Qt::ArrowCursor);
+    // Set cursor
+    if (placeMode) setCursor(isHoveringWidget && !limitReached ? Qt::PointingHandCursor : Qt::ArrowCursor);
+    else if (dragMode && !isPressed) setCursor(isHoveringCircle && snap ? Qt::OpenHandCursor : Qt::ArrowCursor);
+    else if (deleteMode) setCursor(isHoveringCircle && snap ? Qt::PointingHandCursor : Qt::ArrowCursor);
+    else if (!placeMode && !dragMode && !deleteMode) setCursor(Qt::ArrowCursor);
 
     update();
 }
@@ -442,34 +472,92 @@ void ChordDiagram::mouseMoveEvent(QMouseEvent *event)
 void ChordDiagram::leaveEvent(QEvent *event)
 {
     Q_UNUSED(event);
-    isHovering = false;
+    isHoveringWidget = false;
     update();
 }
 
 // Press Event
 void ChordDiagram::mousePressEvent(QMouseEvent *event)
 {
-    // Place circle if snapped and in place mode
-    if (event->button() == Qt::LeftButton && snap && placeMode && !limitReached)
+    // Perform action if snapped
+    if (event->button() == Qt::LeftButton && snap)
     {
-        int idx = getCircleIndex(currCirclePos);
-
-        // Circle is placed on the same string as an already existing circle
-        if (onSameString(currCirclePos))
+        // Place mode
+        if (placeMode && !limitReached)
         {
-            int num = getCircleNum();
+            if (onSameString(currCirclePos))
+            {
+                int num = getNextCircleNum();
+                int idx = getStringCircleIndex(currCirclePos);
+                placedCircles.remove(idx);
+                placedCircles.insert(idx, qMakePair(currCirclePos, num));
+            }
+            else
+            {
+                placedCircles.append(qMakePair(currCirclePos, getNextCircleNum()));
+            }
+            limitReached = (placedCircles.size() >= 4);
+        }
+        // Drag mode
+        else if (dragMode && isHoveringCircle)
+        {
+            grabbedCircle = currCirclePos;
+            isPressed = true;
+            setCursor(Qt::ClosedHandCursor);
+        }
+        // Delete mode
+        else if (deleteMode && isHoveringCircle)
+        {
+            int idx = getCircleIndex(currCirclePos);
+            openString(getStringNum(currCirclePos));
             placedCircles.remove(idx);
-            placedCircles.insert(idx, qMakePair(currCirclePos, num));
+            setCursor(Qt::ArrowCursor);
+            limitReached = false;
         }
-        else
-        {
-            placedCircles.append(qMakePair(currCirclePos, getCircleNum()));
-        }
-        update();
-
-        // Placed circles exceeds the limit
-        limitReached = (placedCircles.size() >= 4);
     }
+    update();
+}
+
+// Release Event
+void ChordDiagram::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton && dragMode)
+    {
+        QPointF newPoint = snapToGrid(event->pos());
+        int idx = getCircleIndex(grabbedCircle);
+        int tempIdx = getStringCircleIndex(newPoint);
+        int circleNum = getCircleNum(newPoint);
+
+        if (snap && isPressed)
+        {
+            // Circle is placed on the same string as an already existing circle
+            if (onSameString(newPoint))
+            {
+                placedCircles[tempIdx].first = placedCircles[idx].first;
+                placedCircles[idx].first = newPoint;
+            }
+            // Circle is placed ontop of an already existing circle
+            else if (circleNum != -1 && circleNum != placedCircles[idx].second)
+            {
+                QPointF tempPoint = placedCircles[tempIdx].first;
+                placedCircles[tempIdx].first = placedCircles[idx].first;
+                placedCircles[idx].first = tempPoint;
+            }
+            // Circle is placed at a valid point
+            else
+            {
+                int newStringNum = getStringNum(newPoint);
+                int oldStringNum = getStringNum(placedCircles[idx].first);
+                closeString(newStringNum);
+                openString(oldStringNum);
+                placedCircles[idx].first = newPoint;
+            }
+        }
+        grabbedCircle = QPointF(-1,-1);
+        setCursor(isHoveringCircle ? Qt::OpenHandCursor : Qt::ArrowCursor);
+        isPressed = false;
+    }
+    update();
 }
 
 // Snaps the circle to a position on the grid
@@ -503,36 +591,82 @@ bool ChordDiagram::onSameString(QPointF point)
     return false;
 }
 
-// Return Priority
-// 1. Returns the index of the circle given its coordinates
-// 2. Returns the index of the circle on the same string
-// 3. Returns -1 if no circle is found that matches cases (1) & (2)
+// Returns the index of the circle at the given point
 int ChordDiagram::getCircleIndex(QPointF point)
 {
-    int idx = -1;
     for (int i = 0; i < placedCircles.size(); i++)
     {
         if (placedCircles[i].first == point) return i;
-        else if (placedCircles[i].first.x() == point.x()) idx = i;
     }
-    return idx;
+    return -1;
+}
+
+// Returns the index of the circle on the same string as the given point
+int ChordDiagram::getStringCircleIndex(QPointF point)
+{
+    for (int i = 0; i < placedCircles.size(); i++)
+    {
+        if (placedCircles[i].first.x() == point.x()) return i;
+    }
+    return -1;
+}
+
+// Returns the circle number at the given coordinates
+int ChordDiagram::getCircleNum(QPointF point)
+{
+    for (auto pair : placedCircles)
+    {
+        if (pair.first == point) return pair.second;
+    }
+    return -1;
 }
 
 // Returns the next circle number to be placed
-int ChordDiagram::getCircleNum()
+int ChordDiagram::getNextCircleNum()
 {
-    int n = placedCircles.size() + 1;
-    int expectedSum = n * (n + 1) / 2;
-    int actualSum = 0;
+    int num = 1;
+    QSet<int> numbers;
 
     for (auto pair : placedCircles)
     {
-        actualSum += pair.second;
+        numbers.insert(pair.second);
     }
+    while (numbers.find(num) != numbers.end())
+    {
+        num++;
+    }
+    return num;
+}
 
-    int result = expectedSum - actualSum;
-    if (result == 0) return placedCircles.size();
-    else return result;
+// Checks whether cursor is hovering a circle
+bool ChordDiagram::circleHover(QPointF point)
+{
+    for (int i = 0; i < placedCircles.size(); i++)
+    {
+        if (placedCircles[i].first == point) return true;
+    }
+    return false;
+}
+
+// Returns the string that contains the given point
+int ChordDiagram::getStringNum(QPointF point)
+{
+    return std::trunc(static_cast<int>(point.x()) / cellWidth);
+}
+
+// Closes the given string
+void ChordDiagram::closeString(int stringNum)
+{
+    QPushButton *string = stringButtons[stringNum];
+    if (string->isChecked()) string->click();
+    string->setChecked(true);
+}
+
+// Opens the given string
+void ChordDiagram::openString(int stringNum)
+{
+    QPushButton *string = stringButtons[stringNum];
+    string->setChecked(false);
 }
 
 //////////////////// Toggle Switch Class ////////////////////
@@ -603,6 +737,13 @@ void ToggleSwitch::animateHandle()
 bool ToggleSwitch::isToggled()
 {
     return toggled;
+}
+
+// Toggle the switch
+void ToggleSwitch::toggle()
+{
+    animateHandle();
+    toggled = !toggled;
 }
 
 //////////////////// Field Class ////////////////////

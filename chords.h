@@ -8,6 +8,34 @@
 #include <QLabel>
 #include <QLineEdit>
 
+//////////////////// Toggle Switch Class ////////////////////
+
+class ToggleSwitch : public QWidget {
+    Q_OBJECT
+
+public:
+    ToggleSwitch(QColor background, QWidget *parent = nullptr);
+    bool isToggled();
+    void toggle();
+
+protected:
+    void paintEvent(QPaintEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
+
+signals:
+    void clicked();
+
+private:
+    QColor background;
+    QWidget *handle;
+    bool toggled = false;
+
+public slots:
+    void animateHandle();
+};
+
+//////////////////// Chords Class ////////////////////
+
 class Chords : public QWidget
 {
     Q_OBJECT
@@ -30,6 +58,9 @@ private:
     QScrollArea *scrollArea;
     QStackedWidget *stackedWidget;
     QWidget *chordDiagram;
+    ToggleSwitch *placeSwitch;
+    ToggleSwitch *dragSwitch;
+    ToggleSwitch *deleteSwitch;
 };
 
 //////////////////// Chord Diagram Class ////////////////////
@@ -41,8 +72,15 @@ public:
     ChordDiagram(QWidget *parent = nullptr);
     QPointF snapToGrid(const QPointF &pos);
     bool onSameString(QPointF point);
-    int getCircleNum();
+    int getCircleNum(QPointF point);
+    int getNextCircleNum();
     int getCircleIndex(QPointF point);
+    int getStringCircleIndex(QPointF point);
+    int getStringNum(QPointF point);
+    bool circleHover(QPointF point);
+    void closeString(int stringNum);
+    void openString(int stringNum);
+    void drawCircle(QPainter &painter, QPointF center, int circleNum);
     friend class Chords;
 
 protected:
@@ -50,45 +88,26 @@ protected:
     void mouseMoveEvent(QMouseEvent *event) override;
     void leaveEvent(QEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
     Chords *chords;
-    bool isHovering = false;
+    int cellHeight;
+    int cellWidth;
+    bool isHoveringWidget = false;
+    bool isHoveringCircle = false;
     bool placeMode = false;
     bool dragMode = false;
     bool deleteMode = false;
     bool limitReached = false;
     bool snap = false;
+    bool isPressed = false;
     bool circlePositionsFound = false;
     QVector<QPointF> circlePositions;
     QVector<QPair<QPointF, int>> placedCircles;
+    QPointF grabbedCircle = QPointF(-1,-1);
     QPointF currCirclePos = QPointF(-1,-1);
     QVector<QPushButton*> stringButtons;
-};
-
-//////////////////// Toggle Switch Class ////////////////////
-
-class ToggleSwitch : public QWidget {
-    Q_OBJECT
-
-public:
-    ToggleSwitch(QColor background, QWidget *parent = nullptr);
-    bool isToggled();
-
-protected:
-    void paintEvent(QPaintEvent *event) override;
-    void mousePressEvent(QMouseEvent *event) override;
-
-signals:
-    void clicked();
-
-private:
-    QColor background;
-    QWidget *handle;
-    bool toggled = false;
-
-private slots:
-    void animateHandle();
 };
 
 //////////////////// Field Class ////////////////////
