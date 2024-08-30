@@ -5,6 +5,7 @@
 #include <QPropertyAnimation>
 #include <QGraphicsEffect>
 #include <QMouseEvent>
+#include <QComboBox>
 
 Chords::Chords(QWidget *parent)
     : QWidget{parent}
@@ -77,32 +78,118 @@ Chords::Chords(QWidget *parent)
     button->setIcon(QIcon(pixmap));
     button->setIconSize(QSize(16, 16));
 
-    // Header layout
+    // ==================== Header layout ====================
     QHBoxLayout *headerLayout = new QHBoxLayout(header);
     headerLayout->setAlignment(Qt::AlignLeft);
 
-    // Header section
-    QLabel *chordMode = new QLabel("Chord Mode");
-    chordMode->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    chordMode->setStyleSheet("color: white; font: 11pt Muli; font-weight: semi-bold; border: none;");
-    headerLayout->addWidget(chordMode);
-
+    // Chord mode and search field
+    QLabel *chordMode = new Label("Chord Mode");
     QWidget *toggleSwitch = new ToggleSwitch(QColor(45,45,45));
-    QLineEdit *searchField = new Field("Chord Finder", false, 150);
+    searchField = new Field("Chord Finder", false, 150);
+    headerLayout->addWidget(chordMode);
     headerLayout->addWidget(toggleSwitch);
     headerLayout->addWidget(searchField);
 
-    // Content layout
+    // Bar Placement
+    barPlacement = new Label("Bar Placement");
+    barDropdown = new QComboBox();
+    barDropdown->setFixedSize(100, 32);
+    barDropdown->setCursor(Qt::PointingHandCursor);
+    barDropdown->addItem("None");
+    barDropdown->setVisible(false);
+    barPlacement->setVisible(false);
+    barDropdown->setStyleSheet
+    (
+        "QComboBox {"
+        "   background-color: rgb(45,45,45);"
+        "   border: 1px solid rgb(20,20,20);"
+        "   border-radius: 5px;"
+        "   padding: 5px;"
+        "   font: 10pt Muli;"
+        "}"
+        "QComboBox::drop-down {"
+        "   background-color: rgb(17,17,17);"
+        "   width: 25px;"
+        "}"
+        "QComboBox::down-arrow {"
+        "   width: 10px;"
+        "   height: 10px;"
+        "   image: url(:/Scroll/Icons/Scroll/scroll down.png);"
+        "   subcontrol-position: center;"
+        "}"
+        "QComboBox QAbstractItemView {"
+        "   selection-background-color: #d0d0d0;"
+        "   selection-color: #000;"
+        "}"
+    );
+    for (int i = 1; i < 22; i++)
+    {
+        QString fret = QString("Fret %1").arg(i);
+        barDropdown->addItem(fret);
+    }
+    headerLayout->addWidget(barPlacement);
+    headerLayout->addWidget(barDropdown);
+    headerLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum));
+
+    // Reset Chord
+    trash = new QPushButton();
+    trash->setFixedSize(21,21);
+    trash->setCursor(Qt::PointingHandCursor);
+    trash->setVisible(false);
+    trash->setToolTip("Reset Chord");
+    trash->setStyleSheet
+    (
+        "QPushButton {"
+        "   image: url(:/Miscellaneous/Icons/Miscellaneous/trash.png);"
+        "   background-color: transparent;"
+        "   border: none;"
+        "   outline: none;"
+        "}"
+        "QPushButton:hover {"
+        "   image: url(:/Miscellaneous/Icons/Miscellaneous/trash hover.png)"
+        "}"
+    );
+    headerLayout->addWidget(trash);
+    QObject::connect(trash, &QPushButton::clicked, this, [=]()
+    {
+        ChordDiagram *diagram = qobject_cast<ChordDiagram*>(chordDiagram);
+        if (diagram) diagram->resetDiagram();
+    });
+
+    // Go back
+    headerLayout->addItem(new QSpacerItem(8, 0, QSizePolicy::Fixed, QSizePolicy::Minimum));
+    back = new QPushButton();
+    back->setFixedSize(25,25);
+    back->setCursor(Qt::PointingHandCursor);
+    back->setVisible(false);
+    back->setToolTip("Go Back");
+    back->setStyleSheet
+    (
+        "QPushButton {"
+        "   image: url(:/Miscellaneous/Icons/Miscellaneous/return.png);"
+        "   background-color: transparent;"
+        "   border: none;"
+        "   outline: none;"
+        "}"
+        "QPushButton:hover {"
+        "   image: url(:/Miscellaneous/Icons/Miscellaneous/return hover.png)"
+        "}"
+    );
+    headerLayout->addWidget(back);
+    connect(back, &QPushButton::clicked, this, &Chords::changeWindow);
+
+    // ==================== Content layout ====================
     QVBoxLayout *contentLayout = new QVBoxLayout(content);
     contentLayout->setContentsMargins(0,0,0,0);
     contentLayout->setAlignment(Qt::AlignLeft);
 
-    // Content section
+    // Stacked Widget
     stackedWidget = new QStackedWidget();
     stackedWidget->setMinimumWidth(0);
     stackedWidget->setMaximumWidth(0);
     contentLayout->addWidget(stackedWidget);
 
+    // Chord List
     QWidget *chordList = new QWidget();
     chordList->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     chordList->setStyleSheet("background: rgb(33,33,33); border-left: 1px solid rgb(20,20,20);");
@@ -112,12 +199,13 @@ Chords::Chords(QWidget *parent)
     scrollArea->setWidgetResizable(true);
     stackedWidget->addWidget(scrollArea);
 
-    // Chord list section
+    // ==================== List Layout ====================
     QVBoxLayout *listLayout = new QVBoxLayout(chordList);
     listLayout->setContentsMargins(0,0,0,0);
     listLayout->setSpacing(0);
     listLayout->setAlignment(Qt::AlignTop);
 
+    // Add chord button
     QPushButton *addChord = new QPushButton("+");
     addChord->setFixedHeight(40);
     addChord->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -143,8 +231,9 @@ Chords::Chords(QWidget *parent)
         "}"
     );
     listLayout->addWidget(addChord);
-    connect(addChord, &QPushButton::clicked, this, &Chords::addChord);
+    connect(addChord, &QPushButton::clicked, this, &Chords::changeWindow);
 
+    // Chord items
     for (int i = 0; i < 20; i++)
     {
         QWidget *chord = new QWidget();
@@ -182,10 +271,27 @@ void Chords::animateAccordion(QWidget *widget)
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
+// Returns to the chord list window
+void Chords::changeWindow()
+{
+    bool isFirstWindow = stackedWidget->currentWidget() == scrollArea;
+    int idx = (isFirstWindow) ? 1 : 0;
+    searchField->setVisible(!isFirstWindow);
+    back->setVisible(isFirstWindow);
+    trash->setVisible(isFirstWindow);
+    barPlacement->setVisible(isFirstWindow);
+    barDropdown->setVisible(isFirstWindow);
+
+    if (!chordWindow) addChord();
+    else stackedWidget->setCurrentIndex(idx);
+
+    update();
+}
+
 // Adds a new chord to the list
 void Chords::addChord()
 {
-    QWidget *chordWindow = new QWidget();
+    chordWindow = new QWidget();
     chordWindow->setStyleSheet("background: rgb(33,33,33); border-left: 1px solid rgb(20,20,20);");
     stackedWidget->addWidget(chordWindow);
     stackedWidget->setCurrentWidget(chordWindow);
@@ -259,7 +365,9 @@ void Chords::addChord()
     addButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     addButton->setCursor(Qt::PointingHandCursor);
     addButton->setFocusPolicy(Qt::NoFocus);
-    buttonLayout->addWidget(addButton, 4, 0, 1, 2);
+    buttonLayout->addWidget(addButton, 5, 0, 1, 2);
+
+    update();
 }
 
 // Toggles the corresponding mode
@@ -509,10 +617,13 @@ void ChordDiagram::mousePressEvent(QMouseEvent *event)
         else if (deleteMode && isHoveringCircle)
         {
             int idx = getCircleIndex(currCirclePos);
-            openString(getStringNum(currCirclePos));
-            placedCircles.remove(idx);
-            setCursor(Qt::ArrowCursor);
-            limitReached = false;
+            if (idx != -1)
+            {
+                openString(getStringNum(currCirclePos));
+                placedCircles.remove(idx);
+                setCursor(Qt::ArrowCursor);
+                limitReached = false;
+            }
         }
     }
     update();
@@ -666,7 +777,21 @@ void ChordDiagram::closeString(int stringNum)
 void ChordDiagram::openString(int stringNum)
 {
     QPushButton *string = stringButtons[stringNum];
+    string->setText("");
     string->setChecked(false);
+}
+
+// Resets the chord diagram
+void ChordDiagram::resetDiagram()
+{
+    placedCircles.clear();
+    limitReached = false;
+
+    for (int i = 0; i < 6; i++)
+    {
+        openString(i);
+    }
+    update();
 }
 
 //////////////////// Toggle Switch Class ////////////////////
@@ -751,8 +876,8 @@ void ToggleSwitch::toggle()
 Field::Field(QString text, bool dark, int width, QWidget *parent)
     : QLineEdit{parent}
 {
-    if (width == 0) setMinimumSize(0, 35);
-    else setFixedSize(width, 35);
+    if (width == 0) setMinimumSize(0, 33);
+    else setFixedSize(width, 33);
 
     QString background = (dark) ? "rgba(23,23,23,200)" : "rgba(45,45,45,200)";
     QString stylesheet = QString

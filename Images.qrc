@@ -36,4 +36,10 @@
         <file>Icons/Notes/Treble Clef.png</file>
         <file>Icons/Notes/crotchet.png</file>
     </qresource>
+    <qresource prefix="/Miscellaneous">
+        <file>Icons/Miscellaneous/return.png</file>
+        <file>Icons/Miscellaneous/return hover.png</file>
+        <file>Icons/Miscellaneous/trash.png</file>
+        <file>Icons/Miscellaneous/trash hover.png</file>
+    </qresource>
 </RCC>

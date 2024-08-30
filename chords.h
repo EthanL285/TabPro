@@ -7,6 +7,7 @@
 #include <QStackedWidget>
 #include <QLabel>
 #include <QLineEdit>
+#include <QComboBox>
 
 //////////////////// Toggle Switch Class ////////////////////
 
@@ -34,7 +35,7 @@ public slots:
     void animateHandle();
 };
 
-//////////////////// Chords Class ////////////////////
+//////////////////// Chords Class /////////////////////
 
 class Chords : public QWidget
 {
@@ -47,16 +48,23 @@ public:
 
 private slots:
     void addChord();
+    void changeWindow();
 
 private:
     QWidget *content;
     QWidget *header;
+    QLineEdit *searchField;
     QPushButton *button;
+    QPushButton *trash;
+    QPushButton *back;
+    QLabel *barPlacement;
+    QComboBox *barDropdown;
     bool contentToggled = false;
     QIcon expandIcon;
     QIcon collapseIcon;
     QScrollArea *scrollArea;
     QStackedWidget *stackedWidget;
+    QWidget *chordWindow = nullptr;
     QWidget *chordDiagram;
     ToggleSwitch *placeSwitch;
     ToggleSwitch *dragSwitch;
@@ -81,6 +89,7 @@ public:
     void closeString(int stringNum);
     void openString(int stringNum);
     void drawCircle(QPainter &painter, QPointF center, int circleNum);
+    void resetDiagram();
     friend class Chords;
 
 protected:
