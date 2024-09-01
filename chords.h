@@ -9,6 +9,9 @@
 #include <QLineEdit>
 #include <QComboBox>
 
+#define NUM_STRINGS 6
+#define INVALID_POINT QPointF(-1,-1)
+
 //////////////////// Toggle Switch Class ////////////////////
 
 class ToggleSwitch : public QWidget {
@@ -85,11 +88,11 @@ public:
     int getCircleIndex(QPointF point);
     int getStringCircleIndex(QPointF point);
     int getStringNum(QPointF point);
+    int getFretNum(QPointF point);
     bool circleHover(QPointF point);
     void closeString(int stringNum);
     void openString(int stringNum);
     void drawCircle(QPainter &painter, QPointF center, int circleNum);
-    void resetDiagram();
     friend class Chords;
 
 protected:
@@ -99,10 +102,19 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
 
+private slots:
+    void resetDiagram();
+    void placeBar(QComboBox *dropdown);
+
 private:
     Chords *chords;
     int cellHeight;
     int cellWidth;
+    int paddingLeftRight;
+    int paddingTop;
+    int paddingBottom;
+    int barPlacement = 0;
+    int barSpan = NUM_STRINGS;
     bool isHoveringWidget = false;
     bool isHoveringCircle = false;
     bool placeMode = false;
@@ -114,8 +126,10 @@ private:
     bool circlePositionsFound = false;
     QVector<QPointF> circlePositions;
     QVector<QPair<QPointF, int>> placedCircles;
-    QPointF grabbedCircle = QPointF(-1,-1);
-    QPointF currCirclePos = QPointF(-1,-1);
+    QPointF grabbedCircle = INVALID_POINT;
+    QPointF currCirclePos = INVALID_POINT;
+    QPointF barDeletePoint = INVALID_POINT;
+    QPair<QPointF, int> bar = qMakePair(QPointF(-14,-14),1);
     QVector<QPushButton*> stringButtons;
 };
 
