@@ -25,7 +25,6 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
@@ -37,7 +36,6 @@ public slots:
     void redirectMainWidget();
 
 private:
-    Ui::MainWindow *ui;
     QPixmap backgroundImage;
     QLabel *backgroundLabel;
     QWidget *loginBox;

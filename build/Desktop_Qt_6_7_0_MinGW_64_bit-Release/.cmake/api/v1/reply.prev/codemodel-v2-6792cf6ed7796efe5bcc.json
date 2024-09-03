@@ -7,7 +7,7 @@
 				{
 					"build" : ".",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-.-Release-39a9c4b058c7a7eea675.json",
+					"jsonFile" : "directory-.-Release-06102147873f9fcc1769.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.16"
@@ -44,7 +44,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "TabPro::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-TabPro-Release-bbe1895843ba4312f986.json",
+					"jsonFile" : "target-TabPro-Release-11703108e34136ab5e3c.json",
 					"name" : "TabPro",
 					"projectIndex" : 0
 				},
@@ -58,7 +58,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "TabPro_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-TabPro_autogen_timestamp_deps-Release-90bd58b179f904ab10a7.json",
+					"jsonFile" : "target-TabPro_autogen_timestamp_deps-Release-e2ae05254d7f0ca9ffd5.json",
 					"name" : "TabPro_autogen_timestamp_deps",
 					"projectIndex" : 0
 				}
@@ -74,6 +74,6 @@
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 6
+		"minor" : 7
 	}
 }

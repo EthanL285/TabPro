@@ -6,8 +6,11 @@
 #include <QGraphicsEffect>
 #include <QMouseEvent>
 #include <QComboBox>
+#include <QFile>
 
 #define MAX_CIRCLES 4
+#define ROWS 4
+#define COLS 5
 
 Chords::Chords(QWidget *parent)
     : QWidget{parent}
@@ -21,16 +24,21 @@ Chords::Chords(QWidget *parent)
     boxLayout->setContentsMargins(0,0,0,0);
     mainLayout->addLayout(boxLayout);
 
-    // Add box header
+    // Box header
     header = new QWidget();
     header->setFixedHeight(60);
     header->setMaximumWidth(0);
     header->setMinimumWidth(0);
-    header->setStyleSheet("background: rgb(23,23,23); border-top: 2px solid rgb(20,20,20); border-left: 1px solid rgb(20,20,20);");
     header->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    header->setStyleSheet
+    (
+        "background: rgb(23,23,23); "
+        "border-top: 2px solid rgb(20,20,20); "
+        "border-left: 1px solid rgb(20,20,20);"
+    );
     boxLayout->addWidget(header);
 
-    // Add box
+    // Box Content
     content = new QWidget();
     content->setFixedHeight(310);
     content->setMinimumWidth(0);
@@ -44,14 +52,15 @@ Chords::Chords(QWidget *parent)
     shadowEffect->setOffset(0, 4);
     setGraphicsEffect(shadowEffect);
 
-    // Add button
-    button = new QPushButton();
-    button->setCheckable(true);
-    button->setFixedWidth(20);
-    button->setCursor(Qt::PointingHandCursor);
-    button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-    button->setFocusPolicy(Qt::NoFocus);
-    button->setStyleSheet
+    // Accordion Toggle Button
+    accordionToggle = new QPushButton();
+    accordionToggle->setCheckable(true);
+    accordionToggle->setFixedWidth(20);
+    accordionToggle->setFocusPolicy(Qt::NoFocus);
+    accordionToggle->setCursor(Qt::PointingHandCursor);
+    accordionToggle->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    connect(accordionToggle, &QPushButton::toggled, this, &Chords::toggleContent);
+    accordionToggle->setStyleSheet
     (
         "QPushButton {"
         "   background: rgb(17,17,17);"
@@ -69,22 +78,21 @@ Chords::Chords(QWidget *parent)
         "   font: 15pt Moon;"
         "}"
     );
-    mainLayout->addWidget(button);
-    connect(button, &QPushButton::toggled, this, &Chords::toggleContent);
+    mainLayout->addWidget(accordionToggle);
 
-    // Set button icon
+    // Accordion Toggle Button Icon
     expandIcon = QIcon(":/Playback/Icons/Playback/right chevron.png");
     collapseIcon = QIcon(":/Playback/Icons/Playback/left chevron.png");
 
     QPixmap pixmap = expandIcon.pixmap(QSize(16, 16));
-    button->setIcon(QIcon(pixmap));
-    button->setIconSize(QSize(16, 16));
+    accordionToggle->setIcon(QIcon(pixmap));
+    accordionToggle->setIconSize(QSize(16, 16));
 
     // ==================== Header layout ====================
     QHBoxLayout *headerLayout = new QHBoxLayout(header);
     headerLayout->setAlignment(Qt::AlignLeft);
 
-    // Chord mode and search field
+    // Chord Mode Switch and Search Field
     QLabel *chordMode = new Label("Chord Mode");
     QWidget *toggleSwitch = new ToggleSwitch(QColor(45,45,45));
     searchField = new Field("Chord Finder", false, 150);
@@ -92,7 +100,7 @@ Chords::Chords(QWidget *parent)
     headerLayout->addWidget(toggleSwitch);
     headerLayout->addWidget(searchField);
 
-    // Bar Placement
+    // Bar Dropdown
     barPlacement = new Label("Bar Placement");
     barDropdown = new QComboBox();
     barDropdown->setFixedSize(100, 32);
@@ -138,7 +146,7 @@ Chords::Chords(QWidget *parent)
     headerLayout->addWidget(barDropdown);
     headerLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum));
 
-    // Reset Chord
+    // Reset Chord Button
     trash = new QPushButton();
     trash->setFixedSize(21,21);
     trash->setCursor(Qt::PointingHandCursor);
@@ -156,20 +164,20 @@ Chords::Chords(QWidget *parent)
         "   image: url(:/Miscellaneous/Icons/Miscellaneous/trash hover.png)"
         "}"
     );
-    headerLayout->addWidget(trash);
     QObject::connect(trash, &QPushButton::clicked, this, [=]()
     {
         ChordDiagram *diagram = qobject_cast<ChordDiagram*>(chordDiagram);
         if (diagram) diagram->resetDiagram();
     });
-
-    // Go back
+    headerLayout->addWidget(trash);
     headerLayout->addItem(new QSpacerItem(8, 0, QSizePolicy::Fixed, QSizePolicy::Minimum));
+
+    // Back Button
     back = new QPushButton();
     back->setFixedSize(25,25);
-    back->setCursor(Qt::PointingHandCursor);
     back->setVisible(false);
     back->setToolTip("Go Back");
+    back->setCursor(Qt::PointingHandCursor);
     back->setStyleSheet
     (
         "QPushButton {"
@@ -212,14 +220,14 @@ Chords::Chords(QWidget *parent)
     listLayout->setSpacing(0);
     listLayout->setAlignment(Qt::AlignTop);
 
-    // Add chord button
-    QPushButton *addChord = new QPushButton("+");
-    addChord->setFixedHeight(40);
-    addChord->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    addChord->setCursor(Qt::PointingHandCursor);
-    addChord->setFocusPolicy(Qt::NoFocus);
-    addChord->setToolTip("Add New Chord");
-    addChord->setStyleSheet
+    // New Chord Button
+    QPushButton *newChord= new QPushButton("+");
+    newChord->setFixedHeight(40);
+    newChord->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    newChord->setCursor(Qt::PointingHandCursor);
+    newChord->setFocusPolicy(Qt::NoFocus);
+    newChord->setToolTip("Add New Chord");
+    newChord->setStyleSheet
     (
         "QPushButton {"
         "   background: rgb(45,45,45);"
@@ -237,10 +245,10 @@ Chords::Chords(QWidget *parent)
         "   color: gray;"
         "}"
     );
-    listLayout->addWidget(addChord);
-    connect(addChord, &QPushButton::clicked, this, &Chords::changeWindow);
+    listLayout->addWidget(newChord);
+    connect(newChord, &QPushButton::clicked, this, &Chords::changeWindow);
 
-    // Chord items
+    // Chord Item Buttons
     for (int i = 0; i < 20; i++)
     {
         QWidget *chord = new QWidget();
@@ -261,8 +269,8 @@ void Chords::toggleContent()
     contentToggled = !contentToggled;
 
     // Change button icon
-    if (contentToggled) button->setIcon(collapseIcon);
-    else button->setIcon(expandIcon);
+    if (contentToggled) accordionToggle->setIcon(collapseIcon);
+    else accordionToggle->setIcon(expandIcon);
 }
 
 // Animates the accordion
@@ -278,11 +286,12 @@ void Chords::animateAccordion(QWidget *widget)
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
-// Returns to the chord list window
+// Changes the chord content window
 void Chords::changeWindow()
 {
     bool isFirstWindow = stackedWidget->currentWidget() == scrollArea;
     int idx = (isFirstWindow) ? 1 : 0;
+
     searchField->setVisible(!isFirstWindow);
     back->setVisible(isFirstWindow);
     trash->setVisible(isFirstWindow);
@@ -306,17 +315,18 @@ void Chords::addChord()
     QHBoxLayout *windowLayout = new QHBoxLayout(chordWindow);
     windowLayout->setAlignment(Qt::AlignLeft);
 
-    // Chord diagram
+    // Chord Diagram
     chordDiagram = new ChordDiagram();
     chordDiagram->setFixedWidth(250);
     chordDiagram->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     windowLayout->addWidget(chordDiagram);
 
-    // Diagram Options
+    // ==================== Diagram Layout ====================
     QGridLayout *buttonLayout = new QGridLayout();
     buttonLayout->setAlignment(Qt::AlignCenter);
     windowLayout->addLayout(buttonLayout);
 
+    // Chord Name Field
     QLabel *chordName = new QLabel("Chord Name");
     chordName->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     chordName->setStyleSheet("color: white; font: 11pt Muli; font-weight: semi-bold; border: none;");
@@ -347,7 +357,7 @@ void Chords::addChord()
     buttonLayout->addWidget(dragSwitch, 2, 1, Qt::AlignRight);
     buttonLayout->addWidget(deleteSwitch, 3, 1, Qt::AlignRight);
 
-    // Add button
+    // Add Chord button
     QPushButton *addButton = new QPushButton("Add Chord");
     addButton->setMinimumSize(0, 30);
     addButton->setStyleSheet
@@ -383,24 +393,38 @@ void Chords::toggleMode()
     ChordDiagram *diagram = qobject_cast<ChordDiagram*>(chordDiagram);
     ToggleSwitch* senderSwitch = qobject_cast<ToggleSwitch*>(sender());
 
-    // Toggle sender switch
-    QString name = senderSwitch->objectName();
-    if (name == "place") diagram->placeMode = !diagram->placeMode;
-    else if (name == "drag") diagram->dragMode = !diagram->dragMode;
-    else if (name == "delete") diagram->deleteMode = !diagram->deleteMode;
-
-    // Untoggle other switches
-    auto toggleSwitch = [&](ToggleSwitch *switchWidget, bool &mode)
+    // Toggle the given mode
+    Mode currentMode = getModeFromName(senderSwitch->objectName());
+    switch (currentMode)
     {
-        if (name != switchWidget->objectName() && switchWidget->isToggled())
-        {
-            mode = false;
-            switchWidget->toggle();
-        }
-    };
-    toggleSwitch(placeSwitch, diagram->placeMode);
-    toggleSwitch(dragSwitch, diagram->dragMode);
-    toggleSwitch(deleteSwitch, diagram->deleteMode);
+        case Place: diagram->placeMode = !diagram->placeMode; break;
+        case Drag: diagram->dragMode = !diagram->dragMode; break;
+        case Delete: diagram->deleteMode = !diagram->deleteMode; break;
+        default: break;
+    }
+    // Reset other switches
+    if (currentMode != Place) resetSwitch(placeSwitch, diagram->placeMode);
+    if (currentMode != Drag) resetSwitch(dragSwitch, diagram->dragMode);
+    if (currentMode != Delete) resetSwitch(deleteSwitch, diagram->deleteMode);
+}
+
+// Returns the mode given a name
+Mode Chords::getModeFromName(QString name)
+{
+    if (name == "place") return Place;
+    if (name == "drag") return Drag;
+    if (name == "delete") return Delete;
+    return None;
+}
+
+// Resets the given switch
+void Chords::resetSwitch(ToggleSwitch *widget, bool &mode)
+{
+    if (widget->isToggled())
+    {
+        mode = false;
+        widget->toggle();
+    }
 }
 
 //////////////////// Chord Diagram Class ////////////////////
@@ -412,7 +436,7 @@ ChordDiagram::ChordDiagram(QWidget *parent)
     setMouseTracking(true);
     setCursor(Qt::PointingHandCursor);
 
-    // Open and close string buttons
+    // Open and Close String Buttons
     QHBoxLayout *openCloseLayout = new QHBoxLayout();
     openCloseLayout->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
     openCloseLayout->setSpacing(30);
@@ -442,12 +466,12 @@ ChordDiagram::ChordDiagram(QWidget *parent)
             "}"
         );
         openCloseLayout->addWidget(openClose);
-        stringButtons.append(openClose);
         connect(openClose, &QPushButton::clicked, this, [openClose]()
         {
             if (openClose->isChecked()) openClose->setText("X");
             else openClose->setText("");
         });
+        stringButtons.append(openClose);
     }
 
     // String labels
@@ -473,51 +497,34 @@ void ChordDiagram::paintEvent(QPaintEvent *event)
     painter.setPen(QPen(Qt::white, 0.5));
     painter.save();
 
-    int rows = 4;
-    int cols = 5;
+    // Set values
     paddingLeftRight = 15;
     paddingTop = 35;
     paddingBottom = 35;
-    cellWidth = (width() - 2 * paddingLeftRight) / cols;
-    cellHeight = (height() - paddingTop - paddingBottom) / rows;
+    cellWidth = (width() - 2 * paddingLeftRight) / COLS;
+    cellHeight = (height() - paddingTop - paddingBottom) / ROWS;
+
+    // Initialise snap positions
+    if (snapPositions.empty()) setSnapPositions();
 
     // Draw horizontal lines
-    for (int i = 0; i < rows; i++)
+    painter.setPen(QPen(Qt::white, 5, Qt::SolidLine, Qt::RoundCap));
+    painter.drawLine(paddingLeftRight, paddingTop, width() - paddingLeftRight, paddingTop);
+    painter.restore();
+
+    for (int i = 1; i < ROWS; i++)
     {
         int y = i * cellHeight + paddingTop;
-        if (i == 0)
-        {
-            painter.setPen(QPen(Qt::white, 5, Qt::SolidLine, Qt::RoundCap));
-            painter.drawLine(paddingLeftRight, y, width() - paddingLeftRight, y);
-            painter.restore();
-        }
-        else
-        {
-            painter.drawLine(paddingLeftRight, y, width() - paddingLeftRight, y);
-        }
+        painter.drawLine(paddingLeftRight, y, width() - paddingLeftRight, y);
     }
-    // Explicitly draw the bottom line at the bottom of the grid due to rounding errors
     painter.drawLine(paddingLeftRight, height() - paddingBottom, width() - paddingLeftRight, height() - paddingBottom);
 
     // Draw vertical lines
-    for (int i = 0; i <= cols; i++)
+    for (int i = 0; i <= COLS; i++)
     {
         int x = i * cellWidth + paddingLeftRight;
         painter.drawLine(x, paddingTop, x, height() - paddingBottom);
-
-        // Find circle positions
-        if (!circlePositionsFound)
-        {
-            for (int j = 0; j < rows; j++)
-            {
-                int y = j * cellHeight + paddingTop + (cellHeight / 2);
-                circlePositions.append(QPointF(x, y));
-            }
-            barDeletePoint = QPointF(paddingLeftRight, paddingTop + (cellHeight / 2));
-            circlePositions.append(barDeletePoint);
-        }
     }
-    circlePositionsFound = true;
 
     QFont font("Muli", 10);
     font.setBold(true);
@@ -526,67 +533,88 @@ void ChordDiagram::paintEvent(QPaintEvent *event)
     painter.setPen(QPen(QColor(45,45,45), 1));
 
     // Draw bar
-    if (barPlacement != 0)
+    if (barExists) drawBar(font, painter);
+
+    // Draw hover and currently placed circles
+    drawPlacedCircles(painter);
+    drawHoverCircle(painter);
+}
+
+// Draws the bar
+void ChordDiagram::drawBar(QFont font, QPainter &painter)
+{
+    int factor = NUM_STRINGS - barSpan;
+    int rectWidth = width() - factor * cellWidth;
+    int rectHeight = 28;
+    int barOffSet = factor * (cellWidth / 2);
+    int rectX = (width() - rectWidth) / 2 + barOffSet;
+    int rectY = paddingTop + (cellHeight / 2) - (rectHeight / 2);
+    painter.drawRoundedRect(rectX, rectY, rectWidth, rectHeight, 14, 14);
+
+    QFontMetrics fontMetrics(font);
+    QString text = QString::number(barPlacement);
+    QRect textRect = fontMetrics.boundingRect(text);
+    int textOffSet = factor * cellWidth;
+    int textX = paddingLeftRight - (fontMetrics.horizontalAdvance(text) / 2) + textOffSet;
+    int textY = rectY + (rectHeight - textRect.height()) / 2 + fontMetrics.ascent();
+    painter.save();
+    painter.setPen(Qt::white);
+    painter.drawText(textX, textY, text);
+    painter.restore();
+}
+
+// Draws all the currently placed circles
+void ChordDiagram::drawPlacedCircles(QPainter &painter)
+{
+    for (int i = 1; i <= MAX_CIRCLES; i++)
     {
-        int factor = NUM_STRINGS - barSpan;
-        int rectWidth = width() - factor * cellWidth;
-        int rectHeight = 28;
-        int barOffSet = factor * (cellWidth / 2);
-        int rectX = (width() - rectWidth) / 2 + barOffSet;
-        int rectY = paddingTop + (cellHeight / 2) - (rectHeight / 2);
-        painter.drawRoundedRect(rectX, rectY, rectWidth, rectHeight, 14, 14);
+        if (!placedCircles.contains(i) || placedCircles[i] == grabbedCircle) continue;
 
-        QFontMetrics fontMetrics(font);
-        QString text = QString::number(barPlacement);
-        QRect textRect = fontMetrics.boundingRect(text);
-        int textOffSet = factor * cellWidth;
-        int textX = paddingLeftRight - (fontMetrics.horizontalAdvance(text) / 2) + textOffSet;
-        int textY = rectY + (rectHeight - textRect.height()) / 2 + fontMetrics.ascent();
-        painter.save();
-        painter.setPen(Qt::white);
-        painter.drawText(textX, textY, text);
-        painter.restore();
+        drawCircle(painter, placedCircles[i], i);
+        setStringVisibility(getStringNumber(placedCircles[i]), false);
     }
+}
 
-    // Draw currently placed circles
-    for (const auto pair : placedCircles)
-    {
-        // Ignore circle if grabbed
-        if (pair.first == grabbedCircle) continue;
+// Draws the hover circle
+void ChordDiagram::drawHoverCircle(QPainter &painter)
+{
+    if (!isWidgetHovered || currCirclePos.isNull()) return;
 
-        painter.save();
-        drawCircle(painter, pair.first, pair.second);
-        painter.restore();
+    // Determine the next circle number based off mode
+    int circleNum = 0;
+    if (placeMode && !limitReached) circleNum = getNextCircleNumber();
+    else if (dragMode && isPressed) circleNum = getCircleNumber(grabbedCircle);
 
-        // Change string to closed
-        int stringNum = getStringNum(pair.first);
-        closeString(stringNum);
-    }
-
-    // Draw the circle while hovering
-    if (isHoveringWidget && !currCirclePos.isNull())
-    {
-        // Place mode
-        if (placeMode && !limitReached)
-        {
-            drawCircle(painter, currCirclePos, getNextCircleNum());
-        }
-        // Drag mode
-        else if (dragMode && isPressed)
-        {
-            drawCircle(painter, currCirclePos, getCircleNum(grabbedCircle));
-        }
-    }
+    // Draw circle if circle number is valid
+    if (circleNum != 0) drawCircle(painter, currCirclePos, circleNum);
 }
 
 // Draws a circle with the given number
 void ChordDiagram::drawCircle(QPainter &painter, QPointF center, int circleNum)
 {
+    painter.save();
     QRectF textRect(QPoint(10, 10), QSize(20, 20));
     textRect.moveCenter(center);
     painter.drawEllipse(center, 14, 14);
     painter.setPen(Qt::white);
     painter.drawText(textRect, Qt::AlignCenter, QString::number(circleNum));
+    painter.restore();
+}
+
+// Initialises a vector of all snap positions
+void ChordDiagram::setSnapPositions()
+{
+    for (int i = 0; i <= COLS; i++)
+    {
+        int xPos = i * cellWidth + paddingLeftRight;
+        for (int i = 0; i < ROWS; i++)
+        {
+            int yPos = i * cellHeight + paddingTop + (cellHeight / 2);
+            snapPositions.append(QPointF(xPos, yPos));
+        }
+    }
+    barDeletePoint = QPointF(paddingLeftRight, paddingTop + (cellHeight / 2));
+    snapPositions.append(barDeletePoint);
 }
 
 // Hover event (enable mouse tracking)
@@ -595,155 +623,15 @@ void ChordDiagram::mouseMoveEvent(QMouseEvent *event)
     // Get position of mouse
     currCirclePos = snapToGrid(event->pos());
     if (!snap) currCirclePos = event->pos();
-    isHoveringWidget = !(currCirclePos.y() < 35 || currCirclePos.y() > height() - 35);
-    isHoveringCircle = circleHover(currCirclePos);
+    isWidgetHovered = !(currCirclePos.y() < 35 || currCirclePos.y() > height() - 35);
+    isCircleHovered = isHoveringCircle(currCirclePos);
 
     // Set cursor
-    if (placeMode) setCursor(isHoveringWidget && !limitReached ? Qt::PointingHandCursor : Qt::ArrowCursor);
-    else if (dragMode && !isPressed) setCursor(isHoveringCircle && snap ? Qt::OpenHandCursor : Qt::ArrowCursor);
-    else if (deleteMode) setCursor(isHoveringCircle && snap ? Qt::PointingHandCursor : Qt::ArrowCursor);
+    if (placeMode) setCursor(isWidgetHovered && !limitReached ? Qt::PointingHandCursor : Qt::ArrowCursor);
+    else if (dragMode && !isPressed) setCursor(isCircleHovered && snap ? Qt::OpenHandCursor : Qt::ArrowCursor);
+    else if (deleteMode) setCursor(isCircleHovered && snap ? Qt::PointingHandCursor : Qt::ArrowCursor);
     else if (!placeMode && !dragMode && !deleteMode) setCursor(Qt::ArrowCursor);
 
-    update();
-}
-
-// Leave event
-void ChordDiagram::leaveEvent(QEvent *event)
-{
-    Q_UNUSED(event);
-    isHoveringWidget = false;
-    update();
-}
-
-// Press Event
-void ChordDiagram::mousePressEvent(QMouseEvent *event)
-{
-    // Perform action if snapped
-    if (event->button() == Qt::LeftButton && snap)
-    {
-        // Place mode
-        if (placeMode && !limitReached)
-        {
-            if (onSameString(currCirclePos))
-            {
-                int num = getNextCircleNum();
-                int idx = getStringCircleIndex(currCirclePos);
-                placedCircles.remove(idx);
-                placedCircles.insert(idx, qMakePair(currCirclePos, num));
-            }
-            else
-            {
-                placedCircles.append(qMakePair(currCirclePos, getNextCircleNum()));
-            }
-            limitReached = (placedCircles.size() >= MAX_CIRCLES);
-        }
-        // Drag mode
-        else if (dragMode && isHoveringCircle)
-        {
-            grabbedCircle = currCirclePos;
-            isPressed = true;
-            setCursor(Qt::ClosedHandCursor);
-        }
-        // Delete mode
-        else if (deleteMode && isHoveringCircle)
-        {
-            int circleIdx = getCircleIndex(currCirclePos);
-            int barIdx = circlePositions.indexOf(barDeletePoint);
-
-            if (circleIdx != -1)
-            {
-                openString(getStringNum(currCirclePos));
-                placedCircles.remove(circleIdx);
-                setCursor(Qt::ArrowCursor);
-                limitReached = false;
-            }
-            else if (barIdx != -1 && currCirclePos == barDeletePoint && barSpan > 2)
-            {
-                barSpan--;
-                circlePositions.remove(barIdx);
-                barDeletePoint.setX(paddingLeftRight + (NUM_STRINGS - barSpan) * cellWidth);
-                circlePositions.append(barDeletePoint);
-                setCursor(Qt::ArrowCursor);
-            }
-        }
-    }
-    update();
-}
-
-// Release Event
-void ChordDiagram::mouseReleaseEvent(QMouseEvent *event)
-{
-    if (event->button() == Qt::LeftButton && dragMode)
-    {
-        QPointF newPoint = snapToGrid(event->pos());
-        int idx = getCircleIndex(grabbedCircle);
-        int tempIdx = getStringCircleIndex(newPoint);
-        int circleNum = getCircleNum(newPoint);
-
-        if (snap && isPressed)
-        {
-            // Circle is placed on the same string as an already existing circle
-            if (onSameString(newPoint))
-            {
-                placedCircles[tempIdx].first = placedCircles[idx].first;
-                placedCircles[idx].first = newPoint;
-            }
-            // Circle is placed ontop of an already existing circle
-            else if (circleNum != -1 && circleNum != placedCircles[idx].second)
-            {
-                QPointF tempPoint = placedCircles[tempIdx].first;
-                placedCircles[tempIdx].first = placedCircles[idx].first;
-                placedCircles[idx].first = tempPoint;
-            }
-            // Circle is placed at a valid point
-            else
-            {
-                int newStringNum = getStringNum(newPoint);
-                int oldStringNum = getStringNum(placedCircles[idx].first);
-                closeString(newStringNum);
-                openString(oldStringNum);
-                placedCircles[idx].first = newPoint;
-            }
-        }
-        grabbedCircle = INVALID_POINT;
-        setCursor(isHoveringCircle ? Qt::OpenHandCursor : Qt::ArrowCursor);
-        isPressed = false;
-    }
-    update();
-}
-
-// Updates the bar placement value
-void ChordDiagram::placeBar(QComboBox *barDropdown)
-{
-    barPlacement = barDropdown->currentIndex();
-    barSpan = NUM_STRINGS;
-
-    // Reset bar delete point
-    circlePositions.remove(circlePositions.indexOf(barDeletePoint));
-    barDeletePoint = QPointF(paddingLeftRight, paddingTop + (cellHeight / 2));
-    circlePositions.append(barDeletePoint);
-
-    // Remove bar
-    if (barPlacement == 0)
-    {
-        placedCircles.remove(placedCircles.indexOf(bar));
-    }
-    // Place bar
-    else if (!placedCircles.contains(bar))
-    {
-        for (int i = 0; i < placedCircles.size(); i++)
-        {
-            auto &pair = placedCircles[i];
-            if (pair.second == 1 || getFretNum(pair.first) == 1)
-            {
-                placedCircles.remove(getCircleIndex(pair.first));
-                i--;
-            }
-        }
-        placedCircles.append(bar);
-    }
-
-    limitReached = (placedCircles.size() >= MAX_CIRCLES);
     update();
 }
 
@@ -754,7 +642,7 @@ QPointF ChordDiagram::snapToGrid(const QPointF &pos)
     QPointF nearestPoint;
     double minDistance = std::numeric_limits<double>::max();
 
-    for (const auto &point : circlePositions)
+    for (const auto &point : snapPositions)
     {
         double distance = std::sqrt(std::pow(point.x() - pos.x(), 2) + std::pow(point.y() - pos.y(), 2));
         if (distance < minDistance)
@@ -764,108 +652,244 @@ QPointF ChordDiagram::snapToGrid(const QPointF &pos)
         }
     }
     bool isCloseEnough = (minDistance <= 13);
-    bool isNotBarFret = (barPlacement == 0 || getFretNum(nearestPoint) != 1);
+    bool isNotBarFret = (barPlacement == 0 || getFretNumber(nearestPoint) != 1);
     bool isInDeleteMode = (deleteMode && nearestPoint == barDeletePoint);
     snap = isCloseEnough && (isNotBarFret || isInDeleteMode);
 
     return nearestPoint;
 }
 
+// Leave event
+void ChordDiagram::leaveEvent(QEvent *event)
+{
+    Q_UNUSED(event);
+    isWidgetHovered = false;
+    update();
+}
+
+// Press Event
+void ChordDiagram::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() != Qt::LeftButton || !snap) return;
+
+    // Handle mode press event
+    if (placeMode && !limitReached) handlePlaceMode();
+    else if (dragMode && isCircleHovered) handleDragMode();
+    else if (deleteMode && isCircleHovered) handleDeleteMode();
+
+    update();
+}
+
+// Handles the place mode press event
+void ChordDiagram::handlePlaceMode()
+{
+    int num = getNextCircleNumber();
+    int sameStringCircle = getSameStringCircle(currCirclePos);
+
+    if (sameStringCircle != -1) placedCircles.remove(sameStringCircle);
+
+    placedCircles.insert(num, currCirclePos);
+    limitReached = (placedCircles.size() >= MAX_CIRCLES);
+}
+
+// Handles the drag mode press event
+void ChordDiagram::handleDragMode()
+{
+    grabbedCircle = currCirclePos;
+    isPressed = true;
+    setCursor(Qt::ClosedHandCursor);
+}
+
+// Handles the delete mode press event
+void ChordDiagram::handleDeleteMode()
+{
+    int circleNum = getCircleNumber(currCirclePos);
+    int barIdx = snapPositions.indexOf(barDeletePoint);
+
+    if (circleNum != -1)
+    {
+        setStringVisibility(getStringNumber(currCirclePos), true);
+        placedCircles.remove(circleNum);
+        limitReached = false;
+        setCursor(Qt::ArrowCursor);
+    }
+    else if (barExists && currCirclePos == barDeletePoint && barSpan > 2)
+    {
+        barSpan--;
+        snapPositions.remove(barIdx);
+        barDeletePoint.setX(paddingLeftRight + (NUM_STRINGS - barSpan) * cellWidth);
+        snapPositions.append(barDeletePoint);
+        setCursor(Qt::ArrowCursor);
+    }
+}
+
+// Release Event
+void ChordDiagram::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (event->button() != Qt::LeftButton || !dragMode) return;
+
+    QPointF newPoint = snapToGrid(event->pos());
+    int circleNum = getCircleNumber(grabbedCircle);
+    int duplicateCircle = getCircleNumber(newPoint);
+    int sameStringCircle = getSameStringCircle(newPoint);
+
+    if (snap && isPressed)
+    {
+        handleDragPlacement(circleNum, sameStringCircle, duplicateCircle, newPoint);
+    }
+    isPressed = false;
+    grabbedCircle = INVALID_POINT;
+    setCursor(isCircleHovered ? Qt::OpenHandCursor : Qt::ArrowCursor);
+
+    update();
+}
+
+// Handles the drag mode release event
+void ChordDiagram::handleDragPlacement(int circleNum, int sameStringCircle, int duplicateCircle, QPointF newPoint)
+{
+    if (sameStringCircle != -1)
+    {
+        handleSameStringCircle(circleNum, sameStringCircle, newPoint);
+    }
+    else if (duplicateCircle != -1 && duplicateCircle != circleNum)
+    {
+        handleDuplicateCircle(circleNum, sameStringCircle, duplicateCircle);
+    }
+    else
+    {
+        handleValidPlacement(circleNum, newPoint);
+    }
+}
+
+// Handles the drag case where circles are placed on the same string
+void ChordDiagram::handleSameStringCircle(int circleNum, int sameStringCircle, QPointF newPoint)
+{
+    placedCircles.insert(sameStringCircle, placedCircles[circleNum]);
+    placedCircles.insert(circleNum, newPoint);
+}
+
+// Handles the drag case where a circle is placed on an existing circle
+void ChordDiagram::handleDuplicateCircle(int circleNum, int sameStringCircle, int duplicateCircle)
+{
+    QPointF temp = placedCircles[sameStringCircle];
+    placedCircles.insert(sameStringCircle, placedCircles[circleNum]);
+    placedCircles.insert(circleNum, temp);
+}
+
+// Handles valid drag placement
+void ChordDiagram::handleValidPlacement(int circleNum, QPointF newPoint)
+{
+    int newStringNum = getStringNumber(newPoint);
+    int oldStringNum = getStringNumber(placedCircles[circleNum]);
+
+    setStringVisibility(newStringNum, false);
+    setStringVisibility(oldStringNum, true);
+    placedCircles.insert(circleNum, newPoint);
+}
+
+// Places the bar on the diagram
+void ChordDiagram::placeBar(QComboBox *barDropdown)
+{
+    barPlacement = barDropdown->currentIndex();
+    barSpan = NUM_STRINGS;
+
+    // Reset bar delete point
+    snapPositions.removeAll(barDeletePoint);
+    barDeletePoint = QPointF(paddingLeftRight, paddingTop + (cellHeight / 2));
+    snapPositions.append(barDeletePoint);
+
+    // Remove existing bar
+    if (barPlacement == 0)
+    {
+        placedCircles.remove(1);
+    }
+    else
+    {
+        // Place the bar and remove any fret 1 circles
+        placedCircles.insert(1, barPoint);
+        for (int i = 2; i <= MAX_CIRCLES; i++)
+        {
+            if (placedCircles.contains(i) && getFretNumber(placedCircles[i]) == 1)
+            {
+                placedCircles.remove(i);
+            }
+        }
+    }
+    barExists = (barPlacement != 0);
+    limitReached = (placedCircles.size() >= MAX_CIRCLES);
+
+    update();
+}
+
 // Checks whether a point is on the same string as a placed circle
-bool ChordDiagram::onSameString(QPointF point)
+int ChordDiagram::getSameStringCircle(QPointF point)
 {
-    for (auto pair : placedCircles)
+    for (int i = 1; i <= MAX_CIRCLES; i++)
     {
-        if (pair.first.x() == point.x()) return true;
-    }
-    return false;
-}
-
-// Returns the index of the circle at the given point
-int ChordDiagram::getCircleIndex(QPointF point)
-{
-    for (int i = 0; i < placedCircles.size(); i++)
-    {
-        if (placedCircles[i].first == point) return i;
-    }
-    return -1;
-}
-
-// Returns the index of the circle on the same string as the given point
-int ChordDiagram::getStringCircleIndex(QPointF point)
-{
-    for (int i = 0; i < placedCircles.size(); i++)
-    {
-        if (placedCircles[i].first.x() == point.x()) return i;
+        if (placedCircles.contains(i) && placedCircles[i].x() == point.x()) return i;
     }
     return -1;
 }
 
 // Returns the circle number at the given coordinates
-int ChordDiagram::getCircleNum(QPointF point)
+int ChordDiagram::getCircleNumber(QPointF point)
 {
-    for (auto pair : placedCircles)
+    for (int i = 1; i <= MAX_CIRCLES; i++)
     {
-        if (pair.first == point) return pair.second;
+        if (placedCircles.contains(i) && placedCircles[i] == point) return i;
     }
     return -1;
 }
 
 // Returns the next circle number to be placed
-int ChordDiagram::getNextCircleNum()
-{
-    int num = (barPlacement != 0) ? 2 : 1;
-    QSet<int> numbers;
-
-    for (auto pair : placedCircles)
+int ChordDiagram::getNextCircleNumber()
+{ 
+    for (int i = 1; i <= MAX_CIRCLES; i++)
     {
-        numbers.insert(pair.second);
+        if (!placedCircles.contains(i)) return i;
     }
-    while (numbers.find(num) != numbers.end())
-    {
-        num++;
-    }
-    return num;
+    return MAX_CIRCLES;
 }
 
 // Checks whether cursor is hovering a circle
-bool ChordDiagram::circleHover(QPointF point)
+bool ChordDiagram::isHoveringCircle(QPointF point)
 {
     if (barPlacement != 0 && point == barDeletePoint) return true;
 
-    for (int i = 0; i < placedCircles.size(); i++)
+    for (int i = 1; i <= MAX_CIRCLES; i++)
     {
-        if (placedCircles[i].first == point) return true;
+        if (placedCircles.contains(i) && placedCircles[i] == point) return true;
     }
     return false;
 }
 
 // Returns the string that contains the given point
-int ChordDiagram::getStringNum(QPointF point)
+int ChordDiagram::getStringNumber(QPointF point)
 {
     return std::trunc(static_cast<int>(point.x()) / cellWidth);
 }
 
 // Returns the fret that contains the given point
-int ChordDiagram::getFretNum(QPointF point)
+int ChordDiagram::getFretNumber(QPointF point)
 {
     return std::trunc(static_cast<int>(point.y()) / cellHeight);
 }
 
 // Closes the given string
-void ChordDiagram::closeString(int stringNum)
+void ChordDiagram::setStringVisibility(int stringNum, bool visible)
 {
     QPushButton *string = stringButtons[stringNum];
-    if (string->isChecked()) string->click();
-    string->setChecked(true);
-}
 
-// Opens the given string
-void ChordDiagram::openString(int stringNum)
-{
-    QPushButton *string = stringButtons[stringNum];
-    string->setText("");
-    string->setChecked(false);
+    if (!visible)
+    {
+        if (string->isChecked()) string->click();
+        string->setChecked(true);
+    }
+    else
+    {
+        string->setText("");
+        string->setChecked(false);
+    }
 }
 
 // Resets the chord diagram
@@ -876,7 +900,7 @@ void ChordDiagram::resetDiagram()
 
     for (int i = 0; i < 6; i++)
     {
-        openString(i);
+        setStringVisibility(i, true);
     }
     update();
 }
@@ -991,6 +1015,3 @@ Label::Label(QString text, QWidget *parent)
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     setStyleSheet("color: white; font: 11pt Muli; font-weight: semi-bold; border: none;");
 }
-
-
-

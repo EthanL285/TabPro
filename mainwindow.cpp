@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "./ui_mainwindow.h"
 #include "loginui.h"
 #include "registerui.h"
 #include "transitions.h"
@@ -10,7 +9,6 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
 {
     // Create UserModel object for database-related operations
     usermodel = new UserModel(this);
@@ -173,9 +171,3 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     backgroundLabel->setPixmap(scaledBgImage);
     backgroundLabel->setGeometry(x, y, scaledBgImage.size().width(), scaledBgImage.size().height());
 }
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
-

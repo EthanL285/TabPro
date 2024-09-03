@@ -8,9 +8,18 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QComboBox>
+#include <QHash>
 
 #define NUM_STRINGS 6
+#define BAR_POINT QPointF(-14,-14)
 #define INVALID_POINT QPointF(-1,-1)
+
+enum Mode {
+    Place,
+    Drag,
+    Delete,
+    None
+};
 
 //////////////////// Toggle Switch Class ////////////////////
 
@@ -48,6 +57,8 @@ public:
     void toggleContent();
     void animateAccordion(QWidget *widget);
     void toggleMode();
+    void resetSwitch(ToggleSwitch *widget, bool &mode);
+    Mode getModeFromName(QString name);
 
 private slots:
     void addChord();
@@ -57,7 +68,7 @@ private:
     QWidget *content;
     QWidget *header;
     QLineEdit *searchField;
-    QPushButton *button;
+    QPushButton *accordionToggle;
     QPushButton *trash;
     QPushButton *back;
     QLabel *barPlacement;
@@ -82,17 +93,30 @@ class ChordDiagram : public QWidget {
 public:
     ChordDiagram(QWidget *parent = nullptr);
     QPointF snapToGrid(const QPointF &pos);
-    bool onSameString(QPointF point);
-    int getCircleNum(QPointF point);
-    int getNextCircleNum();
-    int getCircleIndex(QPointF point);
-    int getStringCircleIndex(QPointF point);
-    int getStringNum(QPointF point);
-    int getFretNum(QPointF point);
-    bool circleHover(QPointF point);
-    void closeString(int stringNum);
-    void openString(int stringNum);
+
+    void drawBar(QFont font, QPainter &painter);
+    void drawPlacedCircles(QPainter &painter);
+    void drawHoverCircle(QPainter &painter);
     void drawCircle(QPainter &painter, QPointF center, int circleNum);
+
+    bool isHoveringCircle(QPointF point);
+    int getCircleNumber(QPointF point);
+    int getNextCircleNumber();
+    int getFretNumber(QPointF point);
+    int getSameStringCircle(QPointF point);
+    int getStringNumber(QPointF point);
+    void setStringVisibility(int stringNum, bool visible);
+    void setSnapPositions();
+
+    void handlePlaceMode();
+    void handleDragMode();
+    void handleDeleteMode();
+
+    void handleDragPlacement(int circleNum, int sameStringCircle, int duplicateCircle, QPointF newPoint);
+    void handleSameStringCircle(int circleNum, int sameStringCircle, QPointF newPoint);
+    void handleDuplicateCircle(int circleNum, int sameStringCircle, int duplicateCircle);
+    void handleValidPlacement(int circleNum, QPointF newPoint);
+
     friend class Chords;
 
 protected:
@@ -115,22 +139,24 @@ private:
     int paddingBottom;
     int barPlacement = 0;
     int barSpan = NUM_STRINGS;
-    bool isHoveringWidget = false;
-    bool isHoveringCircle = false;
+
+    bool isWidgetHovered = false;
+    bool isCircleHovered = false;
     bool placeMode = false;
     bool dragMode = false;
     bool deleteMode = false;
     bool limitReached = false;
     bool snap = false;
     bool isPressed = false;
-    bool circlePositionsFound = false;
-    QVector<QPointF> circlePositions;
-    QVector<QPair<QPointF, int>> placedCircles;
+    bool barExists = false;
+
+    QVector<QPointF> snapPositions;
+    QHash<int, QPointF> placedCircles;
+    QVector<QPushButton*> stringButtons;
+    QPointF barPoint = BAR_POINT;
     QPointF grabbedCircle = INVALID_POINT;
     QPointF currCirclePos = INVALID_POINT;
     QPointF barDeletePoint = INVALID_POINT;
-    QPair<QPointF, int> bar = qMakePair(QPointF(-14,-14),1);
-    QVector<QPushButton*> stringButtons;
 };
 
 //////////////////// Field Class ////////////////////
