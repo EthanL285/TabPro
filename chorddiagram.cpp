@@ -145,9 +145,7 @@ void ChordDiagram::drawPlacedCircles(QPainter &painter)
     for (int i = 1; i <= MAX_CIRCLES; i++)
     {
         if (!placedCircles.contains(i) || placedCircles[i] == grabbedCircle) continue;
-
         drawCircle(painter, placedCircles[i], i);
-        setStringVisibility(getStringNumber(placedCircles[i]), false);
     }
 }
 
@@ -264,6 +262,7 @@ void ChordDiagram::handlePlaceMode()
 
     if (sameStringCircle != -1) placedCircles.remove(sameStringCircle);
 
+    setStringVisibility(getStringNumber(currCirclePos), false);
     placedCircles.insert(num, currCirclePos);
     limitReached = (placedCircles.size() >= MAX_CIRCLES);
 }
@@ -280,17 +279,24 @@ void ChordDiagram::handleDragMode()
 void ChordDiagram::handleDeleteMode()
 {
     int circleNum = getCircleNumber(currCirclePos);
+    int stringNum = getStringNumber(currCirclePos);
+    int barStringNum = NUM_STRINGS - barSpan;
     int barIdx = snapPositions.indexOf(barDeletePoint);
 
+    // Delete circle
     if (circleNum != -1)
     {
-        setStringVisibility(getStringNumber(currCirclePos), true);
+        if (!barExists || stringNum < barStringNum) setStringVisibility(stringNum, true);
+
         placedCircles.remove(circleNum);
         limitReached = false;
         setCursor(Qt::ArrowCursor);
     }
+    // Reduce bar span
     else if (barExists && currCirclePos == barDeletePoint && barSpan > 2)
     {
+        if (getSameStringCircle(barDeletePoint) == -1) setStringVisibility(barStringNum, true);
+
         barSpan--;
         snapPositions.remove(barIdx);
         barDeletePoint.setX(paddingLeftRight + (NUM_STRINGS - barSpan) * cellWidth);
@@ -357,9 +363,10 @@ void ChordDiagram::handleValidPlacement(int circleNum, QPointF newPoint)
 {
     int newStringNum = getStringNumber(newPoint);
     int oldStringNum = getStringNumber(placedCircles[circleNum]);
+    int barStringNum = NUM_STRINGS - barSpan;
 
+    if (!barExists || oldStringNum < barStringNum) setStringVisibility(oldStringNum, true);
     setStringVisibility(newStringNum, false);
-    setStringVisibility(oldStringNum, true);
     placedCircles.insert(circleNum, newPoint);
 }
 
@@ -379,6 +386,13 @@ void ChordDiagram::placeBar()
     if (barPlacement == 0)
     {
         placedCircles.remove(1);
+
+        // Set strings to open
+        for (int i = 0; i < NUM_STRINGS; i++)
+        {
+            int xPos = i * cellWidth + paddingLeftRight;
+            if (getSameStringCircle(QPointF(xPos, 0)) == -1) setStringVisibility(i, true);
+        }
     }
     else
     {
@@ -390,6 +404,11 @@ void ChordDiagram::placeBar()
             {
                 placedCircles.remove(i);
             }
+        }
+        // Set strings to closed
+        for (int i = 0; i < NUM_STRINGS; i++)
+        {
+            setStringVisibility(i, false);
         }
     }
     barExists = (barPlacement != 0);
@@ -461,11 +480,13 @@ void ChordDiagram::setStringVisibility(int stringNum, bool visible)
     {
         if (string->isChecked()) string->click();
         string->setChecked(true);
+        string->setDisabled(true);
     }
     else
     {
         string->setText("");
         string->setChecked(false);
+        string->setEnabled(true);
     }
 }
 
@@ -473,6 +494,7 @@ void ChordDiagram::setStringVisibility(int stringNum, bool visible)
 void ChordDiagram::resetDiagram()
 {
     placedCircles.clear();
+    barExists = false;
     limitReached = false;
 
     for (int i = 0; i < 6; i++)

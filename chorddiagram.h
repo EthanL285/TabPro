@@ -60,7 +60,6 @@ public slots:
     void placeBar();
 
 private:
-    // Chords *chords;
     int cellHeight;
     int cellWidth;
     int paddingLeftRight;

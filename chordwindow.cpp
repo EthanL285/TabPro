@@ -170,6 +170,7 @@ ChordWindow::ChordWindow(QWidget *parent)
 
     chordWindow = new QWidget();
     chordWindow->setStyleSheet("background: rgb(33,33,33); border-left: 1px solid rgb(20,20,20);");
+    chordWindow->setContentsMargins(5, 0, 0, 0);
     stackedWidget->addWidget(chordWindow);
 
     QHBoxLayout *windowLayout = new QHBoxLayout(chordWindow);
@@ -181,6 +182,7 @@ ChordWindow::ChordWindow(QWidget *parent)
 
     QGridLayout *buttonLayout = new QGridLayout();
     buttonLayout->setAlignment(Qt::AlignCenter);
+    buttonLayout->setContentsMargins(10, 0, 10, 0);
     windowLayout->addLayout(buttonLayout);
 
     // Chord Name Field
@@ -304,7 +306,11 @@ ChordWindow::ChordWindow(QWidget *parent)
         "   image: url(:/Miscellaneous/Icons/Miscellaneous/trash hover.png)"
         "}"
     );
-    QObject::connect(trash, &QPushButton::clicked, diagram, &ChordDiagram::resetDiagram);
+    QObject::connect(trash, &QPushButton::clicked, this, [&]()
+    {
+        barDropdown->setCurrentIndex(0);
+        diagram->resetDiagram();
+    });
     headerLayout->addWidget(trash);
     headerLayout->addItem(new QSpacerItem(8, 0, QSizePolicy::Fixed, QSizePolicy::Minimum));
 
@@ -348,7 +354,7 @@ void ChordWindow::toggleContent()
 void ChordWindow::animateAccordion(QWidget *widget)
 {
     QPropertyAnimation *animation = new QPropertyAnimation(widget, "minimumWidth");
-    int endWidth = (contentToggled) ? 0 : 500;
+    int endWidth = (contentToggled) ? 0 : 530;
 
     animation->setStartValue(widget->minimumWidth());
     animation->setEndValue(endWidth);
@@ -449,8 +455,8 @@ QLineEdit *ChordWindow::createField(QString text, bool dark, int width)
 QLabel *ChordWindow::createLabel(QString text)
 {
     QLabel *label = new QLabel(text);
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    setStyleSheet("color: white; font: 11pt Muli; font-weight: semi-bold; border: none;");
+    label->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    label->setStyleSheet("color: white; font: 11pt Muli; font-weight: semi-bold; border: none;");
 
     return label;
 }
