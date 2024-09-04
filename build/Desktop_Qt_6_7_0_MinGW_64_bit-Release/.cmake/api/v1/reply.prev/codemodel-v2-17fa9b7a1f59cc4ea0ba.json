@@ -7,7 +7,7 @@
 				{
 					"build" : ".",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-.-Release-06102147873f9fcc1769.json",
+					"jsonFile" : "directory-.-Release-2d74a55e9b7faf26a0f8.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.16"
@@ -44,7 +44,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "TabPro::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-TabPro-Release-42160a9184f18f466a8a.json",
+					"jsonFile" : "target-TabPro-Release-882044684ed0a3c9a97a.json",
 					"name" : "TabPro",
 					"projectIndex" : 0
 				},

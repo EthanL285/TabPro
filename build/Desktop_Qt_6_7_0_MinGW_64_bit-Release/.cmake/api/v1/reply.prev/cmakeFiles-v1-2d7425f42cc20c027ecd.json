@@ -1972,9 +1972,6 @@
 		},
 		{
 			"path" : "Sound.qrc"
-		},
-		{
-			"path" : "Styles.qrc"
 		}
 	],
 	"kind" : "cmakeFiles",

@@ -44,7 +44,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         menubar.h menubar.cpp
         staff.h staff.cpp
         notes.h notes.cpp
-        chords.h chords.cpp
+        chordwindow.h chordwindow.cpp
+        chorddiagram.h chorddiagram.cpp
+        toggleswitch.h toggleswitch.cpp
 
 
 

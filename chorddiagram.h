@@ -1,91 +1,20 @@
-#ifndef CHORDS_H
-#define CHORDS_H
+#ifndef CHORDDIAGRAM_H
+#define CHORDDIAGRAM_H
 
 #include <QWidget>
-#include <QPushButton>
-#include <QScrollArea>
-#include <QStackedWidget>
-#include <QLabel>
-#include <QLineEdit>
 #include <QComboBox>
-#include <QHash>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QPainter>
+#include <QMouseEvent>
 
+#define ROWS 4
+#define COLS 5
+#define MAX_CIRCLES 4
 #define NUM_STRINGS 6
 #define BAR_POINT QPointF(-14,-14)
 #define INVALID_POINT QPointF(-1,-1)
-
-enum Mode {
-    Place,
-    Drag,
-    Delete,
-    None
-};
-
-//////////////////// Toggle Switch Class ////////////////////
-
-class ToggleSwitch : public QWidget {
-    Q_OBJECT
-
-public:
-    ToggleSwitch(QColor background, QWidget *parent = nullptr);
-    bool isToggled();
-    void toggle();
-
-protected:
-    void paintEvent(QPaintEvent *event) override;
-    void mousePressEvent(QMouseEvent *event) override;
-
-signals:
-    void clicked();
-
-private:
-    QColor background;
-    QWidget *handle;
-    bool toggled = false;
-
-public slots:
-    void animateHandle();
-};
-
-//////////////////// Chords Class /////////////////////
-
-class Chords : public QWidget
-{
-    Q_OBJECT
-public:
-    explicit Chords(QWidget *parent = nullptr);
-    void toggleContent();
-    void animateAccordion(QWidget *widget);
-    void toggleMode();
-    void resetSwitch(ToggleSwitch *widget, bool &mode);
-    Mode getModeFromName(QString name);
-
-private slots:
-    void addChord();
-    void changeWindow();
-
-private:
-    QWidget *content;
-    QWidget *header;
-    QLineEdit *searchField;
-    QPushButton *accordionToggle;
-    QPushButton *trash;
-    QPushButton *back;
-    QLabel *barPlacement;
-    QComboBox *barDropdown;
-    bool contentToggled = false;
-    QIcon expandIcon;
-    QIcon collapseIcon;
-    QScrollArea *scrollArea;
-    QStackedWidget *stackedWidget;
-    QWidget *chordWindow = nullptr;
-    QWidget *chordDiagram;
-    ToggleSwitch *placeSwitch;
-    ToggleSwitch *dragSwitch;
-    ToggleSwitch *deleteSwitch;
-};
-
-//////////////////// Chord Diagram Class ////////////////////
 
 class ChordDiagram : public QWidget {
     Q_OBJECT
@@ -117,7 +46,7 @@ public:
     void handleDuplicateCircle(int circleNum, int sameStringCircle, int duplicateCircle);
     void handleValidPlacement(int circleNum, QPointF newPoint);
 
-    friend class Chords;
+    friend class ChordWindow;
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -126,12 +55,12 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
 
-private slots:
+public slots:
     void resetDiagram();
-    void placeBar(QComboBox *dropdown);
+    void placeBar();
 
 private:
-    Chords *chords;
+    // Chords *chords;
     int cellHeight;
     int cellWidth;
     int paddingLeftRight;
@@ -159,22 +88,4 @@ private:
     QPointF barDeletePoint = INVALID_POINT;
 };
 
-//////////////////// Field Class ////////////////////
-
-class Field : public QLineEdit {
-    Q_OBJECT
-
-public:
-    Field(QString text, bool dark, int width = 0, QWidget *parent = nullptr);
-};
-
-//////////////////// Label Class ////////////////////
-
-class Label : public QLabel {
-    Q_OBJECT
-
-public:
-    Label(QString text, QWidget *parent = nullptr);
-};
-
-#endif // CHORDS_H
+#endif // CHORDDIAGRAM_H

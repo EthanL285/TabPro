@@ -1,6 +1,6 @@
 #include "guitar.h"
 #include "staff.h"
-#include "chords.h"
+#include "chordwindow.h"
 
 #include <QPainter>
 #include <QGraphicsDropShadowEffect>
@@ -126,7 +126,7 @@ Guitar::Guitar(QWidget *parent)
     createFretButtons();
 
     // Add chord section
-    Chords *chords = new Chords();
+    ChordWindow *chords = new ChordWindow();
     bottomLayout->setAlignment(Qt::AlignCenter);
     bottomLayout->addWidget(chords);
 }

@@ -486,9 +486,15 @@
 	"HEADERS" : 
 	[
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chords.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chorddiagram.h",
 			"MU",
-			"EWIEGA46WW/moc_chords.cpp",
+			"EWIEGA46WW/moc_chorddiagram.cpp",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chordwindow.h",
+			"MU",
+			"EWIEGA46WW/moc_chordwindow.cpp",
 			null
 		],
 		[
@@ -561,6 +567,12 @@
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/tablature.h",
 			"MU",
 			"EWIEGA46WW/moc_tablature.cpp",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/toggleswitch.h",
+			"MU",
+			"EWIEGA46WW/moc_toggleswitch.cpp",
 			null
 		],
 		[
@@ -667,7 +679,12 @@
 	"SOURCES" : 
 	[
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chords.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chorddiagram.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chordwindow.cpp",
 			"MU",
 			null
 		],
@@ -733,6 +750,11 @@
 		],
 		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/tablature.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/toggleswitch.cpp",
 			"MU",
 			null
 		],
