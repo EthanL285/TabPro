@@ -30,7 +30,6 @@ public:
     void toggleMode();
     void resetSwitch(ToggleSwitch *widget, bool &mode);
     Mode getModeFromName(QString name);
-
     QLineEdit *createField(QString text, bool dark, int width = 0);
     QLabel *createLabel(QString text);
 
@@ -38,9 +37,8 @@ private slots:
     void addChord();
     void changeWindow();
 
-private:
+private:      
     ChordDiagram *diagram;
-
     QWidget *content;
     QWidget *header;
     QLineEdit *searchField;

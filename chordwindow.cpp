@@ -17,10 +17,12 @@ ChordWindow::ChordWindow(QWidget *parent)
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
     mainLayout->setSpacing(0);
     mainLayout->setContentsMargins(0,0,0,0);
-    mainLayout->setAlignment(Qt::AlignLeft);
+    mainLayout->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 
     QVBoxLayout *boxLayout = new QVBoxLayout();
+    boxLayout->setSpacing(0);
     boxLayout->setContentsMargins(0,0,0,0);
+    boxLayout->setAlignment(Qt::AlignCenter);
     mainLayout->addLayout(boxLayout);
 
     // Box header
@@ -28,18 +30,17 @@ ChordWindow::ChordWindow(QWidget *parent)
     header->setFixedHeight(60);
     header->setMaximumWidth(0);
     header->setMinimumWidth(0);
-    header->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    header->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     header->setStyleSheet
     (
         "background: rgb(23,23,23); "
-        "border-top: 2px solid rgb(20,20,20); "
+        "border-top: 1px solid rgb(20,20,20); "
         "border-left: 1px solid rgb(20,20,20);"
     );
     boxLayout->addWidget(header);
 
     // Box Content
     content = new QWidget();
-    content->setFixedHeight(310);
     content->setMinimumWidth(0);
     content->setStyleSheet("background: rgb(45,45,45); border: none;");
     content->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
@@ -222,18 +223,18 @@ ChordWindow::ChordWindow(QWidget *parent)
     addButton->setStyleSheet
     (
         "QPushButton {"
-        "   background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(255, 255, 255, 200), stop: 1 rgba(96, 94, 92, 200));"
-        "   border: none;"
+        "   background-color: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(255, 255, 255, 200), stop: 1 rgba(96, 94, 92, 200));"
+        "   border: 1px solid rgb(20,20,20);"
         "   border-radius: 5px;"
         "   color: black;"
         "   font: 11pt Muli;"
         "   font-weight: semi-bold;"
         "}"
         "QPushButton:hover {"
-        "   background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(255, 255, 255, 200), stop: 0.2 rgba(243, 242, 241, 200));"
+        "   background-color: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(255, 255, 255, 200), stop: 0.2 rgba(243, 242, 241, 200));"
         "}"
         "QPushButton:pressed {"
-        "   background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgba(32, 31, 30, 200), stop: 0.3 rgba(59, 58, 57, 200));"
+        "   background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgba(32, 31, 30, 200), stop: 0.3 rgba(59, 58, 57, 200));"
         "   color: white;"
         "   font: 11pt Muli;"
         "}"
@@ -242,6 +243,7 @@ ChordWindow::ChordWindow(QWidget *parent)
     addButton->setCursor(Qt::PointingHandCursor);
     addButton->setFocusPolicy(Qt::NoFocus);
     buttonLayout->addWidget(addButton, 5, 0, 1, 2);
+    connect(addButton, &QPushButton::clicked, this, &ChordWindow::addChord);
 
     //////////////////// Chord Diagram Window - Header Layout ////////////////////
 
@@ -382,8 +384,7 @@ void ChordWindow::changeWindow()
 // Adds a new chord to the list
 void ChordWindow::addChord()
 {
-    stackedWidget->setCurrentWidget(chordWindow);
-    update();
+    qDebug() << "Added Chord";
 }
 
 // Toggles the corresponding mode

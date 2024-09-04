@@ -14,6 +14,7 @@
 #include <QLineEdit>
 #include <QIntValidator>
 #include <QScrollArea>
+#include <QScrollBar>
 
 Guitar::Guitar(QWidget *parent)
     : QWidget{parent}
@@ -71,6 +72,7 @@ Guitar::Guitar(QWidget *parent)
 
     // Bottom Layout (Includes techniques, guitar interface and chords)
     QHBoxLayout *bottomLayout = new QHBoxLayout();
+    bottomLayout->setAlignment(Qt::AlignCenter);
     bottomLayout->setContentsMargins(0,0,0,0);
     bottomLayout->setSpacing(0);
     interfaceLayout->addLayout(bottomLayout);
@@ -87,8 +89,8 @@ Guitar::Guitar(QWidget *parent)
     (
         "background-color: rgb(23,23,23); "
         "border-top-left-radius: 15px;"
-        "border-left: 2px solid rgb(20,20,20);"
-        "border-top: 2px solid rgb(20,20,20);"
+        "border-left: 1px solid rgb(20,20,20);"
+        "border-top: 1px solid rgb(20,20,20);"
     );
     inputLayout->addWidget(playingTechniques);
     createPlayingTechniqueButtons();
@@ -103,7 +105,7 @@ Guitar::Guitar(QWidget *parent)
     // Create strings
     QWidget *strings = new QWidget();
     strings->setMinimumWidth(50);
-    strings->setStyleSheet("background-color: rgb(23,23,23);");
+    strings->setStyleSheet("background-color: rgb(23,23,23); border-left: 1px solid rgb(20,20,20);");
     strings->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     guitarLayout->addWidget(strings);
 
@@ -127,7 +129,6 @@ Guitar::Guitar(QWidget *parent)
 
     // Add chord section
     ChordWindow *chords = new ChordWindow();
-    bottomLayout->setAlignment(Qt::AlignCenter);
     bottomLayout->addWidget(chords);
 }
 
@@ -374,7 +375,7 @@ QWidget *Guitar::createTempoButton()
         "   font-size: 22px;"
         "   font-weight: bold;"
         "   text-align: center;"
-        "   outline: none;"
+        "   border: none;"
         "   padding-bottom: 5px;"
         "}"
         "QPushButton:hover { "
@@ -419,7 +420,7 @@ QWidget *Guitar::createTempoButton()
         "   font-size: 22px;"
         "   font-weight: bold;"
         "   text-align: center;"
-        "   outline: none;"
+        "   border: none;"
         "   padding-bottom: 5px;"
         "}"
         "QPushButton:hover { "
