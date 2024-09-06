@@ -13,6 +13,7 @@
 #define COLS 5
 #define MAX_CIRCLES 4
 #define NUM_STRINGS 6
+#define CIRCLE_RADIUS 16
 #define BAR_POINT QPointF(-14,-14)
 #define INVALID_POINT QPointF(-1,-1)
 
@@ -22,18 +23,20 @@ class ChordDiagram : public QWidget {
 public:
     ChordDiagram(QWidget *parent = nullptr);
     QPointF snapToGrid(const QPointF &pos);
+    void convertToTabColumn();
 
     void drawBar(QFont font, QPainter &painter);
     void drawPlacedCircles(QPainter &painter);
     void drawHoverCircle(QPainter &painter);
     void drawCircle(QPainter &painter, QPointF center, int circleNum);
 
-    bool isHoveringCircle(QPointF point);
+    QPointF getCircle(int stringNum);
     int getCircleNumber(QPointF point);
     int getNextCircleNumber();
     int getFretNumber(QPointF point);
     int getSameStringCircle(QPointF point);
     int getStringNumber(QPointF point);
+    bool isHoveringCircle(QPointF point);
     void setStringVisibility(int stringNum, bool visible);
     void setSnapPositions();
 
@@ -78,6 +81,7 @@ private:
     bool isPressed = false;
     bool barExists = false;
 
+    QVector<int> tabColumn;
     QVector<QPointF> snapPositions;
     QHash<int, QPointF> placedCircles;
     QVector<QPushButton*> stringButtons;

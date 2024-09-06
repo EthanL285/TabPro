@@ -3,6 +3,8 @@
 #include <QHBoxLayout>
 #include <QPainter>
 #include <QPropertyAnimation>
+#include "chorddisplay.h"
+
 #include <QGraphicsEffect>
 #include <QMouseEvent>
 #include <QComboBox>
@@ -41,6 +43,7 @@ ChordWindow::ChordWindow(QWidget *parent)
 
     // Box Content
     content = new QWidget();
+    content->setFixedHeight(310);
     content->setMinimumWidth(0);
     content->setStyleSheet("background: rgb(45,45,45); border: none;");
     content->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
@@ -49,12 +52,13 @@ ChordWindow::ChordWindow(QWidget *parent)
     QGraphicsDropShadowEffect *shadowEffect = new QGraphicsDropShadowEffect(this);
     shadowEffect->setBlurRadius(5);
     shadowEffect->setColor(QColor(0, 0, 0, 150));
-    shadowEffect->setOffset(0, 4);
+    shadowEffect->setOffset(0, 5);
     setGraphicsEffect(shadowEffect);
 
     // Accordion Toggle Button
     accordionToggle = new QPushButton();
     accordionToggle->setCheckable(true);
+    accordionToggle->setFixedHeight(370);
     accordionToggle->setFixedWidth(20);
     accordionToggle->setFocusPolicy(Qt::NoFocus);
     accordionToggle->setCursor(Qt::PointingHandCursor);
@@ -125,13 +129,18 @@ ChordWindow::ChordWindow(QWidget *parent)
 
     //////////////////// Chord List Window - List layout ////////////////////
 
-    QVBoxLayout *listLayout = new QVBoxLayout(chordList);
-    listLayout->setContentsMargins(0,0,0,0);
-    listLayout->setSpacing(0);
-    listLayout->setAlignment(Qt::AlignTop);
+    QVBoxLayout *listContainer = new QVBoxLayout(chordList);
+    listContainer->setContentsMargins(0,0,0,0);
+    listContainer->setSpacing(0);
+    listContainer->setAlignment(Qt::AlignTop);
+
+    listLayout = new QGridLayout();
+    listLayout->setContentsMargins(1,0,1,0);
+    listLayout->setSpacing(2);
+    listContainer->addLayout(listLayout);
 
     // New Chord Button
-    QPushButton *newChord= new QPushButton("+");
+    QPushButton *newChord = new QPushButton("+");
     newChord->setFixedHeight(40);
     newChord->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     newChord->setCursor(Qt::PointingHandCursor);
@@ -155,17 +164,9 @@ ChordWindow::ChordWindow(QWidget *parent)
         "   color: gray;"
         "}"
     );
-    listLayout->addWidget(newChord);
+    listContainer->addStretch();
+    listContainer->addWidget(newChord, Qt::AlignBottom);
     connect(newChord, &QPushButton::clicked, this, &ChordWindow::changeWindow);
-
-    // Chord Item Buttons
-    for (int i = 0; i < 20; i++)
-    {
-        QWidget *chord = new QWidget();
-        chord->setFixedHeight(50);
-        chord->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-        listLayout->addWidget(chord);
-    }
 
     //////////////////// Chord Diagram Window - Content Layout ////////////////////
 
@@ -181,7 +182,7 @@ ChordWindow::ChordWindow(QWidget *parent)
     diagram = new ChordDiagram();
     windowLayout->addWidget(diagram);
 
-    QGridLayout *buttonLayout = new QGridLayout();
+    buttonLayout = new QGridLayout();
     buttonLayout->setAlignment(Qt::AlignCenter);
     buttonLayout->setContentsMargins(10, 0, 10, 0);
     windowLayout->addLayout(buttonLayout);
@@ -192,7 +193,7 @@ ChordWindow::ChordWindow(QWidget *parent)
     chordName->setStyleSheet("color: white; font: 11pt Muli; font-weight: semi-bold; border: none;");
     buttonLayout->addWidget(chordName, 0, 0);
 
-    QLineEdit *nameField = createField("Name", true);
+    nameField = createField("Name", true);
     buttonLayout->addWidget(nameField, 0, 1);
 
     // Labels
@@ -243,7 +244,7 @@ ChordWindow::ChordWindow(QWidget *parent)
     addButton->setCursor(Qt::PointingHandCursor);
     addButton->setFocusPolicy(Qt::NoFocus);
     buttonLayout->addWidget(addButton, 5, 0, 1, 2);
-    connect(addButton, &QPushButton::clicked, this, &ChordWindow::addChord);
+    connect(addButton, &QPushButton::clicked, this, &ChordWindow::addChordToList);
 
     //////////////////// Chord Diagram Window - Header Layout ////////////////////
 
@@ -302,7 +303,6 @@ ChordWindow::ChordWindow(QWidget *parent)
         "   image: url(:/Miscellaneous/Icons/Miscellaneous/trash.png);"
         "   background-color: transparent;"
         "   border: none;"
-        "   outline: none;"
         "}"
         "QPushButton:hover {"
         "   image: url(:/Miscellaneous/Icons/Miscellaneous/trash hover.png)"
@@ -328,7 +328,6 @@ ChordWindow::ChordWindow(QWidget *parent)
         "   image: url(:/Miscellaneous/Icons/Miscellaneous/return.png);"
         "   background-color: transparent;"
         "   border: none;"
-        "   outline: none;"
         "}"
         "QPushButton:hover {"
         "   image: url(:/Miscellaneous/Icons/Miscellaneous/return hover.png)"
@@ -378,13 +377,93 @@ void ChordWindow::changeWindow()
     barPlacement->setVisible(isFirstWindow);
     barDropdown->setVisible(isFirstWindow);
 
+    if (!isFirstWindow) removeStatusMessage();
     update();
 }
 
-// Adds a new chord to the list
-void ChordWindow::addChord()
+// Removes the status message
+void ChordWindow::removeStatusMessage()
 {
-    qDebug() << "Added Chord";
+    statusMessage->setVisible(false);
+}
+
+// Adds a new chord to the list
+void ChordWindow::addChordToList()
+{
+    Status status = Status::Success;
+    QString chordName = nameField->text();
+
+    // Validate chord name
+    if (chordName.isEmpty()) status = Status::Empty;
+    else if (chordName.size() > 12) status = Status::CharLimit;
+    else if (chords.contains(chordName)) status = Status::Duplicate;
+
+    addStatusMessage(status);
+    if (status != Status::Success) return;
+
+    // Add new chord to the list
+    QPushButton *chordItem = new ChordDisplay(diagram, nameField->text());
+    chordItem->setObjectName(chordName);
+    connect(chordItem, &QPushButton::clicked, this, &ChordWindow::addChordToStaff);
+
+    int row = chordCount / 3;
+    int col = chordCount % 3;
+    listLayout->addWidget(chordItem, row, col);
+
+    chordCount++;
+    nameField->clear();
+    diagram->resetDiagram();
+    barDropdown->setCurrentIndex(0);
+    chords.insert(chordName, diagram->tabColumn);
+}
+
+// Adds a status message upon clicking new chord
+void ChordWindow::addStatusMessage(Status status)
+{
+    QString message;
+    QString colour = "rgb(237, 67, 55)";
+    switch (status)
+    {
+        case Status::Success:
+            message = QString::fromUtf8("\u2713 ") + "Chord successfully added";
+            colour = "rgb(114, 191, 106)";
+            break;
+        case Status::Empty:
+            message = QString::fromUtf8("\u2717 ") + "Chord name is empty";
+            break;
+        case Status::Duplicate:
+            message = QString::fromUtf8("\u2717 ") + "Chord name already exists";
+            break;
+        case Status::CharLimit:
+            message = QString::fromUtf8("\u2717 ") + "Character limit exceeded";
+            break;
+    }
+    QString stylesheet = QString("color: %1; font: 11pt Muli; border: none;").arg(colour);
+
+    // Add status message
+    if (!statusMessage)
+    {
+        spacer = new QSpacerItem(0, 5, QSizePolicy::Expanding, QSizePolicy::Fixed);
+        statusMessage = new QLabel(message);
+        buttonLayout->addItem(spacer, 6, 0, 1, 2);
+        buttonLayout->addWidget(statusMessage, 7, 0, 1, 2, Qt::AlignCenter);
+    }
+    statusMessage->setVisible(true);
+    statusMessage->setText(message);
+    statusMessage->setStyleSheet(stylesheet);
+}
+
+// Adds the selected chord to the staff
+void ChordWindow::addChordToStaff()
+{
+    QPushButton *chord = qobject_cast<QPushButton*>(sender());
+
+    // Test
+    qDebug() << "Added Chord to Staff" << chord->objectName();
+    for (const auto &i : chords[chord->objectName()])
+    {
+        qDebug() << i;
+    }
 }
 
 // Toggles the corresponding mode

@@ -47,6 +47,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         chordwindow.h chordwindow.cpp
         chorddiagram.h chorddiagram.cpp
         toggleswitch.h toggleswitch.cpp
+        chorddisplay.h chorddisplay.cpp
 
 
 

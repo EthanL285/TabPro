@@ -15,7 +15,6 @@
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/Icons/Scroll/scroll down.png",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/Icons/Scroll/scroll right.png",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/Icons/Notes/Treble Clef.png",
-		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/Icons/Notes/crotchet.png",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/Icons/Sidebar/SideBarIcon.png",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/Icons/Playback/left chevron hover.png",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/Icons/Playback/right chevron.png",
@@ -31,7 +30,11 @@
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/user.png",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/lock.png",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/Icon1.png",
-		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/IconStripped.png"
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/IconStripped.png",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/Icons/Miscellaneous/return.png",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/Icons/Miscellaneous/return hover.png",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/Icons/Miscellaneous/trash.png",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/Icons/Miscellaneous/trash hover.png"
 	],
 	"LOCK_FILE" : "C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-MinSizeRel/CMakeFiles/TabPro_autogen.dir/AutoRcc_Images_EWIEGA46WW_Lock.lock",
 	"MULTI_CONFIG" : false,

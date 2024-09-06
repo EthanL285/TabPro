@@ -38,14 +38,14 @@ Guitar::Guitar(QWidget *parent)
     noteLayout->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
     viewArea->addLayout(noteLayout);
 
-    QSpacerItem *vSpacer1 = new QSpacerItem(0, 50, QSizePolicy::Fixed, QSizePolicy::Fixed);
-    noteLayout->addItem(vSpacer1);
+    // QSpacerItem *vSpacer1 = new QSpacerItem(0, 50, QSizePolicy::Fixed, QSizePolicy::Fixed);
+    // noteLayout->addItem(vSpacer1);
 
     Staff *staff = new Staff(this);
     noteLayout->addWidget(staff);
 
-    QSpacerItem *vSpacer2 = new QSpacerItem(0, 25, QSizePolicy::Fixed, QSizePolicy::Fixed);
-    noteLayout->addItem(vSpacer2);
+    // QSpacerItem *vSpacer2 = new QSpacerItem(0, 25, QSizePolicy::Fixed, QSizePolicy::Fixed);
+    // noteLayout->addItem(vSpacer2);
 
     // Tab Layout (includes both tablature and playback)
     tabLayout = new QVBoxLayout();
@@ -136,7 +136,7 @@ Guitar::Guitar(QWidget *parent)
 void Guitar::createPlaybackButtons()
 {
     QHBoxLayout *playbackLayout = new QHBoxLayout();
-    playbackLayout->setContentsMargins(0, 0, 0, 50);
+    playbackLayout->setContentsMargins(0, 0, 0, 20);
     playbackLayout->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     tabLayout->addLayout(playbackLayout);
 

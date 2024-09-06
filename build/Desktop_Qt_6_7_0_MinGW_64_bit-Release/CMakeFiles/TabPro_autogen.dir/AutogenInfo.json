@@ -492,6 +492,12 @@
 			null
 		],
 		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chorddisplay.h",
+			"MU",
+			"EWIEGA46WW/moc_chorddisplay.cpp",
+			null
+		],
+		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chordwindow.h",
 			"MU",
 			"EWIEGA46WW/moc_chordwindow.cpp",
@@ -680,6 +686,11 @@
 	[
 		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chorddiagram.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chorddisplay.cpp",
 			"MU",
 			null
 		],
