@@ -49,6 +49,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         toggleswitch.h toggleswitch.cpp
         chorddisplay.h chorddisplay.cpp
 
+        Chords.qrc
+
 
 
 

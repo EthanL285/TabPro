@@ -23,7 +23,8 @@ class ChordDiagram : public QWidget {
 public:
     ChordDiagram(QWidget *parent = nullptr);
     QPointF snapToGrid(const QPointF &pos);
-    void convertToTabColumn();
+    void convertDiagramToTab();
+    void convertTabToDiagram(QVector<QPair<int,int>> tab, int barFret = 0, int barLength = 0);
 
     void drawBar(QFont font, QPainter &painter);
     void drawPlacedCircles(QPainter &painter);

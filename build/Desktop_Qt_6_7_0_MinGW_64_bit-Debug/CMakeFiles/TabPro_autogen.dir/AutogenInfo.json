@@ -477,7 +477,8 @@
 		"C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6QWindowsMediaPluginAdditionalTargetInfo.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/GNUInstallDirs.cmake",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/Images.qrc",
-		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/Sound.qrc"
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/Sound.qrc",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/Chords.qrc"
 	],
 	"CMAKE_SOURCE_DIR" : "C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro",
 	"CROSS_CONFIG" : false,
@@ -486,9 +487,21 @@
 	"HEADERS" : 
 	[
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chords.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chorddiagram.h",
 			"MU",
-			"EWIEGA46WW/moc_chords.cpp",
+			"EWIEGA46WW/moc_chorddiagram.cpp",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chorddisplay.h",
+			"MU",
+			"EWIEGA46WW/moc_chorddisplay.cpp",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chordwindow.h",
+			"MU",
+			"EWIEGA46WW/moc_chordwindow.cpp",
 			null
 		],
 		[
@@ -561,6 +574,12 @@
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/tablature.h",
 			"MU",
 			"EWIEGA46WW/moc_tablature.cpp",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/toggleswitch.h",
+			"MU",
+			"EWIEGA46WW/moc_toggleswitch.cpp",
 			null
 		],
 		[
@@ -666,7 +685,17 @@
 	"SOURCES" : 
 	[
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chords.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chorddiagram.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chorddisplay.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chordwindow.cpp",
 			"MU",
 			null
 		],
@@ -732,6 +761,11 @@
 		],
 		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/tablature.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/toggleswitch.cpp",
 			"MU",
 			null
 		],

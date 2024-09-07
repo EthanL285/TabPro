@@ -36,6 +36,7 @@ public:
     void animateAccordion(QWidget *widget);
     void toggleMode();
     void resetSwitch(ToggleSwitch *widget, bool &mode);
+    void addDefaultChords();
     void addStatusMessage(Status status);
     void removeStatusMessage();
 

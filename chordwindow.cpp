@@ -8,6 +8,8 @@
 #include <QGraphicsEffect>
 #include <QMouseEvent>
 #include <QComboBox>
+#include <QFile>
+#include <QMessageBox>
 
 #define MAX_CIRCLES 4
 #define ROWS 4
@@ -335,6 +337,53 @@ ChordWindow::ChordWindow(QWidget *parent)
     );
     headerLayout->addWidget(back);
     connect(back, &QPushButton::clicked, this, &ChordWindow::changeWindow);
+
+    // Default chords
+    addDefaultChords();
+}
+
+// Adds default chords to the list
+void ChordWindow::addDefaultChords()
+{
+    // Read chords from file
+    QFile file(":/Chords/defaultchords.txt");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QMessageBox::warning(this, "Error", "Could not open chords file for reading");
+        return;
+    }
+    // Process each line/chord
+    QTextStream in(&file);
+    while (!in.atEnd())
+    {
+        int barPlacement = 0;
+        int barSpan = 0;
+
+        QString line = in.readLine();
+        QStringList parts = line.split(";");
+
+        QString chordName = parts[0];
+        QStringList fretPos = parts[1].split(",");
+        QVector<QPair<int, int>> chord;
+
+        for (const QString &string : fretPos)
+        {
+            QStringList posParts = string.split(":");
+            int fret = posParts[0].toInt();
+            int finger = posParts[1].toInt();
+            chord.append(qMakePair(fret, finger));
+        }
+        // Bar chord
+        if (parts.size() == 3)
+        {
+            QStringList bar = parts[2].split(",");
+            barPlacement = bar[0].toInt();
+            barSpan = bar[1].toInt();
+        }
+        diagram->convertTabToDiagram(chord, barPlacement, barSpan);
+        nameField->setText(chordName);
+        addChordToList();
+    }
 }
 
 // Toggles the chord content
@@ -377,7 +426,7 @@ void ChordWindow::changeWindow()
     barPlacement->setVisible(isFirstWindow);
     barDropdown->setVisible(isFirstWindow);
 
-    if (!isFirstWindow) removeStatusMessage();
+    if (statusMessage) removeStatusMessage();
     update();
 }
 

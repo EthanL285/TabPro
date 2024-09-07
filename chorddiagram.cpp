@@ -4,10 +4,10 @@ ChordDiagram::ChordDiagram(QWidget *parent)
     : tabColumn(6,-1), QWidget{parent}
 { 
     QVBoxLayout *diagramLayout = new QVBoxLayout(this);
-    setFixedWidth(247);
+    setFixedSize(247, 292);
     setMouseTracking(true);
     setCursor(Qt::PointingHandCursor);
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     // Open and Close String Buttons
     QHBoxLayout *openCloseLayout = new QHBoxLayout();
@@ -60,6 +60,13 @@ ChordDiagram::ChordDiagram(QWidget *parent)
         letter->setStyleSheet("color: white; font: 11pt Muli; border: none;");
         stringLayout->addWidget(letter);
     }
+
+    // Set drawing values
+    paddingLeftRight = 16;
+    paddingTop = 35;
+    paddingBottom = 35;
+    cellWidth = (width() - 2 * paddingLeftRight) / COLS;
+    cellHeight = (height() - paddingTop - paddingBottom) / ROWS;
 }
 
 // Paint event
@@ -69,13 +76,6 @@ void ChordDiagram::paintEvent(QPaintEvent *event)
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(QPen(Qt::white, 0.5));
     painter.save();
-
-    // Set values
-    paddingLeftRight = 16;
-    paddingTop = 35;
-    paddingBottom = 35;
-    cellWidth = (width() - 2 * paddingLeftRight) / COLS;
-    cellHeight = (height() - paddingTop - paddingBottom) / ROWS;
 
     // Initialise snap positions
     if (snapPositions.empty()) setSnapPositions();
@@ -116,11 +116,11 @@ void ChordDiagram::paintEvent(QPaintEvent *event)
     drawHoverCircle(painter);
 
     // Update tab column
-    convertToTabColumn();
+    convertDiagramToTab();
 }
 
-// Converts the chord diagram to tab column info
-void ChordDiagram::convertToTabColumn()
+// Converts the chord diagram to tab info
+void ChordDiagram::convertDiagramToTab()
 {
     tabColumn.fill(-1);
     int startFret = (barExists) ? barPlacement - 1 : 0;
@@ -145,6 +145,45 @@ void ChordDiagram::convertToTabColumn()
             tabColumn[i] = barPlacement;
         }
     }
+}
+
+// Converts the tab to chord diagram info
+void ChordDiagram::convertTabToDiagram(QVector<QPair<int,int>> tab, int barFret, int barLength)
+{
+    // Tab Vector:
+        // Index: String number
+        // First Value: Fret number
+        // Second Value: Circle number
+
+    placedCircles.clear();
+
+    for (int i = 0; i < NUM_STRINGS; i++)
+    {
+        // Insert circle
+        if (tab[i].second != -1)
+        {
+            int xPos = i * cellWidth + paddingLeftRight;
+            int yPos = (tab[i].first - 1) * cellHeight + paddingTop + (cellHeight / 2);
+            placedCircles.insert(tab[i].second, QPointF(xPos, yPos));
+            setStringVisibility(i, false);
+        }
+        // Close the string
+        else if (tab[i].first == -1)
+        {
+            stringButtons[i]->setChecked(true);
+            stringButtons[i]->setText("X");
+        }
+    }
+    // Place bar
+    barPlacement = barFret;
+    barSpan = barLength;
+    barExists = (barPlacement != 0);
+
+    for (int i = NUM_STRINGS - barSpan; i < NUM_STRINGS; i++)
+    {
+        setStringVisibility(i, false);
+    }
+    update();
 }
 
 // Returns the circle on the given string
