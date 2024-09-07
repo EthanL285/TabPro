@@ -2,6 +2,7 @@
 #define CHORDWINDOW_H
 
 #include "chorddiagram.h"
+#include "chorddisplay.h"
 #include "toggleswitch.h"
 
 #include <QWidget>
@@ -48,9 +49,9 @@ private slots:
     void addChordToList();
     void addChordToStaff();
     void changeWindow();
+    void deleteChord();
 
 private:
-    int chordCount = 0;
     bool contentToggled = false;
     ChordDiagram *diagram;
     QWidget *content;
@@ -62,6 +63,7 @@ private:
     QPushButton *accordionToggle;
     QPushButton *trash;
     QPushButton *back;
+    QPushButton *newChord;
     QLabel *barPlacement;
     QComboBox *barDropdown;
     QIcon expandIcon;
@@ -73,7 +75,7 @@ private:
     ToggleSwitch *dragSwitch;
     ToggleSwitch *deleteSwitch;
     QHash<QString, QVector<int>> chords;
-
+    QVector<ChordDisplay*> chordDisplays;
     QLabel *statusMessage = nullptr;
     QSpacerItem *spacer = nullptr;
 };

@@ -187,6 +187,7 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QComboBox \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QHBoxLayout \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QLabel \
+  C:/Qt/6.7.0/mingw_64/include/QtWidgets/QMenu \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QPushButton \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QVBoxLayout \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QWidget \
@@ -201,6 +202,7 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/qlabel.h \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/qlayout.h \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/qlayoutitem.h \
+  C:/Qt/6.7.0/mingw_64/include/QtWidgets/qmenu.h \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/qpushbutton.h \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/qrubberband.h \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/qsizepolicy.h \

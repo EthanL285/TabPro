@@ -46,3 +46,33 @@ ChordDisplay::ChordDisplay(ChordDiagram *diagram, QString name, QWidget *parent)
         "}"
     );
 }
+
+// Context menu event
+void ChordDisplay::contextMenuEvent(QContextMenuEvent* event)
+{
+    QMenu menu(this);
+    menu.setStyleSheet
+    (
+        "QMenu {"
+        "    background-color: rgb(18,18,18);"
+        "    border: 1px solid rgb(45,45,45);"
+        "}"
+        "QMenu::item {"
+        "    padding: 5px 20px;"
+        "    background: transparent;"
+        "}"
+        "QMenu::item:selected {"
+        "    color: rgb(237, 67, 55);"
+        "}"
+        "QMenu::item:pressed {"
+        "    background: rgb(30,30,30);"
+        "    color: rgb(237, 67, 55);"
+        "}"
+    );
+    QAction* del = menu.addAction("Delete");
+    connect(del, &QAction::triggered, this, [this]() { emit deleted(); });
+    menu.exec(event->globalPos());
+}
+
+
+

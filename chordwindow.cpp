@@ -451,19 +451,44 @@ void ChordWindow::addChordToList()
     if (status != Status::Success) return;
 
     // Add new chord to the list
-    QPushButton *chordItem = new ChordDisplay(diagram, nameField->text());
+    ChordDisplay *chordItem = new ChordDisplay(diagram, nameField->text());
     chordItem->setObjectName(chordName);
     connect(chordItem, &QPushButton::clicked, this, &ChordWindow::addChordToStaff);
+    connect(chordItem, &ChordDisplay::deleted, this, &ChordWindow::deleteChord);
 
+    int chordCount = chordDisplays.size();
     int row = chordCount / 3;
     int col = chordCount % 3;
     listLayout->addWidget(chordItem, row, col);
 
-    chordCount++;
     nameField->clear();
     diagram->resetDiagram();
     barDropdown->setCurrentIndex(0);
+    chordDisplays.append(chordItem);
     chords.insert(chordName, diagram->tabColumn);
+}
+
+// Deletes the chord that emitted the signal
+void ChordWindow::deleteChord()
+{
+    // Remove all widgets in the layout
+    while (QLayoutItem *item = listLayout->takeAt(0))
+    {
+        QWidget *widget = item->widget();
+        listLayout->removeWidget(widget);
+    }
+    // Delete the chord
+    ChordDisplay *chord = qobject_cast<ChordDisplay*>(sender());
+    chordDisplays.removeAll(chord);
+    chord->deleteLater();
+
+    // Re-add all widgets to the layout
+    for (int i = 0; i < chordDisplays.size(); i++)
+    {
+        int row = i / 3;
+        int col = i % 3;
+        listLayout->addWidget(chordDisplays[i], row, col);
+    }
 }
 
 // Adds a status message upon clicking new chord
