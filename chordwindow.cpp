@@ -103,6 +103,7 @@ ChordWindow::ChordWindow(QWidget *parent)
     QLabel *chordMode = createLabel("Chord Mode");
     QWidget *toggleSwitch = new ToggleSwitch(QColor(45,45,45));
     searchField = createField("Chord Finder", false, 150);
+    connect(searchField, &QLineEdit::textChanged, this, &ChordWindow::searchChord);
     headerLayout->addWidget(chordMode);
     headerLayout->addWidget(toggleSwitch);
     headerLayout->addWidget(searchField);
@@ -386,6 +387,39 @@ void ChordWindow::addDefaultChords()
     }
 }
 
+// Searches for the inputted chord
+void ChordWindow::searchChord(QString input)
+{
+    QVector<QPushButton*> hidden;
+    for (QPushButton *chord : chordDisplays)
+    {
+        if (!chord->objectName().contains(input, Qt::CaseInsensitive)) hidden.append(chord);
+    }
+    updateLayout(hidden);
+}
+
+// Updates the grid layout to fill available space
+void ChordWindow::updateLayout(QVector<QPushButton*> hidden)
+{
+    // Re-add visible widgets
+    int count = 0;
+    for (QPushButton *chord : chordDisplays)
+    {
+        int row = count / 3;
+        int col = count % 3;
+        if (!hidden.contains(chord))
+        {
+            listLayout->addWidget(chord, row, col);
+            chord->setVisible(true);
+            count++;
+        }
+        else
+        {
+            chord->setVisible(false);
+        }
+    }
+}
+
 // Toggles the chord content
 void ChordWindow::toggleContent()
 {
@@ -471,24 +505,10 @@ void ChordWindow::addChordToList()
 // Deletes the chord that emitted the signal
 void ChordWindow::deleteChord()
 {
-    // Remove all widgets in the layout
-    while (QLayoutItem *item = listLayout->takeAt(0))
-    {
-        QWidget *widget = item->widget();
-        listLayout->removeWidget(widget);
-    }
-    // Delete the chord
     ChordDisplay *chord = qobject_cast<ChordDisplay*>(sender());
     chordDisplays.removeAll(chord);
     chord->deleteLater();
-
-    // Re-add all widgets to the layout
-    for (int i = 0; i < chordDisplays.size(); i++)
-    {
-        int row = i / 3;
-        int col = i % 3;
-        listLayout->addWidget(chordDisplays[i], row, col);
-    }
+    updateLayout();
 }
 
 // Adds a status message upon clicking new chord

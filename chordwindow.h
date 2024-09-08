@@ -40,6 +40,7 @@ public:
     void addDefaultChords();
     void addStatusMessage(Status status);
     void removeStatusMessage();
+    void updateLayout(QVector<QPushButton*> hidden = QVector<QPushButton*>());
 
     Mode getModeFromName(QString name);
     QLineEdit *createField(QString text, bool dark, int width = 0);
@@ -50,6 +51,7 @@ private slots:
     void addChordToStaff();
     void changeWindow();
     void deleteChord();
+    void searchChord(QString input);
 
 private:
     bool contentToggled = false;
