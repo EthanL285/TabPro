@@ -38,11 +38,10 @@ ChordDisplay::ChordDisplay(ChordDiagram *diagram, QString name, QWidget *parent)
         "}"
         "QPushButton:hover {"
         "   background-color: rgb(40,40,40);"
-        "   border: none;"
+        "   border: 1px solid rgb(70,70,70);"
         "}"
         "QPushButton:pressed {"
         "   background-color: rgb(70,70,70);"
-        "   font: 15pt Moon;"
         "}"
     );
 }
@@ -58,7 +57,9 @@ void ChordDisplay::contextMenuEvent(QContextMenuEvent* event)
         "    border: 1px solid rgb(45,45,45);"
         "}"
         "QMenu::item {"
-        "    padding: 5px 20px;"
+        "    padding: 5px;"
+        "    padding-left: 10px;"
+        "    padding-right: 5px;"
         "    background: transparent;"
         "}"
         "QMenu::item:selected {"
@@ -67,12 +68,21 @@ void ChordDisplay::contextMenuEvent(QContextMenuEvent* event)
         "QMenu::item:pressed {"
         "    background: rgb(30,30,30);"
         "    color: rgb(237, 67, 55);"
+        "    border-radius: 5px;"
+        "}"
+        "QMenu::icon {"
+        "    padding-left: 20px;"
         "}"
     );
-    QAction* del = menu.addAction("Delete");
+    QAction* del = menu.addAction(QIcon(":/Miscellaneous/Icons/Miscellaneous/trash.png"), "Delete");
     connect(del, &QAction::triggered, this, [this]() { emit deleted(); });
+    connect(&menu, &QMenu::aboutToHide, this, &ChordDisplay::unHoverButton);
     menu.exec(event->globalPos());
 }
 
-
-
+// Fixes the visual bug where a button remains in the hover state after opening
+// another context menu
+void ChordDisplay::unHoverButton()
+{
+    setAttribute(Qt::WA_UnderMouse, false);
+}

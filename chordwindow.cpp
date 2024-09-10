@@ -129,6 +129,11 @@ ChordWindow::ChordWindow(QWidget *parent)
     scrollArea->setWidget(chordList);
     scrollArea->setWidgetResizable(true);
     stackedWidget->addWidget(scrollArea);
+    // stackedWidget->addWidget(chordList);
+
+    scrollArea->setMouseTracking(true);
+    scrollArea->viewport()->setMouseTracking(true);  // Enable mouse tracking
+    // scrollArea->viewport()->installEventFilter(this);
 
     //////////////////// Chord List Window - List layout ////////////////////
 
@@ -296,7 +301,7 @@ ChordWindow::ChordWindow(QWidget *parent)
 
     // Reset Chord Button
     trash = new QPushButton();
-    trash->setFixedSize(21,21);
+    trash->setFixedSize(22,22);
     trash->setCursor(Qt::PointingHandCursor);
     trash->setVisible(false);
     trash->setToolTip("Reset Chord");
@@ -306,6 +311,7 @@ ChordWindow::ChordWindow(QWidget *parent)
         "   image: url(:/Miscellaneous/Icons/Miscellaneous/trash.png);"
         "   background-color: transparent;"
         "   border: none;"
+        "   padding: 1px 1px;"
         "}"
         "QPushButton:hover {"
         "   image: url(:/Miscellaneous/Icons/Miscellaneous/trash hover.png)"
@@ -341,6 +347,17 @@ ChordWindow::ChordWindow(QWidget *parent)
 
     // Default chords
     addDefaultChords();
+}
+
+// Fixes the visual bug where the edges of the chord button would remain in the
+// hover state after being clicked
+bool ChordWindow::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::Enter || event->type() == QEvent::Leave) {
+        QWidget *button = qobject_cast<QWidget*>(obj);
+        if (button) updateScrollArea();
+    }
+    return QObject::eventFilter(obj, event);
 }
 
 // Adds default chords to the list
@@ -385,6 +402,7 @@ void ChordWindow::addDefaultChords()
         nameField->setText(chordName);
         addChordToList();
     }
+    diagram->resetDiagram();
 }
 
 // Searches for the inputted chord
@@ -489,6 +507,9 @@ void ChordWindow::addChordToList()
     chordItem->setObjectName(chordName);
     connect(chordItem, &QPushButton::clicked, this, &ChordWindow::addChordToStaff);
     connect(chordItem, &ChordDisplay::deleted, this, &ChordWindow::deleteChord);
+    connect(chordItem, &QPushButton::released, this, &ChordWindow::updateScrollArea);
+    connect(chordItem, &QPushButton::pressed, this, &ChordWindow::updateScrollArea);
+    chordItem->installEventFilter(this);
 
     int chordCount = chordDisplays.size();
     int row = chordCount / 3;
@@ -500,6 +521,12 @@ void ChordWindow::addChordToList()
     barDropdown->setCurrentIndex(0);
     chordDisplays.append(chordItem);
     chords.insert(chordName, diagram->tabColumn);
+}
+
+// Repaints the scroll area
+void ChordWindow::updateScrollArea()
+{
+    scrollArea->viewport()->update();
 }
 
 // Deletes the chord that emitted the signal

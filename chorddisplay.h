@@ -8,6 +8,7 @@
 #include <QHBoxLayout>
 #include <QPropertyAnimation>
 #include <QMenu>
+#include <QMouseEvent>
 
 class ChordDisplay : public QPushButton
 {
@@ -15,6 +16,9 @@ class ChordDisplay : public QPushButton
 public:
     explicit ChordDisplay(ChordDiagram *diagram, QString name, QWidget *parent = nullptr);
     void contextMenuEvent(QContextMenuEvent* event) override;
+
+private slots:
+    void unHoverButton();
 
 signals:
     void deleted();

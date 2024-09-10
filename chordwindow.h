@@ -46,12 +46,18 @@ public:
     QLineEdit *createField(QString text, bool dark, int width = 0);
     QLabel *createLabel(QString text);
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
+
 private slots:
     void addChordToList();
     void addChordToStaff();
     void changeWindow();
     void deleteChord();
     void searchChord(QString input);
+
+public slots:
+    void updateScrollArea();
 
 private:
     bool contentToggled = false;
