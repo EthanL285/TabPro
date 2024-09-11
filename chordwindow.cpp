@@ -1,10 +1,9 @@
 #include "chordwindow.h"
+#include "chorddisplay.h"
 
 #include <QHBoxLayout>
 #include <QPainter>
 #include <QPropertyAnimation>
-#include "chorddisplay.h"
-
 #include <QGraphicsEffect>
 #include <QMouseEvent>
 #include <QComboBox>
@@ -15,8 +14,8 @@
 #define ROWS 4
 #define COLS 5
 
-ChordWindow::ChordWindow(QWidget *parent)
-    : QWidget{parent}
+ChordWindow::ChordWindow(Guitar *parent)
+    : guitar{parent}, QWidget{parent}
 {
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
     mainLayout->setSpacing(0);
@@ -129,11 +128,6 @@ ChordWindow::ChordWindow(QWidget *parent)
     scrollArea->setWidget(chordList);
     scrollArea->setWidgetResizable(true);
     stackedWidget->addWidget(scrollArea);
-    // stackedWidget->addWidget(chordList);
-
-    scrollArea->setMouseTracking(true);
-    scrollArea->viewport()->setMouseTracking(true);  // Enable mouse tracking
-    // scrollArea->viewport()->installEventFilter(this);
 
     //////////////////// Chord List Window - List layout ////////////////////
 
@@ -578,13 +572,8 @@ void ChordWindow::addStatusMessage(Status status)
 void ChordWindow::addChordToStaff()
 {
     QPushButton *chord = qobject_cast<QPushButton*>(sender());
-
-    // Test
+    guitar->addChord(chords[chord->objectName()]);
     qDebug() << "Added Chord to Staff" << chord->objectName();
-    for (const auto &i : chords[chord->objectName()])
-    {
-        qDebug() << i;
-    }
 }
 
 // Toggles the corresponding mode

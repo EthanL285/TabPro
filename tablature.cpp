@@ -278,36 +278,43 @@ void Tablature::getColumnInfo()
     }
 }
 
-// Adds fret number to tab
+// Adds a fret number to tab
 void Tablature::addFretNumber()
 {
-    // Retrieve pointer to the QPushButton that emitted the signal
-    QPushButton *button = qobject_cast<QPushButton*>(sender());
-
     // Retrieve string and fret number
+    QPushButton *button = qobject_cast<QPushButton*>(sender());
     QStringList parts = button->objectName().split(" ");
     int row = parts[0].toInt();
     int col = parts[1].toInt();
 
     // Add fret number to tab
-    QString fretNumber;
+    QString tabColumn;
     for (int i = 0; i < 6; i++)
     {
-        if (i == row) fretNumber+= QString("%1").arg(col);
-        else fretNumber += "\u2015";
-
-        if (i < 5) fretNumber += "\n";
+        QString num = (i == row) ? QString("%1").arg(col) : "\u2015";
+        tabColumn.append(num + "\n");
     }
-    selectedColumn->setText(fretNumber);
+    tabColumn.chop(1);
 
-    // Add currently selected note to the staff
+    selectedColumn->setText(tabColumn);
     staff->addNote("crotchet", row, col, getSelectedColumnIndex());
+    if (selectedColumn == columns.last())  addRest();
+}
 
-    // Create new rest if inserted into last column
-    if (selectedColumn == columns.last())
+// Adds a chord to the tab
+void Tablature::addChord(QVector<int> chord)
+{
+    QString tabColumn;
+    for (int i = chord.size() - 1; i >= 0; i--)
     {
-        addRest();
+        QString num = (chord[i] == -1) ? "\u2015" : QString::number(chord[i]);
+        tabColumn.append(num + "\n");
     }
+    tabColumn.chop(1);
+
+    selectedColumn->setText(tabColumn);
+    staff->addNote("crotchet", 2, 0, getSelectedColumnIndex());
+    if (selectedColumn == columns.last()) addRest();
 }
 
 // Creates the rest QPushButton

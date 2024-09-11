@@ -21,6 +21,7 @@ public:
     QLabel *createNewTabLine();
     void addRest();
     void adjustScrollBarPosition(QPushButton *button, QString alignment);
+    void addChord(QVector<int> chord);
 
 public slots:
     int getSelectedColumnIndex();

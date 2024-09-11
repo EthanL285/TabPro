@@ -128,7 +128,7 @@ Guitar::Guitar(QWidget *parent)
     createFretButtons();
 
     // Add chord section
-    ChordWindow *chords = new ChordWindow();
+    ChordWindow *chords = new ChordWindow(this);
     bottomLayout->addWidget(chords);
 }
 
@@ -491,6 +491,12 @@ void Guitar::createFretButtons()
             });
         }
     }
+}
+
+// Adds a chord to the tab
+void Guitar::addChord(QVector<int> chord)
+{
+    tab->addChord(chord);
 }
 
 // Creates the scroll area for the entire viewing area

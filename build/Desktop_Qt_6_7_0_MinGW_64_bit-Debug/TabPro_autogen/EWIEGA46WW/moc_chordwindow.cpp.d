@@ -74,6 +74,7 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/6.7.0/mingw_64/include/QtCore/qmargins.h \
   C:/Qt/6.7.0/mingw_64/include/QtCore/qmath.h \
   C:/Qt/6.7.0/mingw_64/include/QtCore/qmetacontainer.h \
+  C:/Qt/6.7.0/mingw_64/include/QtCore/qmetaobject.h \
   C:/Qt/6.7.0/mingw_64/include/QtCore/qmetatype.h \
   C:/Qt/6.7.0/mingw_64/include/QtCore/qminmax.h \
   C:/Qt/6.7.0/mingw_64/include/QtCore/qnamespace.h \
@@ -142,6 +143,7 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/6.7.0/mingw_64/include/QtCore/qyieldcpu.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/QMouseEvent \
   C:/Qt/6.7.0/mingw_64/include/QtGui/QPainter \
+  C:/Qt/6.7.0/mingw_64/include/QtGui/QPixmap \
   C:/Qt/6.7.0/mingw_64/include/QtGui/QTransform \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qaction.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qbitmap.h \
@@ -187,6 +189,16 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/6.7.0/mingw_64/include/QtGui/qvectornd.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs_win.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/QAudioOutput \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/QMediaPlayer \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qaudio.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qaudiooutput.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qmediaenumdebug.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qmediaplayer.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtaudio.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtmultimedia-config.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtmultimediaexports.h \
+  C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtmultimediaglobal.h \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QComboBox \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QHBoxLayout \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QLabel \
@@ -426,4 +438,8 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wchar.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/chorddiagram.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/chorddisplay.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/guitar.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/sound.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/staff.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/tablature.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/toggleswitch.h

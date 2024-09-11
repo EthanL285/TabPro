@@ -10962,6 +10962,7 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chordwindow.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qmargins.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qmath.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qmetacontainer.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qmetaobject.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qmetatype.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qminmax.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qnamespace.h
@@ -11030,6 +11031,7 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chordwindow.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qyieldcpu.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/QMouseEvent
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/QPainter
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/QPixmap
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/QTransform
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qaction.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qbitmap.h
@@ -11075,6 +11077,16 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chordwindow.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qvectornd.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs_win.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtMultimedia/QAudioOutput
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtMultimedia/QMediaPlayer
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qaudio.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qaudiooutput.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qmediaenumdebug.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qmediaplayer.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtaudio.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtmultimedia-config.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtmultimediaexports.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtmultimediaglobal.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/QComboBox
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/QHBoxLayout
  mdp:C:/Qt/6.7.0/mingw_64/include/QtWidgets/QLabel
@@ -11316,6 +11328,10 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chordwindow.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chorddiagram.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chorddisplay.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chordwindow.h
+ mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/guitar.h
+ mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/sound.h
+ mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/staff.h
+ mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/tablature.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/toggleswitch.h
 C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chorddiagram.cpp
 C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chorddisplay.cpp
