@@ -499,6 +499,12 @@ void Guitar::addChord(QVector<int> chord)
     tab->addChord(chord);
 }
 
+// Toggles chord mode
+void Guitar::toggleChordMode()
+{
+    tab->toggleChordMode();
+}
+
 // Creates the scroll area for the entire viewing area
 QScrollArea *Guitar::createScrollArea()
 {

@@ -100,8 +100,9 @@ ChordWindow::ChordWindow(Guitar *parent)
 
     // Chord Mode Switch and Search Field
     QLabel *chordMode = createLabel("Chord Mode");
-    QWidget *toggleSwitch = new ToggleSwitch(QColor(45,45,45));
+    ToggleSwitch *toggleSwitch = new ToggleSwitch(QColor(45,45,45));
     searchField = createField("Chord Finder", false, 150);
+    connect(toggleSwitch, &ToggleSwitch::clicked, this, &ChordWindow::toggleChordMode);
     connect(searchField, &QLineEdit::textChanged, this, &ChordWindow::searchChord);
     headerLayout->addWidget(chordMode);
     headerLayout->addWidget(toggleSwitch);
@@ -573,7 +574,12 @@ void ChordWindow::addChordToStaff()
 {
     QPushButton *chord = qobject_cast<QPushButton*>(sender());
     guitar->addChord(chords[chord->objectName()]);
-    qDebug() << "Added Chord to Staff" << chord->objectName();
+}
+
+// Toggles chord mode
+void ChordWindow::toggleChordMode()
+{
+    guitar->toggleChordMode();
 }
 
 // Toggles the corresponding mode

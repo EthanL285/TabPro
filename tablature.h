@@ -11,6 +11,8 @@
 #include <QLineEdit>
 #include <QScrollArea>
 
+#define EMPTY_COLUMN "\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015"
+
 class Tablature : public QWidget
 {
     Q_OBJECT
@@ -22,6 +24,7 @@ public:
     void addRest();
     void adjustScrollBarPosition(QPushButton *button, QString alignment);
     void addChord(QVector<int> chord);
+    void toggleChordMode();
 
 public slots:
     int getSelectedColumnIndex();
@@ -67,6 +70,7 @@ private:
     QScrollArea *scrollArea = nullptr;
     Staff *staff = nullptr;
     bool playSwitch = true;
+    bool chordMode = false;
     int index; // Index of column
     int BPM = 60;
 };

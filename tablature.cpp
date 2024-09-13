@@ -288,14 +288,19 @@ void Tablature::addFretNumber()
     int col = parts[1].toInt();
 
     // Add fret number to tab
-    QString tabColumn;
-    for (int i = 0; i < 6; i++)
-    {
-        QString num = (i == row) ? QString("%1").arg(col) : "\u2015";
-        tabColumn.append(num + "\n");
-    }
-    tabColumn.chop(1);
+    int idx = 0;
+    QString tabColumn = (chordMode) ? selectedColumn->text() : EMPTY_COLUMN;
 
+    for (int i = 0; i < tabColumn.size(); idx++)
+    {
+        int count = (i < tabColumn.size() - 1 && tabColumn[i + 1] != '\n') ? 2 : 1;
+        if (idx == row)
+        {
+            tabColumn.replace(i, count, QString::number(col));
+            break;
+        }
+        i += count + 1;
+    }
     selectedColumn->setText(tabColumn);
     staff->addNote("crotchet", row, col, getSelectedColumnIndex());
     if (selectedColumn == columns.last())  addRest();
@@ -317,10 +322,17 @@ void Tablature::addChord(QVector<int> chord)
     if (selectedColumn == columns.last()) addRest();
 }
 
+// Toggles chord mode
+void Tablature::toggleChordMode()
+{
+    chordMode = !chordMode;
+}
+
 // Creates the rest QPushButton
 QPushButton *Tablature::createRest()
 {
-    QPushButton *rest = new QPushButton("\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015");
+    QPushButton *rest = new QPushButton(EMPTY_COLUMN);
+
     rest->setFixedSize(35, 205);
     rest->setCheckable(true);
     rest->setCursor(Qt::PointingHandCursor);
@@ -351,7 +363,7 @@ void Tablature::addRest()
     tab[tab.size() - 1] = columns;
 
     // Set rest to selected column
-    rest->setChecked(true);
+    if (!chordMode) rest->setChecked(true);
 
     // Update note line length
     staff->updateLineLength(true);
@@ -451,7 +463,7 @@ void Tablature::insertRest()
         int index = getSelectedColumnIndex();
         QPushButton *rest = createRest();
         columns.insert(index + 1, rest);
-        columnLayout->insertWidget(index + 2, rest); // +2 since layout contains strings (0) and first column (1)
+        columnLayout->insertWidget(index + 2, rest);
     }
 }
 
@@ -506,7 +518,7 @@ void Tablature::remove()
     if (selectedColumn == columns.last())
     {
         // Empty column
-        if (columns.size() > 1 && columns[index - 1]->text() == "\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015")
+        if (columns.size() > 1 && columns[index - 1]->text() == EMPTY_COLUMN)
         {
             columns[index - 1]->setChecked(true);
             columns.remove(index);
@@ -519,7 +531,7 @@ void Tablature::remove()
         // Non-Empty column
         else if (columns.size() > 1)
         {
-            columns[index - 1]->setText("\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015");
+            columns[index - 1]->setText(EMPTY_COLUMN);
             columns[index - 1]->setChecked(true);
             columns.remove(index);
             delete temp;
@@ -529,7 +541,7 @@ void Tablature::remove()
         }
     }
     // Empty column
-    else if (selectedColumn->text() == "\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015")
+    else if (selectedColumn->text() == EMPTY_COLUMN)
     {
         columns[index + 1]->setChecked(true);
         columns.remove(index);
@@ -542,7 +554,7 @@ void Tablature::remove()
     // Non-empty column
     else
     {
-        selectedColumn->setText("\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015");
+        selectedColumn->setText(EMPTY_COLUMN);
         staff->addBlank(index);
     }
 }

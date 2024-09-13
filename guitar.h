@@ -20,7 +20,10 @@ public:
     void createPlaybackButtons();
     QWidget *createTempoButton();
     QScrollArea *createScrollArea();
+
+    // Chord Window Functions
     void addChord(QVector<int> chord);
+    void toggleChordMode();
 
 signals:
 
