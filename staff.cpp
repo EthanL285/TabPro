@@ -5,10 +5,14 @@
 #include <QLabel>
 #include <QPainter>
 
+#define DEFAULT_HEIGHT 185
+#define LINE_COUNT 5
+#define LINE_SPACING 15
+
 Staff::Staff(QWidget *parent)
     : QWidget{parent}
 {
-    setFixedHeight(185);
+    setFixedHeight(DEFAULT_HEIGHT);
     mainLayout = new QHBoxLayout(this);
     mainLayout->setAlignment(Qt::AlignLeft);
     mainLayout->setContentsMargins(0,0,0,0);
@@ -45,16 +49,21 @@ void Staff::paintEvent(QPaintEvent *event)
     pen.setWidth(2);
     painter.setPen(pen);
 
-    const int lineCount = 5;
-    const int lineSpacing = 15;
     int centerY = height() / 2;
 
     // Draw the staff lines
-    for (int i = 0; i < lineCount; i++)
+    for (int i = 0; i < LINE_COUNT; i++)
     {
-        int y = centerY - ((lineCount - 1) * lineSpacing) / 2 + i * lineSpacing;
+        int y = centerY - ((LINE_COUNT - 1) * LINE_SPACING) / 2 + i * LINE_SPACING;
         painter.drawLine(0, y, width(), y);
     }
+}
+
+// Updates the length of the note line to be the same as the tab length
+void Staff::updateLineLength(bool add)
+{
+    length += (add ? 35 : -35);
+    setFixedWidth(length);
 }
 
 // Initialises a map of strings that corresponds to a line on the staff
@@ -122,29 +131,55 @@ void Staff::addNote(QString note, int string, int fretNumber, int index)
     {
         removeNote(index);
         notes.insert(index, noteHead);
+        lines.insert(index, staffLine);
         mainLayout->insertWidget(index + 1, noteHead);
     }
     else
     {
         notes.append(noteHead);
+        lines.append(staffLine);
         mainLayout->addWidget(noteHead, Qt::AlignVCenter);
+    }
+    // Update staff height
+    if (staffLine > highestLine)
+    {
+        updateHeight(DEFAULT_HEIGHT + (staffLine - UPDATE_LINE) * LINE_SPACING, staffLine);
     }
 }
 
-// Updates the length of the note line to be the same as the tab length
-void Staff::updateLineLength(bool add)
+// Updates the staff height
+void Staff::updateHeight(int height, int line)
 {
-    length += (add ? 35 : -35);
-    setFixedWidth(length);
+    setFixedHeight(height);
+    highestLine = line;
 }
 
 // Removes the note at the given index
 void Staff::removeNote(int index)
 {
+    // Remove note
     QWidget *temp = notes[index];
     notes.remove(index);
     mainLayout->removeWidget(temp);
     delete temp;
+
+    // Update height
+    int staffLine = lines[index];
+    int max = *std::max_element(lines.begin(), lines.end());
+    int count = std::count(lines.begin(), lines.end(), staffLine);
+    lines.remove(index);
+
+    if (lines.empty())
+    {
+        updateHeight(DEFAULT_HEIGHT, UPDATE_LINE);
+    }
+    else if (staffLine > UPDATE_LINE && staffLine == max && count == 1)
+    {
+        int secondMax = *std::max_element(lines.begin(), lines.end());
+        int newHeight = (secondMax > UPDATE_LINE) ? DEFAULT_HEIGHT + (secondMax - UPDATE_LINE) * LINE_SPACING : DEFAULT_HEIGHT;
+        int line = (secondMax > UPDATE_LINE) ? secondMax : UPDATE_LINE;
+        updateHeight(newHeight, line);
+    }
 }
 
 // Replaces the note at the given index with a blank
@@ -154,7 +189,6 @@ void Staff::addBlank(int index)
 
     QWidget *blank = new Blank();
     notes.insert(index, blank);
+    lines.insert(index, -1);
     mainLayout->insertWidget(index + 1, blank);
 }
-
-// test

@@ -35,17 +35,13 @@ Guitar::Guitar(QWidget *parent)
 
     // Add Note line
     QVBoxLayout *noteLayout = new QVBoxLayout();
+    noteLayout->setContentsMargins(0, 10, 0, 0);
     noteLayout->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
     viewArea->addLayout(noteLayout);
 
-    // QSpacerItem *vSpacer1 = new QSpacerItem(0, 50, QSizePolicy::Fixed, QSizePolicy::Fixed);
-    // noteLayout->addItem(vSpacer1);
-
+    // Staff
     Staff *staff = new Staff(this);
     noteLayout->addWidget(staff);
-
-    // QSpacerItem *vSpacer2 = new QSpacerItem(0, 25, QSizePolicy::Fixed, QSizePolicy::Fixed);
-    // noteLayout->addItem(vSpacer2);
 
     // Tab Layout (includes both tablature and playback)
     tabLayout = new QVBoxLayout();
