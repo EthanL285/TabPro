@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QPainter>
 
+#define INVALID_LINE -999
 #define DEFAULT_HEIGHT 185
 #define LINE_COUNT 5
 #define LINE_SPACING 15
@@ -72,12 +73,12 @@ QMap<int, QPair<int, int>> Staff::createStringMap()
     // QPair<staff line, noteMap key>
     QMap<int, QPair<int, int>> stringMap;
 
-    stringMap[5] = qMakePair(-11, 4); // E string
-    stringMap[4] = qMakePair(-8, 9);  // A string
-    stringMap[3] = qMakePair(-5, 2);  // D string
-    stringMap[2] = qMakePair(-2, 7);  // G string
-    stringMap[1] = qMakePair(0, 11);  // B string (staff center line)
-    stringMap[0] = qMakePair(3, 4);   // E string
+    stringMap[0] = qMakePair(-11, 4); // E string
+    stringMap[1] = qMakePair(-8, 9);  // A string
+    stringMap[2] = qMakePair(-5, 2);  // D string
+    stringMap[3] = qMakePair(-2, 7);  // G string
+    stringMap[4] = qMakePair(0, 11);  // B string (staff center line)
+    stringMap[5] = qMakePair(3, 4);   // E string
 
     return stringMap;
 }
@@ -109,41 +110,60 @@ QPixmap Staff::getNotePixmap(QString note)
 }
 
 // Adds the selected note to the staff
-void Staff::addNote(QString note, int string, int fretNumber, int index)
+void Staff::addNote(QString note, QVector<int> fretNumbers, int index, bool isChord)
 {
-    // Determine which staff line to place the note on
-    QPair<int, int> stringInfo = stringMap[string];
-    int staffLine = stringInfo.first;
-    int stringKey = stringInfo.second + 1;
+    QVector<int> staffLines(6);
+    staffLines.fill(INVALID_LINE);
 
-    for (int i = 0; i < fretNumber; i++)
+    // Get staff lines of the current note if chord mode is toggled
+    if (!isChord && chordMode && index < notes.size())
     {
-        // Increment staff line by 1 if current note is not a sharp
-        int key = (stringKey + i) % 12;
-        if (!noteMap[key].contains("#")) staffLine++;
+        Crotchet *crotchet = qobject_cast<Crotchet*>(notes[index]);
+        if (crotchet) staffLines = crotchet->getStaffLines();
+    }
+
+    // Update staff line vector
+    for (int string = 0; string < 6; string++)
+    {
+        if (fretNumbers[string] == -1) continue;
+
+        // Determine which staff line to place the note on
+        QPair<int, int> stringInfo = stringMap[string];
+        int staffLine = stringInfo.first;
+        int stringKey = stringInfo.second + 1;
+
+        for (int i = 0; i < fretNumbers[string]; i++)
+        {
+            // Increment staff line by 1 if current note is not a sharp
+            int key = (stringKey + i) % 12;
+            if (!noteMap[key].contains("#")) staffLine++;
+        }
+        staffLines[string] = staffLine;
     }
 
     // Add note to the staff
-    QWidget *noteHead = new Crotchet(staffLine);
+    QWidget *noteHead = new Crotchet(staffLines);
 
     // Insertion is not at last index
+    int maxLine = *std::max_element(staffLines.begin(), staffLines.end());
+
     if (index != notes.size())
     {
         removeNote(index);
         notes.insert(index, noteHead);
-        lines.insert(index, staffLine);
+        lines.insert(index, maxLine);
         mainLayout->insertWidget(index + 1, noteHead);
     }
     else
     {
         notes.append(noteHead);
-        lines.append(staffLine);
+        lines.append(maxLine);
         mainLayout->addWidget(noteHead, Qt::AlignVCenter);
     }
     // Update staff height
-    if (staffLine > highestLine)
+    if (maxLine > highestLine)
     {
-        updateHeight(DEFAULT_HEIGHT + (staffLine - UPDATE_LINE) * LINE_SPACING, staffLine);
+        updateHeight(DEFAULT_HEIGHT + (maxLine - UPDATE_LINE) * LINE_SPACING, maxLine);
     }
 }
 
@@ -191,4 +211,10 @@ void Staff::addBlank(int index)
     notes.insert(index, blank);
     lines.insert(index, -1);
     mainLayout->insertWidget(index + 1, blank);
+}
+
+// Toggles chord mode
+void Staff::toggleChordMode()
+{
+    chordMode = !chordMode;
 }

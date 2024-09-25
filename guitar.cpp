@@ -61,7 +61,7 @@ Guitar::Guitar(QWidget *parent)
 
     // Interface layout (Includes everything below tab)
     QVBoxLayout *interfaceLayout = new QVBoxLayout();
-    interfaceLayout->setContentsMargins(0, 0, 0, 50);
+    interfaceLayout->setContentsMargins(0, 0, 0, 40);
     interfaceLayout->setSpacing(0);
     interfaceLayout->setAlignment(Qt::AlignHCenter);
     viewArea->addLayout(interfaceLayout);
@@ -506,7 +506,7 @@ QScrollArea *Guitar::createScrollArea()
 {
     QScrollArea *scrollArea = new QScrollArea();
     scrollArea->setWidgetResizable(true);
-    scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     scrollArea->viewport()->setStyleSheet
     (
         "background: qradialgradient(cx: 0.5, cy: 0, radius: 0.7, "

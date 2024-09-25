@@ -17,13 +17,18 @@ class Crotchet : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Crotchet(int staffLine, QWidget *parent = nullptr);
+    explicit Crotchet(QVector<int> staffLines, QWidget *parent = nullptr);
+    bool isSingleNote();
+    QVector<int> getStaffLines();
+    void drawAdditionalLines(QPainter &painter, int staffLine);
+    void drawSingleStem(QPainter &painter);
+    void drawChordStem(QPainter &painter, QVector<int> yPos);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
-    int staffLine;
+    QVector<int> staffLines;
     bool flip;
     bool addLines;
 };

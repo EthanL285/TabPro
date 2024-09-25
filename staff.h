@@ -17,9 +17,10 @@ public:
     QMap<int, QPair<int, int>> createStringMap();
     QMap<int, QString> createNoteMap();
     QPixmap getNotePixmap(QString note);
-    void addNote(QString note, int string, int fretNumber, int index);
+    void addNote(QString note, QVector<int> fretNumbers, int index, bool isChord = false);
     void removeNote(int index);
     void addBlank(int index);
+    void toggleChordMode();
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -28,6 +29,7 @@ private:
     QHBoxLayout *mainLayout;
     int length = 95;
     int highestLine = UPDATE_LINE;
+    bool chordMode = false;
     QString selectedNote = "crotchet";
     QMap<QString, QPixmap> notePixmaps;
     QMap<int, QString> noteMap;

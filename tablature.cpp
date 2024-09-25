@@ -287,6 +287,11 @@ void Tablature::addFretNumber()
     int row = parts[0].toInt();
     int col = parts[1].toInt();
 
+    // NOTE: NEED TO EDIT BUTTON NAME TO BE IN THE ORDER OF EADGBE
+    QVector<int> fretNumbers(6);
+    fretNumbers.fill(-1);
+    fretNumbers[5 - row] = col;
+
     // Add fret number to tab
     int idx = 0;
     QString tabColumn = (chordMode) ? selectedColumn->text() : EMPTY_COLUMN;
@@ -302,7 +307,7 @@ void Tablature::addFretNumber()
         i += count + 1;
     }
     selectedColumn->setText(tabColumn);
-    staff->addNote("crotchet", row, col, getSelectedColumnIndex());
+    staff->addNote("crotchet", fretNumbers, getSelectedColumnIndex());
     if (selectedColumn == columns.last())  addRest();
 }
 
@@ -318,7 +323,7 @@ void Tablature::addChord(QVector<int> chord)
     tabColumn.chop(1);
 
     selectedColumn->setText(tabColumn);
-    staff->addNote("crotchet", 2, 0, getSelectedColumnIndex());
+    staff->addNote("crotchet", chord, getSelectedColumnIndex(), true);
     if (selectedColumn == columns.last()) addRest();
 }
 
@@ -326,6 +331,7 @@ void Tablature::addChord(QVector<int> chord)
 void Tablature::toggleChordMode()
 {
     chordMode = !chordMode;
+    staff->toggleChordMode();
 }
 
 // Creates the rest QPushButton
