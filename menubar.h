@@ -3,12 +3,16 @@
 
 #include <QWidget>
 #include <QMenuBar>
+#include <QPushButton>
+#include <QHBoxLayout>
 
 class MenuBar : public QWidget
 {
     Q_OBJECT
 public:
     explicit MenuBar(QWidget *parent = nullptr);
+    QPushButton *createButton(QString text, int fontSize);
+    QHBoxLayout *createDivider();
 
 private:
     QMenuBar *menuBar;
