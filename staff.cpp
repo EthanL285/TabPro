@@ -1,5 +1,6 @@
 #include "staff.h"
-#include "notes.h"
+#include "crotchet.h"
+#include "blank.h"
 
 #include <QFrame>
 #include <QLabel>

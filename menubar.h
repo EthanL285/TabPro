@@ -17,6 +17,12 @@ public:
 private:
     QMenuBar *menuBar;
     QMenu *fileMenu;
+    QPushButton *selectedNote = nullptr;
+    QPushButton *selectedSign = nullptr;
+
+private slots:
+    void clickNote();
+    void clickSign();
 
 signals:
 };

@@ -37,6 +37,7 @@ MenuBar::MenuBar(QWidget *parent)
     for (const QString &sign : signs)
     {
         QPushButton *signButton = createButton(sign, 20);
+        connect(signButton, &QPushButton::clicked, this, &MenuBar::clickSign);
         bottomLayout->addWidget(signButton);
     }
     // Add divider
@@ -47,7 +48,14 @@ MenuBar::MenuBar(QWidget *parent)
     for (const QString &note : notes)
     {
         QPushButton *noteButton = createButton(note, 30);
+        connect(noteButton, &QPushButton::clicked, this, &MenuBar::clickNote);
         bottomLayout->addWidget(noteButton);
+
+        if (note == "𝅘𝅥")
+        {
+            noteButton->setChecked(true);
+            selectedNote = noteButton;
+        }
     }
 }
 
@@ -55,11 +63,13 @@ MenuBar::MenuBar(QWidget *parent)
 QPushButton *MenuBar::createButton(QString text, int fontSize)
 {
     QPushButton *button = new QPushButton(text);
+    button->setCheckable(true);
     button->setFixedWidth(40);
     button->setCursor(Qt::PointingHandCursor);
     button->setStyleSheet(QString(
         "QPushButton { border: none; font-size: %1px; }"
         "QPushButton:hover { color: rgb(70, 129, 232); }"
+        "QPushButton:checked { color: rgb(70, 129, 232); }"
     ).arg(fontSize));
 
     return button;
@@ -83,4 +93,33 @@ QHBoxLayout *MenuBar::createDivider()
     return dividerLayout;
 }
 
+// Selects the corresponding note when button is clicked
+void MenuBar::clickNote()
+{
+    QPushButton *senderButton = qobject_cast<QPushButton*>(sender());
+    if (selectedNote == senderButton)
+    {
+        senderButton->setChecked(true);
+        return;
+    }
+    selectedNote->setChecked(false);
+    selectedNote = senderButton;
+}
+
+// Selects the corresponding sign when button is clicked
+void MenuBar::clickSign()
+{
+    QPushButton *senderButton = qobject_cast<QPushButton*>(sender());
+    if (selectedSign != nullptr)
+    {
+        if (selectedSign == senderButton)
+        {
+            selectedSign = nullptr;
+            return;
+        }
+        selectedSign->setChecked(false);
+    }
+    selectedSign = senderButton;
+    selectedSign->setChecked(true);
+}
 

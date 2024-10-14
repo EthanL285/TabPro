@@ -117,6 +117,7 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/6.7.0/mingw_64/include/QtCore/qversiontagging.h \
   C:/Qt/6.7.0/mingw_64/include/QtCore/qxptype_traits.h \
   C:/Qt/6.7.0/mingw_64/include/QtCore/qyieldcpu.h \
+  C:/Qt/6.7.0/mingw_64/include/QtGui/QPainter \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qaction.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qbitmap.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qbrush.h \
@@ -129,13 +130,16 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/6.7.0/mingw_64/include/QtGui/qimage.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qkeysequence.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qpaintdevice.h \
+  C:/Qt/6.7.0/mingw_64/include/QtGui/qpainter.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qpalette.h \
+  C:/Qt/6.7.0/mingw_64/include/QtGui/qpen.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qpixelformat.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qpixmap.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qpolygon.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qregion.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qrgb.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qrgba64.h \
+  C:/Qt/6.7.0/mingw_64/include/QtGui/qtextoption.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qtgui-config.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qtguiexports.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qtguiglobal.h \

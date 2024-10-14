@@ -43,13 +43,17 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Sound.qrc
         menubar.h menubar.cpp
         staff.h staff.cpp
-        notes.h notes.cpp
+        crotchet.h crotchet.cpp
         chordwindow.h chordwindow.cpp
         chorddiagram.h chorddiagram.cpp
         toggleswitch.h toggleswitch.cpp
         chorddisplay.h chorddisplay.cpp
 
         Chords.qrc
+
+        quaver.h quaver.cpp
+        note.h note.cpp
+        blank.h blank.cpp
 
 
 

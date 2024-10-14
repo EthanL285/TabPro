@@ -487,6 +487,12 @@
 	"HEADERS" : 
 	[
 		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/blank.h",
+			"MU",
+			"EWIEGA46WW/moc_blank.cpp",
+			null
+		],
+		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chorddiagram.h",
 			"MU",
 			"EWIEGA46WW/moc_chorddiagram.cpp",
@@ -502,6 +508,12 @@
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chordwindow.h",
 			"MU",
 			"EWIEGA46WW/moc_chordwindow.cpp",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/crotchet.h",
+			"MU",
+			"EWIEGA46WW/moc_crotchet.cpp",
 			null
 		],
 		[
@@ -535,15 +547,21 @@
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/notes.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/note.h",
 			"MU",
-			"EWIEGA46WW/moc_notes.cpp",
+			"EWIEGA46WW/moc_note.cpp",
 			null
 		],
 		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/passwordui.h",
 			"MU",
 			"EWIEGA46WW/moc_passwordui.cpp",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/quaver.h",
+			"MU",
+			"EWIEGA46WW/moc_quaver.cpp",
 			null
 		],
 		[
@@ -685,6 +703,11 @@
 	"SOURCES" : 
 	[
 		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/blank.cpp",
+			"MU",
+			null
+		],
+		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chorddiagram.cpp",
 			"MU",
 			null
@@ -696,6 +719,11 @@
 		],
 		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chordwindow.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/crotchet.cpp",
 			"MU",
 			null
 		],
@@ -730,12 +758,17 @@
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/notes.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/note.cpp",
 			"MU",
 			null
 		],
 		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/passwordui.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/quaver.cpp",
 			"MU",
 			null
 		],
