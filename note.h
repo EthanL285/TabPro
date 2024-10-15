@@ -23,8 +23,10 @@ private:
 
     QVector<int> staffLines;    // Contains the staff line location of note heads
     QPainter painter;
+    int stemHeight;
     bool addLines;
     bool flip;
+
 signals:
 };
 
