@@ -487,6 +487,12 @@
 	"HEADERS" : 
 	[
 		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/accidentaltype.h",
+			"MU",
+			"EWIEGA46WW/moc_accidentaltype.cpp",
+			null
+		],
+		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/blank.h",
 			"MU",
 			"EWIEGA46WW/moc_blank.cpp",
@@ -511,15 +517,15 @@
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/crotchet.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/containerwidget.h",
 			"MU",
-			"EWIEGA46WW/moc_crotchet.cpp",
+			"EWIEGA46WW/moc_containerwidget.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/guitar.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/crotchet.h",
 			"MU",
-			"EWIEGA46WW/moc_guitar.cpp",
+			"EWIEGA46WW/moc_crotchet.cpp",
 			null
 		],
 		[
@@ -550,6 +556,12 @@
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/note.h",
 			"MU",
 			"EWIEGA46WW/moc_note.cpp",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/notetype.h",
+			"MU",
+			"EWIEGA46WW/moc_notetype.cpp",
 			null
 		],
 		[
@@ -723,12 +735,12 @@
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/crotchet.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/containerwidget.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/guitar.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/crotchet.cpp",
 			"MU",
 			null
 		],

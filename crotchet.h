@@ -5,12 +5,14 @@
 
 #include <QWidget>
 
-// ========== Crotchet Class ==========
 class Crotchet : public Note
 {
     Q_OBJECT
 public:
-    explicit Crotchet(QVector<int> staffLines);
+    explicit Crotchet(QVector<int> staffLines, QWidget *parent = nullptr);
+
+private:
+    void paintEvent(QPaintEvent *event) override;
 };
 
 #endif // CROTCHET_H

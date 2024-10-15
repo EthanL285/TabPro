@@ -1,6 +1,8 @@
 #ifndef STAFF_H
 #define STAFF_H
 
+#include "menubar.h"
+
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QPixmap>
@@ -11,13 +13,13 @@ class Staff : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Staff(QWidget *parent = nullptr);
+    explicit Staff(MenuBar *menu, QWidget *parent = nullptr);
     void updateLineLength(bool add);
     void updateHeight(int height, int line);
     QMap<int, QPair<int, int>> createStringMap();
     QMap<int, QString> createNoteMap();
     QPixmap getNotePixmap(QString note);
-    void addNote(QString note, QVector<int> fretNumbers, int index, bool isChord = false);
+    void addNote(QVector<int> fretNumbers, int index, bool isChord = false);
     void removeNote(int index);
     void addBlank(int index);
     void toggleChordMode();
@@ -35,6 +37,7 @@ private:
     QMap<int, QString> noteMap;
     QMap<int, QPair<int, int>> stringMap;
 
+    MenuBar *menu;
     QVector<QWidget*> notes;
     QVector<int> lines;
 

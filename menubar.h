@@ -1,6 +1,9 @@
 #ifndef MENUBAR_H
 #define MENUBAR_H
 
+#include "notetype.h"
+#include "accidentaltype.h"
+
 #include <QWidget>
 #include <QMenuBar>
 #include <QPushButton>
@@ -11,18 +14,23 @@ class MenuBar : public QWidget
     Q_OBJECT
 public:
     explicit MenuBar(QWidget *parent = nullptr);
+    NoteType getSelectedNote();
+    AccidentalType getSelectedAccidental();
+
+private:
     QPushButton *createButton(QString text, int fontSize);
     QHBoxLayout *createDivider();
 
-private:
     QMenuBar *menuBar;
     QMenu *fileMenu;
-    QPushButton *selectedNote = nullptr;
-    QPushButton *selectedSign = nullptr;
+    QPair<NoteType, QPushButton*> selectedNote;
+    QPair<AccidentalType, QPushButton*> selectedAccidental;
+    QMap<QString, NoteType> notes;
+    QMap<QString, AccidentalType> accidentals;
 
 private slots:
     void clickNote();
-    void clickSign();
+    void clickAccidental();
 
 signals:
 };

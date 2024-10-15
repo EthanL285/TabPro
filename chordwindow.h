@@ -4,7 +4,7 @@
 #include "chorddiagram.h"
 #include "chorddisplay.h"
 #include "toggleswitch.h"
-#include "guitar.h"
+#include "containerwidget.h"
 
 #include <QWidget>
 #include <QPushButton>
@@ -33,7 +33,7 @@ class ChordWindow : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ChordWindow(Guitar *parent = nullptr);
+    explicit ChordWindow(ContainerWidget *parent = nullptr);
     void toggleContent();
     void animateAccordion(QWidget *widget);
     void resetSwitch(ToggleSwitch *widget, bool &mode);
@@ -62,7 +62,7 @@ public slots:
     void updateScrollArea();
 
 private:
-    Guitar *guitar;
+    ContainerWidget *guitar;
     ChordDiagram *diagram;
     QWidget *content;
     QWidget *header;

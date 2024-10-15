@@ -5,7 +5,6 @@
 #include "passwordui.h"
 #include "mainwidget.h"
 #include <QTimer>
-#include "menubar.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -55,10 +54,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Create Transitions object
     transition = new Transitions(this);
-
-    // Add menu bar
-    MenuBar *menubar = new MenuBar();
-    setMenuWidget(menubar);
 
     // Automatically login user if token exists
     if (usermodel->tokenExists())
@@ -152,7 +147,7 @@ void MainWindow::redirectMainWidget()
     // Create MainWidget object if first time
     if (mainWidget == nullptr)
     {
-        mainWidget = new MainWidget();
+        mainWidget = new MainWidget(this);
         stackedWidget->addWidget(mainWidget);
         stackedWidget->setCurrentWidget(mainWidget);
     }

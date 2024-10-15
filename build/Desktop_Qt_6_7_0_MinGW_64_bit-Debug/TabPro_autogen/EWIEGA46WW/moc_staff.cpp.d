@@ -144,11 +144,17 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs.h \
   C:/Qt/6.7.0/mingw_64/include/QtGui/qwindowdefs_win.h \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QHBoxLayout \
+  C:/Qt/6.7.0/mingw_64/include/QtWidgets/QMenuBar \
+  C:/Qt/6.7.0/mingw_64/include/QtWidgets/QPushButton \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/QWidget \
+  C:/Qt/6.7.0/mingw_64/include/QtWidgets/qabstractbutton.h \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/qboxlayout.h \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/qgridlayout.h \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/qlayout.h \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/qlayoutitem.h \
+  C:/Qt/6.7.0/mingw_64/include/QtWidgets/qmenu.h \
+  C:/Qt/6.7.0/mingw_64/include/QtWidgets/qmenubar.h \
+  C:/Qt/6.7.0/mingw_64/include/QtWidgets/qpushbutton.h \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/qsizepolicy.h \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/qtwidgets-config.h \
   C:/Qt/6.7.0/mingw_64/include/QtWidgets/qtwidgetsexports.h \
@@ -352,4 +358,7 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/sys/types.h \
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/time.h \
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/vadefs.h \
-  C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wchar.h
+  C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wchar.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/accidentaltype.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/menubar.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/notetype.h

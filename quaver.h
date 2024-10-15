@@ -1,29 +1,19 @@
 #ifndef QUAVER_H
 #define QUAVER_H
 
+#include "note.h"
+
 #include <QWidget>
 
-class Quaver : public QWidget
+class Quaver : public Note
 {
     Q_OBJECT
 public:
-    explicit Quaver(QWidget *parent = nullptr);
-
-    /*
-    bool isSingleNote();
-    QVector<int> getStaffLines();
-    void drawAdditionalLines(QPainter &painter, int staffLine);
-    void drawSingleStem(QPainter &painter);
-    void drawChordStem(QPainter &painter, QVector<int> yPos);
-
-protected:
-    void paintEvent(QPaintEvent *event) override;
+    explicit Quaver(QVector<int> staffLines, QWidget *parent = nullptr);
 
 private:
-    QVector<int> staffLines;
-    bool flip;
-    bool addLines;
-*/
+    void paintEvent(QPaintEvent *event) override;
+    void drawFlag();
 };
 
 

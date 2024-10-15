@@ -1,5 +1,6 @@
 #include "staff.h"
 #include "crotchet.h"
+#include "quaver.h"
 #include "blank.h"
 
 #include <QFrame>
@@ -11,8 +12,8 @@
 #define LINE_COUNT 5
 #define LINE_SPACING 15
 
-Staff::Staff(QWidget *parent)
-    : QWidget{parent}
+Staff::Staff(MenuBar *menu, QWidget *parent)
+    : menu{menu}, QWidget{parent}
 {
     setFixedHeight(DEFAULT_HEIGHT);
     mainLayout = new QHBoxLayout(this);
@@ -111,7 +112,7 @@ QPixmap Staff::getNotePixmap(QString note)
 }
 
 // Adds the selected note to the staff
-void Staff::addNote(QString note, QVector<int> fretNumbers, int index, bool isChord)
+void Staff::addNote(QVector<int> fretNumbers, int index, bool isChord)
 {
     QVector<int> staffLines(6);
     staffLines.fill(INVALID_LINE);
@@ -143,7 +144,27 @@ void Staff::addNote(QString note, QVector<int> fretNumbers, int index, bool isCh
     }
 
     // Add note to the staff
-    QWidget *noteHead = new Crotchet(staffLines);
+    QWidget *note;
+    switch (menu->getSelectedNote())
+    {
+        case NoteType::Semibreve:
+            note = new Crotchet(staffLines);
+            break;
+        case NoteType::Minim:
+            note = new Crotchet(staffLines);
+            break;
+        case NoteType::Crotchet:
+            note = new Crotchet(staffLines);
+            break;
+        case NoteType::Quaver:
+            note = new Quaver(staffLines);
+            break;
+        case NoteType::Semiquaver:
+            note = new Quaver(staffLines);
+            break;
+        default:
+            break;
+    }
 
     // Insertion is not at last index
     int maxLine = *std::max_element(staffLines.begin(), staffLines.end());
@@ -151,15 +172,15 @@ void Staff::addNote(QString note, QVector<int> fretNumbers, int index, bool isCh
     if (index != notes.size())
     {
         removeNote(index);
-        notes.insert(index, noteHead);
+        notes.insert(index, note);
         lines.insert(index, maxLine);
-        mainLayout->insertWidget(index + 1, noteHead);
+        mainLayout->insertWidget(index + 1, note);
     }
     else
     {
-        notes.append(noteHead);
+        notes.append(note);
         lines.append(maxLine);
-        mainLayout->addWidget(noteHead, Qt::AlignVCenter);
+        mainLayout->addWidget(note, Qt::AlignVCenter);
     }
     // Update staff height
     if (maxLine > highestLine)

@@ -3,9 +3,7 @@
 
 #include <QWidget>
 #include "mainwindow.h"
-#include "sidebar.h"
-#include "guitar.h"
-#include "menubar.h"
+#include "containerwidget.h"
 
 class MainWidget : public QWidget
 {
@@ -18,9 +16,7 @@ protected:
 
 private:
     MainWindow *mainWindow;
-    Sidebar *sidebar;
-    Guitar *guitar;
-    MenuBar *menubar;
+    ContainerWidget *container;
 
 signals:
 };

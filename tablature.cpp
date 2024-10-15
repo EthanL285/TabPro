@@ -307,7 +307,7 @@ void Tablature::addFretNumber()
         i += count + 1;
     }
     selectedColumn->setText(tabColumn);
-    staff->addNote("crotchet", fretNumbers, getSelectedColumnIndex());
+    staff->addNote(fretNumbers, getSelectedColumnIndex());
     if (selectedColumn == columns.last())  addRest();
 }
 
@@ -323,7 +323,7 @@ void Tablature::addChord(QVector<int> chord)
     tabColumn.chop(1);
 
     selectedColumn->setText(tabColumn);
-    staff->addNote("crotchet", chord, getSelectedColumnIndex(), true);
+    staff->addNote(chord, getSelectedColumnIndex(), true);
     if (selectedColumn == columns.last()) addRest();
 }
 

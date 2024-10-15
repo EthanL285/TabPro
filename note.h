@@ -1,6 +1,8 @@
 #ifndef NOTE_H
 #define NOTE_H
 
+#include "notetype.h"
+
 #include <QWidget>
 #include <QPainter>
 
@@ -8,24 +10,28 @@ class Note : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Note(QVector<int> staffLines, QWidget *parent = nullptr);
     QVector<int> getStaffLines();
 
 protected:
-    void paintEvent(QPaintEvent *event) override;
+    explicit Note(QVector<int> staffLines, QWidget *parent = nullptr);
 
-private:
+    NoteType type;
+    QPainter painter;
+    QVector<int> staffLines;    // The staff lines of note heads
+    QVector<int> yPos;          // The positions of note heads
+    int stemHeight;
+
+    static constexpr int INVALID_LINE = -999;
+    static constexpr int STEM_HEIGHT = 56;
+    static constexpr int HEAD_WIDTH = 17;
+    static constexpr int HEAD_HEIGHT = 11;
+    static constexpr double STAFF_SPACING = 7.5;
+
     bool isSingleNote();
+    bool isFlipped();
     void drawExtraLines(int staffLine);
     void drawSingleStem();
     void drawMultiStem(QVector<int> yPos);
-    void drawFlag(QVector<int> yPos);
-
-    QVector<int> staffLines;    // Contains the staff line location of note heads
-    QPainter painter;
-    int stemHeight;
-    bool addLines;
-    bool flip;
 
 signals:
 };

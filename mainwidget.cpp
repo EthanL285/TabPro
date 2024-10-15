@@ -12,13 +12,13 @@ MainWidget::MainWidget(MainWindow *parent)
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(50);
 
-    // Add sidebar
-    // sidebar = new Sidebar(this);
-    // mainLayout->addWidget(sidebar);
+    // Menu bar
+    MenuBar *menu = new MenuBar();
+    mainWindow->setMenuWidget(menu);
 
-    // Add guitar widget
-    guitar = new Guitar(this);
-    mainLayout->addWidget(guitar, Qt::AlignHCenter);
+    // Container widget
+    container = new ContainerWidget(menu, this);
+    mainLayout->addWidget(container, Qt::AlignHCenter);
 }
 
 void MainWidget::paintEvent(QPaintEvent *event)

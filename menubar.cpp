@@ -30,14 +30,26 @@ MenuBar::MenuBar(QWidget *parent)
     bottomLayout->setContentsMargins(0, 0, 0, 0);
     bottomLayout->setSpacing(0);
 
-    QVector<QString> notes = {"𝅝","𝅗𝅥","𝅘𝅥","𝅘𝅥𝅮","𝅘𝅥𝅯","𝅘𝅥𝅰","𝅘𝅥𝅱"};
-    QVector<QString> signs = {"♭","♮","♯"};
+    notes = {
+        {"𝅝", NoteType::Semibreve},
+        {"𝅗𝅥", NoteType::Minim},
+        {"𝅘𝅥", NoteType::Crotchet},
+        {"𝅘𝅥𝅮", NoteType::Quaver},
+        {"𝅘𝅥𝅯", NoteType::Quaver},
+        {"𝅘𝅥𝅰", NoteType::Quaver},
+        {"𝅘𝅥𝅱", NoteType::Quaver}
+    };
+    accidentals = {
+        {"♭", AccidentalType::Flat},
+        {"♮", AccidentalType::Natural},
+        {"♯", AccidentalType::Sharp}
+    };
 
-    // Add sign buttons
-    for (const QString &sign : signs)
+    // Add accidental buttons
+    for (QMap<QString, AccidentalType>::iterator it = accidentals.begin(); it != accidentals.end(); ++it)
     {
-        QPushButton *signButton = createButton(sign, 20);
-        connect(signButton, &QPushButton::clicked, this, &MenuBar::clickSign);
+        QPushButton *signButton = createButton(it.key(), 20);
+        connect(signButton, &QPushButton::clicked, this, &MenuBar::clickAccidental);
         bottomLayout->addWidget(signButton);
     }
     // Add divider
@@ -45,18 +57,30 @@ MenuBar::MenuBar(QWidget *parent)
     bottomLayout->addLayout(divider);
 
     // Add note buttons
-    for (const QString &note : notes)
+    for (QMap<QString, NoteType>::iterator it = notes.begin(); it != notes.end(); ++it)
     {
-        QPushButton *noteButton = createButton(note, 30);
+        QPushButton *noteButton = createButton(it.key(), 30);
         connect(noteButton, &QPushButton::clicked, this, &MenuBar::clickNote);
         bottomLayout->addWidget(noteButton);
 
-        if (note == "𝅘𝅥")
+        if (it.value() == NoteType::Crotchet)
         {
             noteButton->setChecked(true);
-            selectedNote = noteButton;
+            selectedNote = qMakePair(NoteType::Crotchet, noteButton);
         }
     }
+}
+
+// Getter for selected note
+NoteType MenuBar::getSelectedNote()
+{
+    return selectedNote.first;
+}
+
+// Getter for selected accidental
+AccidentalType MenuBar::getSelectedAccidental()
+{
+    return selectedAccidental.first;
 }
 
 // Creates a menu bar button
@@ -97,29 +121,32 @@ QHBoxLayout *MenuBar::createDivider()
 void MenuBar::clickNote()
 {
     QPushButton *senderButton = qobject_cast<QPushButton*>(sender());
-    if (selectedNote == senderButton)
+    QPushButton *selectedButton = selectedNote.second;
+    if (selectedButton == senderButton)
     {
         senderButton->setChecked(true);
         return;
     }
-    selectedNote->setChecked(false);
-    selectedNote = senderButton;
+    selectedNote.second->setChecked(false);
+    selectedNote = qMakePair(notes[senderButton->text()], senderButton);
 }
 
-// Selects the corresponding sign when button is clicked
-void MenuBar::clickSign()
+// Selects the corresponding accidental when button is clicked
+void MenuBar::clickAccidental()
 {
     QPushButton *senderButton = qobject_cast<QPushButton*>(sender());
-    if (selectedSign != nullptr)
+    QPushButton *selectedButton = selectedAccidental.second;
+
+    if (selectedButton != nullptr)
     {
-        if (selectedSign == senderButton)
+        if (selectedButton == senderButton)
         {
-            selectedSign = nullptr;
+            selectedAccidental = qMakePair(AccidentalType::None, nullptr);
             return;
         }
-        selectedSign->setChecked(false);
+        selectedButton->setChecked(false);
     }
-    selectedSign = senderButton;
-    selectedSign->setChecked(true);
+    selectedAccidental = qMakePair(accidentals[senderButton->text()], senderButton);
+    senderButton->setChecked(true);
 }
 

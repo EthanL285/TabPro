@@ -14,7 +14,7 @@
 #define ROWS 4
 #define COLS 5
 
-ChordWindow::ChordWindow(Guitar *parent)
+ChordWindow::ChordWindow(ContainerWidget *parent)
     : guitar{parent}, QWidget{parent}
 {
     QHBoxLayout *mainLayout = new QHBoxLayout(this);

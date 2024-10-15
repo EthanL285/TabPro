@@ -37,7 +37,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         passwordui.h passwordui.cpp
         mainwidget.h mainwidget.cpp
         sidebar.h sidebar.cpp
-        guitar.h guitar.cpp
+        containerwidget.h containerwidget.cpp
         tablature.h tablature.cpp
         sound.h sound.cpp
         Sound.qrc
@@ -54,6 +54,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         quaver.h quaver.cpp
         note.h note.cpp
         blank.h blank.cpp
+        notetype.h
+        accidentaltype.h
 
 
 
