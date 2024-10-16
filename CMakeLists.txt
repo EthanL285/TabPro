@@ -18,55 +18,49 @@ find_package(Qt6 REQUIRED COMPONENTS HttpServer)
 find_package(Qt6 REQUIRED COMPONENTS Multimedia)
 
 set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-
+        src/main.cpp
+        src/mainwindow.cpp
+        src/mainwindow.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(TabPro
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        Images.qrc
-        loginui.h loginui.cpp
-        registerui.h registerui.cpp
-        uiwidgets.h uiwidgets.cpp
-        usermodel.h usermodel.cpp
-        transitions.h transitions.cpp
-        passwordui.h passwordui.cpp
-        mainwidget.h mainwidget.cpp
-        sidebar.h sidebar.cpp
-        containerwidget.h containerwidget.cpp
-        tablature.h tablature.cpp
-        sound.h sound.cpp
-        Sound.qrc
-        menubar.h menubar.cpp
-        staff.h staff.cpp
-        crotchet.h crotchet.cpp
-        chordwindow.h chordwindow.cpp
-        chorddiagram.h chorddiagram.cpp
-        toggleswitch.h toggleswitch.cpp
-        chorddisplay.h chorddisplay.cpp
-
-        Chords.qrc
-
-        quaver.h quaver.cpp
-        note.h note.cpp
-        blank.h blank.cpp
-        notetype.h
-        accidentaltype.h
 
 
 
+        src/model/notes/crotchet.h src/model/notes/crotchet.cpp
+        src/model/notes/quaver.h src/model/notes/quaver.cpp
+        src/model/notes/note.h src/model/notes/note.cpp
+        src/model/notes/notetype.h
+        src/model/notes/blank.h src/model/notes/blank.cpp
+        src/model/notes/blank.h src/model/notes/blank.cpp
 
+        src/controller/containers/containerwidget.h src/controller/containers/containerwidget.cpp
+        src/controller/sound/sound.h src/controller/sound/sound.cpp
+        src/controller/user/usermodel.h src/controller/user/usermodel.cpp
+        src/controller/containers/mainwidget.h src/controller/containers/mainwidget.cpp
 
+        src/view/menu/sidebar.h src/view/menu/sidebar.cpp
+        src/view/menu/menubar.h src/view/menu/menubar.cpp
+        src/view/staff/staff.h src/view/staff/staff.cpp
+        src/view/tablature/tablature.h src/view/tablature/tablature.cpp
+        src/view/chorddiagram/chordwindow.h src/view/chorddiagram/chordwindow.cpp
+        src/view/chorddiagram/chorddiagram.h src/view/chorddiagram/chorddiagram.cpp
+        src/view/chorddiagram/toggleswitch.h src/view/chorddiagram/toggleswitch.cpp
+        src/view/chorddiagram/chorddisplay.h src/view/chorddiagram/chorddisplay.cpp
+        src/view/user/loginui.h src/view/user/loginui.cpp
+        src/view/user/registerui.h src/view/user/registerui.cpp
+        src/view/user/uiwidgets.h src/view/user/uiwidgets.cpp
+        src/view/user/transitions.h src/view/user/transitions.cpp
+        src/view/user/passwordui.h src/view/user/passwordui.cpp
 
-
-
-
-
+        src/resources/chords/chords.qrc
+        src/resources/icons/icons.qrc
+        src/resources/sound/sound.qrc
     )
+
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET TabPro APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
@@ -91,6 +85,21 @@ target_link_libraries(TabPro PRIVATE Qt6::Network)
 target_link_libraries(TabPro PRIVATE Qt6::NetworkAuth)
 target_link_libraries(TabPro PRIVATE Qt6::HttpServer)
 target_link_libraries(TabPro PRIVATE Qt6::Multimedia)
+target_include_directories(
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/controller/sound
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/controller/containers
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/controller/user
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/chorddiagram
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/staff
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/tablature
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/menu
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/user
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/notes
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/accidentals
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/resources/chords
+)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

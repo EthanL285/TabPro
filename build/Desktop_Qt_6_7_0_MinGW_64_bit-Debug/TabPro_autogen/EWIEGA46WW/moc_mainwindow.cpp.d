@@ -907,6 +907,6 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/vadefs.h \
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wchar.h \
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wctype.h \
-  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/transitions.h \
-  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/uiwidgets.h \
-  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/usermodel.h
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/user/usermodel.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user/transitions.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user/uiwidgets.h

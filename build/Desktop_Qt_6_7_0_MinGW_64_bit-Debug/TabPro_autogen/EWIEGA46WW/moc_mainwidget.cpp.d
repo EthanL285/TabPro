@@ -920,14 +920,14 @@ C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/vadefs.h \
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wchar.h \
   C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wctype.h \
-  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/accidentaltype.h \
-  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/containerwidget.h \
   C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwindow.h \
-  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/menubar.h \
-  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/notetype.h \
-  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/sound.h \
-  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/staff.h \
-  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/tablature.h \
-  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/transitions.h \
-  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/uiwidgets.h \
-  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/usermodel.h
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/containers/containerwidget.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/sound/sound.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/user/usermodel.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/accidentals/accidentaltype.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/notetype.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/menu/menubar.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/staff/staff.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/tablature/tablature.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user/transitions.h \
+  C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user/uiwidgets.h

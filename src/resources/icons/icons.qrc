@@ -1,0 +1,44 @@
+<RCC>
+    <qresource prefix="/app">
+        <file>app/AppIcon.png</file>
+        <file>app/AppIconStripped.png</file>
+    </qresource>
+    <qresource prefix="/field">
+        <file>field/VisibilityChecked.png</file>
+        <file>field/VisibilityUnchecked.png</file>
+        <file>field/User.png</file>
+        <file>field/Email.png</file>
+        <file>field/Lock.png</file>
+    </qresource>
+    <qresource prefix="/background">
+        <file>background/Background.png</file>
+    </qresource>
+    <qresource prefix="/sidebar">
+        <file>sidebar/SideBarIcon.png</file>
+    </qresource>
+    <qresource prefix="/playback">
+        <file>playback/left chevron hover.png</file>
+        <file>playback/left chevron.png</file>
+        <file>playback/pause hover.png</file>
+        <file>playback/pause.png</file>
+        <file>playback/play hover.png</file>
+        <file>playback/play.png</file>
+        <file>playback/right chevron hover.png</file>
+        <file>playback/right chevron.png</file>
+    </qresource>
+    <qresource prefix="/scroll">
+        <file>scroll/scroll down.png</file>
+        <file>scroll/scroll left.png</file>
+        <file>scroll/scroll right.png</file>
+        <file>scroll/scroll up.png</file>
+    </qresource>
+    <qresource prefix="/notes">
+        <file>notes/Treble Clef.png</file>
+    </qresource>
+    <qresource prefix="/miscellaneous">
+        <file>miscellaneous/return hover.png</file>
+        <file>miscellaneous/return.png</file>
+        <file>miscellaneous/trash hover.png</file>
+        <file>miscellaneous/trash.png</file>
+    </qresource>
+</RCC>

@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/Chords">
-        <file>defaultchords.txt</file>
-    </qresource>
-</RCC>

@@ -476,9 +476,9 @@
 		"C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6QWindowsMediaPluginTargets-relwithdebinfo.cmake",
 		"C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6QWindowsMediaPluginAdditionalTargetInfo.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.29/Modules/GNUInstallDirs.cmake",
-		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/Images.qrc",
-		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/Sound.qrc",
-		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/Chords.qrc"
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/resources/chords/chords.qrc",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/resources/icons/icons.qrc",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/resources/sound/sound.qrc"
 	],
 	"CMAKE_SOURCE_DIR" : "C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro",
 	"CROSS_CONFIG" : false,
@@ -487,147 +487,141 @@
 	"HEADERS" : 
 	[
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/accidentaltype.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/containers/containerwidget.h",
 			"MU",
-			"EWIEGA46WW/moc_accidentaltype.cpp",
+			"GIGHKARUYA/moc_containerwidget.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/blank.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/containers/mainwidget.h",
 			"MU",
-			"EWIEGA46WW/moc_blank.cpp",
+			"GIGHKARUYA/moc_mainwidget.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chorddiagram.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/sound/sound.h",
 			"MU",
-			"EWIEGA46WW/moc_chorddiagram.cpp",
+			"QGPU35UW2K/moc_sound.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chorddisplay.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/user/usermodel.h",
 			"MU",
-			"EWIEGA46WW/moc_chorddisplay.cpp",
+			"TL2PDCYXSP/moc_usermodel.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chordwindow.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/mainwindow.h",
 			"MU",
-			"EWIEGA46WW/moc_chordwindow.cpp",
+			"UVLADIE3JM/moc_mainwindow.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/containerwidget.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/blank.h",
 			"MU",
-			"EWIEGA46WW/moc_containerwidget.cpp",
+			"NIU2735H7E/moc_blank.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/crotchet.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/crotchet.h",
 			"MU",
-			"EWIEGA46WW/moc_crotchet.cpp",
+			"NIU2735H7E/moc_crotchet.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/loginui.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/note.h",
 			"MU",
-			"EWIEGA46WW/moc_loginui.cpp",
+			"NIU2735H7E/moc_note.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwidget.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/notetype.h",
 			"MU",
-			"EWIEGA46WW/moc_mainwidget.cpp",
+			"NIU2735H7E/moc_notetype.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwindow.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/quaver.h",
 			"MU",
-			"EWIEGA46WW/moc_mainwindow.cpp",
+			"NIU2735H7E/moc_quaver.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/menubar.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/chorddiagram/chorddiagram.h",
 			"MU",
-			"EWIEGA46WW/moc_menubar.cpp",
+			"OFU3OLVCYP/moc_chorddiagram.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/note.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/chorddiagram/chorddisplay.h",
 			"MU",
-			"EWIEGA46WW/moc_note.cpp",
+			"OFU3OLVCYP/moc_chorddisplay.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/notetype.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/chorddiagram/chordwindow.h",
 			"MU",
-			"EWIEGA46WW/moc_notetype.cpp",
+			"OFU3OLVCYP/moc_chordwindow.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/passwordui.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/chorddiagram/toggleswitch.h",
 			"MU",
-			"EWIEGA46WW/moc_passwordui.cpp",
+			"OFU3OLVCYP/moc_toggleswitch.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/quaver.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/menu/menubar.h",
 			"MU",
-			"EWIEGA46WW/moc_quaver.cpp",
+			"MDWXFLLFIT/moc_menubar.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/registerui.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/menu/sidebar.h",
 			"MU",
-			"EWIEGA46WW/moc_registerui.cpp",
+			"MDWXFLLFIT/moc_sidebar.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/sidebar.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/staff/staff.h",
 			"MU",
-			"EWIEGA46WW/moc_sidebar.cpp",
+			"BBY7CNHIOT/moc_staff.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/sound.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/tablature/tablature.h",
 			"MU",
-			"EWIEGA46WW/moc_sound.cpp",
+			"MQWK3E4237/moc_tablature.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/staff.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user/loginui.h",
 			"MU",
-			"EWIEGA46WW/moc_staff.cpp",
+			"JGIE6HG6ZU/moc_loginui.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/tablature.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user/passwordui.h",
 			"MU",
-			"EWIEGA46WW/moc_tablature.cpp",
+			"JGIE6HG6ZU/moc_passwordui.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/toggleswitch.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user/registerui.h",
 			"MU",
-			"EWIEGA46WW/moc_toggleswitch.cpp",
+			"JGIE6HG6ZU/moc_registerui.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/transitions.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user/transitions.h",
 			"MU",
-			"EWIEGA46WW/moc_transitions.cpp",
+			"JGIE6HG6ZU/moc_transitions.cpp",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/uiwidgets.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user/uiwidgets.h",
 			"MU",
-			"EWIEGA46WW/moc_uiwidgets.cpp",
-			null
-		],
-		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/usermodel.h",
-			"MU",
-			"EWIEGA46WW/moc_usermodel.cpp",
+			"JGIE6HG6ZU/moc_uiwidgets.cpp",
 			null
 		]
 	],
@@ -663,6 +657,20 @@
 	],
 	"MOC_INCLUDES" : 
 	[
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/TabPro",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/sound",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/containers",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/user",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/chorddiagram",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/staff",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/tablature",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/menu",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/accidentals",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/resources/chords",
 		"C:/Qt/6.7.0/mingw_64/include/QtCore",
 		"C:/Qt/6.7.0/mingw_64/include",
 		"C:/Qt/6.7.0/mingw_64/mkspecs/win32-g++",
@@ -715,117 +723,117 @@
 	"SOURCES" : 
 	[
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/blank.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/containers/containerwidget.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chorddiagram.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/containers/mainwidget.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chorddisplay.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/sound/sound.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/chordwindow.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/user/usermodel.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/containerwidget.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/main.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/crotchet.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/mainwindow.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/loginui.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/blank.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/main.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/crotchet.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwidget.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/note.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/mainwindow.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/quaver.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/menubar.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/chorddiagram/chorddiagram.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/note.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/chorddiagram/chorddisplay.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/passwordui.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/chorddiagram/chordwindow.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/quaver.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/chorddiagram/toggleswitch.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/registerui.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/menu/menubar.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/sidebar.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/menu/sidebar.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/sound.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/staff/staff.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/staff.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/tablature/tablature.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/tablature.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user/loginui.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/toggleswitch.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user/passwordui.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/transitions.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user/registerui.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/uiwidgets.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user/transitions.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/usermodel.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user/uiwidgets.cpp",
 			"MU",
 			null
 		]
