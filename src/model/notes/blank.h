@@ -1,9 +1,11 @@
 #ifndef BLANK_H
 #define BLANK_H
 
+#include "note.h"
+
 #include <QWidget>
 
-class Blank : public QWidget
+class Blank : public Note
 {
     Q_OBJECT
 public:

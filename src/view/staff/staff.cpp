@@ -118,10 +118,9 @@ void Staff::addNote(QVector<int> fretNumbers, int index, bool isChord)
     staffLines.fill(INVALID_LINE);
 
     // Get staff lines of the current note if chord mode is toggled
-    if (!isChord && chordMode && index < notes.size())
+    if (!isChord && chordMode && index < notes.size() && !dynamic_cast<Blank*>(notes[index]))
     {
-        Crotchet *crotchet = qobject_cast<Crotchet*>(notes[index]);
-        if (crotchet) staffLines = crotchet->getStaffLines();
+        staffLines = notes[index]->getStaffLines();
     }
 
     // Update staff line vector
@@ -144,7 +143,7 @@ void Staff::addNote(QVector<int> fretNumbers, int index, bool isChord)
     }
 
     // Add note to the staff
-    QWidget *note;
+    Note *note;
     switch (menu->getSelectedNote())
     {
         case NoteType::Semibreve:
@@ -229,7 +228,7 @@ void Staff::addBlank(int index)
 {
     if (notes[index] != nullptr) removeNote(index);
 
-    QWidget *blank = new Blank();
+    Note *blank = new Blank();
     notes.insert(index, blank);
     lines.insert(index, -1);
     mainLayout->insertWidget(index + 1, blank);

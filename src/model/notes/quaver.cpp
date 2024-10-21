@@ -94,11 +94,11 @@ void Quaver::drawFlag()
     path.cubicTo(c1, c2, end1);
     path.cubicTo(c3, c4, end2);
 
-    // Translate path to start( at the top of stem
+    // Translate path to start at the top of stem
     float xOffset = (isFlipped()) ? -HEAD_WIDTH / 2 : HEAD_WIDTH / 2;
     float yOffset = (isFlipped()) ? -HEAD_HEIGHT / 2 + stemHeight : HEAD_HEIGHT / 2 - stemHeight;
     path.translate(xOffset, yOffset);
-    path.translate(width() / 2, yPos[0]);
+    path.translate(width() / 2, *std::max_element(yPos.begin(), yPos.end()));
 
     // Draw the path
     painter.setPen(Qt::white);

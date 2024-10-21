@@ -2,6 +2,7 @@
 #define STAFF_H
 
 #include "menubar.h"
+#include "note.h"
 
 #include <QWidget>
 #include <QHBoxLayout>
@@ -38,7 +39,7 @@ private:
     QMap<int, QPair<int, int>> stringMap;
 
     MenuBar *menu;
-    QVector<QWidget*> notes;
+    QVector<Note*> notes;
     QVector<int> lines;
 
 signals:

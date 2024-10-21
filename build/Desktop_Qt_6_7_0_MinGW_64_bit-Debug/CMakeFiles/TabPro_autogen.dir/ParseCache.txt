@@ -1038,6 +1038,7 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/cont
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qversiontagging.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qxptype_traits.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qyieldcpu.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/QPainter
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/QPixmap
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qaction.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qbitmap.h
@@ -1051,6 +1052,7 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/cont
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qimage.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qkeysequence.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpaintdevice.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpainter.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpalette.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpen.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpicture.h
@@ -1308,6 +1310,7 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/cont
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/containers/containerwidget.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/sound/sound.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/accidentals/accidentaltype.h
+ mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/note.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/notetype.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/menu/menubar.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/staff/staff.h
@@ -2956,6 +2959,7 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/cont
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/user/usermodel.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/mainwindow.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/accidentals/accidentaltype.h
+ mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/note.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/notetype.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/menu/menubar.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/staff/staff.h
@@ -4721,6 +4725,7 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/bla
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qversiontagging.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qxptype_traits.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qyieldcpu.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/QPainter
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qaction.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qbitmap.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qbrush.h
@@ -4733,13 +4738,16 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/bla
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qimage.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qkeysequence.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpaintdevice.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpainter.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpalette.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpen.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpixelformat.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpixmap.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpolygon.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qregion.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qrgb.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qrgba64.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qtextoption.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qtgui-config.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qtguiexports.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qtguiglobal.h
@@ -4953,6 +4961,8 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/bla
  mdp:C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wchar.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/moc_predefs.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/blank.h
+ mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/note.h
+ mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/notetype.h
 C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/chorddiagram/chorddisplay.h
  mmc:Q_OBJECT
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/QList
@@ -6176,6 +6186,7 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/chorddiagr
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/containers/containerwidget.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/sound/sound.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/accidentals/accidentaltype.h
+ mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/note.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/notetype.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/chorddiagram/chorddiagram.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/chorddiagram/chorddisplay.h
@@ -8163,6 +8174,7 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/staff/staf
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qversiontagging.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qxptype_traits.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qyieldcpu.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/QPainter
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/QPixmap
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qaction.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qbitmap.h
@@ -8176,13 +8188,16 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/staff/staf
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qimage.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qkeysequence.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpaintdevice.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpainter.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpalette.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpen.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpixelformat.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpixmap.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpolygon.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qregion.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qrgb.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qrgba64.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qtextoption.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qtgui-config.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qtguiexports.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qtguiglobal.h
@@ -8407,6 +8422,7 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/staff/staf
  mdp:C:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wchar.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/moc_predefs.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/accidentals/accidentaltype.h
+ mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/note.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/notetype.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/menu/menubar.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/staff/staff.h
@@ -9448,6 +9464,7 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/tablature/
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qversiontagging.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qxptype_traits.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/qyieldcpu.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/QPainter
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/QPixmap
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qaction.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qbitmap.h
@@ -9461,6 +9478,7 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/tablature/
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qimage.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qkeysequence.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpaintdevice.h
+ mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpainter.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpalette.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpen.h
  mdp:C:/Qt/6.7.0/mingw_64/include/QtGui/qpicture.h
@@ -9717,6 +9735,7 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/tablature/
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/moc_predefs.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/sound/sound.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/accidentals/accidentaltype.h
+ mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/note.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/notetype.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/menu/menubar.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/staff/staff.h

@@ -66,9 +66,11 @@ void Note::drawMultiStem(QVector<int> yPos)
 
     stemHeight = (maxLine < -7) ? STEM_HEIGHT + (abs(minLine) - 7) * STAFF_SPACING : maxPos - minPos + STEM_HEIGHT;
 
+    painter.save();
     painter.setPen(QPen(Qt::white, 1.5));
     painter.translate(width() / 2, maxPos);
     painter.drawLine((HEAD_WIDTH / 2), (HEAD_HEIGHT / 2) - stemHeight, (HEAD_WIDTH / 2), (HEAD_HEIGHT / 2) - 10);
+    painter.restore();
 }
 
 // Checks whether the note is singular
