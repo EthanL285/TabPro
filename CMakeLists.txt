@@ -59,6 +59,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/resources/chords/chords.qrc
         src/resources/icons/icons.qrc
         src/resources/sound/sound.qrc
+        src/model/notes/quaverfamily.h
     )
 
 # Define target properties for Android with Qt 6 as:

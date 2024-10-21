@@ -1208,6 +1208,7 @@ TabPro_autogen/timestamp: \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/notetype.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/quaver.cpp \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/quaver.h \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/quaverfamily.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/resources/chords/chords.qrc \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/resources/icons/icons.qrc \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/resources/sound/sound.qrc \

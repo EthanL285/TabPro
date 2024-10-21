@@ -1,4 +1,5 @@
 #include "quaver.h"
+#include "staff.h"
 
 #include <QPainterPath>
 
@@ -103,4 +104,10 @@ void Quaver::drawFlag()
     // Draw the path
     painter.setPen(Qt::white);
     painter.drawPath(path);
+}
+
+// Draws a beam to the next note
+void Quaver::drawBeam()
+{
+    // QVector<Note*> notes = Staff::notes;
 }

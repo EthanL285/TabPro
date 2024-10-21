@@ -11,7 +11,7 @@ class Crotchet : public Note
 public:
     explicit Crotchet(QVector<int> staffLines, QWidget *parent = nullptr);
 
-private:
+protected:
     void paintEvent(QPaintEvent *event) override;
 };
 

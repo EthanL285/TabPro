@@ -2,18 +2,20 @@
 #define QUAVER_H
 
 #include "note.h"
+#include "quaverfamily.h"
 
 #include <QWidget>
 
-class Quaver : public Note
+class Quaver : public Note, public QuaverFamily
 {
     Q_OBJECT
 public:
     explicit Quaver(QVector<int> staffLines, QWidget *parent = nullptr);
 
-private:
+protected:
     void paintEvent(QPaintEvent *event) override;
-    void drawFlag();
+    void drawFlag() override;
+    void drawBeam() override;
 };
 
 

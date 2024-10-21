@@ -32,15 +32,12 @@ Staff::Staff(MenuBar *menu, QWidget *parent)
     trebleClefLabel->setStyleSheet("background: transparent;");
     mainLayout->addWidget(trebleClefLabel, Qt::AlignVCenter);
 
-    // Test code below
     stringMap = createStringMap();
     noteMap = createNoteMap();
-
-    notePixmaps["crotchet"] = QPixmap(":/Notes/Icons/Notes/crotchet.png");
-    // addNote("crotchet");
-    // addNote("crotchet");
-
 }
+
+// Define static member
+QVector<Note*> Staff::notes;
 
 // Creates the staff
 void Staff::paintEvent(QPaintEvent *event)
@@ -103,12 +100,6 @@ QMap<int, QString> Staff::createNoteMap()
     noteMap[11] = "B";
 
     return noteMap;
-}
-
-// Retrieves the pixmap of the given note
-QPixmap Staff::getNotePixmap(QString note)
-{
-    return notePixmaps[note];
 }
 
 // Adds the selected note to the staff

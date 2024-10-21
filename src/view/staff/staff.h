@@ -24,6 +24,7 @@ public:
     void removeNote(int index);
     void addBlank(int index);
     void toggleChordMode();
+    static QVector<Note*> notes;
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -34,12 +35,10 @@ private:
     int highestLine = UPDATE_LINE;
     bool chordMode = false;
     QString selectedNote = "crotchet";
-    QMap<QString, QPixmap> notePixmaps;
     QMap<int, QString> noteMap;
     QMap<int, QPair<int, int>> stringMap;
 
     MenuBar *menu;
-    QVector<Note*> notes;
     QVector<int> lines;
 
 signals:
