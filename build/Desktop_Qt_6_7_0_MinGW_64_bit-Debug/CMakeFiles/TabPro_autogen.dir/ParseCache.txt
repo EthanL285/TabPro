@@ -2966,8 +2966,6 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/cont
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/tablature/tablature.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user/transitions.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user/uiwidgets.h
-C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user/uiwidgets.cpp
-C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/main.cpp
 C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/note.h
  mmc:Q_OBJECT
  mdp:C:/Qt/6.7.0/mingw_64/include/QtCore/q20functional.h
@@ -3324,6 +3322,8 @@ C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/not
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/TabPro_autogen/moc_predefs.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/note.h
  mdp:C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/notetype.h
+C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user/uiwidgets.cpp
+C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/main.cpp
 C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user/registerui.cpp
 C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/sound/sound.h
  mmc:Q_OBJECT

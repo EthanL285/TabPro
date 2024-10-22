@@ -48,12 +48,10 @@ MainWindow::MainWindow(QWidget *parent)
     mainLayout->setAlignment(Qt::AlignCenter);
     mainLayout->setContentsMargins(0, 0, 0, 0);
 
-    // Create loginUI object
+    // Create loginUI and Transitions object
     loginBox = new loginUI(this, usermodel);
-    stackedWidget->addWidget(loginBox);
-
-    // Create Transitions object
     transition = new Transitions(this);
+    stackedWidget->addWidget(loginBox);
 
     // Automatically login user if token exists
     if (usermodel->tokenExists())
@@ -74,40 +72,30 @@ void MainWindow::redirectLogin()
     // Remove error messages of existing pages
     if (registerBox != nullptr)
     {
-        static_cast<RegisterUI*>(registerBox)->removeText(); // Convert type from *QWidget (Base) to *RegisterUI (Derived)
-        static_cast<RegisterUI*>(registerBox)->removeErrorMessage(500);
+        RegisterUI *registerUI = static_cast<RegisterUI*>(registerBox);
+        registerUI->removeText();
+        registerUI->removeErrorMessage(500);
     }
-    if (passwordBox != nullptr)
+    if (passwordBox == nullptr) return;
+
+    PasswordUI *passwordUI = static_cast<PasswordUI*>(passwordBox);
+    int pageNumber = passwordUI->getPageNumber();
+
+    // Remove error messages and handle specific page actions
+    passwordUI->removeErrorMessage(500, pageNumber == 0 ? 172 : pageNumber == 1 ? 144 : 160);
+
+    // Verification page
+    if (pageNumber == 0)
     {
-        int pageNumber = static_cast<PasswordUI*>(passwordBox)->getPageNumber();
-
-        // Verification page
-        if (pageNumber == 0)
-        {
-            static_cast<PasswordUI*>(passwordBox)->removeErrorMessage(500, 172);
-            usermodel->disconnectFromSMTPServer(); // Disconnect from socket if active still
-        }
-        // Code input page
-        else if (pageNumber == 1)
-        {
-            static_cast<PasswordUI*>(passwordBox)->removeErrorMessage(500, 144);
-
-            QTimer::singleShot(500, this, [this]()
-            {
-                static_cast<PasswordUI*>(passwordBox)->removeVerificationPage();
-            });
-        }
-        // Reset password page
-        else
-        {
-            static_cast<PasswordUI*>(passwordBox)->removeErrorMessage(500, 160);
-
-            QTimer::singleShot(500, this, [this]()
-           {
-               static_cast<PasswordUI*>(passwordBox)->removeResetPasswordPage();
-           });
-        }
+        usermodel->disconnectFromSMTPServer(); // Disconnect from socket if active still
+        return;
     }
+    // Code input or reset password page
+    QTimer::singleShot(500, this, [this, pageNumber, passwordUI]()
+    {
+       if (pageNumber == 1) passwordUI->removeVerificationPage();
+       else passwordUI->removeResetPasswordPage();
+    });
 }
 
 void MainWindow::redirectRegister()
@@ -144,13 +132,12 @@ void MainWindow::redirectPassword()
 
 void MainWindow::redirectMainWidget()
 {
-    // Create MainWidget object if first time
-    if (mainWidget == nullptr)
-    {
-        mainWidget = new MainWidget(this);
-        stackedWidget->addWidget(mainWidget);
-        stackedWidget->setCurrentWidget(mainWidget);
-    }
+    if (mainWidget != nullptr) return;
+
+    // Create MainWidget object
+    mainWidget = new MainWidget(this);
+    stackedWidget->addWidget(mainWidget);
+    stackedWidget->setCurrentWidget(mainWidget);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
