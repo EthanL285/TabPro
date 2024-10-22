@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->setMinimumSize(1440, 900);
 
     // Load background image
-    backgroundImage = QPixmap(":/background/background/Background.png");
+    backgroundImage = QPixmap(":/background/background/Background Grayscale.png");
 
     // Set background image to intial window size
     QPixmap scaledBgImage = backgroundImage;
@@ -31,11 +31,6 @@ MainWindow::MainWindow(QWidget *parent)
     backgroundLabel = new QLabel(this);
     backgroundLabel->setPixmap(scaledBgImage);
     backgroundLabel->setGeometry(0, 0, this->size().width(), this->size().height());
-
-    // Set background image to black and white
-    QGraphicsColorizeEffect *colorize = new QGraphicsColorizeEffect;
-    colorize->setColor(Qt::black);
-    backgroundLabel->setGraphicsEffect(colorize);
 
     // Create central and stacked widget to manage pages
     QWidget *centralWidget = new QWidget();
@@ -57,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent)
     if (usermodel->tokenExists())
     {
         qDebug() << "Token exists. Logging in";
-        redirectMainWidget();
+        // redirectMainWidget();
         // UserCredentials usercredentials = usermodel->getUserCredentials();
     }
 }
@@ -138,6 +133,10 @@ void MainWindow::redirectMainWidget()
     mainWidget = new MainWidget(this);
     stackedWidget->addWidget(mainWidget);
     stackedWidget->setCurrentWidget(mainWidget);
+
+    QGraphicsBlurEffect *blurEffect = new QGraphicsBlurEffect();
+    blurEffect->setBlurRadius(80);
+    backgroundLabel->setGraphicsEffect(blurEffect);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)

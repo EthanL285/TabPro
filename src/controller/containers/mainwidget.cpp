@@ -29,7 +29,7 @@ void MainWidget::paintEvent(QPaintEvent *event)
 
     // Set the background color
     painter.setRenderHint(QPainter::Antialiasing);
-    QColor color(33,33,33);
+    QColor color(33,33,33,0);
     painter.setBrush(color);
     painter.setPen(Qt::NoPen);
 

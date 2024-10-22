@@ -101,40 +101,26 @@ PasswordUI::PasswordUI(MainWindow *parent, UserModel *usermodel) : QWidget(paren
 // Send reset email to user
 void PasswordUI::sendResetEmail()
 {
-    // Retrieve email field from parent widget
     email = emailParent->findChild<QLineEdit*>("field");
 
-    // Check for empty fields
-    bool fieldEmpty = false;
-    fieldEmpty = emailParent->emptyFieldCheck(email) || fieldEmpty;
-
     // Empty email field
-    if (fieldEmpty)
+    if (emailParent->emptyFieldCheck(email))
     {
         addErrorMessage(QString::fromUtf8("\u2717 ") + "Please fill in all required fields", 153, "rgb(237, 67, 55)");
+        return;
     }
-    // Filled email field
-    else
+    // Verify user
+    QString message = usermodel->verifyUser(emailParent); // Also sets border and focus
+
+    // Email not found in database
+    if (message != "Valid")
     {
-        // Verify user
-        QString message = usermodel->verifyUser(emailParent); // Also sets border and focus
-
-        // Email not found in database
-        if (message != "Valid")
-        {
-            // Add error message
-            addErrorMessage(message, 153, "rgb(237, 67, 55)");
-        }
-        // Email is found in database
-        else
-        {
-            // Send verification code to user email
-            verificationCode = generateVerificationCode();
-            usermodel->sendVerificationEmail(email->text(), verificationCode, this);
-
-            // No need to remove error message if invalid attempt prior
-        }
+        addErrorMessage(message, 153, "rgb(237, 67, 55)");
+        return;
     }
+    // Send verification code to user email
+    verificationCode = generateVerificationCode();
+    usermodel->sendVerificationEmail(email->text(), verificationCode, this);
 }
 
 // Email successfully delivered
@@ -197,31 +183,23 @@ void PasswordUI::displayVerificationPage()
 // Checks user input to see if it matches the verification code sent
 void PasswordUI::checkUserInput()
 {
-    if (allCodeFieldsFilled())
-    {
-        QString userInput = getUserInputCode();
-        if (userInput == verificationCode)
-        {
-            // Set info back to send email page before proceeding
-            info->setText("Enter your account email address and we will share a 6 digit<br>verification code to reset your password");
-
-            removeErrorMessage(0, 144);
-
-            // Change page after error message is removed
-            QTimer::singleShot(0, this, [&]()
-            {
-                displayResetPasswordPage();
-            });
-        }
-        else
-        {
-            addErrorMessage(QString::fromUtf8("\u2717 ") + "Incorrect verification code. Please try again", 125, "rgb(237, 67, 55)");
-        }
-    }
-    else
+    // Incomplete fields
+    if (!allCodeFieldsFilled())
     {
         addErrorMessage(QString::fromUtf8("\u2717 ") + "Please fill in all required fields", 125, "rgb(237, 67, 55)");
+        return;
     }
+    // Invalid code
+    QString userInput = getUserInputCode();
+    if (userInput != verificationCode)
+    {
+        addErrorMessage(QString::fromUtf8("\u2717 ") + "Incorrect verification code. Please try again", 125, "rgb(237, 67, 55)");
+        return;
+    }
+    // Change page
+    info->setText("Enter your account email address and we will share a 6 digit<br>verification code to reset your password");
+    removeErrorMessage(0, 144);
+    QTimer::singleShot(0, this, &PasswordUI::displayResetPasswordPage);
 }
 
 // Displays the reset passsword page
@@ -267,8 +245,7 @@ void PasswordUI::checkUserPassword()
     if (userHasResetPassword)
     {
         addErrorMessage(QString::fromUtf8("\u2717 ") + "Password recently reset. Return back to login", 141, "rgb(237, 67, 55)");
-
-        if (resetSuccess != nullptr)
+        if (resetSuccess)
         {
             widgetLayout->removeWidget(resetSuccess);
             delete resetSuccess;
@@ -282,65 +259,52 @@ void PasswordUI::checkUserPassword()
 
     // Check for empty fields
     bool fieldEmpty = false;
-
     fieldEmpty = this->confirmNewPasswordParent->emptyFieldCheck(confirmPasswordField) || fieldEmpty;
     fieldEmpty = this->newPasswordParent->emptyFieldCheck(newPasswordField) || fieldEmpty;
 
-    // At least one field is empty
     if (fieldEmpty)
     {
-
         addErrorMessage(QString::fromUtf8("\u2717 ") + "Please fill in all required fields", 141, "rgb(237, 67, 55)");
+        return;
     }
-    // All fields are filled
-    else
+    // Passwords do not match
+    if  (newPasswordField->text() != confirmPasswordField->text())
     {
-        // Passwords match
-        if (newPasswordField->text() == confirmPasswordField->text())
-        {
-            QString message = usermodel->isValidPassword(newPasswordField->text());
-
-            // Invalid password
-            if (message != "Valid")
-            {
-                newPasswordField->setFocus();
-                newPasswordParent->setRedBorder(true);
-                confirmNewPasswordParent->setRedBorder(true);
-                addErrorMessage(message, 141, "rgb(237, 67, 55)");
-            }
-            // Valid password
-            else
-            {
-                // Update users password
-                usermodel->updateUserPassword(userEmail, newPasswordField->text());
-                userHasResetPassword = true;
-
-                // Reset widgets
-                removeErrorMessage(0, 111);
-                widgetLayout->setContentsMargins(40, 30, 40, 111);
-
-                newPasswordParent->setRedBorder(false);
-                confirmNewPasswordParent->setRedBorder(false);
-                newPasswordField->clear();
-                confirmPasswordField->clear();
-
-                // Add success message
-                resetSuccess = new QLabel(QString::fromUtf8("\u2713 ") + "Password successfully reset");
-                resetSuccess->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-                resetSuccess->setStyleSheet("color: rgb(114, 191, 106); font: 11pt Muli;");
-                widgetLayout->addWidget(resetSuccess);
-                widgetLayout->setAlignment(resetSuccess, Qt::AlignHCenter);
-            }
-        }
-        // Passwords do not match
-        else
-        {
-            newPasswordField->setFocus();
-            newPasswordParent->setRedBorder(true);
-            confirmNewPasswordParent->setRedBorder(true);
-            addErrorMessage(QString::fromUtf8("\u2717 ") + "Passwords do not match. Please try again", 141, "rgb(237, 67, 55)");
-        }
+        newPasswordField->setFocus();
+        newPasswordParent->setRedBorder(true);
+        confirmNewPasswordParent->setRedBorder(true);
+        addErrorMessage(QString::fromUtf8("\u2717 ") + "Passwords do not match. Please try again", 141, "rgb(237, 67, 55)");
+        return;
     }
+    // Invalid password
+    QString message = usermodel->isValidPassword(newPasswordField->text());
+    if (message != "Valid")
+    {
+        newPasswordField->setFocus();
+        newPasswordParent->setRedBorder(true);
+        confirmNewPasswordParent->setRedBorder(true);
+        addErrorMessage(message, 141, "rgb(237, 67, 55)");
+        return;
+    }
+    // Update user's password
+    usermodel->updateUserPassword(userEmail, newPasswordField->text());
+    userHasResetPassword = true;
+
+    // Reset widgets
+    removeErrorMessage(0, 111);
+    widgetLayout->setContentsMargins(40, 30, 40, 111);
+
+    newPasswordParent->setRedBorder(false);
+    confirmNewPasswordParent->setRedBorder(false);
+    newPasswordField->clear();
+    confirmPasswordField->clear();
+
+    // Add success message
+    resetSuccess = new QLabel(QString::fromUtf8("\u2713 ") + "Password successfully reset");
+    resetSuccess->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    resetSuccess->setStyleSheet("color: rgb(114, 191, 106); font: 11pt Muli;");
+    widgetLayout->addWidget(resetSuccess);
+    widgetLayout->setAlignment(resetSuccess, Qt::AlignHCenter);
 }
 
 // Changes verification page back to send email page
@@ -509,50 +473,46 @@ QString PasswordUI::getUserInputCode()
 // Delete error message after 'wait' ms
 void PasswordUI::removeErrorMessage(int wait, int bottomMargin)
 {
-    // Error message exists and function is not currently processing
-    if (errorMessage != nullptr && errorLayout != nullptr)
+    // Return if no error message
+    if (!errorMessage || !errorLayout) return;
+
+    // Stop existing active timer
+    if (errorMessageTimer && errorMessageTimer->isActive())
     {
-        // Stop any active timer
-        if (errorMessageTimer && errorMessageTimer->isActive())
-        {
-            errorMessageTimer->stop();
-        }
-        // Create a new timer
-        errorMessageTimer = new QTimer(this);
-        errorMessageTimer->setSingleShot(true);
-
-        // Remove error message from widget once transition ends (timer expires)
-        connect(errorMessageTimer, &QTimer::timeout, this, [this, bottomMargin]() {
-            QWidget *emailField = errorLayout->itemAt(0)->widget();
-            QWidget *sendButton = errorLayout->itemAt(2)->widget();
-
-            errorLayout->removeWidget(emailField);
-            errorLayout->removeWidget(errorMessage);
-            errorLayout->removeWidget(sendButton);
-            widgetLayout->removeItem(errorLayout);
-
-            emailParent->setRedBorder(false);
-
-            // Restore to original layout
-            widgetLayout->insertWidget(4, emailField);
-            widgetLayout->insertItem(5, verticalSpacer);
-            widgetLayout->insertWidget(6, sendButton);
-            widgetLayout->setContentsMargins(40, 30, 40, bottomMargin);
-
-            // Bottom margin for 1st page: 172
-            // Bottom margin for 2nd Page: 144
-
-            delete errorMessage;
-            delete errorLayout;
-            errorMessage = nullptr;
-            errorLayout = nullptr;
-
-            delete errorMessageTimer; // Delete the timer object
-            errorMessageTimer = nullptr; // Reset the timer pointer
-        });
-        // Start the timer
-        errorMessageTimer->start(wait);
+        errorMessageTimer->stop();
     }
+    // Create a new timer
+    errorMessageTimer = new QTimer(this);
+    errorMessageTimer->setSingleShot(true);
+
+    // Remove error message from widget once transition ends (timer expires)
+    connect(errorMessageTimer, &QTimer::timeout, this, [this, bottomMargin]() {
+        QWidget *emailField = errorLayout->itemAt(0)->widget();
+        QWidget *sendButton = errorLayout->itemAt(2)->widget();
+
+        errorLayout->removeWidget(emailField);
+        errorLayout->removeWidget(errorMessage);
+        errorLayout->removeWidget(sendButton);
+        widgetLayout->removeItem(errorLayout);
+
+        emailParent->setRedBorder(false);
+
+        // Restore to original layout
+        widgetLayout->insertWidget(4, emailField);
+        widgetLayout->insertItem(5, verticalSpacer);
+        widgetLayout->insertWidget(6, sendButton);
+        widgetLayout->setContentsMargins(40, 30, 40, bottomMargin);
+
+        delete errorMessage;
+        delete errorLayout;
+        errorMessage = nullptr;
+        errorLayout = nullptr;
+
+        delete errorMessageTimer;
+        errorMessageTimer = nullptr;
+    });
+    // Start the timer
+    errorMessageTimer->start(wait);
 }
 
 // Generates a verification code

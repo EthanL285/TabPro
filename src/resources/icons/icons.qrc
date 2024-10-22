@@ -12,6 +12,7 @@
     </qresource>
     <qresource prefix="/background">
         <file>background/Background.png</file>
+        <file>background/Background Grayscale.png</file>
     </qresource>
     <qresource prefix="/sidebar">
         <file>sidebar/SideBarIcon.png</file>

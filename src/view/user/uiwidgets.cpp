@@ -92,27 +92,27 @@ void TextField::setRedBorder(bool setRed)
 
     // Set field and icon border to red
     field->setStyleSheet
-        (
-            "#" + field->objectName() +   // Change parent widget only (for fields with labels)
-            " {"
-            "background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(96, 94, 92, 100), stop: 1 rgba(32, 31, 30, 200));"
-            "border-top: " + borderColour + ";"
-                             "border-right: " + borderColour + ";"
-                             "border-bottom: " + borderColour + ";"
-                             "border-left: none;"
-                             "color: white;"
-                             "font: 12pt Muli;"
-                             "padding-left: 6px;"
-                             "}"
-            );
+    (
+        "#" + field->objectName() +   // Change parent widget only (for fields with labels)
+        " {"
+        "background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 rgba(96, 94, 92, 100), stop: 1 rgba(32, 31, 30, 200));"
+        "border-top: " + borderColour + ";"
+        "border-right: " + borderColour + ";"
+        "border-bottom: " + borderColour + ";"
+        "border-left: none;"
+        "color: white;"
+        "font: 12pt Muli;"
+        "padding-left: 6px;"
+        "}"
+    );
     fieldIcon->setStyleSheet
-        (
-            "background-color: rgba(0, 0, 0, 100);"
-            "border-top: " + borderColour + ";"
-                             "border-right: none;"
-                             "border-bottom: " + borderColour + ";"
-                             "border-left: " + borderColour + ";"
-            );
+    (
+        "background-color: rgba(0, 0, 0, 100);"
+        "border-top: " + borderColour + ";"
+        "border-right: none;"
+        "border-bottom: " + borderColour + ";"
+        "border-left: " + borderColour + ";"
+    );
 }
 
 void TextField::setCheckBoxStylesheet(QCheckBox *checkbox)

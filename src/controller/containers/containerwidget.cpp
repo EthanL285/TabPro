@@ -510,7 +510,7 @@ QScrollArea *ContainerWidget::createScrollArea()
     scrollArea->viewport()->setStyleSheet
     (
         "background: qradialgradient(cx: 0.5, cy: 0, radius: 0.7, "
-        "fx: 0.5, fy: 0, stop: 0 rgb(50,50,50), stop: 1 rgb(25,25,25));"
+        "fx: 0.5, fy: 0, stop: 0 rgba(50,50,50,0), stop: 1 rgba(25,25,25,0));"
     );
     scrollArea->setStyleSheet
     (
@@ -626,6 +626,7 @@ QScrollArea *ContainerWidget::createScrollArea()
         "QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {" // Regions to the left and right of the handle
         "    background: none;"
         "}"
+        "QScrollArea { background: transparent; border: none; }"
     );
     return scrollArea;
 }
@@ -654,7 +655,7 @@ void Rectangle::paintEvent(QPaintEvent *event)
 
     // Set the background color
     painter.setRenderHint(QPainter::Antialiasing);
-    QColor color(45,45,45);
+    QColor color(45,45,45,0);
     painter.setBrush(color);
     painter.setPen(Qt::NoPen);
 
