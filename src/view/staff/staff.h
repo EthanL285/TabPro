@@ -24,7 +24,11 @@ public:
     void removeNote(int index);
     void addBlank(int index);
     void toggleChordMode();
+    void updateBarLines();
+
     static QVector<Note*> notes;
+    static constexpr int INVALID_LINE = -999;
+    static constexpr double STAFF_SPACING = 7.5;
 
 protected:
     void paintEvent(QPaintEvent *event) override;

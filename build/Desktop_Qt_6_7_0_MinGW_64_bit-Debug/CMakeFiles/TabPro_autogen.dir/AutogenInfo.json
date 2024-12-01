@@ -517,6 +517,12 @@
 			null
 		],
 		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barline.h",
+			"MU",
+			"VNQA4LF4BW/moc_barline.cpp",
+			null
+		],
+		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/blank.h",
 			"MU",
 			"NIU2735H7E/moc_blank.cpp",
@@ -550,6 +556,42 @@
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/quaverfamily.h",
 			"MU",
 			"NIU2735H7E/moc_quaverfamily.cpp",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/halfrest.h",
+			"MU",
+			"XZ2MUJWC77/moc_halfrest.cpp",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/quarterrest.h",
+			"MU",
+			"XZ2MUJWC77/moc_quarterrest.cpp",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/rest.h",
+			"MU",
+			"XZ2MUJWC77/moc_rest.cpp",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/wholerest.h",
+			"MU",
+			"XZ2MUJWC77/moc_wholerest.cpp",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rhythmsymbol.h",
+			"MU",
+			"VNQA4LF4BW/moc_rhythmsymbol.cpp",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/staffsymbol.h",
+			"MU",
+			"VNQA4LF4BW/moc_staffsymbol.cpp",
 			null
 		],
 		[
@@ -674,8 +716,10 @@
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/tablature",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/menu",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/accidentals",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/resources/chords",
 		"C:/Qt/6.7.0/mingw_64/include/QtCore",
 		"C:/Qt/6.7.0/mingw_64/include",
@@ -759,6 +803,11 @@
 			null
 		],
 		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barline.cpp",
+			"MU",
+			null
+		],
+		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/blank.cpp",
 			"MU",
 			null
@@ -775,6 +824,21 @@
 		],
 		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/quaver.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/halfrest.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/quarterrest.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/wholerest.cpp",
 			"MU",
 			null
 		],

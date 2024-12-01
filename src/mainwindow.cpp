@@ -52,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent)
     if (usermodel->tokenExists())
     {
         qDebug() << "Token exists. Logging in";
-        // redirectMainWidget();
+        redirectMainWidget();
         // UserCredentials usercredentials = usermodel->getUserCredentials();
     }
 }

@@ -7,10 +7,10 @@
 #include <QLabel>
 #include <QPainter>
 
-#define INVALID_LINE -999
 #define DEFAULT_HEIGHT 185
 #define LINE_COUNT 5
 #define LINE_SPACING 15
+#define TIME_SIGNATURE 4
 
 Staff::Staff(MenuBar *menu, QWidget *parent)
     : menu{menu}, QWidget{parent}
@@ -177,6 +177,8 @@ void Staff::addNote(QVector<int> fretNumbers, int index, bool isChord)
     {
         updateHeight(DEFAULT_HEIGHT + (maxLine - UPDATE_LINE) * LINE_SPACING, maxLine);
     }
+    // Update measure
+    // updateBarLines();
 }
 
 // Updates the staff height
@@ -214,9 +216,11 @@ void Staff::removeNote(int index)
     }
 }
 
-// Replaces the note at the given index with a blank
+// Inserts or replaces the note at the given index
 void Staff::addBlank(int index)
 {
+    // If index is not last, then assume insert
+
     if (notes[index] != nullptr) removeNote(index);
 
     Note *blank = new Blank();
@@ -229,4 +233,19 @@ void Staff::addBlank(int index)
 void Staff::toggleChordMode()
 {
     chordMode = !chordMode;
+}
+
+// Updates the position of all bar lines
+void Staff::updateBarLines()
+{
+    int beats = 0;
+    for (int i = 0; i < notes.size(); i++)
+    {
+        // beats += notes[i]->getBeatValue(); (Iterate through StaffSymbol instead and filter for RhythmSymbol)
+        if (beats > TIME_SIGNATURE && notes[i]) // Add rests first before proceeding
+        {
+            addBlank(i);
+            beats = 0;
+        }
+    }
 }

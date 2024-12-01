@@ -60,6 +60,14 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/resources/icons/icons.qrc
         src/resources/sound/sound.qrc
         src/model/notes/quaverfamily.h
+        src/model/rests/rest.h
+        src/model/rests/wholerest.h src/model/rests/wholerest.cpp
+        src/model/rests/halfrest.h src/model/rests/halfrest.cpp
+        src/model/rests/quarterrest.h src/model/rests/quarterrest.cpp
+        src/model/rhythmsymbol.h
+        src/model/staffsymbol.h
+        src/model/barline.h src/model/barline.cpp
+
     )
 
 # Define target properties for Android with Qt 6 as:
@@ -97,9 +105,12 @@ target_include_directories(
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/tablature
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/menu
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/user
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/notes
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/accidentals
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/rests
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/resources/chords
+
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

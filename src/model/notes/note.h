@@ -1,12 +1,13 @@
 #ifndef NOTE_H
 #define NOTE_H
 
+#include "rhythmsymbol.h"
 #include "notetype.h"
 
 #include <QWidget>
 #include <QPainter>
 
-class Note : public QWidget
+class Note : public QWidget, RhythmSymbol
 {
     Q_OBJECT
 public:
@@ -21,11 +22,9 @@ protected:
     QVector<int> yPos;          // The positions of note heads
     int stemHeight;
 
-    static constexpr int INVALID_LINE = -999;
     static constexpr int STEM_HEIGHT = 56;
     static constexpr int HEAD_WIDTH = 17;
     static constexpr int HEAD_HEIGHT = 11;
-    static constexpr double STAFF_SPACING = 7.5;
 
     bool isSingleNote();
     bool isFlipped();

@@ -1,4 +1,5 @@
 #include "note.h"
+#include "staff.h"
 
 #include <QPainter>
 #include <QPainterPath>
@@ -19,7 +20,7 @@ QVector<int> Note::getStaffLines()
 void Note::drawExtraLines(int staffLine)
 {
     // Don't draw if extra lines already exist
-    int min = *std::min_element(staffLines.begin(), staffLines.end(), [](int a, int b) { return (a != INVALID_LINE && (b == INVALID_LINE || a < b)); });
+    int min = *std::min_element(staffLines.begin(), staffLines.end(), [](int a, int b) { return (a != Staff::Staff::INVALID_LINE && (b == Staff::INVALID_LINE || a < b)); });
     int max = *std::max_element(staffLines.begin(), staffLines.end());
     if ((staffLine < 0 && staffLine != min) || (staffLine > 0 && staffLine != max)) {
         return;
@@ -40,7 +41,7 @@ void Note::drawExtraLines(int staffLine)
     // Draw lines
     for (int i = 0; i < numLines; i += 2)
     {
-        int yPoint = STAFF_SPACING * i + offset;
+        int yPoint = Staff::Staff::STAFF_SPACING * i + offset;
         painter.drawLine((HEAD_WIDTH / 2) + 3, -yPoint, (-HEAD_WIDTH / 2) - 3, -yPoint);
     }
 }
@@ -48,8 +49,8 @@ void Note::drawExtraLines(int staffLine)
 // Draws the stem of singular notes
 void Note::drawSingleStem()
 {
-    int staffLine = *std::find_if(std::begin(staffLines), std::end(staffLines), [](int x) { return x != INVALID_LINE; });
-    stemHeight = STEM_HEIGHT + std::max(0, abs(staffLine) - 7) * STAFF_SPACING;
+    int staffLine = *std::find_if(std::begin(staffLines), std::end(staffLines), [](int x) { return x != Staff::INVALID_LINE; });
+    stemHeight = STEM_HEIGHT + std::max(0, abs(staffLine) - 7) * Staff::STAFF_SPACING;
 
     painter.setPen(QPen(Qt::white, 1.5));
     painter.drawLine((HEAD_WIDTH / 2), (HEAD_HEIGHT / 2) - stemHeight, (HEAD_WIDTH / 2), (HEAD_HEIGHT / 2) - 8);
@@ -62,9 +63,9 @@ void Note::drawMultiStem(QVector<int> yPos)
     int minPos = *std::min_element(yPos.begin(), yPos.end());
     int maxLine = *std::max_element(staffLines.begin(), staffLines.end());
     int minLine = *std::min_element(staffLines.begin(), staffLines.end(), [](int a, int b) {
-        return (a != INVALID_LINE) && (b == INVALID_LINE || a < b); });
+        return (a != Staff::INVALID_LINE) && (b == Staff::INVALID_LINE || a < b); });
 
-    stemHeight = (maxLine < -7) ? STEM_HEIGHT + (abs(minLine) - 7) * STAFF_SPACING : maxPos - minPos + STEM_HEIGHT;
+    stemHeight = (maxLine < -7) ? STEM_HEIGHT + (abs(minLine) - 7) * Staff::STAFF_SPACING : maxPos - minPos + STEM_HEIGHT;
 
     painter.save();
     painter.setPen(QPen(Qt::white, 1.5));
@@ -79,7 +80,7 @@ bool Note::isSingleNote()
     int count = 0;
     for (int line : staffLines)
     {
-        if (line != INVALID_LINE) count++;
+        if (line != Staff::INVALID_LINE) count++;
     }
     return count == 1;
 }
@@ -87,6 +88,6 @@ bool Note::isSingleNote()
 // Checks whether the note is flipped
 bool Note::isFlipped()
 {
-    int staffLine = *std::find_if(staffLines.begin(), staffLines .end(), [](int x) { return x != INVALID_LINE; } );
+    int staffLine = *std::find_if(staffLines.begin(), staffLines .end(), [](int x) { return x != Staff::INVALID_LINE; } );
     return isSingleNote() && staffLine > 0;
 }

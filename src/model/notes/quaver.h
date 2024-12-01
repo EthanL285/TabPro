@@ -11,6 +11,7 @@ class Quaver : public Note, public QuaverFamily
     Q_OBJECT
 public:
     explicit Quaver(QVector<int> staffLines, QWidget *parent = nullptr);
+    double getBeatValue() override;
 
 protected:
     void paintEvent(QPaintEvent *event) override;
