@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="25.0.1">
   <diagram name="Page-1" id="ZHnEIwUeH1aHhkg0L1_h">
-    <mxGraphModel dx="2780" dy="2225" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3667" dy="2705" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -19,35 +19,35 @@
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="395" y="620" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="395" y="630" />
-              <mxPoint x="120" y="630" />
+              <mxPoint x="395" y="640" />
+              <mxPoint x="120" y="640" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-286" value="&lt;p style=&quot;margin: 4px 0px 0px; text-align: center;&quot;&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin: 4px 0px 0px; text-align: center;&quot;&gt;&lt;b style=&quot;&quot;&gt;QuaverFamily&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;# drawFlag(): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;# drawBeam(): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="315" y="670" width="160" height="110" as="geometry" />
+          <mxGeometry x="315" y="680" width="160" height="110" as="geometry" />
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-294" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;endSize=10;" parent="1" target="61lvURAlY18TH1YNvSzT-286" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="200" y="760" as="targetPoint" />
-            <mxPoint x="120.04347826086996" y="860" as="sourcePoint" />
+            <mxPoint x="200" y="770" as="targetPoint" />
+            <mxPoint x="120.04347826086996" y="870" as="sourcePoint" />
             <Array as="points">
-              <mxPoint x="120" y="820" />
-              <mxPoint x="395" y="820" />
+              <mxPoint x="120" y="830" />
+              <mxPoint x="395" y="830" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-292" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;endSize=10;" parent="1" target="61lvURAlY18TH1YNvSzT-286" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="395" y="860" as="sourcePoint" />
+            <mxPoint x="395" y="870" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-296" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;endSize=10;" parent="1" target="61lvURAlY18TH1YNvSzT-286" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="675" y="860" as="sourcePoint" />
+            <mxPoint x="675" y="870" as="sourcePoint" />
             <Array as="points">
-              <mxPoint x="675" y="820" />
-              <mxPoint x="395" y="820" />
+              <mxPoint x="675" y="830" />
+              <mxPoint x="395" y="830" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -55,8 +55,8 @@
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="-165" y="860" as="sourcePoint" />
             <Array as="points">
-              <mxPoint x="-165" y="630" />
-              <mxPoint x="120" y="630" />
+              <mxPoint x="-165" y="640" />
+              <mxPoint x="120" y="640" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -143,16 +143,16 @@
           <mxGeometry x="370" y="400" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-337" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Quaver&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getBeatValue() int&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;# paintEvent(event: QPaintEvent*): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;# drawFlag()&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;# drawBeam()&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="550" y="860" width="250" height="140" as="geometry" />
+          <mxGeometry x="550" y="870" width="250" height="140" as="geometry" />
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-338" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;SemiQuaver&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getBeatValue() int&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;# paintEvent(event: QPaintEvent*): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;# drawFlag()&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;# drawBeam()&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="270" y="860" width="250" height="140" as="geometry" />
+          <mxGeometry x="270" y="870" width="250" height="140" as="geometry" />
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-339" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;DemiQuaver&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getBeatValue() int&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;# paintEvent(event: QPaintEvent*): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;# drawFlag()&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;# drawBeam()&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="-10" y="860" width="250" height="140" as="geometry" />
+          <mxGeometry x="-10" y="870" width="250" height="140" as="geometry" />
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-340" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Crotchet&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getBeatValue() int&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;# paintEvent(event: QPaintEvent*): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="-290" y="860" width="250" height="110" as="geometry" />
+          <mxGeometry x="-290" y="870" width="250" height="110" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
