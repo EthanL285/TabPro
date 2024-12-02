@@ -2,6 +2,9 @@
 #include "crotchet.h"
 #include "quaver.h"
 #include "blank.h"
+#include "rest.h"
+#include "quarterrest.h"
+#include "eighthrest.h"
 
 #include <QFrame>
 #include <QLabel>
@@ -37,7 +40,7 @@ Staff::Staff(MenuBar *menu, QWidget *parent)
 }
 
 // Define static member
-QVector<Note*> Staff::notes;
+QVector<StaffSymbol*> Staff::notes;
 
 // Creates the staff
 void Staff::paintEvent(QPaintEvent *event)
@@ -111,7 +114,8 @@ void Staff::addNote(QVector<int> fretNumbers, int index, bool isChord)
     // Get staff lines of the current note if chord mode is toggled
     if (!isChord && chordMode && index < notes.size() && !dynamic_cast<Blank*>(notes[index]))
     {
-        staffLines = notes[index]->getStaffLines();
+        Note *note = dynamic_cast<Note*>(notes[index]);
+        if (note) staffLines = note->getStaffLines();
     }
 
     // Update staff line vector
@@ -216,17 +220,37 @@ void Staff::removeNote(int index)
     }
 }
 
-// Inserts or replaces the note at the given index
-void Staff::addBlank(int index)
+// Replaces the note at the given index with a rest
+void Staff::addRest(int index)
 {
-    // If index is not last, then assume insert
+    Note *note = dynamic_cast<Note*>(notes[index]);
+    NoteType type = note->getType();
+    removeNote(index);
 
-    if (notes[index] != nullptr) removeNote(index);
-
-    Note *blank = new Blank();
-    notes.insert(index, blank);
+    Rest *rest;
+    switch (type)
+    {
+        case NoteType::Semibreve:
+            rest = new QuarterRest();
+            break;
+        case NoteType::Minim:
+            rest = new QuarterRest();
+            break;
+        case NoteType::Crotchet:
+            rest = new QuarterRest();
+            break;
+        case NoteType::Quaver:
+            rest = new EighthRest();
+            break;
+        case NoteType::Semiquaver:
+            rest = new EighthRest();
+            break;
+        default:
+            break;
+    }
+    notes.insert(index, rest);
     lines.insert(index, -1);
-    mainLayout->insertWidget(index + 1, blank);
+    mainLayout->insertWidget(index + 1, rest);
 }
 
 // Toggles chord mode
@@ -244,7 +268,7 @@ void Staff::updateBarLines()
         // beats += notes[i]->getBeatValue(); (Iterate through StaffSymbol instead and filter for RhythmSymbol)
         if (beats > TIME_SIGNATURE && notes[i]) // Add rests first before proceeding
         {
-            addBlank(i);
+            addRest(i);
             beats = 0;
         }
     }

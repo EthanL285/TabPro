@@ -561,7 +561,7 @@ void Tablature::remove()
     else
     {
         selectedColumn->setText(EMPTY_COLUMN);
-        staff->addBlank(index);
+        staff->addRest(index);
     }
 }
 

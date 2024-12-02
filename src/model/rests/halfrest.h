@@ -5,11 +5,11 @@
 
 #include <QWidget>
 
-class HalfRest : public QWidget, Rest
+class HalfRest : public Rest
 {
     Q_OBJECT
 public:
-    explicit HalfRest(QWidget *parent = nullptr);
+    explicit HalfRest();
     double getBeatValue() override;
 
 signals:

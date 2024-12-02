@@ -5,6 +5,7 @@
 
 class RhythmSymbol : public StaffSymbol
 {
+    Q_OBJECT
 public:
     virtual double getBeatValue() = 0;
 };

@@ -1,8 +1,8 @@
 #include "crotchet.h"
 #include "staff.h"
 
-Crotchet::Crotchet(QVector<int> staffLines, QWidget *parent)
-    : Note(staffLines, parent)
+Crotchet::Crotchet(QVector<int> staffLines)
+    : Note(staffLines)
 {
     type = NoteType::Crotchet;
 }

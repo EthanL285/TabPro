@@ -2,7 +2,7 @@
 #define STAFF_H
 
 #include "menubar.h"
-#include "note.h"
+#include "staffsymbol.h"
 
 #include <QWidget>
 #include <QHBoxLayout>
@@ -22,11 +22,11 @@ public:
     QPixmap getNotePixmap(QString note);
     void addNote(QVector<int> fretNumbers, int index, bool isChord = false);
     void removeNote(int index);
-    void addBlank(int index);
+    void addRest(int index);
     void toggleChordMode();
     void updateBarLines();
 
-    static QVector<Note*> notes;
+    static QVector<StaffSymbol*> notes;
     static constexpr int INVALID_LINE = -999;
     static constexpr double STAFF_SPACING = 7.5;
 

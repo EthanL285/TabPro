@@ -1,7 +1,7 @@
 #include "blank.h"
 
-Blank::Blank(QWidget *parent)
-    : Note{QVector<int>(6,-1), parent}
+Blank::Blank()
+    : Note{QVector<int>(6,-1)}
 {
     setFixedWidth(35);
 }

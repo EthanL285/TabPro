@@ -1,8 +1,11 @@
 #ifndef STAFFSYMBOL_H
 #define STAFFSYMBOL_H
 
-class StaffSymbol
+#include <QWidget>
+
+class StaffSymbol : public QWidget
 {
+    Q_OBJECT
 public:
 
 };

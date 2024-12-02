@@ -10,7 +10,7 @@ class Quaver : public Note, public QuaverFamily
 {
     Q_OBJECT
 public:
-    explicit Quaver(QVector<int> staffLines, QWidget *parent = nullptr);
+    explicit Quaver(QVector<int> staffLines);
     double getBeatValue() override;
 
 protected:

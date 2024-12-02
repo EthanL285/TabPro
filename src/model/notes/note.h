@@ -7,14 +7,15 @@
 #include <QWidget>
 #include <QPainter>
 
-class Note : public QWidget, RhythmSymbol
+class Note : public RhythmSymbol
 {
     Q_OBJECT
 public:
     QVector<int> getStaffLines();
+    NoteType getType();
 
 protected:
-    explicit Note(QVector<int> staffLines, QWidget *parent = nullptr);
+    explicit Note(QVector<int> staffLines);
 
     NoteType type;
     QPainter painter;

@@ -559,6 +559,12 @@
 			null
 		],
 		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/eighthrest.h",
+			"MU",
+			"XZ2MUJWC77/moc_eighthrest.cpp",
+			null
+		],
+		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/halfrest.h",
 			"MU",
 			"XZ2MUJWC77/moc_halfrest.cpp",
@@ -574,12 +580,6 @@
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/rest.h",
 			"MU",
 			"XZ2MUJWC77/moc_rest.cpp",
-			null
-		],
-		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/wholerest.h",
-			"MU",
-			"XZ2MUJWC77/moc_wholerest.cpp",
 			null
 		],
 		[
@@ -828,17 +828,17 @@
 			null
 		],
 		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/EighthRest.cpp",
+			"MU",
+			null
+		],
+		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/halfrest.cpp",
 			"MU",
 			null
 		],
 		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/quarterrest.cpp",
-			"MU",
-			null
-		],
-		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/wholerest.cpp",
 			"MU",
 			null
 		],

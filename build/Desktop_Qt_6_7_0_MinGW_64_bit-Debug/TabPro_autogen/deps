@@ -1211,13 +1211,13 @@ TabPro_autogen/timestamp: \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/quaver.cpp \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/quaver.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/quaverfamily.h \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/EighthRest.cpp \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/eighthrest.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/halfrest.cpp \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/halfrest.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/quarterrest.cpp \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/quarterrest.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/rest.h \
-	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/wholerest.cpp \
-	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/wholerest.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rhythmsymbol.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/staffsymbol.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/resources/chords/chords.qrc \

@@ -3,8 +3,8 @@
 
 #include <QPainterPath>
 
-Quaver::Quaver(QVector<int> staffLines, QWidget *parent)
-    : Note(staffLines, parent)
+Quaver::Quaver(QVector<int> staffLines)
+    : Note(staffLines)
 {
     type = NoteType::Quaver;
 }
