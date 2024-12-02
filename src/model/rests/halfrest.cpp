@@ -1,8 +1,8 @@
 #include "halfrest.h"
 
-HalfRest::HalfRest(QWidget *parent)
-    : QWidget{parent}
+HalfRest::HalfRest()
 {
+    setFixedWidth(35);
 }
 
 // Get the beat value of the rest

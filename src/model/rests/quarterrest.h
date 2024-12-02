@@ -5,11 +5,11 @@
 
 #include <QWidget>
 
-class QuarterRest : public QWidget, Rest
+class QuarterRest : public Rest
 {
     Q_OBJECT
 public:
-    explicit QuarterRest(QWidget *parent = nullptr);
+    explicit QuarterRest();
     double getBeatValue() override;
 
 signals:

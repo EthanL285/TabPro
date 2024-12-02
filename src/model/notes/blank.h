@@ -9,7 +9,7 @@ class Blank : public Note
 {
     Q_OBJECT
 public:
-    explicit Blank(QWidget *parent = nullptr);
+    explicit Blank();
     double getBeatValue() override;
 };
 

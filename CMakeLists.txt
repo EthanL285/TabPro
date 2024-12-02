@@ -61,7 +61,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/resources/sound/sound.qrc
         src/model/notes/quaverfamily.h
         src/model/rests/rest.h
-        src/model/rests/wholerest.h src/model/rests/wholerest.cpp
+        src/model/rests/eighthrest.h src/model/rests/eighthrest.cpp
         src/model/rests/halfrest.h src/model/rests/halfrest.cpp
         src/model/rests/quarterrest.h src/model/rests/quarterrest.cpp
         src/model/rhythmsymbol.h

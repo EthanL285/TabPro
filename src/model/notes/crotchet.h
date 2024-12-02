@@ -9,7 +9,7 @@ class Crotchet : public Note
 {
     Q_OBJECT
 public:
-    explicit Crotchet(QVector<int> staffLines, QWidget *parent = nullptr);
+    explicit Crotchet(QVector<int> staffLines);
     double getBeatValue() override;
 
 protected:

@@ -4,8 +4,8 @@
 #include <QPainter>
 #include <QPainterPath>
 
-Note::Note(QVector<int> staffLines, QWidget *parent)
-    : staffLines{staffLines}, QWidget{parent}
+Note::Note(QVector<int> staffLines)
+    : staffLines{staffLines}
 {
     setFixedWidth(35);
 }
@@ -90,4 +90,10 @@ bool Note::isFlipped()
 {
     int staffLine = *std::find_if(staffLines.begin(), staffLines .end(), [](int x) { return x != Staff::INVALID_LINE; } );
     return isSingleNote() && staffLine > 0;
+}
+
+// Getter for type
+NoteType Note::getType()
+{
+    return type;
 }

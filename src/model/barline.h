@@ -5,7 +5,7 @@
 
 #include <QWidget>
 
-class BarLine : public QWidget, StaffSymbol
+class BarLine : public StaffSymbol
 {
     Q_OBJECT
 public:
