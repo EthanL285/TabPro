@@ -517,9 +517,15 @@
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barline.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/staffbarline.h",
 			"MU",
-			"VNQA4LF4BW/moc_barline.cpp",
+			"K34KLYPH57/moc_staffbarline.cpp",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/tabbarline.h",
+			"MU",
+			"K34KLYPH57/moc_tabbarline.cpp",
 			null
 		],
 		[
@@ -720,6 +726,7 @@
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/accidentals",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/resources/chords",
 		"C:/Qt/6.7.0/mingw_64/include/QtCore",
 		"C:/Qt/6.7.0/mingw_64/include",
@@ -803,7 +810,12 @@
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barline.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/staffbarline.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/tabbarline.cpp",
 			"MU",
 			null
 		],
@@ -828,7 +840,7 @@
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/EighthRest.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/eighthrest.cpp",
 			"MU",
 			null
 		],

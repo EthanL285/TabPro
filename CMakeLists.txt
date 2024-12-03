@@ -66,7 +66,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/model/rests/quarterrest.h src/model/rests/quarterrest.cpp
         src/model/rhythmsymbol.h
         src/model/staffsymbol.h
-        src/model/barline.h src/model/barline.cpp
+        src/model/barlines/staffbarline.h src/model/barlines/staffbarline.cpp
+        src/model/barlines/tabbarline.h src/model/barlines/tabbarline.cpp
 
     )
 
@@ -109,8 +110,8 @@ target_include_directories(
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/notes
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/accidentals
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/rests
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/barlines
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/resources/chords
-
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

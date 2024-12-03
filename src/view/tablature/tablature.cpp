@@ -1,4 +1,5 @@
 #include "tablature.h"
+#include "staffbarline.h"
 
 #include <QTimer>
 #include <QRegularExpression>
@@ -53,7 +54,6 @@ Tablature::Tablature(Sound *sound, Staff *staff, QWidget *parent)
     QLabel *strings = createNewTabLine();
     columnLayout->addWidget(strings);
 
-    tab.push_back(columns);
     addRest();
 
     /*
@@ -86,8 +86,8 @@ QLabel *Tablature::createNewTabLine()
 // Retrieve index of the selected column
 int Tablature::getSelectedColumnIndex()
 {
-    auto it = std::find(columns.begin(), columns.end(), selectedColumn);
-    int index = std::distance(columns.begin(), it);
+    auto it = std::find(tab.begin(), tab.end(), selectedColumn);
+    int index = std::distance(tab.begin(), it);
 
     return index;
 }
@@ -117,8 +117,8 @@ void Tablature::goLeft()
     // Select previous column
     if (index != 0)
     {
-        columns[index - 1]->setChecked(true); // selectColumn() handles the rest
-        adjustScrollBarPosition(columns[index - 1], "right");
+        tab[index - 1]->setChecked(true); // selectColumn() handles the rest
+        adjustScrollBarPosition(tab[index - 1], "right");
     }
 }
 
@@ -136,10 +136,10 @@ void Tablature::goRight()
     int index = getSelectedColumnIndex();
 
     // Select next column
-    if (index != columns.size() - 1)
+    if (index != tab.size() - 1)
     {
-        columns[index + 1]->setChecked(true);
-        adjustScrollBarPosition(columns[index + 1], "left");
+        tab[index + 1]->setChecked(true);
+        adjustScrollBarPosition(tab[index + 1], "left");
     }
 }
 
@@ -161,7 +161,7 @@ void Tablature::playTab(QPushButton *play)
 
     // Play tab from the selected column onwards OR beginning if the last column is selected
     index = getSelectedColumnIndex();
-    if (index == columns.size() - 1)
+    if (index == tab.size() - 1)
     {
         index = 0;
     }
@@ -184,11 +184,11 @@ void Tablature::playColumn()
     playSwitch = true;
 
     // Iterate through tab
-    if (index < columns.size())
+    if (index < tab.size())
     {
         // Retrieve the notes in the column and store in hashmap
         getColumnInfo();
-        columns[index]->setChecked(true);
+        tab[index]->setChecked(true);
         playSwitch = false; // selectColumn() identifies user intervention whilst play is active by seeing if playSwitch is false
 
         // Access hashmap and play note
@@ -200,7 +200,7 @@ void Tablature::playColumn()
             }
         }
         // Adjust scroll bar position
-        adjustScrollBarPosition(columns[index], "left");
+        adjustScrollBarPosition(tab[index], "left");
 
         index++;
     }
@@ -229,7 +229,7 @@ void Tablature::adjustScrollBarPosition(QPushButton *button, QString alignment)
         // Set the scrollbar value
         QScrollBar *hScrollBar = scrollArea->horizontalScrollBar();
 
-        if (button == columns.first())
+        if (button == tab.first())
         {
             hScrollBar->setValue(0);
         }
@@ -260,7 +260,7 @@ void Tablature::getColumnInfo()
     fretPositions.insert(5, "-");
 
     // Parse column to retrieve fret numbers and strings
-    QString notes = columns[index]->text();
+    QString notes = tab[index]->text();
     QStringList lines = notes.split("\n");
     static QRegularExpression numRegex("\\d+"); // Regular expression pattern to match digits
 
@@ -308,8 +308,58 @@ void Tablature::addFretNumber()
     }
     selectedColumn->setText(tabColumn);
     staff->addNote(fretNumbers, getSelectedColumnIndex());
-    if (selectedColumn == columns.last())  addRest();
+    // updateBarLines();
+    if (selectedColumn == tab.last())  addRest();
 }
+
+// Updates the tablature barlines to match the staff barlines
+void Tablature::updateBarLines()
+{
+    staff->updateBarLines();
+
+    // Get positions of new barlines
+    QVector<int> barlinePos;
+    QVector<int> newBarlinePos;
+    for (int i = 0; i < staff->notes.size(); i++)
+    {
+        StaffBarLine *barline = dynamic_cast<StaffBarLine*>(staff->notes[i]);
+        if (barline) newBarlinePos.append(i);
+    }
+
+    // Get positions of current barlines
+    for (int i = 0; i < tab.size(); i++)
+    {
+        if (tab[i]->objectName() == "barline") barlinePos.append(i);
+    }
+
+    qDebug() << "tab: " << tab;
+    qDebug() << "Old Pos: " << barlinePos;
+    qDebug() << "New Pos: " << newBarlinePos;
+
+    // Compare current and new positions
+    for (int i = 0; i < newBarlinePos.size(); i++)
+    {
+        int newPos = newBarlinePos[i];
+        if (barlinePos.contains(newPos)) continue;
+        addBarLine(newPos);
+    }
+}
+
+// Inserts a barline at the given index
+void Tablature::addBarLine(int index)
+{
+    QPushButton *barline = createRest();
+    barline->setObjectName("barline");
+    columnLayout->addWidget(barline);
+    tab.push_back(barline);
+
+    // Set rest to selected column
+    if (!chordMode) barline->setChecked(true);
+
+    // Update note line length
+    staff->updateLineLength(true);
+}
+
 
 // Adds a chord to the tab
 void Tablature::addChord(QVector<int> chord)
@@ -324,7 +374,7 @@ void Tablature::addChord(QVector<int> chord)
 
     selectedColumn->setText(tabColumn);
     staff->addNote(chord, getSelectedColumnIndex(), true);
-    if (selectedColumn == columns.last()) addRest();
+    if (selectedColumn == tab.last()) addRest();
 }
 
 // Toggles chord mode
@@ -363,10 +413,7 @@ void Tablature::addRest()
 {
     QPushButton *rest = createRest();
     columnLayout->addWidget(rest);
-    columns.push_back(rest);
-
-    // Update tab vector with current column
-    tab[tab.size() - 1] = columns;
+    tab.push_back(rest);
 
     // Set rest to selected column
     if (!chordMode) rest->setChecked(true);
@@ -460,7 +507,7 @@ void Tablature::changeTempoEdit(QLineEdit *field, QPushButton *increase, QPushBu
 // Inserts rest after selected column
 void Tablature::insertRest()
 {
-    if (selectedColumn == columns.last())
+    if (selectedColumn == tab.last())
     {
         addRest();
     }
@@ -468,7 +515,7 @@ void Tablature::insertRest()
     {
         int index = getSelectedColumnIndex();
         QPushButton *rest = createRest();
-        columns.insert(index + 1, rest);
+        tab.insert(index + 1, rest);
         columnLayout->insertWidget(index + 2, rest);
     }
 }
@@ -521,13 +568,13 @@ void Tablature::remove()
     int index = getSelectedColumnIndex();
 
     // Selected column is the last column in the tab
-    if (selectedColumn == columns.last())
+    if (selectedColumn == tab.last())
     {
         // Empty column
-        if (columns.size() > 1 && columns[index - 1]->text() == EMPTY_COLUMN)
+        if (tab.size() > 1 && tab[index - 1]->text() == EMPTY_COLUMN)
         {
-            columns[index - 1]->setChecked(true);
-            columns.remove(index);
+            tab[index - 1]->setChecked(true);
+            tab.remove(index);
             columnLayout->removeWidget(temp);
             delete temp;
 
@@ -535,11 +582,11 @@ void Tablature::remove()
             staff->removeNote(index - 1);
         }
         // Non-Empty column
-        else if (columns.size() > 1)
+        else if (tab.size() > 1)
         {
-            columns[index - 1]->setText(EMPTY_COLUMN);
-            columns[index - 1]->setChecked(true);
-            columns.remove(index);
+            tab[index - 1]->setText(EMPTY_COLUMN);
+            tab[index - 1]->setChecked(true);
+            tab.remove(index);
             delete temp;
 
             staff->updateLineLength(false);
@@ -549,8 +596,8 @@ void Tablature::remove()
     // Empty column
     else if (selectedColumn->text() == EMPTY_COLUMN)
     {
-        columns[index + 1]->setChecked(true);
-        columns.remove(index);
+        tab[index + 1]->setChecked(true);
+        tab.remove(index);
         columnLayout->removeWidget(temp);
         delete temp;
 

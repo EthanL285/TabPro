@@ -22,8 +22,9 @@ public:
     QPixmap getNotePixmap(QString note);
     void addNote(QVector<int> fretNumbers, int index, bool isChord = false);
     void removeNote(int index);
-    void addRest(int index);
     void toggleChordMode();
+    void addRest(int index);
+    void addBarLine(int index);
     void updateBarLines();
 
     static QVector<StaffSymbol*> notes;

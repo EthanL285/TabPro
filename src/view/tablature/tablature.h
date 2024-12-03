@@ -25,6 +25,8 @@ public:
     void adjustScrollBarPosition(QPushButton *button, QString alignment);
     void addChord(QVector<int> chord);
     void toggleChordMode();
+    void updateBarLines();
+    void addBarLine(int index);
 
 public slots:
     int getSelectedColumnIndex();
@@ -60,8 +62,7 @@ private:
     QVBoxLayout *rowLayout;
     QHBoxLayout *tabLayout;
     QPushButton *selectedColumn = nullptr;
-    QVector<QVector<QPushButton*>> tab;
-    QVector<QPushButton*> columns;
+    QVector<QPushButton*> tab;
     Sound *sound;
     QVector<int> *notes;
     QHash<int, QString> fretPositions;

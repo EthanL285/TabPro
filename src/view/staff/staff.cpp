@@ -5,6 +5,7 @@
 #include "rest.h"
 #include "quarterrest.h"
 #include "eighthrest.h"
+#include "staffbarline.h"
 
 #include <QFrame>
 #include <QLabel>
@@ -181,7 +182,7 @@ void Staff::addNote(QVector<int> fretNumbers, int index, bool isChord)
     {
         updateHeight(DEFAULT_HEIGHT + (maxLine - UPDATE_LINE) * LINE_SPACING, maxLine);
     }
-    // Update measure
+    // Update barlines
     // updateBarLines();
 }
 
@@ -220,6 +221,12 @@ void Staff::removeNote(int index)
     }
 }
 
+// Toggles chord mode
+void Staff::toggleChordMode()
+{
+    chordMode = !chordMode;
+}
+
 // Replaces the note at the given index with a rest
 void Staff::addRest(int index)
 {
@@ -253,23 +260,47 @@ void Staff::addRest(int index)
     mainLayout->insertWidget(index + 1, rest);
 }
 
-// Toggles chord mode
-void Staff::toggleChordMode()
+// Inserts a bar line at the given index
+void Staff::addBarLine(int index)
 {
-    chordMode = !chordMode;
+    StaffBarLine *barline = new StaffBarLine();
+    notes.insert(index, barline);
+    lines.insert(index, -1);
+    mainLayout->insertWidget(index + 1, barline);
 }
 
 // Updates the position of all bar lines
 void Staff::updateBarLines()
 {
-    int beats = 0;
+    // Get positions of current and new barlines
+    double beats = 0;
+    QVector<int> barlinePos;
+    QVector<int> newBarlinePos;
+
     for (int i = 0; i < notes.size(); i++)
     {
-        // beats += notes[i]->getBeatValue(); (Iterate through StaffSymbol instead and filter for RhythmSymbol)
-        if (beats > TIME_SIGNATURE && notes[i]) // Add rests first before proceeding
+        Note *note = dynamic_cast<Note*>(notes[i]);
+        if (!note)
         {
-            addRest(i);
+            barlinePos.append(i);
+            continue;
+        }
+        beats += note->getBeatValue();
+        if (beats >= TIME_SIGNATURE)
+        {
+            newBarlinePos.append(i + 1);
             beats = 0;
         }
+    }
+    // qDebug() << "Current: " << barlinePos;
+    // qDebug() << "New: " << newBarlinePos;
+    // qDebug() << "Notes: " << notes;
+
+    // Compare current and new positions
+    for (int i = 0; i < newBarlinePos.size(); i++)
+    {
+        int newPos = newBarlinePos[i];
+        if (barlinePos.contains(newPos)) continue;
+        addBarLine(newPos);
     }
 }
