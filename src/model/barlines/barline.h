@@ -5,11 +5,11 @@
 
 #include <QWidget>
 
-class StaffBarLine : public StaffSymbol
+class BarLine : public StaffSymbol
 {
     Q_OBJECT
 public:
-    explicit StaffBarLine();
+    explicit BarLine();
 
 protected:
     void paintEvent(QPaintEvent *event) override;

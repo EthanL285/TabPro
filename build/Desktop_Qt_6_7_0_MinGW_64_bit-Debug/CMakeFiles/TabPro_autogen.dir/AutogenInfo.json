@@ -517,15 +517,9 @@
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/staffbarline.h",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/barline.h",
 			"MU",
-			"K34KLYPH57/moc_staffbarline.cpp",
-			null
-		],
-		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/tabbarline.h",
-			"MU",
-			"K34KLYPH57/moc_tabbarline.cpp",
+			"K34KLYPH57/moc_barline.cpp",
 			null
 		],
 		[
@@ -810,12 +804,7 @@
 			null
 		],
 		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/staffbarline.cpp",
-			"MU",
-			null
-		],
-		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/tabbarline.cpp",
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/barline.cpp",
 			"MU",
 			null
 		],

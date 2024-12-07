@@ -5,7 +5,7 @@
 #include "rest.h"
 #include "quarterrest.h"
 #include "eighthrest.h"
-#include "staffbarline.h"
+#include "barline.h"
 
 #include <QFrame>
 #include <QLabel>
@@ -182,8 +182,6 @@ void Staff::addNote(QVector<int> fretNumbers, int index, bool isChord)
     {
         updateHeight(DEFAULT_HEIGHT + (maxLine - UPDATE_LINE) * LINE_SPACING, maxLine);
     }
-    // Update barlines
-    // updateBarLines();
 }
 
 // Updates the staff height
@@ -263,28 +261,33 @@ void Staff::addRest(int index)
 // Inserts a bar line at the given index
 void Staff::addBarLine(int index)
 {
-    StaffBarLine *barline = new StaffBarLine();
-    notes.insert(index, barline);
-    lines.insert(index, -1);
-    mainLayout->insertWidget(index + 1, barline);
+    int idx = 0;
+    for (int i = 0; i < mainLayout->count(); i++)
+    {
+        // Insert bar line
+        if (idx == index)
+        {
+            mainLayout->insertWidget(i + 1, new BarLine());
+            updateLineLength(true);
+            return;
+        }
+        // Increment if widget is not a barline
+        QWidget *widget = mainLayout->itemAt(i)->widget();
+        if (!dynamic_cast<BarLine*>(widget)) idx++;
+    }
 }
 
 // Updates the position of all bar lines
 void Staff::updateBarLines()
 {
-    // Get positions of current and new barlines
-    double beats = 0;
-    QVector<int> barlinePos;
+    QVector<int> currBarlinePos;
     QVector<int> newBarlinePos;
 
+    // Get positions of new barlines
+    double beats = 0;
     for (int i = 0; i < notes.size(); i++)
     {
         Note *note = dynamic_cast<Note*>(notes[i]);
-        if (!note)
-        {
-            barlinePos.append(i);
-            continue;
-        }
         beats += note->getBeatValue();
         if (beats >= TIME_SIGNATURE)
         {
@@ -292,15 +295,21 @@ void Staff::updateBarLines()
             beats = 0;
         }
     }
-    // qDebug() << "Current: " << barlinePos;
-    // qDebug() << "New: " << newBarlinePos;
-    // qDebug() << "Notes: " << notes;
-
-    // Compare current and new positions
-    for (int i = 0; i < newBarlinePos.size(); i++)
+    // Get positions of current barlines
+    int idx = 0;
+    for (int i = 1; i < mainLayout->count(); i++)
     {
-        int newPos = newBarlinePos[i];
-        if (barlinePos.contains(newPos)) continue;
-        addBarLine(newPos);
+        QWidget *widget = mainLayout->itemAt(i)->widget();
+        if (dynamic_cast<BarLine*>(widget))
+        {
+            currBarlinePos.append(idx);
+            continue;
+        }
+        idx++;
+    }
+    // Compare current and new positions
+    for (int newPos : newBarlinePos)
+    {
+        if (!currBarlinePos.contains(newPos)) addBarLine(newPos);
     }
 }

@@ -1,5 +1,6 @@
 #include "tablature.h"
-#include "staffbarline.h"
+#include "barline.h"
+#include "note.h"
 
 #include <QTimer>
 #include <QRegularExpression>
@@ -308,7 +309,7 @@ void Tablature::addFretNumber()
     }
     selectedColumn->setText(tabColumn);
     staff->addNote(fretNumbers, getSelectedColumnIndex());
-    // updateBarLines();
+    updateBarLines();
     if (selectedColumn == tab.last())  addRest();
 }
 
@@ -316,31 +317,38 @@ void Tablature::addFretNumber()
 void Tablature::updateBarLines()
 {
     staff->updateBarLines();
+    QVector<int> currBarlinePos;
+    QVector<int> newBarlinePos;
 
     // Get positions of new barlines
-    QVector<int> barlinePos;
-    QVector<int> newBarlinePos;
+    double beats = 0;
     for (int i = 0; i < staff->notes.size(); i++)
     {
-        StaffBarLine *barline = dynamic_cast<StaffBarLine*>(staff->notes[i]);
-        if (barline) newBarlinePos.append(i);
+        Note *note = dynamic_cast<Note*>(staff->notes[i]);
+        beats += note->getBeatValue();
+        if (beats >= 4)
+        {
+            newBarlinePos.append(i + 1);
+            beats = 0;
+        }
     }
-
     // Get positions of current barlines
-    for (int i = 0; i < tab.size(); i++)
+    int idx = 0;
+    for (int i = 1; i < columnLayout->count(); i++)
     {
-        if (tab[i]->objectName() == "barline") barlinePos.append(i);
+        QWidget *widget = columnLayout->itemAt(i)->widget();
+        if (dynamic_cast<BarLine*>(widget))
+        {
+            currBarlinePos.append(idx);
+            continue;
+        }
+        idx++;
     }
-
-    qDebug() << "tab: " << tab;
-    qDebug() << "Old Pos: " << barlinePos;
-    qDebug() << "New Pos: " << newBarlinePos;
-
     // Compare current and new positions
     for (int i = 0; i < newBarlinePos.size(); i++)
     {
         int newPos = newBarlinePos[i];
-        if (barlinePos.contains(newPos)) continue;
+        if (currBarlinePos.contains(newPos)) continue;
         addBarLine(newPos);
     }
 }
@@ -348,18 +356,9 @@ void Tablature::updateBarLines()
 // Inserts a barline at the given index
 void Tablature::addBarLine(int index)
 {
-    QPushButton *barline = createRest();
-    barline->setObjectName("barline");
+    BarLine *barline = new BarLine();
     columnLayout->addWidget(barline);
-    tab.push_back(barline);
-
-    // Set rest to selected column
-    if (!chordMode) barline->setChecked(true);
-
-    // Update note line length
-    staff->updateLineLength(true);
 }
-
 
 // Adds a chord to the tab
 void Tablature::addChord(QVector<int> chord)

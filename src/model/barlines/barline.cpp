@@ -1,15 +1,15 @@
-#include "staffbarline.h"
+#include "barline.h"
 #include <QPainter>
 
 #define HEIGHT 28
 
-StaffBarLine::StaffBarLine()
+BarLine::BarLine()
 {
     setFixedWidth(35);
 }
 
 // Paint event
-void StaffBarLine::paintEvent(QPaintEvent *event)
+void BarLine::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
