@@ -12,6 +12,7 @@
 #include <QScrollArea>
 
 #define EMPTY_COLUMN "\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015"
+#define TAB_HEIGHT 92
 
 class Tablature : public QWidget
 {

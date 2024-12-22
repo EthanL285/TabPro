@@ -308,7 +308,7 @@ void Tablature::addFretNumber()
     }
     selectedColumn->setText(tabColumn);
     staff->addNote(fretNumbers, getSelectedColumnIndex());
-    BarLineManager::updateBarLines(staff->notes, columnLayout, 4);
+    BarLineManager::updateBarLines(staff->notes, columnLayout, 4, TAB_HEIGHT);
     if (selectedColumn == tab.last())  addRest();
 }
 

@@ -68,6 +68,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         src/model/barlines/barline.h src/model/barlines/barline.cpp
         src/model/barlines/barlinemanager.h src/model/barlines/barlinemanager.cpp
+        src/model/rests/restfactory.h src/model/rests/restfactory.cpp
+        src/model/notes/notefactory.h src/model/notes/notefactory.cpp
 
 
 

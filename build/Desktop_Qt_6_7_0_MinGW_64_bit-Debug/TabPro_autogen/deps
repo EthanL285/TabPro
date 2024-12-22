@@ -1211,6 +1211,8 @@ TabPro_autogen/timestamp: \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/crotchet.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/note.cpp \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/note.h \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/notefactory.cpp \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/notefactory.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/notetype.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/quaver.cpp \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/quaver.h \
@@ -1222,6 +1224,8 @@ TabPro_autogen/timestamp: \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/quarterrest.cpp \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/quarterrest.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/rest.h \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/restfactory.cpp \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/restfactory.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rhythmsymbol.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/resources/chords/chords.qrc \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/resources/icons/icons.qrc \

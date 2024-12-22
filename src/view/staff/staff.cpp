@@ -1,11 +1,9 @@
 #include "staff.h"
-#include "crotchet.h"
-#include "quaver.h"
 #include "blank.h"
 #include "rest.h"
-#include "quarterrest.h"
-#include "eighthrest.h"
 #include "barlinemanager.h"
+#include "notefactory.h"
+#include "restfactory.h"
 
 #include <QFrame>
 #include <QLabel>
@@ -15,6 +13,7 @@
 #define LINE_COUNT 5
 #define LINE_SPACING 15
 #define TIME_SIGNATURE 4
+#define STAFF_HEIGHT 28
 
 Staff::Staff(MenuBar *menu, QWidget *parent)
     : menu{menu}, QWidget{parent}
@@ -137,29 +136,8 @@ void Staff::addNote(QVector<int> fretNumbers, int index, bool isChord)
         }
         staffLines[string] = staffLine;
     }
-
     // Add note to the staff
-    Note *note;
-    switch (menu->getSelectedNote())
-    {
-        case NoteType::Semibreve:
-            note = new Crotchet(staffLines);
-            break;
-        case NoteType::Minim:
-            note = new Crotchet(staffLines);
-            break;
-        case NoteType::Crotchet:
-            note = new Crotchet(staffLines);
-            break;
-        case NoteType::Quaver:
-            note = new Quaver(staffLines);
-            break;
-        case NoteType::Semiquaver:
-            note = new Quaver(staffLines);
-            break;
-        default:
-            break;
-    }
+    Note *note = NoteFactory::createNote(menu->getSelectedNote(), staffLines);
 
     // Insertion is not at last index
     int maxLine = *std::max_element(staffLines.begin(), staffLines.end());
@@ -183,7 +161,7 @@ void Staff::addNote(QVector<int> fretNumbers, int index, bool isChord)
         updateHeight(DEFAULT_HEIGHT + (maxLine - UPDATE_LINE) * LINE_SPACING, maxLine);
     }
     // Update barlines
-    BarLineManager::updateBarLines(notes, mainLayout, TIME_SIGNATURE);
+    BarLineManager::updateBarLines(notes, mainLayout, TIME_SIGNATURE, STAFF_HEIGHT);
 }
 
 // Updates the staff height
@@ -231,31 +209,22 @@ void Staff::toggleChordMode()
 void Staff::addRest(int index)
 {
     Note *note = dynamic_cast<Note*>(notes[index]);
-    NoteType type = note->getType();
+    Rest *rest = RestFactory::createRest(note->getType());
     removeNote(index);
 
-    Rest *rest;
-    switch (type)
-    {
-        case NoteType::Semibreve:
-            rest = new QuarterRest();
-            break;
-        case NoteType::Minim:
-            rest = new QuarterRest();
-            break;
-        case NoteType::Crotchet:
-            rest = new QuarterRest();
-            break;
-        case NoteType::Quaver:
-            rest = new EighthRest();
-            break;
-        case NoteType::Semiquaver:
-            rest = new EighthRest();
-            break;
-        default:
-            break;
-    }
     notes.insert(index, rest);
     lines.insert(index, -1);
-    mainLayout->insertWidget(index + 1, rest);
+
+    // Add rest to layout
+    int count = 0;
+    for (int i = 0; i < mainLayout->count(); i++)
+    {
+        if (count == index)
+        {
+            mainLayout->insertWidget(i, rest);
+            break;
+        }
+        QWidget *widget = mainLayout->itemAt(i)->widget();
+        if (dynamic_cast<RhythmSymbol*>(widget)) count++;
+    }
 }

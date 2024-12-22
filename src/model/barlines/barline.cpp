@@ -1,11 +1,10 @@
 #include "barline.h"
 #include <QPainter>
 
-#define HEIGHT 28
-
-BarLine::BarLine()
+BarLine::BarLine(int height)
 {
     setFixedWidth(35);
+    barHeight = height;
 }
 
 // Paint event
@@ -18,6 +17,6 @@ void BarLine::paintEvent(QPaintEvent *event)
     painter.setPen(pen);
 
     painter.translate(width() / 2, height() / 2);
-    painter.drawLine(0, -HEIGHT, 0, HEIGHT);
+    painter.drawLine(0, -barHeight, 0, barHeight);
 }
 

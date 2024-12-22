@@ -547,6 +547,12 @@
 			null
 		],
 		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/notefactory.h",
+			"MU",
+			"NIU2735H7E/moc_notefactory.cpp",
+			null
+		],
+		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/notetype.h",
 			"MU",
 			"NIU2735H7E/moc_notetype.cpp",
@@ -586,6 +592,12 @@
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/rest.h",
 			"MU",
 			"XZ2MUJWC77/moc_rest.cpp",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/restfactory.h",
+			"MU",
+			"XZ2MUJWC77/moc_restfactory.cpp",
 			null
 		],
 		[
@@ -829,6 +841,11 @@
 			null
 		],
 		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/notefactory.cpp",
+			"MU",
+			null
+		],
+		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/quaver.cpp",
 			"MU",
 			null
@@ -845,6 +862,11 @@
 		],
 		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/quarterrest.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/restfactory.cpp",
 			"MU",
 			null
 		],

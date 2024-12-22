@@ -7,10 +7,13 @@ class BarLine : public QWidget
 {
     Q_OBJECT
 public:
-    explicit BarLine();
+    explicit BarLine(int height);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+
+private:
+    int barHeight;
 
 signals:
 };
