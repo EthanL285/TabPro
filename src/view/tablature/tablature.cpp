@@ -1,6 +1,5 @@
 #include "tablature.h"
-#include "barline.h"
-#include "note.h"
+#include "barlinemanager.h"
 
 #include <QTimer>
 #include <QRegularExpression>
@@ -309,55 +308,8 @@ void Tablature::addFretNumber()
     }
     selectedColumn->setText(tabColumn);
     staff->addNote(fretNumbers, getSelectedColumnIndex());
-    updateBarLines();
+    BarLineManager::updateBarLines(staff->notes, columnLayout, 4);
     if (selectedColumn == tab.last())  addRest();
-}
-
-// Updates the tablature barlines to match the staff barlines
-void Tablature::updateBarLines()
-{
-    staff->updateBarLines();
-    QVector<int> currBarlinePos;
-    QVector<int> newBarlinePos;
-
-    // Get positions of new barlines
-    double beats = 0;
-    for (int i = 0; i < staff->notes.size(); i++)
-    {
-        Note *note = dynamic_cast<Note*>(staff->notes[i]);
-        beats += note->getBeatValue();
-        if (beats >= 4)
-        {
-            newBarlinePos.append(i + 1);
-            beats = 0;
-        }
-    }
-    // Get positions of current barlines
-    int idx = 0;
-    for (int i = 1; i < columnLayout->count(); i++)
-    {
-        QWidget *widget = columnLayout->itemAt(i)->widget();
-        if (dynamic_cast<BarLine*>(widget))
-        {
-            currBarlinePos.append(idx);
-            continue;
-        }
-        idx++;
-    }
-    // Compare current and new positions
-    for (int i = 0; i < newBarlinePos.size(); i++)
-    {
-        int newPos = newBarlinePos[i];
-        if (currBarlinePos.contains(newPos)) continue;
-        addBarLine(newPos);
-    }
-}
-
-// Inserts a barline at the given index
-void Tablature::addBarLine(int index)
-{
-    BarLine *barline = new BarLine();
-    columnLayout->addWidget(barline);
 }
 
 // Adds a chord to the tab

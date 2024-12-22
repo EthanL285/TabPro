@@ -1,9 +1,9 @@
 #ifndef RYTHMSYMBOL_H
 #define RYTHMSYMBOL_H
 
-#include "staffsymbol.h"
+#include <QWidget>
 
-class RhythmSymbol : public StaffSymbol
+class RhythmSymbol : public QWidget
 {
     Q_OBJECT
 public:

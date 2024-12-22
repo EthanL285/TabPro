@@ -65,8 +65,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/model/rests/halfrest.h src/model/rests/halfrest.cpp
         src/model/rests/quarterrest.h src/model/rests/quarterrest.cpp
         src/model/rhythmsymbol.h
-        src/model/staffsymbol.h
+
         src/model/barlines/barline.h src/model/barlines/barline.cpp
+        src/model/barlines/barlinemanager.h src/model/barlines/barlinemanager.cpp
+
 
 
     )

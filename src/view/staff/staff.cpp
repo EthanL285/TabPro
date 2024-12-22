@@ -5,7 +5,7 @@
 #include "rest.h"
 #include "quarterrest.h"
 #include "eighthrest.h"
-#include "barline.h"
+#include "barlinemanager.h"
 
 #include <QFrame>
 #include <QLabel>
@@ -41,7 +41,7 @@ Staff::Staff(MenuBar *menu, QWidget *parent)
 }
 
 // Define static member
-QVector<StaffSymbol*> Staff::notes;
+QVector<RhythmSymbol*> Staff::notes;
 
 // Creates the staff
 void Staff::paintEvent(QPaintEvent *event)
@@ -182,6 +182,8 @@ void Staff::addNote(QVector<int> fretNumbers, int index, bool isChord)
     {
         updateHeight(DEFAULT_HEIGHT + (maxLine - UPDATE_LINE) * LINE_SPACING, maxLine);
     }
+    // Update barlines
+    BarLineManager::updateBarLines(notes, mainLayout, TIME_SIGNATURE);
 }
 
 // Updates the staff height
@@ -256,60 +258,4 @@ void Staff::addRest(int index)
     notes.insert(index, rest);
     lines.insert(index, -1);
     mainLayout->insertWidget(index + 1, rest);
-}
-
-// Inserts a bar line at the given index
-void Staff::addBarLine(int index)
-{
-    int idx = 0;
-    for (int i = 0; i < mainLayout->count(); i++)
-    {
-        // Insert bar line
-        if (idx == index)
-        {
-            mainLayout->insertWidget(i + 1, new BarLine());
-            updateLineLength(true);
-            return;
-        }
-        // Increment if widget is not a barline
-        QWidget *widget = mainLayout->itemAt(i)->widget();
-        if (!dynamic_cast<BarLine*>(widget)) idx++;
-    }
-}
-
-// Updates the position of all bar lines
-void Staff::updateBarLines()
-{
-    QVector<int> currBarlinePos;
-    QVector<int> newBarlinePos;
-
-    // Get positions of new barlines
-    double beats = 0;
-    for (int i = 0; i < notes.size(); i++)
-    {
-        Note *note = dynamic_cast<Note*>(notes[i]);
-        beats += note->getBeatValue();
-        if (beats >= TIME_SIGNATURE)
-        {
-            newBarlinePos.append(i + 1);
-            beats = 0;
-        }
-    }
-    // Get positions of current barlines
-    int idx = 0;
-    for (int i = 1; i < mainLayout->count(); i++)
-    {
-        QWidget *widget = mainLayout->itemAt(i)->widget();
-        if (dynamic_cast<BarLine*>(widget))
-        {
-            currBarlinePos.append(idx);
-            continue;
-        }
-        idx++;
-    }
-    // Compare current and new positions
-    for (int newPos : newBarlinePos)
-    {
-        if (!currBarlinePos.contains(newPos)) addBarLine(newPos);
-    }
 }

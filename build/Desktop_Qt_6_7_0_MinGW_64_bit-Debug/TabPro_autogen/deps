@@ -20,6 +20,7 @@ TabPro_autogen/timestamp: \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QThread \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QTimer \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QVariant \
+	C:/Qt/6.7.0/mingw_64/include/QtCore/QVector \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QtCore \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QtCoreDepends \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/q20algorithm.h \
@@ -454,6 +455,7 @@ TabPro_autogen/timestamp: \
 	C:/Qt/6.7.0/mingw_64/include/QtSql/qtsqlexports.h \
 	C:/Qt/6.7.0/mingw_64/include/QtSql/qtsqlglobal.h \
 	C:/Qt/6.7.0/mingw_64/include/QtSql/qtsqlversion.h \
+	C:/Qt/6.7.0/mingw_64/include/QtWidgets/QBoxLayout \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/QCheckBox \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/QComboBox \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/QCommonStyle \
@@ -1201,6 +1203,8 @@ TabPro_autogen/timestamp: \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/accidentals/accidentaltype.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/barline.cpp \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/barline.h \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/barlinemanager.cpp \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/barlinemanager.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/blank.cpp \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/blank.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/crotchet.cpp \
@@ -1219,7 +1223,6 @@ TabPro_autogen/timestamp: \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/quarterrest.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rests/rest.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rhythmsymbol.h \
-	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/staffsymbol.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/resources/chords/chords.qrc \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/resources/icons/icons.qrc \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/resources/sound/sound.qrc \

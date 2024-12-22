@@ -523,6 +523,12 @@
 			null
 		],
 		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/barlinemanager.h",
+			"MU",
+			"K34KLYPH57/moc_barlinemanager.cpp",
+			null
+		],
+		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/blank.h",
 			"MU",
 			"NIU2735H7E/moc_blank.cpp",
@@ -586,12 +592,6 @@
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/rhythmsymbol.h",
 			"MU",
 			"VNQA4LF4BW/moc_rhythmsymbol.cpp",
-			null
-		],
-		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/staffsymbol.h",
-			"MU",
-			"VNQA4LF4BW/moc_staffsymbol.cpp",
 			null
 		],
 		[
@@ -805,6 +805,11 @@
 		],
 		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/barline.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/barlinemanager.cpp",
 			"MU",
 			null
 		],

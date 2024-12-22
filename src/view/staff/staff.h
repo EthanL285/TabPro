@@ -2,7 +2,7 @@
 #define STAFF_H
 
 #include "menubar.h"
-#include "staffsymbol.h"
+#include "rhythmsymbol.h"
 
 #include <QWidget>
 #include <QHBoxLayout>
@@ -24,10 +24,8 @@ public:
     void removeNote(int index);
     void toggleChordMode();
     void addRest(int index);
-    void addBarLine(int index);
-    void updateBarLines();
 
-    static QVector<StaffSymbol*> notes;
+    static QVector<RhythmSymbol*> notes;
     static constexpr int INVALID_LINE = -999;
     static constexpr double STAFF_SPACING = 7.5;
 

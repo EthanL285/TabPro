@@ -1,11 +1,9 @@
 #ifndef BARLINE_H
 #define BARLINE_H
 
-#include "staffsymbol.h"
-
 #include <QWidget>
 
-class BarLine : public StaffSymbol
+class BarLine : public QWidget
 {
     Q_OBJECT
 public:
