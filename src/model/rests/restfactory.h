@@ -11,7 +11,7 @@ class RestFactory : public QWidget
     Q_OBJECT
 public:
     explicit RestFactory(QWidget *parent = nullptr);
-    static Rest *createRest(int beatValue);
+    static Rest *createRest(double beatValue);
     static Rest *createRest(NoteType type);
 
 signals:

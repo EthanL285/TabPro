@@ -26,6 +26,7 @@ public:
     void adjustScrollBarPosition(QPushButton *button, QString alignment);
     void addChord(QVector<int> chord);
     void toggleChordMode();
+    void updateBarLines();
 
 public slots:
     int getSelectedColumnIndex();

@@ -160,8 +160,6 @@ void Staff::addNote(QVector<int> fretNumbers, int index, bool isChord)
     {
         updateHeight(DEFAULT_HEIGHT + (maxLine - UPDATE_LINE) * LINE_SPACING, maxLine);
     }
-    // Update barlines
-    BarLineManager::updateBarLines(notes, mainLayout, TIME_SIGNATURE, STAFF_HEIGHT);
 }
 
 // Updates the staff height
@@ -217,7 +215,7 @@ void Staff::addRest(int index)
 
     // Add rest to layout
     int count = 0;
-    for (int i = 0; i < mainLayout->count(); i++)
+    for (int i = 1; i < mainLayout->count() + 1; i++)
     {
         if (count == index)
         {
@@ -228,3 +226,16 @@ void Staff::addRest(int index)
         if (dynamic_cast<RhythmSymbol*>(widget)) count++;
     }
 }
+
+// Updates the barlines on the staff
+void Staff::updateBarLines()
+{
+    int diff = BarLineManager::updateBarLines(notes, mainLayout, TIME_SIGNATURE, STAFF_HEIGHT);
+
+    // Update staff length
+    for (int i = 0; i < abs(diff); i++)
+    {
+        updateLineLength(diff >= 0);
+    }
+}
+

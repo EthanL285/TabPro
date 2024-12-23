@@ -24,6 +24,7 @@ public:
     void removeNote(int index);
     void toggleChordMode();
     void addRest(int index);
+    void updateBarLines();
 
     static QVector<RhythmSymbol*> notes;
     static constexpr int INVALID_LINE = -999;

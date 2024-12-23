@@ -8,9 +8,10 @@ RestFactory::RestFactory(QWidget *parent)
 {}
 
 // Create rest given a beat value
-Rest *RestFactory::createRest(int beatValue)
+Rest *RestFactory::createRest(double beatValue)
 {
-    switch (beatValue * 2)
+    int value = beatValue * 2;
+    switch (value)
     {
         case 1:
             return new EighthRest();  // 0.5 beat value

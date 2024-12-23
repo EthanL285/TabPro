@@ -12,8 +12,7 @@ class BarLineManager : public QWidget
     Q_OBJECT
 public:
     explicit BarLineManager(QWidget *parent = nullptr);
-    static void updateBarLines(QVector<RhythmSymbol*> notes, QBoxLayout *layout, int signature, int barHeight);
-    static void addBarLine(int index, int barHeight, QBoxLayout *layout);
+    static int updateBarLines(QVector<RhythmSymbol*> notes, QBoxLayout *layout, int signature, int barHeight);
 
 signals:
 };

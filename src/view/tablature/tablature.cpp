@@ -308,8 +308,13 @@ void Tablature::addFretNumber()
     }
     selectedColumn->setText(tabColumn);
     staff->addNote(fretNumbers, getSelectedColumnIndex());
-    BarLineManager::updateBarLines(staff->notes, columnLayout, 4, TAB_HEIGHT);
-    if (selectedColumn == tab.last())  addRest();
+
+    // Update barlines
+    updateBarLines();
+    staff->updateBarLines();
+
+    // Add rest if last column
+    if (selectedColumn == tab.last()) addRest();
 }
 
 // Adds a chord to the tab
@@ -561,6 +566,15 @@ void Tablature::remove()
         selectedColumn->setText(EMPTY_COLUMN);
         staff->addRest(index);
     }
+    // Update barlines
+    updateBarLines();
+    staff->updateBarLines();
+}
+
+// Updates the barlines on the tab
+void Tablature::updateBarLines()
+{
+    BarLineManager::updateBarLines(staff->notes, columnLayout, 4, TAB_HEIGHT);
 }
 
 // Creates the scroll area for the tab
