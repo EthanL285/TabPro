@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="25.0.3">
   <diagram name="Page-1" id="ZHnEIwUeH1aHhkg0L1_h">
-    <mxGraphModel dx="2780" dy="2225" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1862" dy="1710" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -52,7 +52,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="61lvURAlY18TH1YNvSzT-312" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;endSize=10;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" target="61lvURAlY18TH1YNvSzT-282" edge="1" source="61lvURAlY18TH1YNvSzT-340">
+        <mxCell id="61lvURAlY18TH1YNvSzT-312" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;endSize=10;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="61lvURAlY18TH1YNvSzT-340" target="61lvURAlY18TH1YNvSzT-282" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="-165" y="710" as="sourcePoint" />
             <Array as="points">
@@ -61,15 +61,16 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="61lvURAlY18TH1YNvSzT-316" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=diamond;endFill=1;endSize=10;startSize=8;" parent="1" source="61lvURAlY18TH1YNvSzT-297" edge="1">
+        <mxCell id="61lvURAlY18TH1YNvSzT-316" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.336;entryY=0.996;entryDx=0;entryDy=0;endArrow=diamond;endFill=1;endSize=10;startSize=8;entryPerimeter=0;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="395" y="-220" as="targetPoint" />
+            <mxPoint x="394.66999999999996" y="-241" as="targetPoint" />
+            <mxPoint x="395.35" y="-120" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-297" value="&lt;p style=&quot;margin: 4px 0px 0px; text-align: center;&quot;&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin: 4px 0px 0px; text-align: center;&quot;&gt;&lt;b&gt;RhythmSymbol&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;&lt;i&gt;+ getBeatValue(): double&lt;/i&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
           <mxGeometry x="315" y="-120" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="uu0UymK6C3fd5Xmq3B1f-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;endSize=10;" edge="1" parent="1" source="61lvURAlY18TH1YNvSzT-304" target="61lvURAlY18TH1YNvSzT-297">
+        <mxCell id="uu0UymK6C3fd5Xmq3B1f-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;endSize=10;" parent="1" source="61lvURAlY18TH1YNvSzT-304" target="61lvURAlY18TH1YNvSzT-297" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="630" y="40" />
@@ -104,24 +105,24 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="uu0UymK6C3fd5Xmq3B1f-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;endFill=0;endSize=10;" edge="1" parent="1" source="61lvURAlY18TH1YNvSzT-315" target="uu0UymK6C3fd5Xmq3B1f-7">
+        <mxCell id="uu0UymK6C3fd5Xmq3B1f-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;endFill=0;endSize=10;" parent="1" source="61lvURAlY18TH1YNvSzT-315" target="uu0UymK6C3fd5Xmq3B1f-7" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="465" y="-490" />
-              <mxPoint x="714" y="-490" />
+              <mxPoint x="455" y="-530" />
+              <mxPoint x="704" y="-530" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="61lvURAlY18TH1YNvSzT-315" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b style=&quot;background-color: initial;&quot;&gt;Staff&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- INVALID_LINE: -999&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- LINE_COUNT: 5&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- LINE_SPACING: 15&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;- STAFF_SPACING: 7.5&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;- STAFF_HEIGHT: 28&lt;/p&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- menu: MenuBar*&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+ &lt;u&gt;notes: QVector&amp;lt;RhythmSymbol*&amp;gt;&lt;/u&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;br&gt;&lt;div&gt;&amp;nbsp;+ addNote(staffLines: QVector&amp;lt;int&amp;gt;, index: int, isChord: bool): void&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;br&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="280" y="-450" width="370" height="230" as="geometry" />
+        <mxCell id="61lvURAlY18TH1YNvSzT-315" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b style=&quot;background-color: initial;&quot;&gt;Staff&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- INVALID_LINE: -999&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- LINE_COUNT: 5&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- LINE_SPACING: 15&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;- STAFF_SPACING: 7.5&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;- STAFF_HEIGHT: 28&lt;/p&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- menu: MenuBar*&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;+ &lt;u&gt;notes: QVector&amp;lt;RhythmSymbol*&amp;gt;&lt;/u&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;br&gt;&lt;div&gt;&amp;nbsp;+ addNote(staffLines: QVector&amp;lt;int&amp;gt;, index: int, isChord: bool): void&lt;/div&gt;&lt;div&gt;&amp;nbsp;+ updateBarLines(): void&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;br&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="270" y="-490" width="370" height="250" as="geometry" />
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-324" value="&lt;b&gt;1&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="405" y="-220" width="20" height="30" as="geometry" />
+          <mxGeometry x="403.13" y="-240" width="20" height="30" as="geometry" />
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-325" value="&lt;b&gt;0..*&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="405" y="-150" width="30" height="30" as="geometry" />
+          <mxGeometry x="403.13" y="-150" width="30" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="uu0UymK6C3fd5Xmq3B1f-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=1;entryDx=0;entryDy=0;endArrow=diamond;endFill=1;endSize=10;" edge="1" parent="1" source="61lvURAlY18TH1YNvSzT-331">
+        <mxCell id="uu0UymK6C3fd5Xmq3B1f-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamond;endFill=1;endSize=10;" parent="1" source="61lvURAlY18TH1YNvSzT-331" edge="1" target="61lvURAlY18TH1YNvSzT-315">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="520" y="-220" as="targetPoint" />
             <Array as="points">
@@ -166,44 +167,44 @@
         <mxCell id="sgIyxewJTq29KD3pFsZS-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;endArrow=open;endFill=0;endSize=10;" parent="1" source="sgIyxewJTq29KD3pFsZS-2" target="61lvURAlY18TH1YNvSzT-315" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="730" y="-310" />
-              <mxPoint x="730" y="-310" />
+              <mxPoint x="720" y="-350" />
+              <mxPoint x="720" y="-350" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="uu0UymK6C3fd5Xmq3B1f-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=open;endFill=0;endSize=10;" edge="1" parent="1" source="sgIyxewJTq29KD3pFsZS-2" target="uu0UymK6C3fd5Xmq3B1f-7">
+        <mxCell id="uu0UymK6C3fd5Xmq3B1f-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=open;endFill=0;endSize=10;" parent="1" source="sgIyxewJTq29KD3pFsZS-2" target="uu0UymK6C3fd5Xmq3B1f-7" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="955" y="-490" />
-              <mxPoint x="714" y="-490" />
+              <mxPoint x="945" y="-530" />
+              <mxPoint x="704" y="-530" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="sgIyxewJTq29KD3pFsZS-2" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Tablature&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- TAB_HEIGHT: 92&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- tab: QVector&amp;lt;QPushButton*&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- selectedColumn: QPushButton*&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- staff: Staff*&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- BPM: int&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;br&gt;&lt;div&gt;&amp;nbsp;+ addFretNumber(): void&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="770" y="-420" width="370" height="200" as="geometry" />
+        <mxCell id="sgIyxewJTq29KD3pFsZS-2" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Tablature&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- TAB_HEIGHT: 92&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- tab: QVector&amp;lt;QPushButton*&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- selectedColumn: QPushButton*&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- staff: Staff*&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- BPM: int&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;br&gt;&lt;div&gt;&amp;nbsp;+ addFretNumber(): void&lt;/div&gt;&lt;div&gt;&amp;nbsp;+ updateBarLines(): void&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="760" y="-460" width="370" height="220" as="geometry" />
         </mxCell>
         <mxCell id="sgIyxewJTq29KD3pFsZS-4" value="&lt;b&gt;0..*&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="720" y="-150" width="30" height="30" as="geometry" />
         </mxCell>
         <mxCell id="sgIyxewJTq29KD3pFsZS-5" value="&lt;b&gt;1&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="960" y="-220" width="20" height="30" as="geometry" />
+          <mxGeometry x="964.38" y="-240" width="20" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="uu0UymK6C3fd5Xmq3B1f-3" value="&lt;b&gt;1&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="530" y="-220" width="20" height="30" as="geometry" />
+        <mxCell id="uu0UymK6C3fd5Xmq3B1f-3" value="&lt;b&gt;1&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="530" y="-240" width="20" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="uu0UymK6C3fd5Xmq3B1f-7" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;BarLineManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ &lt;u&gt;updateBarLines(notes: QVector&amp;lt;RhythmSymbol*&amp;gt;, layout: QBoxLayout*, signature: int, barHeight: int)&lt;/u&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ &lt;u&gt;addBarLine(index: int, barHeight: int, layout: QBoxLayout)&lt;/u&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" vertex="1" parent="1">
-          <mxGeometry x="433.12" y="-670" width="561.25" height="120" as="geometry" />
+        <mxCell id="uu0UymK6C3fd5Xmq3B1f-7" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;BarLineManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ &lt;u&gt;updateBarLines(notes: QVector&amp;lt;RhythmSymbol*&amp;gt;, layout: QBoxLayout*, signature: int, barHeight: int)&lt;/u&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="423.13" y="-700" width="561.25" height="110" as="geometry" />
         </mxCell>
-        <mxCell id="uu0UymK6C3fd5Xmq3B1f-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=open;endFill=0;endSize=10;" edge="1" parent="1" source="uu0UymK6C3fd5Xmq3B1f-13" target="61lvURAlY18TH1YNvSzT-304">
+        <mxCell id="uu0UymK6C3fd5Xmq3B1f-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=open;endFill=0;endSize=10;" parent="1" source="uu0UymK6C3fd5Xmq3B1f-13" target="61lvURAlY18TH1YNvSzT-304" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="uu0UymK6C3fd5Xmq3B1f-13" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;RestFactory&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;u&gt;&lt;br&gt;&lt;/u&gt;&lt;div&gt;&amp;nbsp;+ &lt;u&gt;createRest(beatValue: int)&lt;/u&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp;+ &lt;u&gt;createRest(type: NoteType)&lt;/u&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+        <mxCell id="uu0UymK6C3fd5Xmq3B1f-13" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;RestFactory&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;u&gt;&lt;br&gt;&lt;/u&gt;&lt;div&gt;&amp;nbsp;+ &lt;u&gt;createRest(beatValue: int)&lt;/u&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp;+ &lt;u&gt;createRest(type: NoteType)&lt;/u&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
           <mxGeometry x="890" y="70" width="180" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="uu0UymK6C3fd5Xmq3B1f-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endSize=10;endArrow=open;endFill=0;" edge="1" parent="1" source="uu0UymK6C3fd5Xmq3B1f-14" target="61lvURAlY18TH1YNvSzT-282">
+        <mxCell id="uu0UymK6C3fd5Xmq3B1f-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endSize=10;endArrow=open;endFill=0;" parent="1" source="uu0UymK6C3fd5Xmq3B1f-14" target="61lvURAlY18TH1YNvSzT-282" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="uu0UymK6C3fd5Xmq3B1f-14" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;NoteFactory&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;br&gt;&lt;div&gt;&amp;nbsp;+ &lt;u&gt;createNote(type: NoteType, staffLines: QVector&amp;lt;int&amp;gt;)&lt;/u&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+        <mxCell id="uu0UymK6C3fd5Xmq3B1f-14" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;NoteFactory&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;br&gt;&lt;div&gt;&amp;nbsp;+ &lt;u&gt;createNote(type: NoteType, staffLines: QVector&amp;lt;int&amp;gt;)&lt;/u&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
           <mxGeometry x="-380" y="205" width="310" height="110" as="geometry" />
         </mxCell>
       </root>
