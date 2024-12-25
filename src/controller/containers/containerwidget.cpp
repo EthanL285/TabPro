@@ -308,7 +308,7 @@ void ContainerWidget::createPlayingTechniqueButtons()
                 case 6: break;
                 case 7: tab->insertMutedHit(); break;
                 case 8: tab->insertVibrato(); break;
-                case 9: tab->insertRest(); break;
+                case 9: tab->insertRestAfter(); break;
                 case 10: tab->insertBarLine(); break;
                 case 11: tab->undo(); break;
                 case 12: tab->remove(); break;

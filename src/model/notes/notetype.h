@@ -10,3 +10,4 @@ enum class NoteType {
 };
 
 #endif // NOTETYPE_H
+

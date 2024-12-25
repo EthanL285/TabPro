@@ -8,12 +8,12 @@
 #include <QFrame>
 #include <QLabel>
 #include <QPainter>
+#include <cmath>
 
 #define DEFAULT_HEIGHT 185
 #define LINE_COUNT 5
 #define LINE_SPACING 15
 #define TIME_SIGNATURE 4
-#define STAFF_HEIGHT 28
 
 Staff::Staff(MenuBar *menu, QWidget *parent)
     : menu{menu}, QWidget{parent}
@@ -173,10 +173,8 @@ void Staff::updateHeight(int height, int line)
 void Staff::removeNote(int index)
 {
     // Remove note
-    QWidget *temp = notes[index];
-    notes.remove(index);
-    mainLayout->removeWidget(temp);
-    delete temp;
+    mainLayout->removeWidget(notes[index]);
+    delete notes.takeAt(index);
 
     // Update height
     int staffLine = lines[index];
@@ -203,8 +201,17 @@ void Staff::toggleChordMode()
     chordMode = !chordMode;
 }
 
+// Inserts a rest at the given index
+void Staff::insertRest(int index, double beat)
+{
+    Rest *rest = RestFactory::createRest(beat);
+    notes.insert(index, rest);
+    lines.insert(index, -1);
+    mainLayout->insertWidget(index + STAFF_OFFSET, rest);
+}
+
 // Replaces the note at the given index with a rest
-void Staff::addRest(int index)
+void Staff::replaceNoteWithRest(int index)
 {
     Note *note = dynamic_cast<Note*>(notes[index]);
     Rest *rest = RestFactory::createRest(note->getType());
@@ -230,7 +237,7 @@ void Staff::addRest(int index)
 // Updates the barlines on the staff
 void Staff::updateBarLines()
 {
-    int diff = BarLineManager::updateBarLines(notes, mainLayout, TIME_SIGNATURE, STAFF_HEIGHT);
+    int diff = BarLineManager::updateBarLines(notes, mainLayout, TIME_SIGNATURE, this);
 
     // Update staff length
     for (int i = 0; i < abs(diff); i++)
@@ -238,4 +245,3 @@ void Staff::updateBarLines()
         updateLineLength(diff >= 0);
     }
 }
-

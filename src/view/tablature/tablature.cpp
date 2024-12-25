@@ -281,6 +281,15 @@ void Tablature::getColumnInfo()
 // Adds a fret number to tab
 void Tablature::addFretNumber()
 {
+    // Add rest if note exceeds time signature
+    /*
+    if (staff->willExceedSignature())
+    {
+        staff->addRest(getSelectedColumnIndex());
+        addRest();
+        qDebug() << "Added Rest at: " << getSelectedColumnIndex();
+    } */
+
     // Retrieve string and fret number
     QPushButton *button = qobject_cast<QPushButton*>(sender());
     QStringList parts = button->objectName().split(" ");
@@ -370,11 +379,18 @@ void Tablature::addRest()
     QPushButton *rest = createRest();
     columnLayout->addWidget(rest);
     tab.push_back(rest);
+    staff->updateLineLength(true);
 
     // Set rest to selected column
     if (!chordMode) rest->setChecked(true);
+}
 
-    // Update note line length
+// Inserts a rest at the given index
+void Tablature::insertRest(int index)
+{
+    QPushButton *rest = createRest();
+    columnLayout->insertWidget(index + TAB_OFFSET, rest);
+    tab.insert(index, rest);
     staff->updateLineLength(true);
 }
 
@@ -461,7 +477,7 @@ void Tablature::changeTempoEdit(QLineEdit *field, QPushButton *increase, QPushBu
 }
 
 // Inserts rest after selected column
-void Tablature::insertRest()
+void Tablature::insertRestAfter()
 {
     if (selectedColumn == tab.last())
     {
@@ -472,7 +488,7 @@ void Tablature::insertRest()
         int index = getSelectedColumnIndex();
         QPushButton *rest = createRest();
         tab.insert(index + 1, rest);
-        columnLayout->insertWidget(index + 2, rest);
+        columnLayout->insertWidget(index + TAB_OFFSET, rest);
     }
 }
 
@@ -564,7 +580,7 @@ void Tablature::remove()
     else
     {
         selectedColumn->setText(EMPTY_COLUMN);
-        staff->addRest(index);
+        staff->replaceNoteWithRest(index);
     }
     // Update barlines
     updateBarLines();
@@ -574,7 +590,7 @@ void Tablature::remove()
 // Updates the barlines on the tab
 void Tablature::updateBarLines()
 {
-    BarLineManager::updateBarLines(staff->notes, columnLayout, 4, TAB_HEIGHT);
+    BarLineManager::updateBarLines(staff->notes, columnLayout, TIME_SIGNATURE, this);
 }
 
 // Creates the scroll area for the tab

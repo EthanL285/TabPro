@@ -12,7 +12,8 @@
 #include <QScrollArea>
 
 #define EMPTY_COLUMN "\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015"
-#define TAB_HEIGHT 92
+#define TIME_SIGNATURE 4
+#define TAB_OFFSET 1
 
 class Tablature : public QWidget
 {
@@ -23,6 +24,7 @@ public:
     QScrollArea *createScrollArea();
     QLabel *createNewTabLine();
     void addRest();
+    void insertRest(int index);
     void adjustScrollBarPosition(QPushButton *button, QString alignment);
     void addChord(QVector<int> chord);
     void toggleChordMode();
@@ -49,7 +51,7 @@ public slots:
     void insertRelease();
     void insertVibrato();
     void insertMutedHit();
-    void insertRest();
+    void insertRestAfter();
     void insertBarLine();
     void undo();
     void remove();

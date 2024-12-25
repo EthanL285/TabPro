@@ -9,6 +9,7 @@
 #include <QPixmap>
 
 #define UPDATE_LINE 11
+#define STAFF_OFFSET 1
 
 class Staff : public QWidget
 {
@@ -17,14 +18,17 @@ public:
     explicit Staff(MenuBar *menu, QWidget *parent = nullptr);
     void updateLineLength(bool add);
     void updateHeight(int height, int line);
+    void updateBarLines();
+
     QMap<int, QPair<int, int>> createStringMap();
     QMap<int, QString> createNoteMap();
     QPixmap getNotePixmap(QString note);
+
+    void insertRest(int index, double beat);
     void addNote(QVector<int> fretNumbers, int index, bool isChord = false);
+    void replaceNoteWithRest(int index);
     void removeNote(int index);
     void toggleChordMode();
-    void addRest(int index);
-    void updateBarLines();
 
     static QVector<RhythmSymbol*> notes;
     static constexpr int INVALID_LINE = -999;
@@ -35,15 +39,17 @@ protected:
 
 private:
     QHBoxLayout *mainLayout;
+
     int length = 95;
     int highestLine = UPDATE_LINE;
     bool chordMode = false;
+
     QString selectedNote = "crotchet";
     QMap<int, QString> noteMap;
     QMap<int, QPair<int, int>> stringMap;
 
     MenuBar *menu;
-    QVector<int> lines;
+    QVector<int> lines;    
 
 signals:
 

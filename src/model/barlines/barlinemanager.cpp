@@ -1,15 +1,28 @@
 #include "barlinemanager.h"
 #include "barline.h"
-#include "rest.h"
-#include "restfactory.h"
+
+#define STAFF_HEIGHT 28
+#define TAB_HEIGHT 92
 
 BarLineManager::BarLineManager(QWidget *parent)
     : QWidget{parent}
 {}
 
-// Updates the barlines of the given layout
-// Returns the difference between the number of old and new barlines
-int BarLineManager::updateBarLines(QVector<RhythmSymbol*> notes, QBoxLayout *layout, int signature, int barHeight)
+// Updates the barlines of the tab
+int BarLineManager::updateBarLines(const QVector<RhythmSymbol*> &notes, QBoxLayout *layout, int signature, Tablature *tab)
+{
+    return updateBarLines(notes, layout, signature, tab, nullptr);
+}
+
+// Updates the barlines of the staff
+int BarLineManager::updateBarLines(const QVector<RhythmSymbol*> &notes, QBoxLayout *layout, int signature, Staff *staff)
+{
+    return updateBarLines(notes, layout, signature, nullptr, staff);
+}
+
+// Updates the barlines of the given widget
+// Returns the difference between the old and new number of barlines in the layout
+int BarLineManager::updateBarLines(const QVector<RhythmSymbol*> &notes, QBoxLayout *layout, int signature, Tablature *tab, Staff *staff)
 {
     // Remove all barlines from layout
     int diff = 0;
@@ -31,22 +44,21 @@ int BarLineManager::updateBarLines(QVector<RhythmSymbol*> notes, QBoxLayout *lay
     {
         RhythmSymbol *symbol = dynamic_cast<RhythmSymbol*>(notes[i]);
         beats += symbol->getBeatValue();
+        if (beats > signature)
+        {
+            (tab ? tab->insertRest(i) : staff->insertRest(i, beats - signature));
+        }
         if (beats >= signature)
         {
             newBarlineIdx.append(i + 1);
             beats = 0;
         }
-        /*
-        else if (beats > signature)
-        {
-            Rest *rest = RestFactory::createRest(beats - signature);
-            qDebug() << "Beats has exceeded signature";
-        } */
     }
     // Add new barlines to layout
     int count = 1;
     for (int idx : newBarlineIdx)
     {
+        int barHeight = (tab) ? TAB_HEIGHT : STAFF_HEIGHT;
         layout->insertWidget(idx + count, new BarLine(barHeight));
         count++;
         diff++;

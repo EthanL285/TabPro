@@ -16,6 +16,7 @@ public:
     explicit MenuBar(QWidget *parent = nullptr);
     NoteType getSelectedNote();
     AccidentalType getSelectedAccidental();
+    static int getTimeSignature();
 
 private:
     QPushButton *createButton(QString text, int fontSize);
