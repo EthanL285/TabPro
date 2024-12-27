@@ -499,6 +499,12 @@
 			null
 		],
 		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/score/scoreupdater.h",
+			"MU",
+			"ZZJ3S7KMVJ/moc_scoreupdater.cpp",
+			null
+		],
+		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/sound/sound.h",
 			"MU",
 			"QGPU35UW2K/moc_sound.cpp",
@@ -520,12 +526,6 @@
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/barline.h",
 			"MU",
 			"K34KLYPH57/moc_barline.cpp",
-			null
-		],
-		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/barlinemanager.h",
-			"MU",
-			"K34KLYPH57/moc_barlinemanager.cpp",
 			null
 		],
 		[
@@ -723,6 +723,7 @@
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/sound",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/containers",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/user",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/score",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/chorddiagram",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/staff",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/tablature",
@@ -796,6 +797,11 @@
 			null
 		],
 		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/score/scoreupdater.cpp",
+			"MU",
+			null
+		],
+		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/sound/sound.cpp",
 			"MU",
 			null
@@ -817,11 +823,6 @@
 		],
 		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/barline.cpp",
-			"MU",
-			null
-		],
-		[
-			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/barlinemanager.cpp",
 			"MU",
 			null
 		],

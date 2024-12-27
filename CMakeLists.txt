@@ -41,6 +41,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/controller/sound/sound.h src/controller/sound/sound.cpp
         src/controller/user/usermodel.h src/controller/user/usermodel.cpp
         src/controller/containers/mainwidget.h src/controller/containers/mainwidget.cpp
+        src/controller/score/scoreupdater.h src/controller/score/scoreupdater.cpp
 
         src/view/menu/sidebar.h src/view/menu/sidebar.cpp
         src/view/menu/menubar.h src/view/menu/menubar.cpp
@@ -67,7 +68,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/model/rhythmsymbol.h
 
         src/model/barlines/barline.h src/model/barlines/barline.cpp
-        src/model/barlines/barlinemanager.h src/model/barlines/barlinemanager.cpp
         src/model/rests/restfactory.h src/model/rests/restfactory.cpp
         src/model/notes/notefactory.h src/model/notes/notefactory.cpp
 
@@ -106,6 +106,7 @@ target_include_directories(
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/controller/sound
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/controller/containers
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/controller/user
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/controller/score
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/chorddiagram
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/staff
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/tablature

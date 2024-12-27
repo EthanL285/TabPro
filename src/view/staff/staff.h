@@ -16,17 +16,18 @@ class Staff : public QWidget
     Q_OBJECT
 public:
     explicit Staff(MenuBar *menu, QWidget *parent = nullptr);
+    void updateStaff();
     void updateLineLength(bool add);
     void updateHeight(int height, int line);
-    void updateBarLines();
 
     QMap<int, QPair<int, int>> createStringMap();
     QMap<int, QString> createNoteMap();
     QPixmap getNotePixmap(QString note);
+    QVector<RhythmSymbol*> getMeasure(int index);
 
     void insertRest(int index, double beat);
     void addNote(QVector<int> fretNumbers, int index, bool isChord = false);
-    void replaceNoteWithRest(int index);
+    void replaceNote(int index, int line, RhythmSymbol *symbol);
     void removeNote(int index);
     void toggleChordMode();
 

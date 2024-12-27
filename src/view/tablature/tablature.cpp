@@ -1,5 +1,7 @@
 #include "tablature.h"
-#include "barlinemanager.h"
+#include "scoreupdater.h"
+#include "note.h"
+#include "restfactory.h"
 
 #include <QTimer>
 #include <QRegularExpression>
@@ -318,9 +320,9 @@ void Tablature::addFretNumber()
     selectedColumn->setText(tabColumn);
     staff->addNote(fretNumbers, getSelectedColumnIndex());
 
-    // Update barlines
-    updateBarLines();
-    staff->updateBarLines();
+    // Visually update tab and staff
+    updateTab();
+    staff->updateStaff();
 
     // Add rest if last column
     if (selectedColumn == tab.last()) addRest();
@@ -579,18 +581,20 @@ void Tablature::remove()
     // Non-empty column
     else
     {
+        Note *note = dynamic_cast<Note*>(staff->notes[index]);
+        Rest *rest = RestFactory::createRest(note->getType());
+        staff->replaceNote(index, -1, rest);
         selectedColumn->setText(EMPTY_COLUMN);
-        staff->replaceNoteWithRest(index);
     }
-    // Update barlines
-    updateBarLines();
-    staff->updateBarLines();
+    // Visually update tab and staff
+    updateTab();
+    staff->updateStaff();
 }
 
-// Updates the barlines on the tab
-void Tablature::updateBarLines()
+// Visually updates the tab
+void Tablature::updateTab()
 {
-    BarLineManager::updateBarLines(staff->notes, columnLayout, TIME_SIGNATURE, this);
+    ScoreUpdater::update(staff->notes, columnLayout, TIME_SIGNATURE, this);
 }
 
 // Creates the scroll area for the tab

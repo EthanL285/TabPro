@@ -1,14 +1,14 @@
 #include "staff.h"
 #include "blank.h"
 #include "rest.h"
-#include "barlinemanager.h"
+#include "scoreupdater.h"
 #include "notefactory.h"
 #include "restfactory.h"
+#include "barline.h"
 
 #include <QFrame>
 #include <QLabel>
 #include <QPainter>
-#include <cmath>
 
 #define DEFAULT_HEIGHT 185
 #define LINE_COUNT 5
@@ -144,10 +144,7 @@ void Staff::addNote(QVector<int> fretNumbers, int index, bool isChord)
 
     if (index != notes.size())
     {
-        removeNote(index);
-        notes.insert(index, note);
-        lines.insert(index, maxLine);
-        mainLayout->insertWidget(index + 1, note);
+        replaceNote(index, maxLine, note);
     }
     else
     {
@@ -210,38 +207,59 @@ void Staff::insertRest(int index, double beat)
     mainLayout->insertWidget(index + STAFF_OFFSET, rest);
 }
 
-// Replaces the note at the given index with a rest
-void Staff::replaceNoteWithRest(int index)
+// Replaces the note at the given index with a symbol
+void Staff::replaceNote(int index, int line, RhythmSymbol *symbol)
 {
-    Note *note = dynamic_cast<Note*>(notes[index]);
-    Rest *rest = RestFactory::createRest(note->getType());
+    // Different beat values
+    if (notes[index]->getBeatValue() != symbol->getBeatValue())
+    {
+        QVector<RhythmSymbol*> measure = getMeasure(index);
+        // do something
+    }
+    // Add symbol
     removeNote(index);
+    notes.insert(index, symbol);
+    lines.insert(index, line);
 
-    notes.insert(index, rest);
-    lines.insert(index, -1);
-
-    // Add rest to layout
+    // Add symbol to layout
     int count = 0;
     for (int i = 1; i < mainLayout->count() + 1; i++)
     {
         if (count == index)
         {
-            mainLayout->insertWidget(i, rest);
+            mainLayout->insertWidget(i, symbol);
             break;
         }
         QWidget *widget = mainLayout->itemAt(i)->widget();
         if (dynamic_cast<RhythmSymbol*>(widget)) count++;
     }
+
 }
 
-// Updates the barlines on the staff
-void Staff::updateBarLines()
+// Returns the notes within the measure that contains the given index
+QVector<RhythmSymbol*> Staff::getMeasure(int index)
 {
-    int diff = BarLineManager::updateBarLines(notes, mainLayout, TIME_SIGNATURE, this);
+    QVector<RhythmSymbol*> measure;
 
-    // Update staff length
-    for (int i = 0; i < abs(diff); i++)
+    // Collect the current note and notes after until the next barline
+    for (int i = index + STAFF_OFFSET; i < mainLayout->count(); i++)
     {
-        updateLineLength(diff >= 0);
+        QWidget *widget = mainLayout->itemAt(i)->widget();
+        if (dynamic_cast<BarLine*>(widget)) break;
+        measure.append(dynamic_cast<RhythmSymbol*>(widget));
     }
+    // Collect notes before the current note until the previous barline
+    for (int i = index + STAFF_OFFSET - 1; i >= 0; i--)
+    {
+        QWidget *widget = mainLayout->itemAt(i)->widget();
+        if (dynamic_cast<BarLine*>(widget)) break;
+        measure.prepend(dynamic_cast<RhythmSymbol*>(widget));
+    }
+    return measure;
+}
+
+// Visually updates the staff
+void Staff::updateStaff()
+{
+    ScoreUpdater::update(notes, mainLayout, TIME_SIGNATURE, this);
 }

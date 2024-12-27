@@ -23,12 +23,12 @@ public:
     QPushButton *createRest();
     QScrollArea *createScrollArea();
     QLabel *createNewTabLine();
+    void updateTab();
+    void addChord(QVector<int> chord);
     void addRest();
     void insertRest(int index);
     void adjustScrollBarPosition(QPushButton *button, QString alignment);
-    void addChord(QVector<int> chord);
     void toggleChordMode();
-    void updateBarLines();
 
 public slots:
     int getSelectedColumnIndex();

@@ -1193,6 +1193,8 @@ TabPro_autogen/timestamp: \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/containers/containerwidget.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/containers/mainwidget.cpp \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/containers/mainwidget.h \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/score/scoreupdater.cpp \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/score/scoreupdater.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/sound/sound.cpp \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/sound/sound.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/controller/user/usermodel.cpp \
@@ -1203,8 +1205,6 @@ TabPro_autogen/timestamp: \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/accidentals/accidentaltype.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/barline.cpp \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/barline.h \
-	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/barlinemanager.cpp \
-	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/barlines/barlinemanager.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/blank.cpp \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/blank.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes/crotchet.cpp \
