@@ -213,8 +213,18 @@ void Staff::replaceNote(int index, int line, RhythmSymbol *symbol)
     // Different beat values
     if (notes[index]->getBeatValue() != symbol->getBeatValue())
     {
-        QVector<RhythmSymbol*> measure = getMeasure(index);
-        // do something
+        // Get measure info
+        QPair<QVector<RhythmSymbol*>, int> info = getMeasureInfo(index);
+        QVector<RhythmSymbol*> measure = info.first;
+        int idx = info.second;
+        measure[idx] = symbol;
+
+        // Measure exceeded
+        if (exceedsMeasure(measure))
+        {
+            // Remove all notes after the replacing note
+            // Insert filler note according to the missing beat value
+        }
     }
     // Add symbol
     removeNote(index);
@@ -236,26 +246,49 @@ void Staff::replaceNote(int index, int line, RhythmSymbol *symbol)
 
 }
 
-// Returns the notes within the measure that contains the given index
-QVector<RhythmSymbol*> Staff::getMeasure(int index)
+// Returns all notes within the measure that contains the given index
+// and the note's index within that measure
+QPair<QVector<RhythmSymbol*>, int> Staff::getMeasureInfo(int index)
 {
+    int measureIdx = 0;
     QVector<RhythmSymbol*> measure;
 
-    // Collect the current note and notes after until the next barline
-    for (int i = index + STAFF_OFFSET; i < mainLayout->count(); i++)
+    // Count number of barlines before measure
+    int count = 0;
+    for (int i = 0; i < index + count; i++)
+    {
+        QWidget *widget = mainLayout->itemAt(i + STAFF_OFFSET)->widget();
+        if (dynamic_cast<BarLine*>(widget)) count++;
+    }
+    int offset = STAFF_OFFSET + count;
+
+    // Collect the notes after the current note until the next barline
+    for (int i = index + offset; i < mainLayout->count(); i++)
     {
         QWidget *widget = mainLayout->itemAt(i)->widget();
         if (dynamic_cast<BarLine*>(widget)) break;
         measure.append(dynamic_cast<RhythmSymbol*>(widget));
     }
     // Collect notes before the current note until the previous barline
-    for (int i = index + STAFF_OFFSET - 1; i >= 0; i--)
+    for (int i = index + offset - 1; i > 0; i--)
     {
         QWidget *widget = mainLayout->itemAt(i)->widget();
         if (dynamic_cast<BarLine*>(widget)) break;
         measure.prepend(dynamic_cast<RhythmSymbol*>(widget));
+        measureIdx++;
     }
-    return measure;
+    return QPair<QVector<RhythmSymbol*>, int>(measure, measureIdx);
+}
+
+// Checks if the total duration of the measure exceeds the time signature
+bool Staff::exceedsMeasure(QVector<RhythmSymbol*> measure)
+{
+    double beats = 0;
+    for (int i = 0; i < measure.size(); i++)
+    {
+        beats += measure[i]->getBeatValue();
+    }
+    return beats > TIME_SIGNATURE;
 }
 
 // Visually updates the staff

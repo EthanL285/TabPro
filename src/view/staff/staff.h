@@ -23,13 +23,14 @@ public:
     QMap<int, QPair<int, int>> createStringMap();
     QMap<int, QString> createNoteMap();
     QPixmap getNotePixmap(QString note);
-    QVector<RhythmSymbol*> getMeasure(int index);
+    QPair<QVector<RhythmSymbol*>, int> getMeasureInfo(int index);
 
     void insertRest(int index, double beat);
     void addNote(QVector<int> fretNumbers, int index, bool isChord = false);
     void replaceNote(int index, int line, RhythmSymbol *symbol);
     void removeNote(int index);
     void toggleChordMode();
+    bool exceedsMeasure(QVector<RhythmSymbol*> measure);
 
     static QVector<RhythmSymbol*> notes;
     static constexpr int INVALID_LINE = -999;
