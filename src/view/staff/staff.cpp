@@ -5,6 +5,7 @@
 #include "notefactory.h"
 #include "restfactory.h"
 #include "barline.h"
+#include "tablature.h"
 
 #include <QFrame>
 #include <QLabel>
@@ -15,8 +16,8 @@
 #define LINE_SPACING 15
 #define TIME_SIGNATURE 4
 
-Staff::Staff(MenuBar *menu, QWidget *parent)
-    : menu{menu}, QWidget{parent}
+Staff::Staff(MenuBar *menu, Tablature *tab, QWidget *parent)
+    : menu{menu}, tab{tab}, QWidget{parent}
 {
     setFixedHeight(DEFAULT_HEIGHT);
     mainLayout = new QHBoxLayout(this);
@@ -37,6 +38,12 @@ Staff::Staff(MenuBar *menu, QWidget *parent)
 
     stringMap = createStringMap();
     noteMap = createNoteMap();
+}
+
+// Setter for tab
+void Staff::setTab(Tablature *tab)
+{
+    this->tab = tab;
 }
 
 // Define static member
@@ -166,6 +173,21 @@ void Staff::updateHeight(int height, int line)
     highestLine = line;
 }
 
+// Toggles chord mode
+void Staff::toggleChordMode()
+{
+    chordMode = !chordMode;
+}
+
+// Inserts a rest at the given index
+void Staff::insertRest(int index, double beat)
+{
+    Rest *rest = RestFactory::createRest(beat);
+    notes.insert(index, rest);
+    lines.insert(index, -1);
+    mainLayout->insertWidget(index + STAFF_OFFSET, rest);
+}
+
 // Removes the note at the given index
 void Staff::removeNote(int index)
 {
@@ -192,19 +214,25 @@ void Staff::removeNote(int index)
     }
 }
 
-// Toggles chord mode
-void Staff::toggleChordMode()
+// Inserts the given note at the specified index
+void Staff::insertNote(int index, int line, RhythmSymbol *symbol)
 {
-    chordMode = !chordMode;
-}
+    qDebug() << "Inserting " << symbol;
+    notes.insert(index, symbol);
+    lines.insert(index, line);
 
-// Inserts a rest at the given index
-void Staff::insertRest(int index, double beat)
-{
-    Rest *rest = RestFactory::createRest(beat);
-    notes.insert(index, rest);
-    lines.insert(index, -1);
-    mainLayout->insertWidget(index + STAFF_OFFSET, rest);
+    // Add note to layout
+    int count = 0;
+    for (int i = 1; i < mainLayout->count() + 1; i++)
+    {
+        if (count == index)
+        {
+            mainLayout->insertWidget(i, symbol);
+            break;
+        }
+        QWidget *widget = mainLayout->itemAt(i)->widget();
+        if (dynamic_cast<RhythmSymbol*>(widget)) count++;
+    }
 }
 
 // Replaces the note at the given index with a symbol
@@ -222,28 +250,50 @@ void Staff::replaceNote(int index, int line, RhythmSymbol *symbol)
         // Measure exceeded
         if (exceedsMeasure(measure))
         {
-            // Remove all notes after the replacing note
-            // Insert filler note according to the missing beat value
+            qDebug() << "Exceeds Measure!";
+
+            // Remove subsequent notes until measure is not exceeded
+            int count = 1;
+            for (int i = idx + 1; i < measure.size(); i++)
+            {
+                if (exceedsMeasure(measure))
+                {
+                    tab->removeColumn(index + count);
+                    removeNote(index + count);
+                    measure.remove(i);
+                    count++;
+                    i--;
+                }
+            }
+            // Beats is less than time signature
+            double beats = getBeats(measure);
+            if (beats < TIME_SIGNATURE)
+            {
+                // Append rest to fill measure
+                Rest *rest = RestFactory::createRest(TIME_SIGNATURE - beats);
+                insertNote(index + 1, -1, rest);
+                tab->insertRest(index + 1);
+            }
+            // Edge Case: Deleting subsequent notes still exceeds measure - Not allowed to replace
+            // Testing: [Q,Q, C, Q, Q, C]
         }
     }
-    // Add symbol
+    // Replace note
     removeNote(index);
-    notes.insert(index, symbol);
-    lines.insert(index, line);
+    insertNote(index, line, symbol);
 
-    // Add symbol to layout
-    int count = 0;
-    for (int i = 1; i < mainLayout->count() + 1; i++)
+    qDebug() << "New Notes: " << notes;
+}
+
+// Returns the total beats in the given measure
+double Staff::getBeats(QVector<RhythmSymbol*> measure)
+{
+    double beats = 0;
+    for (RhythmSymbol *symbol : measure)
     {
-        if (count == index)
-        {
-            mainLayout->insertWidget(i, symbol);
-            break;
-        }
-        QWidget *widget = mainLayout->itemAt(i)->widget();
-        if (dynamic_cast<RhythmSymbol*>(widget)) count++;
+        beats += symbol->getBeatValue();
     }
-
+    return beats;
 }
 
 // Returns all notes within the measure that contains the given index

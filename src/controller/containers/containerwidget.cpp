@@ -40,7 +40,7 @@ ContainerWidget::ContainerWidget(MenuBar *menu, QWidget *parent)
     viewArea->addLayout(noteLayout);
 
     // Staff
-    Staff *staff = new Staff(menu, this);
+    Staff *staff = new Staff(menu, nullptr, this);
     noteLayout->addWidget(staff);
 
     // Tab Layout (includes both tablature and playback)
@@ -58,6 +58,7 @@ ContainerWidget::ContainerWidget(MenuBar *menu, QWidget *parent)
     tab->setContentsMargins(28, 0, 28, 0);
     tabLayout->addWidget(tab);
     createPlaybackButtons();
+    staff->setTab(tab);
 
     // Interface layout (Includes everything below tab)
     QVBoxLayout *interfaceLayout = new QVBoxLayout();

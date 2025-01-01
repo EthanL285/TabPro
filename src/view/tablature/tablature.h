@@ -29,6 +29,7 @@ public:
     void insertRest(int index);
     void adjustScrollBarPosition(QPushButton *button, QString alignment);
     void toggleChordMode();
+    void removeColumn(int index);
 
 public slots:
     int getSelectedColumnIndex();

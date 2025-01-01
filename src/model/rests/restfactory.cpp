@@ -20,6 +20,7 @@ Rest *RestFactory::createRest(double beatValue)
         case 4:
             return new HalfRest();    // 2 beat value
         default:
+            qCritical() << "Invalid beat value (" << beatValue << ") passed to RestFactory";
             return nullptr;
     }
 }
@@ -40,6 +41,7 @@ Rest *RestFactory::createRest(NoteType type)
         case NoteType::Semiquaver:
             return new EighthRest();
         default:
+            qCritical() << "Invalid note type passed to RestFactory";
             return nullptr;
     }
 }

@@ -22,6 +22,7 @@ Note *NoteFactory::createNote(NoteType type, QVector<int> staffLines)
         case NoteType::Semiquaver:
             return new Quaver(staffLines);
         default:
+            qCritical() << "Invalid note type passed to NoteFactory";
             return nullptr;
     }
 }

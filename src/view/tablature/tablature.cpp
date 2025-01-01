@@ -591,6 +591,16 @@ void Tablature::remove()
     staff->updateStaff();
 }
 
+// Removes the column at the given index
+void Tablature::removeColumn(int index)
+{
+    QPushButton *temp = tab[index];
+    columnLayout->removeWidget(temp);
+    tab.remove(index);
+    delete temp;
+    staff->updateLineLength(false);
+}
+
 // Visually updates the tab
 void Tablature::updateTab()
 {
@@ -681,7 +691,6 @@ QScrollArea *Tablature::createScrollArea()
 
     return scrollArea;
 }
-
 
 /*
     "E|------------------------|\n"
