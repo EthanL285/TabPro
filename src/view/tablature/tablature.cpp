@@ -391,9 +391,21 @@ void Tablature::addRest()
 void Tablature::insertRest(int index)
 {
     QPushButton *rest = createRest();
-    columnLayout->insertWidget(index + TAB_OFFSET, rest);
     tab.insert(index, rest);
     staff->updateLineLength(true);
+
+    // Add rest to layout
+    int count = 0;
+    for (int i = 1; i < columnLayout->count() + 1; i++)
+    {
+        if (count == index)
+        {
+            columnLayout->insertWidget(i, rest);
+            break;
+        }
+        QWidget *widget = columnLayout->itemAt(i)->widget();
+        if (dynamic_cast<QPushButton*>(widget)) count++;
+    }
 }
 
 // Selects the tab column
@@ -538,45 +550,21 @@ void Tablature::undo()
 // Removes the notes of a column or the column itself if empty
 void Tablature::remove()
 {
-    QPushButton *temp = selectedColumn;
     int index = getSelectedColumnIndex();
 
-    // Selected column is the last column in the tab
+    // Empty tab
+    if (tab.size() <= 1) return;
+
+    // Selected column is the last column
     if (selectedColumn == tab.last())
     {
-        // Empty column
-        if (tab.size() > 1 && tab[index - 1]->text() == EMPTY_COLUMN)
-        {
-            tab[index - 1]->setChecked(true);
-            tab.remove(index);
-            columnLayout->removeWidget(temp);
-            delete temp;
-
-            staff->updateLineLength(false);
-            staff->removeNote(index - 1);
-        }
-        // Non-Empty column
-        else if (tab.size() > 1)
-        {
-            tab[index - 1]->setText(EMPTY_COLUMN);
-            tab[index - 1]->setChecked(true);
-            tab.remove(index);
-            delete temp;
-
-            staff->updateLineLength(false);
-            staff->removeNote(index - 1);
-        }
+        removeColumn(index - 1, true);
     }
     // Empty column
     else if (selectedColumn->text() == EMPTY_COLUMN)
     {
         tab[index + 1]->setChecked(true);
-        tab.remove(index);
-        columnLayout->removeWidget(temp);
-        delete temp;
-
-        staff->updateLineLength(false);
-        staff->removeNote(index);
+        removeColumn(index, true);
     }
     // Non-empty column
     else
@@ -592,13 +580,17 @@ void Tablature::remove()
 }
 
 // Removes the column at the given index
-void Tablature::removeColumn(int index)
+void Tablature::removeColumn(int index, bool emitSignal)
 {
+    // Remove column
     QPushButton *temp = tab[index];
     columnLayout->removeWidget(temp);
     tab.remove(index);
     delete temp;
     staff->updateLineLength(false);
+
+    // Emit signal to staff
+    if (emitSignal) emit columnRemoved(index);
 }
 
 // Visually updates the tab
@@ -690,6 +682,20 @@ QScrollArea *Tablature::createScrollArea()
     });
 
     return scrollArea;
+}
+
+///////////////////////// SLOTS /////////////////////////
+
+// Slot for column removal
+void Tablature::onColumnRemoved(int index)
+{
+    removeColumn(index, false);
+}
+
+// Slot for rest insertion
+void Tablature::onRestInsertion(int index)
+{
+    insertRest(index);
 }
 
 /*

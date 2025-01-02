@@ -17,8 +17,7 @@ class Staff : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Staff(MenuBar *menu, Tablature *tab, QWidget *parent = nullptr);
-    void setTab(Tablature *tab);
+    explicit Staff(MenuBar *menu, QWidget *parent = nullptr);
     void updateStaff();
     void updateLineLength(bool add);
     void updateHeight(int height, int line);
@@ -27,10 +26,11 @@ public:
     QMap<int, QString> createNoteMap();
     QPixmap getNotePixmap(QString note);
 
-    void insertRest(int index, double beat);
+    void insertRest(int index, double beat, bool emitSignal);
     void addNote(QVector<int> fretNumbers, int index, bool isChord = false);
+    void addNoteToLayout(int index, RhythmSymbol *symbol);
+    void removeNote(int index, bool emitSignal);
     void replaceNote(int index, int line, RhythmSymbol *symbol);
-    void removeNote(int index);
     void insertNote(int index, int line, RhythmSymbol *symbol);
     void toggleChordMode();
 
@@ -61,7 +61,11 @@ private:
     Tablature *tab;
 
 signals:
+    void noteRemoved(int index);
+    void restInserted(int index);
 
+public slots:
+    void onNoteRemoved(int index);
 };
 
 #endif // STAFF_H

@@ -40,7 +40,7 @@ ContainerWidget::ContainerWidget(MenuBar *menu, QWidget *parent)
     viewArea->addLayout(noteLayout);
 
     // Staff
-    Staff *staff = new Staff(menu, nullptr, this);
+    Staff *staff = new Staff(menu, this);
     noteLayout->addWidget(staff);
 
     // Tab Layout (includes both tablature and playback)
@@ -58,7 +58,6 @@ ContainerWidget::ContainerWidget(MenuBar *menu, QWidget *parent)
     tab->setContentsMargins(28, 0, 28, 0);
     tabLayout->addWidget(tab);
     createPlaybackButtons();
-    staff->setTab(tab);
 
     // Interface layout (Includes everything below tab)
     QVBoxLayout *interfaceLayout = new QVBoxLayout();
@@ -127,6 +126,11 @@ ContainerWidget::ContainerWidget(MenuBar *menu, QWidget *parent)
     // Add chord section
     ChordWindow *chords = new ChordWindow(this);
     bottomLayout->addWidget(chords);
+
+    // Connect signals and slots between tab and staff
+    connect(staff, &Staff::noteRemoved, tab, &Tablature::onColumnRemoved);
+    connect(tab, &Tablature::columnRemoved, staff, &Staff::onNoteRemoved);
+    connect(staff, &Staff::restInserted, tab, &Tablature::onRestInsertion);
 }
 
 // Creates buttons for playback

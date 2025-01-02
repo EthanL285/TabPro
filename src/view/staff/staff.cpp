@@ -5,7 +5,6 @@
 #include "notefactory.h"
 #include "restfactory.h"
 #include "barline.h"
-#include "tablature.h"
 
 #include <QFrame>
 #include <QLabel>
@@ -16,8 +15,8 @@
 #define LINE_SPACING 15
 #define TIME_SIGNATURE 4
 
-Staff::Staff(MenuBar *menu, Tablature *tab, QWidget *parent)
-    : menu{menu}, tab{tab}, QWidget{parent}
+Staff::Staff(MenuBar *menu, QWidget *parent)
+    : menu{menu}, QWidget{parent}
 {
     setFixedHeight(DEFAULT_HEIGHT);
     mainLayout = new QHBoxLayout(this);
@@ -38,12 +37,6 @@ Staff::Staff(MenuBar *menu, Tablature *tab, QWidget *parent)
 
     stringMap = createStringMap();
     noteMap = createNoteMap();
-}
-
-// Setter for tab
-void Staff::setTab(Tablature *tab)
-{
-    this->tab = tab;
 }
 
 // Define static member
@@ -180,16 +173,27 @@ void Staff::toggleChordMode()
 }
 
 // Inserts a rest at the given index
-void Staff::insertRest(int index, double beat)
+void Staff::insertRest(int index, double beat, bool emitSignal)
 {
     Rest *rest = RestFactory::createRest(beat);
     notes.insert(index, rest);
     lines.insert(index, -1);
-    mainLayout->insertWidget(index + STAFF_OFFSET, rest);
+    addNoteToLayout(index, rest);
+
+    // Emit signal to tab
+    if (emitSignal) emit restInserted(index);
+}
+
+// Inserts the given note at the specified index
+void Staff::insertNote(int index, int line, RhythmSymbol *symbol)
+{
+    notes.insert(index, symbol);
+    lines.insert(index, line);
+    addNoteToLayout(index, symbol);
 }
 
 // Removes the note at the given index
-void Staff::removeNote(int index)
+void Staff::removeNote(int index, bool emitSignal)
 {
     // Remove note
     mainLayout->removeWidget(notes[index]);
@@ -212,16 +216,14 @@ void Staff::removeNote(int index)
         int line = (secondMax > UPDATE_LINE) ? secondMax : UPDATE_LINE;
         updateHeight(newHeight, line);
     }
+    // Emit signal to tablature
+    if (emitSignal) emit noteRemoved(index);
 }
 
-// Inserts the given note at the specified index
-void Staff::insertNote(int index, int line, RhythmSymbol *symbol)
+// Adds the note to the layout at the given index
+void Staff::addNoteToLayout(int index, RhythmSymbol *symbol)
 {
-    qDebug() << "Inserting " << symbol;
-    notes.insert(index, symbol);
-    lines.insert(index, line);
-
-    // Add note to layout
+    // Exclude bar lines from index
     int count = 0;
     for (int i = 1; i < mainLayout->count() + 1; i++)
     {
@@ -258,31 +260,25 @@ void Staff::replaceNote(int index, int line, RhythmSymbol *symbol)
             {
                 if (exceedsMeasure(measure))
                 {
-                    tab->removeColumn(index + count);
-                    removeNote(index + count);
+                    removeNote(index + count, true);
                     measure.remove(i);
                     count++;
                     i--;
                 }
             }
-            // Beats is less than time signature
             double beats = getBeats(measure);
+            // Append rest to fill measure
             if (beats < TIME_SIGNATURE)
             {
-                // Append rest to fill measure
-                Rest *rest = RestFactory::createRest(TIME_SIGNATURE - beats);
-                insertNote(index + 1, -1, rest);
-                tab->insertRest(index + 1);
+                insertRest(index + 1, TIME_SIGNATURE - beats, true);
             }
             // Edge Case: Deleting subsequent notes still exceeds measure - Not allowed to replace
             // Testing: [Q,Q, C, Q, Q, C]
         }
     }
     // Replace note
-    removeNote(index);
+    removeNote(index, false);
     insertNote(index, line, symbol);
-
-    qDebug() << "New Notes: " << notes;
 }
 
 // Returns the total beats in the given measure
@@ -305,12 +301,15 @@ QPair<QVector<RhythmSymbol*>, int> Staff::getMeasureInfo(int index)
 
     // Count number of barlines before measure
     int count = 0;
-    for (int i = 0; i < index + count; i++)
+    for (int i = 0; i < index + count + STAFF_OFFSET; i++)
     {
         QWidget *widget = mainLayout->itemAt(i + STAFF_OFFSET)->widget();
         if (dynamic_cast<BarLine*>(widget)) count++;
     }
     int offset = STAFF_OFFSET + count;
+
+    qDebug() << "GETTING Measure Info: Idx: " << index << "Offset: " << STAFF_OFFSET << " + " << count;
+
 
     // Collect the notes after the current note until the next barline
     for (int i = index + offset; i < mainLayout->count(); i++)
@@ -346,3 +345,13 @@ void Staff::updateStaff()
 {
     ScoreUpdater::update(notes, mainLayout, TIME_SIGNATURE, this);
 }
+
+///////////////////////// SLOTS /////////////////////////
+
+// Slot for note removal
+void Staff::onNoteRemoved(int index)
+{
+    removeNote(index, false);
+}
+
+

@@ -29,7 +29,7 @@ public:
     void insertRest(int index);
     void adjustScrollBarPosition(QPushButton *button, QString alignment);
     void toggleChordMode();
-    void removeColumn(int index);
+    void removeColumn(int index, bool emitSignal);
 
 public slots:
     int getSelectedColumnIndex();
@@ -59,6 +59,13 @@ public slots:
 
 private slots:
     void selectColumn(bool checked);
+
+public slots:
+    void onColumnRemoved(int index);
+    void onRestInsertion(int index);
+
+signals:
+    void columnRemoved(int index);
 
 private:
     QHBoxLayout *columnLayout;

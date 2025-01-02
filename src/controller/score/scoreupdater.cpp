@@ -45,7 +45,7 @@ void ScoreUpdater::updateBarLines(const QVector<RhythmSymbol*> &notes, QBoxLayou
         beats += symbol->getBeatValue();
         if (beats > signature)
         {
-            (tab ? tab->insertRest(i) : staff->insertRest(i, beats - signature));
+            (tab ? tab->insertRest(i) : staff->insertRest(i, beats - signature, false));
         }
         if (beats >= signature)
         {
