@@ -39,8 +39,11 @@ Staff::Staff(MenuBar *menu, QWidget *parent)
     noteMap = createNoteMap();
 }
 
-// Define static member
-QVector<RhythmSymbol*> Staff::notes;
+// Getter for notes
+QVector<RhythmSymbol*> Staff::getNotes()
+{
+    return notes;
+}
 
 // Creates the staff
 void Staff::paintEvent(QPaintEvent *event)
@@ -307,9 +310,6 @@ QPair<QVector<RhythmSymbol*>, int> Staff::getMeasureInfo(int index)
         if (dynamic_cast<BarLine*>(widget)) count++;
     }
     int offset = STAFF_OFFSET + count;
-
-    qDebug() << "GETTING Measure Info: Idx: " << index << "Offset: " << STAFF_OFFSET << " + " << count;
-
 
     // Collect the notes after the current note until the next barline
     for (int i = index + offset; i < mainLayout->count(); i++)

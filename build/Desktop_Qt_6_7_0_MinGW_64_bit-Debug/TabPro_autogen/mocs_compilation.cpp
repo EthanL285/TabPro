@@ -29,3 +29,5 @@
 #include "JGIE6HG6ZU/moc_registerui.cpp"
 #include "JGIE6HG6ZU/moc_transitions.cpp"
 #include "JGIE6HG6ZU/moc_uiwidgets.cpp"
+#include "KRHXW7JQHD/moc_tabprocontroller.cpp"
+#include "DMSA4VCXOE/moc_teststaff.cpp"

@@ -40,7 +40,7 @@ ContainerWidget::ContainerWidget(MenuBar *menu, QWidget *parent)
     viewArea->addLayout(noteLayout);
 
     // Staff
-    Staff *staff = new Staff(menu, this);
+    staff = new Staff(menu, this);
     noteLayout->addWidget(staff);
 
     // Tab Layout (includes both tablature and playback)
@@ -276,7 +276,8 @@ void ContainerWidget::createPlayingTechniqueButtons()
             continue;
         }
 
-        QPushButton *button = new QPushButton(QString("%1").arg(symbols[col]));
+        QPushButton *button = new QPushButton(symbols[col]);
+        button->setObjectName(symbols[col]);
         button->setToolTip(name[col]);
         button->setFixedSize(40, 40);
         button->setCursor(Qt::PointingHandCursor);
@@ -456,10 +457,10 @@ QWidget *ContainerWidget::createTempoButton()
 // Creates buttons that serve as frets
 void ContainerWidget::createFretButtons()
 {
-    QGridLayout *fretButtonLayout = new QGridLayout();
-    fretButtonLayout->setHorizontalSpacing(7);
-    fretButtonLayout->setContentsMargins(7, 12, 7, 12);
-    guitarLayout->addLayout(fretButtonLayout);
+    fretLayout = new QGridLayout();
+    fretLayout->setHorizontalSpacing(7);
+    fretLayout->setContentsMargins(7, 12, 7, 12);
+    guitarLayout->addLayout(fretLayout);
 
     for (int row = 0; row < 6; ++row)
     {
@@ -484,7 +485,7 @@ void ContainerWidget::createFretButtons()
                 "   background-color: rgb(25,25,25);"
                 "}"
             );
-            fretButtonLayout->addWidget(button, row, col);
+            fretLayout->addWidget(button, row, col);
             connect(button, &QPushButton::clicked, tab, &Tablature::addFretNumber);
             connect(button, &QPushButton::clicked, this, [=]()
             {
@@ -635,6 +636,36 @@ QScrollArea *ContainerWidget::createScrollArea()
     );
     return scrollArea;
 }
+
+//////////////////// TESTING FUCNTIONS ///////////////////////
+
+// Returns the fret button at the given row and column index
+QPushButton *ContainerWidget::getFretButton(int row, int col)
+{
+    QLayoutItem *item = fretLayout->itemAtPosition(row, col);
+    return qobject_cast<QPushButton*>(item->widget());
+}
+
+// Returns the note button from the menu corresponding to the given type
+QPushButton *ContainerWidget::getSelectedNoteButton(NoteType type)
+{
+    return menu->getNoteButton(type);
+}
+
+// Returns the technique button corresponding to the given symbol
+QPushButton *ContainerWidget::getTechniqueButton(QString symbol)
+{
+    return playingTechniques->findChild<QPushButton*>(symbol);
+}
+
+// Returns a vector of all the notes on the staff
+QVector<RhythmSymbol*> ContainerWidget::getNotes()
+{
+    return staff->getNotes();
+}
+
+//////////////////// RECTANGLE CLASS ///////////////////////
+
 
 Rectangle::Rectangle(int width, int height, QWidget *parent)
     : QWidget(parent), width(width), height(height)

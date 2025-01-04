@@ -569,7 +569,7 @@ void Tablature::remove()
     // Non-empty column
     else
     {
-        Note *note = dynamic_cast<Note*>(staff->notes[index]);
+        Note *note = dynamic_cast<Note*>(staff->getNotes()[index]);
         Rest *rest = RestFactory::createRest(note->getType());
         staff->replaceNote(index, -1, rest);
         selectedColumn->setText(EMPTY_COLUMN);
@@ -596,7 +596,7 @@ void Tablature::removeColumn(int index, bool emitSignal)
 // Visually updates the tab
 void Tablature::updateTab()
 {
-    ScoreUpdater::update(staff->notes, columnLayout, TIME_SIGNATURE, this);
+    ScoreUpdater::update(staff->getNotes(), columnLayout, TIME_SIGNATURE, this);
 }
 
 // Creates the scroll area for the tab

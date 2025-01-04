@@ -11,8 +11,6 @@
 #define UPDATE_LINE 11
 #define STAFF_OFFSET 1
 
-class Tablature;
-
 class Staff : public QWidget
 {
     Q_OBJECT
@@ -24,7 +22,7 @@ public:
 
     QMap<int, QPair<int, int>> createStringMap();
     QMap<int, QString> createNoteMap();
-    QPixmap getNotePixmap(QString note);
+    QVector<RhythmSymbol*> getNotes();
 
     void insertRest(int index, double beat, bool emitSignal);
     void addNote(QVector<int> fretNumbers, int index, bool isChord = false);
@@ -38,7 +36,6 @@ public:
     bool exceedsMeasure(QVector<RhythmSymbol*> measure);
     double getBeats(QVector<RhythmSymbol*> measure);
 
-    static QVector<RhythmSymbol*> notes;
     static constexpr int INVALID_LINE = -999;
     static constexpr double STAFF_SPACING = 7.5;
 
@@ -58,7 +55,7 @@ private:
 
     MenuBar *menu;
     QVector<int> lines;
-    Tablature *tab;
+    QVector<RhythmSymbol*> notes;
 
 signals:
     void noteRemoved(int index);

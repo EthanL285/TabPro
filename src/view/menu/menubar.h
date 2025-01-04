@@ -18,10 +18,14 @@ public:
     AccidentalType getSelectedAccidental();
     static int getTimeSignature();
 
+    // Testing Functions
+    QPushButton *getNoteButton(NoteType note);
+
 private:
     QPushButton *createButton(QString text, int fontSize);
     QHBoxLayout *createDivider();
 
+    QWidget *bottomWidget;
     QMenuBar *menuBar;
     QMenu *fileMenu;
     QPair<NoteType, QPushButton*> selectedNote;

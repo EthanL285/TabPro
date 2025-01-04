@@ -16,6 +16,7 @@ find_package(Qt6 REQUIRED COMPONENTS Network)
 find_package(Qt6 REQUIRED COMPONENTS NetworkAuth)
 find_package(Qt6 REQUIRED COMPONENTS HttpServer)
 find_package(Qt6 REQUIRED COMPONENTS Multimedia)
+find_package(Qt6 REQUIRED COMPONENTS Test)
 
 set(PROJECT_SOURCES
         src/main.cpp
@@ -71,6 +72,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/model/rests/restfactory.h src/model/rests/restfactory.cpp
         src/model/notes/notefactory.h src/model/notes/notefactory.cpp
 
+        tests/view/staff/teststaff.h tests/view/staff/teststaff.cpp
+        tests/tabprocontroller.h tests/tabprocontroller.cpp
+
 
 
 
@@ -100,6 +104,8 @@ target_link_libraries(TabPro PRIVATE Qt6::Network)
 target_link_libraries(TabPro PRIVATE Qt6::NetworkAuth)
 target_link_libraries(TabPro PRIVATE Qt6::HttpServer)
 target_link_libraries(TabPro PRIVATE Qt6::Multimedia)
+target_link_libraries(TabPro PRIVATE Qt6::Test)
+
 target_include_directories(
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src
@@ -118,6 +124,9 @@ target_include_directories(
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/rests
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/barlines
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/resources/chords
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/tests
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/tests/view/staff
+
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

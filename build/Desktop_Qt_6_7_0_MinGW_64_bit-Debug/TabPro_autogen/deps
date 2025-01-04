@@ -1,11 +1,14 @@
 TabPro_autogen/timestamp: \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QDeadlineTimer \
+	C:/Qt/6.7.0/mingw_64/include/QtCore/QDebug \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QEvent \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QFlags \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QHash \
+	C:/Qt/6.7.0/mingw_64/include/QtCore/QIODevice \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QList \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QMap \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QMargins \
+	C:/Qt/6.7.0/mingw_64/include/QtCore/QMetaEnum \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QMetaType \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QMutex \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QObject \
@@ -13,12 +16,14 @@ TabPro_autogen/timestamp: \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QPropertyAnimation \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QRect \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QScopedPointer \
+	C:/Qt/6.7.0/mingw_64/include/QtCore/QSharedDataPointer \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QSize \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QSizeF \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QString \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QStringList \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QThread \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QTimer \
+	C:/Qt/6.7.0/mingw_64/include/QtCore/QUrl \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QVariant \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QVector \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/QtCore \
@@ -239,6 +244,7 @@ TabPro_autogen/timestamp: \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/qtemporarydir.h \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/qtemporaryfile.h \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/qtenvironmentvariables.h \
+	C:/Qt/6.7.0/mingw_64/include/QtCore/qtestsupport_core.h \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/qtextboundaryfinder.h \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/qtextstream.h \
 	C:/Qt/6.7.0/mingw_64/include/QtCore/qthread.h \
@@ -389,6 +395,7 @@ TabPro_autogen/timestamp: \
 	C:/Qt/6.7.0/mingw_64/include/QtGui/qsurface.h \
 	C:/Qt/6.7.0/mingw_64/include/QtGui/qsurfaceformat.h \
 	C:/Qt/6.7.0/mingw_64/include/QtGui/qsyntaxhighlighter.h \
+	C:/Qt/6.7.0/mingw_64/include/QtGui/qtestsupport_gui.h \
 	C:/Qt/6.7.0/mingw_64/include/QtGui/qtextcursor.h \
 	C:/Qt/6.7.0/mingw_64/include/QtGui/qtextdocument.h \
 	C:/Qt/6.7.0/mingw_64/include/QtGui/qtextdocumentfragment.h \
@@ -425,12 +432,25 @@ TabPro_autogen/timestamp: \
 	C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtmultimedia-config.h \
 	C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtmultimediaexports.h \
 	C:/Qt/6.7.0/mingw_64/include/QtMultimedia/qtmultimediaglobal.h \
+	C:/Qt/6.7.0/mingw_64/include/QtNetwork/QHostAddress \
+	C:/Qt/6.7.0/mingw_64/include/QtNetwork/QNetworkAccessManager \
+	C:/Qt/6.7.0/mingw_64/include/QtNetwork/QNetworkCookie \
+	C:/Qt/6.7.0/mingw_64/include/QtNetwork/QNetworkReply \
+	C:/Qt/6.7.0/mingw_64/include/QtNetwork/QNetworkRequest \
+	C:/Qt/6.7.0/mingw_64/include/QtNetwork/QSslConfiguration \
+	C:/Qt/6.7.0/mingw_64/include/QtNetwork/QSslPreSharedKeyAuthenticator \
 	C:/Qt/6.7.0/mingw_64/include/QtNetwork/QSslSocket \
 	C:/Qt/6.7.0/mingw_64/include/QtNetwork/qabstractsocket.h \
 	C:/Qt/6.7.0/mingw_64/include/QtNetwork/qhostaddress.h \
+	C:/Qt/6.7.0/mingw_64/include/QtNetwork/qnetworkaccessmanager.h \
+	C:/Qt/6.7.0/mingw_64/include/QtNetwork/qnetworkcookie.h \
+	C:/Qt/6.7.0/mingw_64/include/QtNetwork/qnetworkreply.h \
+	C:/Qt/6.7.0/mingw_64/include/QtNetwork/qnetworkrequest.h \
 	C:/Qt/6.7.0/mingw_64/include/QtNetwork/qssl.h \
 	C:/Qt/6.7.0/mingw_64/include/QtNetwork/qsslcertificate.h \
+	C:/Qt/6.7.0/mingw_64/include/QtNetwork/qsslconfiguration.h \
 	C:/Qt/6.7.0/mingw_64/include/QtNetwork/qsslerror.h \
+	C:/Qt/6.7.0/mingw_64/include/QtNetwork/qsslpresharedkeyauthenticator.h \
 	C:/Qt/6.7.0/mingw_64/include/QtNetwork/qsslsocket.h \
 	C:/Qt/6.7.0/mingw_64/include/QtNetwork/qtcpsocket.h \
 	C:/Qt/6.7.0/mingw_64/include/QtNetwork/qtnetwork-config.h \
@@ -455,6 +475,25 @@ TabPro_autogen/timestamp: \
 	C:/Qt/6.7.0/mingw_64/include/QtSql/qtsqlexports.h \
 	C:/Qt/6.7.0/mingw_64/include/QtSql/qtsqlglobal.h \
 	C:/Qt/6.7.0/mingw_64/include/QtSql/qtsqlversion.h \
+	C:/Qt/6.7.0/mingw_64/include/QtTest/QTest \
+	C:/Qt/6.7.0/mingw_64/include/QtTest/qbenchmark.h \
+	C:/Qt/6.7.0/mingw_64/include/QtTest/qbenchmarkmetric.h \
+	C:/Qt/6.7.0/mingw_64/include/QtTest/qtest.h \
+	C:/Qt/6.7.0/mingw_64/include/QtTest/qtest_gui.h \
+	C:/Qt/6.7.0/mingw_64/include/QtTest/qtest_network.h \
+	C:/Qt/6.7.0/mingw_64/include/QtTest/qtest_widgets.h \
+	C:/Qt/6.7.0/mingw_64/include/QtTest/qtestassert.h \
+	C:/Qt/6.7.0/mingw_64/include/QtTest/qtestcase.h \
+	C:/Qt/6.7.0/mingw_64/include/QtTest/qtestdata.h \
+	C:/Qt/6.7.0/mingw_64/include/QtTest/qtestevent.h \
+	C:/Qt/6.7.0/mingw_64/include/QtTest/qtestkeyboard.h \
+	C:/Qt/6.7.0/mingw_64/include/QtTest/qtestmouse.h \
+	C:/Qt/6.7.0/mingw_64/include/QtTest/qtestspontaneevent.h \
+	C:/Qt/6.7.0/mingw_64/include/QtTest/qtestsystem.h \
+	C:/Qt/6.7.0/mingw_64/include/QtTest/qtesttouch.h \
+	C:/Qt/6.7.0/mingw_64/include/QtTest/qttestexports.h \
+	C:/Qt/6.7.0/mingw_64/include/QtTest/qttestglobal.h \
+	C:/Qt/6.7.0/mingw_64/include/QtTest/qttestlib-config.h \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/QBoxLayout \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/QCheckBox \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/QComboBox \
@@ -471,6 +510,7 @@ TabPro_autogen/timestamp: \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/QPushButton \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/QScrollArea \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/QScrollerProperties \
+	C:/Qt/6.7.0/mingw_64/include/QtWidgets/QSizePolicy \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/QStackedWidget \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/QVBoxLayout \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/QWidget \
@@ -582,6 +622,7 @@ TabPro_autogen/timestamp: \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/qtableview.h \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/qtablewidget.h \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/qtabwidget.h \
+	C:/Qt/6.7.0/mingw_64/include/QtWidgets/qtestsupport_widgets.h \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/qtextbrowser.h \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/qtextedit.h \
 	C:/Qt/6.7.0/mingw_64/include/QtWidgets/qtoolbar.h \
@@ -790,6 +831,14 @@ TabPro_autogen/timestamp: \
 	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Sql/Qt6SqlTargets-relwithdebinfo.cmake \
 	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Sql/Qt6SqlTargets.cmake \
 	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Sql/Qt6SqlVersionlessTargets.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Test/Qt6TestAdditionalTargetInfo.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Test/Qt6TestConfig.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Test/Qt6TestConfigVersion.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Test/Qt6TestConfigVersionImpl.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Test/Qt6TestDependencies.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Test/Qt6TestTargets-relwithdebinfo.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Test/Qt6TestTargets.cmake \
+	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6Test/Qt6TestVersionlessTargets.cmake \
 	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6WebSockets/Qt6WebSocketsAdditionalTargetInfo.cmake \
 	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6WebSockets/Qt6WebSocketsConfig.cmake \
 	C:/Qt/6.7.0/mingw_64/lib/cmake/Qt6WebSockets/Qt6WebSocketsConfigVersion.cmake \
@@ -1256,4 +1305,8 @@ TabPro_autogen/timestamp: \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user/transitions.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user/uiwidgets.cpp \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user/uiwidgets.h \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/tests/tabprocontroller.cpp \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/tests/tabprocontroller.h \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/tests/view/staff/teststaff.cpp \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/tests/view/staff/teststaff.h \
 	C:/Qt/Tools/CMake_64/bin/cmake.exe

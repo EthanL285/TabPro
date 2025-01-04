@@ -22,6 +22,12 @@ public:
     QWidget *createTempoButton();
     QScrollArea *createScrollArea();
 
+    // Testing Functions
+    QPushButton *getFretButton(int row, int col);
+    QPushButton *getSelectedNoteButton(NoteType type);
+    QPushButton *getTechniqueButton(QString symbol);
+    QVector<RhythmSymbol*> getNotes();
+
     // Chord Window Functions
     void addChord(QVector<int> chord);
     void toggleChordMode();
@@ -30,12 +36,15 @@ signals:
 
 private:
     MenuBar *menu;
-    QWidget *rectangle;
-    QHBoxLayout *guitarLayout;
+    QWidget *rectangle;   
     QWidget *playingTechniques;
+    Staff *staff;
     Tablature *tab;
-    QVBoxLayout *tabLayout;
     Sound *sound;
+
+    QHBoxLayout *guitarLayout;
+    QVBoxLayout *tabLayout;
+    QGridLayout *fretLayout;
 };
 
 // Class for drawing rectangle

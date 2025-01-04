@@ -20,7 +20,7 @@ MenuBar::MenuBar(QWidget *parent)
     mainLayout->addWidget(menuBar);
 
     // Create bottom widget
-    QWidget *bottomWidget = new QWidget();
+    bottomWidget = new QWidget();
     bottomWidget->setFixedHeight(40);
     bottomWidget->setStyleSheet("background-color: rgb(23,23,23); border-bottom: 1px solid rgb(18,18,18);");
     mainLayout->addWidget(bottomWidget);
@@ -60,6 +60,7 @@ MenuBar::MenuBar(QWidget *parent)
     for (QMap<QString, NoteType>::iterator it = notes.begin(); it != notes.end(); ++it)
     {
         QPushButton *noteButton = createButton(it.key(), 30);
+        noteButton->setObjectName(it.key());
         connect(noteButton, &QPushButton::clicked, this, &MenuBar::clickNote);
         bottomLayout->addWidget(noteButton);
 
@@ -148,5 +149,18 @@ void MenuBar::clickAccidental()
     }
     selectedAccidental = qMakePair(accidentals[senderButton->text()], senderButton);
     senderButton->setChecked(true);
+}
+
+// Returns the note button corresponding to the given type
+QPushButton *MenuBar::getNoteButton(NoteType type)
+{
+    for (auto it = notes.begin(); it != notes.end(); it++)
+    {
+        if (it.value() == type)
+        {
+            return bottomWidget->findChild<QPushButton*>(it.key());
+        }
+    }
+    return nullptr;
 }
 
