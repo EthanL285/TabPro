@@ -67,6 +67,12 @@ Tablature::Tablature(Sound *sound, Staff *staff, QWidget *parent)
      */
 }
 
+// Returns the layout item at the given index
+QWidget *Tablature::getLayoutItem(int index)
+{
+    return columnLayout->itemAt(index + TAB_OFFSET)->widget();
+}
+
 // Creates new tab line with strings
 QLabel *Tablature::createNewTabLine()
 {

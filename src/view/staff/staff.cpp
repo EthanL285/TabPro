@@ -45,6 +45,12 @@ QVector<RhythmSymbol*> Staff::getNotes()
     return notes;
 }
 
+// Returns the layout item at the given index
+QWidget *Staff::getLayoutItem(int index)
+{
+    return mainLayout->itemAt(index + STAFF_OFFSET)->widget();
+}
+
 // Creates the staff
 void Staff::paintEvent(QPaintEvent *event)
 {

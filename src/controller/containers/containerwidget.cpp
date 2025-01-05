@@ -143,6 +143,7 @@ void ContainerWidget::createPlaybackButtons()
 
     // Go left button
     QPushButton *left = new QPushButton();
+    left->setObjectName("left");
     left->setFixedSize(26, 26);
     left->setCursor(Qt::PointingHandCursor);
     left->setToolTip("Move selection to the left");
@@ -166,6 +167,7 @@ void ContainerWidget::createPlaybackButtons()
 
     // Play button
     QPushButton *play = new QPushButton();
+    play->setObjectName("play");
     play->setCheckable(true);
     play->setFixedSize(31, 31);
     play->setCursor(Qt::PointingHandCursor);
@@ -196,6 +198,7 @@ void ContainerWidget::createPlaybackButtons()
 
     // Go right button
     QPushButton *right = new QPushButton();
+    right->setObjectName("right");
     right->setFixedSize(26, 26);
     right->setCursor(Qt::PointingHandCursor);
     right->setToolTip("Move selection to the right");
@@ -652,16 +655,28 @@ QPushButton *ContainerWidget::getSelectedNoteButton(NoteType type)
     return menu->getNoteButton(type);
 }
 
-// Returns the technique button corresponding to the given symbol
-QPushButton *ContainerWidget::getTechniqueButton(QString symbol)
+// Returns the button that corresponds to the given name
+QPushButton *ContainerWidget::getUIButton(QString buttonName)
 {
-    return playingTechniques->findChild<QPushButton*>(symbol);
+    return findChild<QPushButton*>(buttonName);
 }
 
 // Returns a vector of all the notes on the staff
 QVector<RhythmSymbol*> ContainerWidget::getNotes()
 {
     return staff->getNotes();
+}
+
+// Returns the tab layout item at the given index
+QWidget *ContainerWidget::getTabItem(int index)
+{
+    return tab->getLayoutItem(index);
+}
+
+// Returns the staff layout item at the given index
+QWidget *ContainerWidget::getStaffItem(int index)
+{
+    return staff->getLayoutItem(index);
 }
 
 //////////////////// RECTANGLE CLASS ///////////////////////

@@ -23,9 +23,11 @@ public:
     QScrollArea *createScrollArea();
 
     // Testing Functions
+    QWidget *getTabItem(int index);
+    QWidget *getStaffItem(int index);
     QPushButton *getFretButton(int row, int col);
     QPushButton *getSelectedNoteButton(NoteType type);
-    QPushButton *getTechniqueButton(QString symbol);
+    QPushButton *getUIButton(QString buttonName);
     QVector<RhythmSymbol*> getNotes();
 
     // Chord Window Functions

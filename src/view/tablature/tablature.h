@@ -20,6 +20,7 @@ class Tablature : public QWidget
     Q_OBJECT
 public:
     explicit Tablature(Sound *sound, Staff *staff, QWidget *parent = nullptr);
+    QWidget *getLayoutItem(int index);
     QPushButton *createRest();
     QScrollArea *createScrollArea();
     QLabel *createNewTabLine();

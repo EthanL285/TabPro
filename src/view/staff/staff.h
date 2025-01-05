@@ -16,13 +16,16 @@ class Staff : public QWidget
     Q_OBJECT
 public:
     explicit Staff(MenuBar *menu, QWidget *parent = nullptr);
+
+    QVector<RhythmSymbol*> getNotes();
+    QWidget *getLayoutItem(int index);
+
     void updateStaff();
     void updateLineLength(bool add);
     void updateHeight(int height, int line);
 
     QMap<int, QPair<int, int>> createStringMap();
     QMap<int, QString> createNoteMap();
-    QVector<RhythmSymbol*> getNotes();
 
     void insertRest(int index, double beat, bool emitSignal);
     void addNote(QVector<int> fretNumbers, int index, bool isChord = false);
