@@ -5,7 +5,7 @@ An all-in-one, cross-platform GUI application designed as a comprehensive editor
 ## Key Features
 - **Real-Time Playback:** Experience seamless, dynamic playback with adjustable tempo control to suit your needs
 - **User-Friendly Interface:** Enjoy a clean, organised, and easy-to-navigate interface that simplifies writing and editing guitar tablature.
-- **Chord Selection & Customization:** Choose from a wide range of pre-built chords, or create and add your own custom chords to bring more variety to your compositions.
+- **Chord Customisation:** Choose from a wide range of pre-built chords, or create and add your own custom chords to bring more variety to your compositions.
 - **Intuitive Note Editing:** Easily edit notes with an intuitive system that lets you focus on your music rather than on technical details.
 - **Diverse Playing Techniques:** Add techniques like hammer-ons, bends, and slides to your tablature to capture the nuances of your playing style.
 
