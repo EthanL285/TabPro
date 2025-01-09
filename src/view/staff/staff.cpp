@@ -51,6 +51,12 @@ QWidget *Staff::getLayoutItem(int index)
     return mainLayout->itemAt(index + STAFF_OFFSET)->widget();
 }
 
+// Returns the size of the layout
+int Staff::getLayoutSize()
+{
+    return mainLayout->count();
+}
+
 // Creates the staff
 void Staff::paintEvent(QPaintEvent *event)
 {

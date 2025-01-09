@@ -667,6 +667,12 @@ QVector<RhythmSymbol*> ContainerWidget::getNotes()
     return staff->getNotes();
 }
 
+// Returns the measure at the given index
+QVector<RhythmSymbol*> ContainerWidget::getMeasure(int index)
+{
+    return staff->getMeasureInfo(index).first;
+}
+
 // Returns the tab layout item at the given index
 QWidget *ContainerWidget::getTabItem(int index)
 {
@@ -677,6 +683,12 @@ QWidget *ContainerWidget::getTabItem(int index)
 QWidget *ContainerWidget::getStaffItem(int index)
 {
     return staff->getLayoutItem(index);
+}
+
+// Returns the size of the layout
+int ContainerWidget::getLayoutSize()
+{
+    return staff->getLayoutSize();
 }
 
 //////////////////// RECTANGLE CLASS ///////////////////////

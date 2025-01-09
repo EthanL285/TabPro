@@ -17,6 +17,7 @@ public:
     ~TabProController();
 
     QVector<RhythmSymbol*> getNotes();
+    QVector<RhythmSymbol*> getMeasure(int index);
     QWidget *getStaffItem(int index);
     QWidget *getTabItem(int index);
 

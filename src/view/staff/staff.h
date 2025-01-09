@@ -19,6 +19,7 @@ public:
 
     QVector<RhythmSymbol*> getNotes();
     QWidget *getLayoutItem(int index);
+    int getLayoutSize();
 
     void updateStaff();
     void updateLineLength(bool add);

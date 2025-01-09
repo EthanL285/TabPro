@@ -1,10 +1,5 @@
 #include "teststaff.h"
 #include "tabprocontroller.h"
-#include "crotchet.h"
-#include "quaver.h"
-#include "quarterrest.h"
-#include "eighthrest.h"
-#include "barline.h"
 
 TestStaff::TestStaff(QObject *parent)
     : QObject{parent}
@@ -16,20 +11,12 @@ void TestStaff::testAddNote()
     // [C, C]
     TabProController *controller = new TabProController();
     controller->createTab("2:C");
-
-    QVector<RhythmSymbol*> notes = controller->getNotes();
-    QCOMPARE(notes.size(), 2);
-    QVERIFY(qobject_cast<Crotchet*>(notes[0]) != nullptr);
-    QVERIFY(qobject_cast<Crotchet*>(notes[1]) != nullptr);
+    controller->verifyTab("2:C");
 
     // [C, C, Q, Q]
     controller->changeSelectedNote(NoteType::Quaver);
     controller->addNote(0, 0, 2);
-
-    notes = controller->getNotes();
-    QCOMPARE(notes.size(), 4);
-    QVERIFY(qobject_cast<Quaver*>(notes[2]) != nullptr);
-    QVERIFY(qobject_cast<Quaver*>(notes[3]) != nullptr);
+    controller->verifyTab("2:C,2:Q");
 
     delete controller;
 }
@@ -43,23 +30,14 @@ void TestStaff::testRemoveNote()
 
     // [C, C, Q]
     controller->removeNote(1);
-    QVector<RhythmSymbol*> notes = controller->getNotes();
-    QCOMPARE(notes.size(), 3);
-    QVERIFY(qobject_cast<Crotchet*>(notes[0]) != nullptr);
-    QVERIFY(qobject_cast<Crotchet*>(notes[1]) != nullptr);
-    QVERIFY(qobject_cast<Quaver*>(notes[2]) != nullptr);
+    controller->verifyTab("2:C,1:Q");
 
     // [C, CR, QR]
     controller->moveLeft(1);
     controller->removeNote(1);
     controller->moveLeft(1);
     controller->removeNote(1);
-
-    notes = controller->getNotes();
-    QCOMPARE(notes.size(), 3);
-    QVERIFY(qobject_cast<Crotchet*>(notes[0]) != nullptr);
-    QVERIFY(qobject_cast<QuarterRest*>(notes[1]) != nullptr);
-    QVERIFY(qobject_cast<EighthRest*>(notes[2]) != nullptr);
+    controller->verifyTab("1:C,1:CR,1:QR");
 
     delete controller;
 }
@@ -70,10 +48,7 @@ void TestStaff::testBarLineBasic()
     // [C, C, C, C | Q, Q, Q, Q, Q, Q, Q, Q | Q, Q, C, C, Q, Q |]
     TabProController *controller = new TabProController();
     controller->createTab("4:C,8:Q,2:Q,2:C,2:Q");
-
-    QVERIFY(qobject_cast<BarLine*>(controller->getStaffItem(4)) != nullptr);
-    QVERIFY(qobject_cast<BarLine*>(controller->getStaffItem(13)) != nullptr);
-    QVERIFY(qobject_cast<BarLine*>(controller->getStaffItem(20)) != nullptr);
+    controller->verifyTab("4:C|8:Q|2:Q,2:C,2:Q|");
 
     delete controller;
 }
@@ -84,18 +59,12 @@ void TestStaff::testBarLineComplex()
     // [C, C, C, Q, - | C, C, C, C | Q, Q, C, C, C |]
     TabProController *controller = new TabProController();
     controller->createTab("3:C,1:Q,4:C,2:Q,3:C");
-
-    QVERIFY(qobject_cast<BarLine*>(controller->getStaffItem(5)) != nullptr);
-    QVERIFY(qobject_cast<BarLine*>(controller->getStaffItem(10)) != nullptr);
-    QVERIFY(qobject_cast<BarLine*>(controller->getStaffItem(16)) != nullptr);
-    QVERIFY(qobject_cast<EighthRest*>(controller->getStaffItem(4)) != nullptr);
+    controller->verifyTab("3:C,1:Q,1:QR|4:C|2:Q,3:C|");
 
     // [C, C, C, Q, - | C, C, C, Q, Q, | C, C, C]
     controller->moveLeft(6);
     controller->removeNote(2);
-
-    QVERIFY(qobject_cast<BarLine*>(controller->getStaffItem(5)) != nullptr);
-    QVERIFY(qobject_cast<BarLine*>(controller->getStaffItem(11)) != nullptr);
+    controller->verifyTab("3:C,1:Q,1:QR|3:C,2:Q|3:C");
 
     delete controller;
 }
@@ -107,18 +76,14 @@ void TestStaff::testNoteReplacementBasic()
     TabProController *controller = new TabProController();
     controller->createTab("2:C,2:Q");
 
-    // [C, Q, Q, C]
+    // [C, /Q, Q, C]
     controller->moveLeft(1);
     controller->changeSelectedNote(NoteType::Crotchet);
     controller->addNote(0, 0, 1);
     controller->moveLeft(2);
     controller->changeSelectedNote(NoteType::Quaver);
     controller->addNote(0, 0, 1);
-
-    QVector<RhythmSymbol*> notes = controller->getNotes();
-    QCOMPARE(notes.size(), 4);
-    QVERIFY(qobject_cast<Quaver*>(notes[1]) != nullptr);
-    QVERIFY(qobject_cast<Crotchet*>(notes[3]) != nullptr);
+    controller->verifyTab("1:C,2:Q,1:C");
 
     delete controller;
 }
@@ -130,25 +95,26 @@ void TestStaff::testNoteReplacementExceedsMeasure()
     TabProController *controller = new TabProController();
     controller->createTab("2:Q,1:C,2:Q,1:C");
 
-    // [Q, Q, C, Q, /(C), C |] -> [Q, Q, C, Q, C, QR |]
+    // [Q, Q, C, Q, /C, C |] -> [Q, Q, C, Q, C, QR |]
     controller->moveLeft(2);
     controller->addNote(0, 0, 1);
-
-    QVERIFY(qobject_cast<Quaver*>(controller->getStaffItem(0)) != nullptr);
-    QVERIFY(qobject_cast<Quaver*>(controller->getStaffItem(1)) != nullptr);
-    QVERIFY(qobject_cast<Crotchet*>(controller->getStaffItem(2)) != nullptr);
-    QVERIFY(qobject_cast<Quaver*>(controller->getStaffItem(3)) != nullptr);
-    QVERIFY(qobject_cast<Crotchet*>(controller->getStaffItem(4)) != nullptr);
-    QVERIFY(qobject_cast<EighthRest*>(controller->getStaffItem(5)) != nullptr);
+    controller->verifyTab("2:Q,1:C,1:Q,1:C,1:QR|");
 
     delete controller;
 }
 
+// TODO: Fix cases where verify tab has a barline in the wrong place
+
 /* LEGEND
+ *
  * C = Crotchet
  * Q = Quaver
+ *
+ * CR = Quarter Rest
+ * QR = Eighth Rest
+ *
  * - = Left empty
- * /(x) = Replaced with x
+ * /x = Replaced with x
  * -> = Equivalent to
  *
  */

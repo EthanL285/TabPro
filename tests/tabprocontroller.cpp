@@ -2,6 +2,8 @@
 
 #include <QTest>
 
+#define TIME_SIGNATURE 4
+
 TabProController::TabProController(QObject *parent)
     : QObject{parent}
 {
@@ -32,23 +34,59 @@ void TabProController::createTab(QString tab)
 }
 
 // Compares the actual tab against a comma-separated string representing the expected tab
-// Example input: "4:C,|,8:Q|"
+// Example input: "4:C|8:Q|"
 // - 1st measure consists of 4 Crotchets
 // - 2nd measure consists of 8 Quavers
 void TabProController::verifyTab(QString expectedTab)
 {
-    // TODO: Find a way to include bar lines
-    QVector<RhythmSymbol*> notes = getNotes();
+    int idx = 0;
+    int currMeasure = 0;
+    int tabSize = widget->getLayoutSize() - 1;
+    bool endsWithBarline = expectedTab.endsWith("|");
 
-    QStringList pairs = expectedTab.split(",");
-    for (const QString &pair : pairs)
+    QMap<QString, QString> map =
     {
-        // Extract note type and amount
-        QStringList parts = pair.split(":");
-        NoteType type = stringToNoteType(parts[1].trimmed());
-        int amount = parts[0].toInt();
+        {"C", "Crotchet"},
+        {"Q", "Quaver"},
+        {"CR", "QuarterRest"},
+        {"QR", "EighthRest"}
+    };
+    // Parse string
+    QStringList measures = expectedTab.split("|");
+    if (endsWithBarline) measures.removeLast();
 
+    for (const QString &measure : measures)
+    {
+        int measureIdx = 0;
+        QVector<RhythmSymbol*> measureNotes = widget->getMeasure(idx);
+
+        QStringList pairs = measure.split(",");
+        for (const QString &pair : pairs)
+        {
+            // Extract note type and amount
+            QStringList parts = pair.split(":");
+            QString type = parts[1].trimmed();
+            int amount = parts[0].toInt();
+
+            // Check notes
+            for (int i = 0; i < amount; i++)
+            {
+                QVERIFY(idx < tabSize);
+                QCOMPARE(measureNotes[measureIdx]->metaObject()->className(), map[type]);
+                idx++;
+                measureIdx++;
+            }
+        }
+        // Last measure
+        currMeasure++;
+        if (currMeasure == measures.size() && !endsWithBarline) break;
+
+        // Check barline
+        QCOMPARE(getStaffItem(idx)->metaObject()->className(), "BarLine");
+        idx++;
     }
+    // Expected tab length matches actual tab length
+    QCOMPARE(idx, tabSize);
 }
 
 // Returns a vector of all the notes on the staff
