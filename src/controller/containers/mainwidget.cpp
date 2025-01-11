@@ -12,12 +12,8 @@ MainWidget::MainWidget(MainWindow *parent)
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(50);
 
-    // Menu bar
-    MenuBar *menu = new MenuBar();
-    mainWindow->setMenuWidget(menu);
-
     // Container widget
-    container = new ContainerWidget(menu, this);
+    container = new ContainerWidget(mainWindow, this);
     mainLayout->addWidget(container, Qt::AlignHCenter);
 }
 

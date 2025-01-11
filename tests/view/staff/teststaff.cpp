@@ -91,7 +91,7 @@ void TestStaff::testNoteReplacementBasic()
 // Test for note replacement exceeding measure
 void TestStaff::testNoteReplacementExceedsMeasure()
 {
-    // [Q, Q, C, Q, Q, C |]
+    // CASE 1: [Q, Q, C, Q, Q, C |]
     TabProController *controller = new TabProController();
     controller->createTab("2:Q,1:C,2:Q,1:C");
 
@@ -101,9 +101,42 @@ void TestStaff::testNoteReplacementExceedsMeasure()
     controller->verifyTab("2:Q,1:C,1:Q,1:C,1:QR|");
 
     delete controller;
+
+    // CASE 2: [Q, Q, C, Q, Q, C |]
+    controller = new TabProController();
+    controller->createTab("2:Q,1:C,2:Q,1:C");
+
+    // [Q, Q, C, \C, Q, C |] -> [Q, Q, C, C, C |]
+    controller->moveLeft(3);
+    controller->addNote(0, 0, 1);
+    controller->verifyTab("2:Q,3:C|");
+
+    delete controller;
+
+    // CASE 3: [Q, Q, C, Q, Q, C |]
+    controller = new TabProController();
+    controller->createTab("2:Q,1:C,2:Q,1:C");
+
+    // [Q, \C, C, Q, Q, C |] -> [Q, Q, C, C, C |]
+    controller->moveLeft(5);
+    controller->addNote(0, 0, 1);
+    controller->verifyTab("1:Q,1:C,1:QR,2:Q,1:C|");
+
+    delete controller;
+
+    // CASE 4: [Q, Q, C, Q, Q, C |]
+    controller = new TabProController();
+    controller->createTab("2:Q,1:C,2:Q,1:C");
+
+    // [\C, Q, C, Q, Q, C |] -> [C, C, Q, Q, C|]
+    controller->moveLeft(6);
+    controller->addNote(0, 0, 1);
+    controller->verifyTab("2:C,2:Q,1:C|");
+
+    delete controller;
 }
 
-// TODO: Fix cases where verify tab has a barline in the wrong place
+// Add clear tab button
 
 /* LEGEND
  *
@@ -115,6 +148,6 @@ void TestStaff::testNoteReplacementExceedsMeasure()
  *
  * - = Left empty
  * /x = Replaced with x
- * -> = Equivalent to
+ * -> = Changed to
  *
  */

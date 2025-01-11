@@ -7,8 +7,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    TestStaff test;
-    QTest::qExec(&test, argc, argv);
+    // TestStaff test;
+    // QTest::qExec(&test, argc, argv);
 
     MainWindow w;
 

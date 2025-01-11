@@ -1287,6 +1287,8 @@ TabPro_autogen/timestamp: \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/chorddiagram/chordwindow.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/chorddiagram/toggleswitch.cpp \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/chorddiagram/toggleswitch.h \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/components/buttons/resetbutton.cpp \
+	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/components/buttons/resetbutton.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/menu/menubar.cpp \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/menu/menubar.h \
 	C:/Users/Ethan\ Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/menu/sidebar.cpp \

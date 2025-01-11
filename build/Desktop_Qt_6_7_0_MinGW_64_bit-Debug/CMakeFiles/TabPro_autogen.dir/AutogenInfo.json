@@ -664,6 +664,12 @@
 			null
 		],
 		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/components/buttons/resetbutton.h",
+			"MU",
+			"WJEC2ZHACD/moc_resetbutton.cpp",
+			null
+		],
+		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/menu/menubar.h",
 			"MU",
 			"MDWXFLLFIT/moc_menubar.cpp",
@@ -777,6 +783,7 @@
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/tablature",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/menu",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/user",
+		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/components/buttons",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/notes",
 		"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/model/accidentals",
@@ -939,6 +946,11 @@
 		],
 		[
 			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/chorddiagram/toggleswitch.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Ethan Leffers/Desktop/Coding/Projects/TabPro/TabPro/src/view/components/buttons/resetbutton.cpp",
 			"MU",
 			null
 		],

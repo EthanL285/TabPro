@@ -3,7 +3,6 @@
 
 #include "containerwidget.h"
 #include "notetype.h"
-#include "menubar.h"
 
 #include <QObject>
 
@@ -32,7 +31,6 @@ public:
 
 private:
     ContainerWidget *widget;
-    MenuBar *menu;
 
 signals:
 };

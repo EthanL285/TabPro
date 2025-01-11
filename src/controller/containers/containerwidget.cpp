@@ -16,9 +16,13 @@
 #include <QScrollArea>
 #include <QScrollBar>
 
-ContainerWidget::ContainerWidget(MenuBar *menu, QWidget *parent)
-    : menu{menu}, QWidget{parent}
+ContainerWidget::ContainerWidget(MainWindow *window, QWidget *parent)
+    : QWidget{parent}
 {
+    // Menu bar
+    menu = new MenuBar(this);
+    if (window) window->setMenuWidget(menu);
+
     // Main Layout
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
     mainLayout->setAlignment(Qt::AlignCenter);
@@ -27,13 +31,13 @@ ContainerWidget::ContainerWidget(MenuBar *menu, QWidget *parent)
     // View Area Layout (excludes sidebar)
     QVBoxLayout *viewArea = new QVBoxLayout();
 
-    // Add scroll area
+    // Scroll area
     QScrollArea *scrollArea = createScrollArea();
     scrollArea->setWidget(new QWidget());
     scrollArea->widget()->setLayout(viewArea);
     mainLayout->addWidget(scrollArea, Qt::AlignCenter);
 
-    // Add Note line
+    // Note line
     QVBoxLayout *noteLayout = new QVBoxLayout();
     noteLayout->setContentsMargins(0, 10, 0, 0);
     noteLayout->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
@@ -52,7 +56,7 @@ ContainerWidget::ContainerWidget(MenuBar *menu, QWidget *parent)
     // Sound
     sound = new Sound(this);
 
-    // Add tablature and playback buttons
+    // Tablature and playback buttons
     tab = new Tablature(sound, staff);
     tab->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     tab->setContentsMargins(28, 0, 28, 0);
@@ -78,7 +82,7 @@ ContainerWidget::ContainerWidget(MenuBar *menu, QWidget *parent)
     inputLayout->setAlignment(Qt::AlignCenter);
     bottomLayout->addLayout(inputLayout);
 
-    // Add Playing Technique Buttons
+    // Playing Technique Buttons
     playingTechniques = new QWidget();
     playingTechniques->setFixedSize(1250, 60);
     playingTechniques->setStyleSheet
@@ -510,6 +514,13 @@ void ContainerWidget::toggleChordMode()
     tab->toggleChordMode();
 }
 
+// Clears the contents of the tablature and staff
+void ContainerWidget::clearTab()
+{
+    tab->clearTab();
+    tab->updateTab();
+}
+
 // Creates the scroll area for the entire viewing area
 QScrollArea *ContainerWidget::createScrollArea()
 {
@@ -688,7 +699,7 @@ QWidget *ContainerWidget::getStaffItem(int index)
 // Returns the size of the layout
 int ContainerWidget::getLayoutSize()
 {
-    return staff->getLayoutSize();
+    return staff->getLayout()->count();
 }
 
 //////////////////// RECTANGLE CLASS ///////////////////////

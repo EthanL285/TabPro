@@ -7,8 +7,7 @@
 TabProController::TabProController(QObject *parent)
     : QObject{parent}
 {
-    menu = new MenuBar();
-    widget = new ContainerWidget(menu);
+    widget = new ContainerWidget(nullptr);
 }
 
 // Creates a tab from a comma-separated string where each entry is in the format "amount::NoteType"
@@ -153,7 +152,6 @@ void TabProController::moveRight(int x)
 TabProController::~TabProController()
 {
     delete widget;
-    delete menu;
 }
 
 

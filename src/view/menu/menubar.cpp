@@ -1,4 +1,7 @@
 #include "menubar.h"
+#include "resetbutton.h"
+#include "containerwidget.h"
+
 #include <QVBoxLayout>
 #include <QGraphicsDropShadowEffect>
 #include <QDockWidget>
@@ -27,7 +30,7 @@ MenuBar::MenuBar(QWidget *parent)
 
     QHBoxLayout *bottomLayout = new QHBoxLayout(bottomWidget);
     bottomLayout->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-    bottomLayout->setContentsMargins(0, 0, 0, 0);
+    bottomLayout->setContentsMargins(0, 0, 12, 0);
     bottomLayout->setSpacing(0);
 
     notes = {
@@ -45,18 +48,18 @@ MenuBar::MenuBar(QWidget *parent)
         {"♯", AccidentalType::Sharp}
     };
 
-    // Add accidental buttons
+    // Accidental buttons
     for (QMap<QString, AccidentalType>::iterator it = accidentals.begin(); it != accidentals.end(); ++it)
     {
         QPushButton *signButton = createButton(it.key(), 20);
         connect(signButton, &QPushButton::clicked, this, &MenuBar::clickAccidental);
         bottomLayout->addWidget(signButton);
     }
-    // Add divider
+    // Divider
     QHBoxLayout *divider = createDivider();
     bottomLayout->addLayout(divider);
 
-    // Add note buttons
+    // Note buttons
     for (QMap<QString, NoteType>::iterator it = notes.begin(); it != notes.end(); ++it)
     {
         QPushButton *noteButton = createButton(it.key(), 30);
@@ -70,6 +73,14 @@ MenuBar::MenuBar(QWidget *parent)
             selectedNote = qMakePair(NoteType::Crotchet, noteButton);
         }
     }
+    // Separate music and utility buttons
+    QSpacerItem *menuSpacer = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Fixed);
+    bottomLayout->addSpacerItem(menuSpacer);
+
+    // Reset Chord Button
+    QPushButton *reset = new ResetButton(QSize(21,21), "Reset Tab");
+    QObject::connect(reset, &QPushButton::clicked, qobject_cast<ContainerWidget*>(parentWidget()), &ContainerWidget::clearTab);
+    bottomLayout->addWidget(reset);
 }
 
 // Getter for selected note

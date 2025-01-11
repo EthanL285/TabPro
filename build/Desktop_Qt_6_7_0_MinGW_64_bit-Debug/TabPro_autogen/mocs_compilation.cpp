@@ -20,6 +20,7 @@
 #include "OFU3OLVCYP/moc_chorddisplay.cpp"
 #include "OFU3OLVCYP/moc_chordwindow.cpp"
 #include "OFU3OLVCYP/moc_toggleswitch.cpp"
+#include "WJEC2ZHACD/moc_resetbutton.cpp"
 #include "MDWXFLLFIT/moc_menubar.cpp"
 #include "MDWXFLLFIT/moc_sidebar.cpp"
 #include "BBY7CNHIOT/moc_staff.cpp"

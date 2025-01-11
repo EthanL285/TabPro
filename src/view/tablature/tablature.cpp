@@ -326,9 +326,8 @@ void Tablature::addFretNumber()
     selectedColumn->setText(tabColumn);
     staff->addNote(fretNumbers, getSelectedColumnIndex());
 
-    // Visually update tab and staff
+    // Visually update tab
     updateTab();
-    staff->updateStaff();
 
     // Add rest if last column
     if (selectedColumn == tab.last()) addRest();
@@ -580,9 +579,8 @@ void Tablature::remove()
         staff->replaceNote(index, -1, rest);
         selectedColumn->setText(EMPTY_COLUMN);
     }
-    // Visually update tab and staff
+    // Visually update tab
     updateTab();
-    staff->updateStaff();
 }
 
 // Removes the column at the given index
@@ -603,6 +601,17 @@ void Tablature::removeColumn(int index, bool emitSignal)
 void Tablature::updateTab()
 {
     ScoreUpdater::update(staff->getNotes(), columnLayout, TIME_SIGNATURE, this);
+    ScoreUpdater::update(staff->getNotes(), staff->getLayout(), TIME_SIGNATURE, staff);
+}
+
+// Clears the tab
+void Tablature::clearTab()
+{
+    tab.last()->setChecked(true);
+    for (int i = staff->getNotes().size() - 1; i >= 0; i--)
+    {
+        remove();
+    }
 }
 
 // Creates the scroll area for the tab

@@ -4,6 +4,7 @@
 #include "menubar.h"
 #include "tablature.h"
 #include "sound.h"
+#include "mainwindow.h"
 
 #include <QWidget>
 #include <QLabel>
@@ -13,7 +14,7 @@ class ContainerWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ContainerWidget(MenuBar *menu, QWidget *parent = nullptr);
+    explicit ContainerWidget(MainWindow *window, QWidget *parent = nullptr);
     QLabel *createStrings(QString note);
     void createFretBoard();
     void createFretButtons();
@@ -21,6 +22,8 @@ public:
     void createPlaybackButtons();
     QWidget *createTempoButton();
     QScrollArea *createScrollArea();
+
+    void clearTab();
 
     // Testing Functions
     QWidget *getTabItem(int index);

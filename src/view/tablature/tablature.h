@@ -25,6 +25,7 @@ public:
     QScrollArea *createScrollArea();
     QLabel *createNewTabLine();
     void updateTab();
+    void clearTab();
     void addChord(QVector<int> chord);
     void addRest();
     void insertRest(int index);

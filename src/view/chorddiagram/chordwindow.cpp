@@ -1,5 +1,6 @@
 #include "chordwindow.h"
 #include "chorddisplay.h"
+#include "resetbutton.h"
 
 #include <QHBoxLayout>
 #include <QPainter>
@@ -295,23 +296,8 @@ ChordWindow::ChordWindow(ContainerWidget *parent)
     headerLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum));
 
     // Reset Chord Button
-    trash = new QPushButton();
-    trash->setFixedSize(22,22);
-    trash->setCursor(Qt::PointingHandCursor);
+    trash = new ResetButton(QSize(22,22), "Reset Chord");
     trash->setVisible(false);
-    trash->setToolTip("Reset Chord");
-    trash->setStyleSheet
-    (
-        "QPushButton {"
-        "   image: url(:/miscellaneous/miscellaneous/trash.png);"
-        "   background-color: transparent;"
-        "   border: none;"
-        "   padding: 1px 1px;"
-        "}"
-        "QPushButton:hover {"
-        "   image: url(:/miscellaneous/miscellaneous/trash hover.png)"
-        "}"
-    );
     QObject::connect(trash, &QPushButton::clicked, this, [&]()
     {
         barDropdown->setCurrentIndex(0);

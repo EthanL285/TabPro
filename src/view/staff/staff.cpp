@@ -51,10 +51,10 @@ QWidget *Staff::getLayoutItem(int index)
     return mainLayout->itemAt(index + STAFF_OFFSET)->widget();
 }
 
-// Returns the size of the layout
-int Staff::getLayoutSize()
+// Returns the layout of the staff
+QHBoxLayout *Staff::getLayout()
 {
-    return mainLayout->count();
+    return mainLayout;
 }
 
 // Creates the staff
@@ -350,12 +350,6 @@ bool Staff::exceedsMeasure(QVector<RhythmSymbol*> measure)
         beats += measure[i]->getBeatValue();
     }
     return beats > TIME_SIGNATURE;
-}
-
-// Visually updates the staff
-void Staff::updateStaff()
-{
-    ScoreUpdater::update(notes, mainLayout, TIME_SIGNATURE, this);
 }
 
 ///////////////////////// SLOTS /////////////////////////
