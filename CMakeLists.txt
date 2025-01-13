@@ -75,6 +75,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         tests/view/staff/teststaff.h tests/view/staff/teststaff.cpp
         tests/tabprocontroller.h tests/tabprocontroller.cpp
         src/view/components/buttons/resetbutton.h src/view/components/buttons/resetbutton.cpp
+        tests/view/tablature/testtablature.h tests/view/tablature/testtablature.cpp
 
 
 
@@ -128,6 +129,7 @@ target_include_directories(
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/resources/chords
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/tests
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/tests/view/staff
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/tests/view/tablature
 
 )
 

@@ -24,6 +24,7 @@ public:
     QPushButton *createRest();
     QScrollArea *createScrollArea();
     QLabel *createNewTabLine();
+
     void updateTab();
     void clearTab();
     void addChord(QVector<int> chord);

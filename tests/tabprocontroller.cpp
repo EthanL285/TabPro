@@ -1,8 +1,11 @@
 #include "tabprocontroller.h"
+#include "rest.h"
 
 #include <QTest>
 
 #define TIME_SIGNATURE 4
+#define NOTE_BUTTON "0\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015"
+#define REST_BUTTON "\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015"
 
 TabProController::TabProController(QObject *parent)
     : QObject{parent}
@@ -34,14 +37,59 @@ void TabProController::createTab(QString tab)
     }
 }
 
-// Compares the actual tab against a comma-separated string representing the expected tab
+// Verifies the tab by comparing the actual tab against a string representing the expected tab
 // Example input: "4:C|8:Q|"
 // - 1st measure consists of 4 Crotchets
 // - 2nd measure consists of 8 Quavers
 void TabProController::verifyTab(QString expectedTab)
 {
     int idx = 0;
-    int currMeasure = 0;
+    int tabSize = widget->getLayoutSize() - 1;
+    bool endsWithBarline = expectedTab.endsWith("|");
+
+    // Parse string
+    QStringList measures = expectedTab.split("|");
+    if (endsWithBarline) measures.removeLast();
+
+    for (int i = 0; i < measures.size(); i++)
+    {
+        int amount = 0;
+        QStringList pairs = measures[i].split(",");
+        for (const QString &pair : pairs)
+        {
+            // Extract amount
+            QStringList parts = pair.split(":");
+            amount += parts[0].toInt();
+        }
+        // Check buttons
+        for (int j = 0; j < amount; j++)
+        {
+            QVERIFY(idx < tabSize);
+            QPushButton *button = qobject_cast<QPushButton*>(getTabItem(idx));
+            QString expectedText = dynamic_cast<Rest*>(getStaffItem(idx)) ? REST_BUTTON : NOTE_BUTTON;
+            QVERIFY(button);
+            QCOMPARE(button->text(), expectedText);
+
+            idx++;
+        }
+        // Last measure
+        if (i == measures.size() - 1 && !endsWithBarline) break;
+
+        // Check barline
+        QCOMPARE(getTabItem(idx)->metaObject()->className(), "BarLine");
+        idx++;
+    }
+    // Expected tab length matches actual tab length
+    QCOMPARE(idx, tabSize);
+}
+
+// Verifies the staff by comparing the actual tab against a string representing the expected tab
+// Example input: "4:C|8:Q|"
+// - 1st measure consists of 4 Crotchets
+// - 2nd measure consists of 8 Quavers
+void TabProController::verifyStaff(QString expectedTab)
+{
+    int idx = 0;
     int tabSize = widget->getLayoutSize() - 1;
     bool endsWithBarline = expectedTab.endsWith("|");
 
@@ -56,12 +104,9 @@ void TabProController::verifyTab(QString expectedTab)
     QStringList measures = expectedTab.split("|");
     if (endsWithBarline) measures.removeLast();
 
-    for (const QString &measure : measures)
+    for (int i = 0; i < measures.size(); i++)
     {
-        int measureIdx = 0;
-        QVector<RhythmSymbol*> measureNotes = widget->getMeasure(idx);
-
-        QStringList pairs = measure.split(",");
+        QStringList pairs = measures[i].split(",");
         for (const QString &pair : pairs)
         {
             // Extract note type and amount
@@ -70,17 +115,15 @@ void TabProController::verifyTab(QString expectedTab)
             int amount = parts[0].toInt();
 
             // Check notes
-            for (int i = 0; i < amount; i++)
+            for (int j = 0; j < amount; j++)
             {
                 QVERIFY(idx < tabSize);
-                QCOMPARE(measureNotes[measureIdx]->metaObject()->className(), map[type]);
+                QCOMPARE(getStaffItem(idx)->metaObject()->className(), map[type]);
                 idx++;
-                measureIdx++;
             }
         }
         // Last measure
-        currMeasure++;
-        if (currMeasure == measures.size() && !endsWithBarline) break;
+        if (i == measures.size() - 1 && !endsWithBarline) break;
 
         // Check barline
         QCOMPARE(getStaffItem(idx)->metaObject()->className(), "BarLine");
@@ -97,7 +140,7 @@ void TabProController::clearTab()
 }
 
 // Returns a vector of all the notes on the staff
-QVector<RhythmSymbol*> TabProController::getNotes()
+const QVector<RhythmSymbol*> &TabProController::getNotes()
 {
     return widget->getNotes();
 }

@@ -17,7 +17,7 @@ class Staff : public QWidget
 public:
     explicit Staff(MenuBar *menu, QWidget *parent = nullptr);
 
-    QVector<RhythmSymbol*> getNotes();
+    const QVector<RhythmSymbol*> &getNotes();
     QWidget *getLayoutItem(int index);
     QHBoxLayout *getLayout();
 

@@ -32,8 +32,7 @@ public:
     QPushButton *getMenuButton(NoteType type);
     QPushButton *getMenuButton(QString buttonName);
     QPushButton *getUIButton(QString buttonName);
-    QVector<RhythmSymbol*> getNotes();
-    QVector<RhythmSymbol*> getMeasure(int index);
+    const QVector<RhythmSymbol*> &getNotes();
     int getLayoutSize();
 
     // Chord Window Functions

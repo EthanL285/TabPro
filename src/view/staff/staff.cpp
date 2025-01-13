@@ -40,7 +40,7 @@ Staff::Staff(MenuBar *menu, QWidget *parent)
 }
 
 // Getter for notes
-QVector<RhythmSymbol*> Staff::getNotes()
+const QVector<RhythmSymbol*> &Staff::getNotes()
 {
     return notes;
 }

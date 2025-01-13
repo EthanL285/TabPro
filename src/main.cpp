@@ -1,14 +1,18 @@
 #include "mainwindow.h"
+#include "teststaff.h"
+#include "testtablature.h"
 
 #include <QApplication>
-#include "teststaff.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    TestStaff test;
-    QTest::qExec(&test, argc, argv);
+    TestStaff testStaff;
+    TestTablature testTab;
+
+    QTest::qExec(&testStaff, argc, argv);
+    QTest::qExec(&testTab, argc, argv);
 
     MainWindow w;
 

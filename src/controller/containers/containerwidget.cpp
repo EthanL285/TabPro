@@ -679,15 +679,9 @@ QPushButton *ContainerWidget::getUIButton(QString buttonName)
 }
 
 // Returns a vector of all the notes on the staff
-QVector<RhythmSymbol*> ContainerWidget::getNotes()
+const QVector<RhythmSymbol*> &ContainerWidget::getNotes()
 {
     return staff->getNotes();
-}
-
-// Returns the measure at the given index
-QVector<RhythmSymbol*> ContainerWidget::getMeasure(int index)
-{
-    return staff->getMeasureInfo(index).first;
 }
 
 // Returns the tab layout item at the given index
