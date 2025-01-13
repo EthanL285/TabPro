@@ -20,8 +20,9 @@ An all-in-one, cross-platform GUI application designed as a comprehensive editor
 ![Login screen](https://github.com/user-attachments/assets/d46807e4-e69b-4830-b63e-66733b71b298)  
 
 ### Interface
-![Home Page](https://github.com/user-attachments/assets/c8c78f07-b695-4ab2-a304-03155676d6dc)
+![Home Page 2](https://github.com/user-attachments/assets/312b1368-064a-49e8-baca-ff62dfdfdb26)
 
 ### Chord Customisation
 ![ChordDemonstration-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/5c762d4e-862a-4a74-ae2f-61c2b12229a5)  
+
 
