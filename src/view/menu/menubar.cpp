@@ -1,6 +1,7 @@
 #include "menubar.h"
 #include "resetbutton.h"
 #include "containerwidget.h"
+#include "signaturebutton.h"
 
 #include <QVBoxLayout>
 #include <QGraphicsDropShadowEffect>
@@ -56,8 +57,7 @@ MenuBar::MenuBar(QWidget *parent)
         menuLayout->addWidget(signButton);
     }
     // Divider
-    QHBoxLayout *divider = createDivider();
-    menuLayout->addLayout(divider);
+    menuLayout->addLayout(createDivider());
 
     // Note buttons
     for (QMap<QString, NoteType>::iterator it = notes.begin(); it != notes.end(); ++it)
@@ -72,12 +72,19 @@ MenuBar::MenuBar(QWidget *parent)
             noteButton->setChecked(true);
             selectedNote = qMakePair(NoteType::Crotchet, noteButton);
         }
-    }
+    } 
+    // Divider
+    menuLayout->addLayout(createDivider());
+
+    // Time signature button
+    QPushButton *timeSignature = new SignatureButton();
+    menuLayout->addWidget(timeSignature);
+
     // Separate music and utility buttons
     QSpacerItem *menuSpacer = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Fixed);
     menuLayout->addSpacerItem(menuSpacer);
 
-    // Reset Chord Button
+    // Reset chord button
     QPushButton *reset = new ResetButton(QSize(21,21), "Reset Tab");
     reset->setObjectName("reset tab");
     QObject::connect(reset, &QPushButton::clicked, qobject_cast<ContainerWidget*>(parentWidget()), &ContainerWidget::clearTab);

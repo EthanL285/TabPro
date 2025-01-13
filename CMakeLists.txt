@@ -76,6 +76,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         tests/tabprocontroller.h tests/tabprocontroller.cpp
         src/view/components/buttons/resetbutton.h src/view/components/buttons/resetbutton.cpp
         tests/view/tablature/testtablature.h tests/view/tablature/testtablature.cpp
+        src/view/components/buttons/signaturebutton.h src/view/components/buttons/signaturebutton.cpp
 
 
 

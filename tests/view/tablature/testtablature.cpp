@@ -49,16 +49,15 @@ void TestTablature::testClearTab()
 {
     // Clear when selected note is last
     TabProController *controller = new TabProController();
+    QVector<RhythmSymbol*> notes = controller->getNotes();
     controller->createTab("4:C");
     controller->clearTab();
-    QVector<RhythmSymbol*> notes = controller->getNotes();
     QCOMPARE(notes.size(), 0);
 
     // Clear when selected note is not last
     controller->createTab("8:Q");
     controller->moveLeft(4);
     controller->clearTab();
-    notes = controller->getNotes();
     QCOMPARE(notes.size(), 0);
 
     delete controller;
