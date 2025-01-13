@@ -22,6 +22,7 @@ public:
 
     void createTab(QString tab);
     void verifyTab(QString expectedTab);
+    void clearTab();
 
     void addNote(int string, int fret, int x);
     void removeNote(int x);

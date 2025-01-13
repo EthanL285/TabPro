@@ -17,6 +17,8 @@ TabProController::TabProController(QObject *parent)
 // - Adds a Quaver 2 times
 void TabProController::createTab(QString tab)
 {
+    clearTab();
+
     // Parse string
     QStringList pairs = tab.split(",");
     for (const QString &pair : pairs)
@@ -88,6 +90,12 @@ void TabProController::verifyTab(QString expectedTab)
     QCOMPARE(idx, tabSize);
 }
 
+// Clears the tablature
+void TabProController::clearTab()
+{
+    QTest::mouseClick(widget->getMenuButton("reset tab"), Qt::LeftButton);
+}
+
 // Returns a vector of all the notes on the staff
 QVector<RhythmSymbol*> TabProController::getNotes()
 {
@@ -127,7 +135,7 @@ void TabProController::removeNote(int x)
 // Changes the currently selected note to the given type
 void TabProController::changeSelectedNote(NoteType type)
 {
-    QTest::mouseClick(widget->getSelectedNoteButton(type), Qt::LeftButton);
+    QTest::mouseClick(widget->getMenuButton(type), Qt::LeftButton);
 }
 
 // Moves the tab left 'x' times

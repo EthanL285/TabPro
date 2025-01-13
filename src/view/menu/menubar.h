@@ -19,13 +19,14 @@ public:
     static int getTimeSignature();
 
     // Testing Functions
-    QPushButton *getNoteButton(NoteType note);
+    QPushButton *getMenuButton(NoteType note);
+    QPushButton *getMenuButton(QString buttonName);
 
 private:
     QPushButton *createButton(QString text, int fontSize);
     QHBoxLayout *createDivider();
 
-    QWidget *bottomWidget;
+    QWidget *menuWidget;
     QMenuBar *menuBar;
     QMenu *fileMenu;
     QPair<NoteType, QPushButton*> selectedNote;

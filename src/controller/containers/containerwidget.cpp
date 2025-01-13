@@ -660,10 +660,16 @@ QPushButton *ContainerWidget::getFretButton(int row, int col)
     return qobject_cast<QPushButton*>(item->widget());
 }
 
-// Returns the note button from the menu corresponding to the given type
-QPushButton *ContainerWidget::getSelectedNoteButton(NoteType type)
+// Returns the menu note button corresponding to the given type
+QPushButton *ContainerWidget::getMenuButton(NoteType type)
 {
-    return menu->getNoteButton(type);
+    return menu->getMenuButton(type);
+}
+
+// Returns the menu button corresponding to the given type
+QPushButton *ContainerWidget::getMenuButton(QString buttonName)
+{
+    return menu->getMenuButton(buttonName);
 }
 
 // Returns the button that corresponds to the given name

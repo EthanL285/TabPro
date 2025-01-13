@@ -42,6 +42,26 @@ void TestStaff::testRemoveNote()
     delete controller;
 }
 
+// Test for clearing the tablature
+void TestStaff::testClearTab()
+{
+    // Clear when selected note is last
+    TabProController *controller = new TabProController();
+    controller->createTab("4:C");
+    controller->clearTab();
+    QVector<RhythmSymbol*> notes = controller->getNotes();
+    QCOMPARE(notes.size(), 0);
+
+    // Clear when selected note is not last
+    controller->createTab("8:Q");
+    controller->moveLeft(4);
+    controller->clearTab();
+    notes = controller->getNotes();
+    QCOMPARE(notes.size(), 0);
+
+    delete controller;
+}
+
 // Test for basic barline behaviour
 void TestStaff::testBarLineBasic()
 {
@@ -92,51 +112,36 @@ void TestStaff::testNoteReplacementBasic()
 void TestStaff::testNoteReplacementExceedsMeasure()
 {
     // CASE 1: [Q, Q, C, Q, Q, C |]
+    // [Q, Q, C, Q, /C, C |] -> [Q, Q, C, Q, C, QR |]
     TabProController *controller = new TabProController();
     controller->createTab("2:Q,1:C,2:Q,1:C");
-
-    // [Q, Q, C, Q, /C, C |] -> [Q, Q, C, Q, C, QR |]
     controller->moveLeft(2);
     controller->addNote(0, 0, 1);
     controller->verifyTab("2:Q,1:C,1:Q,1:C,1:QR|");
 
-    delete controller;
-
     // CASE 2: [Q, Q, C, Q, Q, C |]
-    controller = new TabProController();
-    controller->createTab("2:Q,1:C,2:Q,1:C");
-
     // [Q, Q, C, \C, Q, C |] -> [Q, Q, C, C, C |]
+    controller->createTab("2:Q,1:C,2:Q,1:C");
     controller->moveLeft(3);
     controller->addNote(0, 0, 1);
     controller->verifyTab("2:Q,3:C|");
 
-    delete controller;
-
     // CASE 3: [Q, Q, C, Q, Q, C |]
-    controller = new TabProController();
-    controller->createTab("2:Q,1:C,2:Q,1:C");
-
     // [Q, \C, C, Q, Q, C |] -> [Q, Q, C, C, C |]
+    controller->createTab("2:Q,1:C,2:Q,1:C");
     controller->moveLeft(5);
     controller->addNote(0, 0, 1);
     controller->verifyTab("1:Q,1:C,1:QR,2:Q,1:C|");
 
-    delete controller;
-
     // CASE 4: [Q, Q, C, Q, Q, C |]
-    controller = new TabProController();
-    controller->createTab("2:Q,1:C,2:Q,1:C");
-
     // [\C, Q, C, Q, Q, C |] -> [C, C, Q, Q, C|]
+    controller->createTab("2:Q,1:C,2:Q,1:C");
     controller->moveLeft(6);
     controller->addNote(0, 0, 1);
     controller->verifyTab("2:C,2:Q,1:C|");
 
     delete controller;
 }
-
-// Add clear tab button
 
 /* LEGEND
  *

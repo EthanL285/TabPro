@@ -13,6 +13,7 @@ public:
 private slots:
     void testAddNote();
     void testRemoveNote();
+    void testClearTab();
     void testBarLineBasic();
     void testBarLineComplex();
     void testNoteReplacementBasic();

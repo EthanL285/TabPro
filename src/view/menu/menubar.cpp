@@ -23,15 +23,15 @@ MenuBar::MenuBar(QWidget *parent)
     mainLayout->addWidget(menuBar);
 
     // Create bottom widget
-    bottomWidget = new QWidget();
-    bottomWidget->setFixedHeight(40);
-    bottomWidget->setStyleSheet("background-color: rgb(23,23,23); border-bottom: 1px solid rgb(18,18,18);");
-    mainLayout->addWidget(bottomWidget);
+    menuWidget = new QWidget();
+    menuWidget->setFixedHeight(40);
+    menuWidget->setStyleSheet("background-color: rgb(23,23,23); border-bottom: 1px solid rgb(18,18,18);");
+    mainLayout->addWidget(menuWidget);
 
-    QHBoxLayout *bottomLayout = new QHBoxLayout(bottomWidget);
-    bottomLayout->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-    bottomLayout->setContentsMargins(0, 0, 12, 0);
-    bottomLayout->setSpacing(0);
+    QHBoxLayout *menuLayout = new QHBoxLayout(menuWidget);
+    menuLayout->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    menuLayout->setContentsMargins(0, 0, 12, 0);
+    menuLayout->setSpacing(0);
 
     notes = {
         {"𝅝", NoteType::Semibreve},
@@ -53,11 +53,11 @@ MenuBar::MenuBar(QWidget *parent)
     {
         QPushButton *signButton = createButton(it.key(), 20);
         connect(signButton, &QPushButton::clicked, this, &MenuBar::clickAccidental);
-        bottomLayout->addWidget(signButton);
+        menuLayout->addWidget(signButton);
     }
     // Divider
     QHBoxLayout *divider = createDivider();
-    bottomLayout->addLayout(divider);
+    menuLayout->addLayout(divider);
 
     // Note buttons
     for (QMap<QString, NoteType>::iterator it = notes.begin(); it != notes.end(); ++it)
@@ -65,7 +65,7 @@ MenuBar::MenuBar(QWidget *parent)
         QPushButton *noteButton = createButton(it.key(), 30);
         noteButton->setObjectName(it.key());
         connect(noteButton, &QPushButton::clicked, this, &MenuBar::clickNote);
-        bottomLayout->addWidget(noteButton);
+        menuLayout->addWidget(noteButton);
 
         if (it.value() == NoteType::Crotchet)
         {
@@ -75,12 +75,13 @@ MenuBar::MenuBar(QWidget *parent)
     }
     // Separate music and utility buttons
     QSpacerItem *menuSpacer = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Fixed);
-    bottomLayout->addSpacerItem(menuSpacer);
+    menuLayout->addSpacerItem(menuSpacer);
 
     // Reset Chord Button
     QPushButton *reset = new ResetButton(QSize(21,21), "Reset Tab");
+    reset->setObjectName("reset tab");
     QObject::connect(reset, &QPushButton::clicked, qobject_cast<ContainerWidget*>(parentWidget()), &ContainerWidget::clearTab);
-    bottomLayout->addWidget(reset);
+    menuLayout->addWidget(reset);
 }
 
 // Getter for selected note
@@ -163,15 +164,21 @@ void MenuBar::clickAccidental()
 }
 
 // Returns the note button corresponding to the given type
-QPushButton *MenuBar::getNoteButton(NoteType type)
+QPushButton *MenuBar::getMenuButton(NoteType type)
 {
     for (auto it = notes.begin(); it != notes.end(); it++)
     {
         if (it.value() == type)
         {
-            return bottomWidget->findChild<QPushButton*>(it.key());
+            return menuWidget->findChild<QPushButton*>(it.key());
         }
     }
     return nullptr;
+}
+
+// Returns the menu button corresponding to the given name
+QPushButton *MenuBar::getMenuButton(QString name)
+{
+    return menuWidget->findChild<QPushButton*>(name);
 }
 
