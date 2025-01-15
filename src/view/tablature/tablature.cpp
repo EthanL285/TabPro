@@ -600,8 +600,8 @@ void Tablature::removeColumn(int index, bool emitSignal)
 // Visually updates the tab
 void Tablature::updateTab()
 {
-    ScoreUpdater::update(staff->getNotes(), columnLayout, TIME_SIGNATURE, this);
-    ScoreUpdater::update(staff->getNotes(), staff->getLayout(), TIME_SIGNATURE, staff);
+    ScoreUpdater::update(staff->getNotes(), columnLayout, staff->getBeatsPerMeasure(), this);
+    ScoreUpdater::update(staff->getNotes(), staff->getLayout(), staff->getBeatsPerMeasure(), staff);
 }
 
 // Clears the tab

@@ -26,6 +26,7 @@ public:
     void clearTab();
 
     // Testing Functions
+    int getLayoutSize();
     QWidget *getTabItem(int index);
     QWidget *getStaffItem(int index);
     QPushButton *getFretButton(int row, int col);
@@ -33,7 +34,6 @@ public:
     QPushButton *getMenuButton(QString buttonName);
     QPushButton *getUIButton(QString buttonName);
     const QVector<RhythmSymbol*> &getNotes();
-    int getLayoutSize();
 
     // Chord Window Functions
     void addChord(QVector<int> chord);

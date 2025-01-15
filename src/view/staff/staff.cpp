@@ -1,7 +1,6 @@
 #include "staff.h"
 #include "blank.h"
 #include "rest.h"
-#include "scoreupdater.h"
 #include "notefactory.h"
 #include "restfactory.h"
 #include "barline.h"
@@ -13,7 +12,6 @@
 #define DEFAULT_HEIGHT 185
 #define LINE_COUNT 5
 #define LINE_SPACING 15
-#define TIME_SIGNATURE 4
 
 Staff::Staff(MenuBar *menu, QWidget *parent)
     : menu{menu}, QWidget{parent}
@@ -37,6 +35,18 @@ Staff::Staff(MenuBar *menu, QWidget *parent)
 
     stringMap = createStringMap();
     noteMap = createNoteMap();
+}
+
+// Getter for beats per measure
+int Staff::getBeatsPerMeasure()
+{
+    return beatsPerMeasure;
+}
+
+// Getter for beat unit
+int Staff::getBeatUnit()
+{
+    return beatUnit;
 }
 
 // Getter for notes
@@ -283,9 +293,9 @@ void Staff::replaceNote(int index, int line, RhythmSymbol *symbol)
             }
             double beats = getBeats(measure);
             // Append rest to fill measure
-            if (beats < TIME_SIGNATURE)
+            if (beats < beatsPerMeasure)
             {
-                insertRest(index + 1, TIME_SIGNATURE - beats, true);
+                insertRest(index + 1, beatsPerMeasure - beats, true);
             }
             // Edge Case: Deleting subsequent notes still exceeds measure - Not allowed to replace
             // Testing: [Q,Q, C, Q, Q, C]
@@ -349,7 +359,7 @@ bool Staff::exceedsMeasure(QVector<RhythmSymbol*> measure)
     {
         beats += measure[i]->getBeatValue();
     }
-    return beats > TIME_SIGNATURE;
+    return beats > beatsPerMeasure;
 }
 
 ///////////////////////// SLOTS /////////////////////////
@@ -359,5 +369,13 @@ void Staff::onNoteRemoved(int index)
 {
     removeNote(index, false);
 }
+
+// Slot for time signature changed
+void Staff::onTimeSignatureChanged(int beatsPerMeasure, int beatUnit)
+{
+    this->beatsPerMeasure = beatsPerMeasure;
+    this->beatUnit = beatUnit;
+}
+
 
 

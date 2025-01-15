@@ -1,9 +1,7 @@
 #include "tabprocontroller.h"
-#include "rest.h"
 
 #include <QTest>
 
-#define TIME_SIGNATURE 4
 #define NOTE_BUTTON "0\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015"
 #define REST_BUTTON "\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015"
 
@@ -53,24 +51,24 @@ void TabProController::verifyTab(QString expectedTab)
 
     for (int i = 0; i < measures.size(); i++)
     {
-        int amount = 0;
         QStringList pairs = measures[i].split(",");
         for (const QString &pair : pairs)
         {
             // Extract amount
             QStringList parts = pair.split(":");
-            amount += parts[0].toInt();
-        }
-        // Check buttons
-        for (int j = 0; j < amount; j++)
-        {
-            QVERIFY(idx < tabSize);
-            QPushButton *button = qobject_cast<QPushButton*>(getTabItem(idx));
-            QString expectedText = dynamic_cast<Rest*>(getStaffItem(idx)) ? REST_BUTTON : NOTE_BUTTON;
-            QVERIFY(button);
-            QCOMPARE(button->text(), expectedText);
+            QString type = parts[1].trimmed();
+            int amount = parts[0].toInt();
 
-            idx++;
+            // Check buttons
+            for (int j = 0; j < amount; j++)
+            {
+                QVERIFY(idx < tabSize);
+                QPushButton *button = qobject_cast<QPushButton*>(getTabItem(idx));
+                QString expectedText = type.contains("R") ? REST_BUTTON : NOTE_BUTTON;
+                QVERIFY(button);
+                QCOMPARE(button->text(), expectedText);
+                idx++;
+            }
         }
         // Last measure
         if (i == measures.size() - 1 && !endsWithBarline) break;

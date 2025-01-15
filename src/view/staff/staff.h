@@ -16,6 +16,8 @@ class Staff : public QWidget
     Q_OBJECT
 public:
     explicit Staff(MenuBar *menu, QWidget *parent = nullptr);
+    int getBeatsPerMeasure();
+    int getBeatUnit();
 
     const QVector<RhythmSymbol*> &getNotes();
     QWidget *getLayoutItem(int index);
@@ -47,7 +49,8 @@ protected:
 
 private:
     QHBoxLayout *mainLayout;
-
+    int beatsPerMeasure = 4;
+    int beatUnit = 4;
     int length = 95;
     int highestLine = UPDATE_LINE;
     bool chordMode = false;
@@ -66,6 +69,7 @@ signals:
 
 public slots:
     void onNoteRemoved(int index);
+    void onTimeSignatureChanged(int beatsPerMeasure, int beatUnit);
 };
 
 #endif // STAFF_H

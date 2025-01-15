@@ -16,7 +16,6 @@ public:
     explicit MenuBar(QWidget *parent = nullptr);
     NoteType getSelectedNote();
     AccidentalType getSelectedAccidental();
-    static int getTimeSignature();
 
     // Testing Functions
     QPushButton *getMenuButton(NoteType note);
@@ -35,10 +34,13 @@ private:
     QMap<QString, AccidentalType> accidentals;
 
 private slots:
-    void clickNote();
-    void clickAccidental();
+    void onNoteClick();
+    void onAccidentalClick();
+    void onTimeSignatureClick();
 
 signals:
+    void timeSignatureChanged(int beatsPerMeasure, int beatUnit);
+
 };
 
 #endif // MENUBAR_H

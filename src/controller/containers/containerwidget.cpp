@@ -135,6 +135,7 @@ ContainerWidget::ContainerWidget(MainWindow *window, QWidget *parent)
     connect(staff, &Staff::noteRemoved, tab, &Tablature::onColumnRemoved);
     connect(tab, &Tablature::columnRemoved, staff, &Staff::onNoteRemoved);
     connect(staff, &Staff::restInserted, tab, &Tablature::onRestInsertion);
+    connect(menu, &MenuBar::timeSignatureChanged, staff, &Staff::onTimeSignatureChanged);
 }
 
 // Creates buttons for playback
@@ -653,6 +654,12 @@ QScrollArea *ContainerWidget::createScrollArea()
 
 //////////////////// TESTING FUCNTIONS ///////////////////////
 
+// Returns the size of the layout
+int ContainerWidget::getLayoutSize()
+{
+    return staff->getLayout()->count();
+}
+
 // Returns the fret button at the given row and column index
 QPushButton *ContainerWidget::getFretButton(int row, int col)
 {
@@ -694,12 +701,6 @@ QWidget *ContainerWidget::getTabItem(int index)
 QWidget *ContainerWidget::getStaffItem(int index)
 {
     return staff->getLayoutItem(index);
-}
-
-// Returns the size of the layout
-int ContainerWidget::getLayoutSize()
-{
-    return staff->getLayout()->count();
 }
 
 //////////////////// RECTANGLE CLASS ///////////////////////

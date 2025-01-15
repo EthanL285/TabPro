@@ -53,7 +53,7 @@ MenuBar::MenuBar(QWidget *parent)
     for (QMap<QString, AccidentalType>::iterator it = accidentals.begin(); it != accidentals.end(); ++it)
     {
         QPushButton *signButton = createButton(it.key(), 20);
-        connect(signButton, &QPushButton::clicked, this, &MenuBar::clickAccidental);
+        connect(signButton, &QPushButton::clicked, this, &MenuBar::onAccidentalClick);
         menuLayout->addWidget(signButton);
     }
     // Divider
@@ -64,7 +64,7 @@ MenuBar::MenuBar(QWidget *parent)
     {
         QPushButton *noteButton = createButton(it.key(), 30);
         noteButton->setObjectName(it.key());
-        connect(noteButton, &QPushButton::clicked, this, &MenuBar::clickNote);
+        connect(noteButton, &QPushButton::clicked, this, &MenuBar::onNoteClick);
         menuLayout->addWidget(noteButton);
 
         if (it.value() == NoteType::Crotchet)
@@ -79,6 +79,7 @@ MenuBar::MenuBar(QWidget *parent)
     // Time signature button
     QPushButton *timeSignature = new SignatureButton();
     menuLayout->addWidget(timeSignature);
+    connect(timeSignature, &QPushButton::clicked, this, &MenuBar::onTimeSignatureClick);
 
     // Separate music and utility buttons
     QSpacerItem *menuSpacer = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -138,7 +139,7 @@ QHBoxLayout *MenuBar::createDivider()
 }
 
 // Selects the corresponding note when button is clicked
-void MenuBar::clickNote()
+void MenuBar::onNoteClick()
 {
     QPushButton *senderButton = qobject_cast<QPushButton*>(sender());
     QPushButton *selectedButton = selectedNote.second;
@@ -152,7 +153,7 @@ void MenuBar::clickNote()
 }
 
 // Selects the corresponding accidental when button is clicked
-void MenuBar::clickAccidental()
+void MenuBar::onAccidentalClick()
 {
     QPushButton *senderButton = qobject_cast<QPushButton*>(sender());
     QPushButton *selectedButton = selectedAccidental.second;
@@ -168,6 +169,12 @@ void MenuBar::clickAccidental()
     }
     selectedAccidental = qMakePair(accidentals[senderButton->text()], senderButton);
     senderButton->setChecked(true);
+}
+
+// Selects the corresponding time signature when button is clicked
+void MenuBar::onTimeSignatureClick()
+{
+    emit timeSignatureChanged(4, 4);
 }
 
 // Returns the note button corresponding to the given type

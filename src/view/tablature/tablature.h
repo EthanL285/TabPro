@@ -12,7 +12,6 @@
 #include <QScrollArea>
 
 #define EMPTY_COLUMN "\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015"
-#define TIME_SIGNATURE 4
 #define TAB_OFFSET 1
 
 class Tablature : public QWidget
