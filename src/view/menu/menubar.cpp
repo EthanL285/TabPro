@@ -88,8 +88,8 @@ MenuBar::MenuBar(QWidget *parent)
     // Reset chord button
     QPushButton *reset = new ResetButton(QSize(21,21), "Reset Tab");
     reset->setObjectName("reset tab");
-    QObject::connect(reset, &QPushButton::clicked, qobject_cast<ContainerWidget*>(parentWidget()), &ContainerWidget::clearTab);
     menuLayout->addWidget(reset);
+    connect(reset, &QPushButton::clicked, this, &MenuBar::onResetTabClick);
 }
 
 // Getter for selected note
@@ -171,10 +171,16 @@ void MenuBar::onAccidentalClick()
     senderButton->setChecked(true);
 }
 
-// Selects the corresponding time signature when button is clicked
+// Emits the timeSignatureChanged signal
 void MenuBar::onTimeSignatureClick()
 {
     emit timeSignatureChanged(4, 4);
+}
+
+// Emits the resetTab signal
+void MenuBar::onResetTabClick()
+{
+    emit resetTab();
 }
 
 // Returns the note button corresponding to the given type

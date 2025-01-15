@@ -131,11 +131,13 @@ ContainerWidget::ContainerWidget(MainWindow *window, QWidget *parent)
     ChordWindow *chords = new ChordWindow(this);
     bottomLayout->addWidget(chords);
 
-    // Connect signals and slots between tab and staff
-    connect(staff, &Staff::noteRemoved, tab, &Tablature::onColumnRemoved);
+    // Connect signals and slots between menu, tab and staff
     connect(tab, &Tablature::columnRemoved, staff, &Staff::onNoteRemoved);
+    connect(staff, &Staff::noteRemoved, tab, &Tablature::onColumnRemoved);
     connect(staff, &Staff::restInserted, tab, &Tablature::onRestInsertion);
+
     connect(menu, &MenuBar::timeSignatureChanged, staff, &Staff::onTimeSignatureChanged);
+    connect(menu, &MenuBar::resetTab, tab, &Tablature::resetTab);
 }
 
 // Creates buttons for playback
@@ -513,13 +515,6 @@ void ContainerWidget::addChord(QVector<int> chord)
 void ContainerWidget::toggleChordMode()
 {
     tab->toggleChordMode();
-}
-
-// Clears the contents of the tablature and staff
-void ContainerWidget::clearTab()
-{
-    tab->clearTab();
-    tab->updateTab();
 }
 
 // Creates the scroll area for the entire viewing area

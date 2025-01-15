@@ -23,8 +23,6 @@ public:
     QWidget *createTempoButton();
     QScrollArea *createScrollArea();
 
-    void clearTab();
-
     // Testing Functions
     int getLayoutSize();
     QWidget *getTabItem(int index);

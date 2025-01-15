@@ -36,11 +36,12 @@ private:
 private slots:
     void onNoteClick();
     void onAccidentalClick();
+    void onResetTabClick();
     void onTimeSignatureClick();
 
 signals:
     void timeSignatureChanged(int beatsPerMeasure, int beatUnit);
-
+    void resetTab();
 };
 
 #endif // MENUBAR_H

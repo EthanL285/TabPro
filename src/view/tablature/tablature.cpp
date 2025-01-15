@@ -604,14 +604,15 @@ void Tablature::updateTab()
     ScoreUpdater::update(staff->getNotes(), staff->getLayout(), staff->getBeatsPerMeasure(), staff);
 }
 
-// Clears the tab
-void Tablature::clearTab()
+// Resets the tab
+void Tablature::resetTab()
 {
     tab.last()->setChecked(true);
     for (int i = staff->getNotes().size() - 1; i >= 0; i--)
     {
         remove();
     }
+    updateTab();
 }
 
 // Creates the scroll area for the tab

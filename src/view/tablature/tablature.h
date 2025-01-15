@@ -25,7 +25,7 @@ public:
     QLabel *createNewTabLine();
 
     void updateTab();
-    void clearTab();
+    void resetTab();
     void addChord(QVector<int> chord);
     void addRest();
     void insertRest(int index);
