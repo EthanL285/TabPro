@@ -1,179 +1,173 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="26.0.2">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="26.0.5">
   <diagram name="Page-1" id="ZHnEIwUeH1aHhkg0L1_h">
-    <mxGraphModel dx="2389" dy="2014" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2910" dy="2296" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="61lvURAlY18TH1YNvSzT-313" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=10;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="61lvURAlY18TH1YNvSzT-282" target="61lvURAlY18TH1YNvSzT-297" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="-130" y="40" />
-              <mxPoint x="145" y="40" />
+              <mxPoint x="-130" y="90" />
+              <mxPoint x="145" y="90" />
             </Array>
-            <mxPoint x="130" y="90" as="targetPoint" />
+            <mxPoint x="130" y="150" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="61lvURAlY18TH1YNvSzT-282" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Note&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- STEM_HEIGHT: 50&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- HEAD_WIDTH: 18&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- HEAD_HEIGHT: 11&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- type: NoteType&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- painter: QPainter&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- staffLines: QVector&amp;lt;int&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- stemHeight: int&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;br&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ getStaffLines(): QVector&amp;lt;int&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# isSingleNote(): boolean&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# isFlipped(): boolean&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# drawExtraLines(staffLine: int): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# drawSingleStem(): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# drawMultiStem(yPos: QVector&amp;lt;int&amp;gt;): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="-255" y="90" width="250" height="320" as="geometry" />
+        <mxCell id="61lvURAlY18TH1YNvSzT-282" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Note&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- type: NoteType&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- painter: QPainter&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- staffLines: QVector&amp;lt;int&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- stemHeight: int&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;br&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ getStaffLines(): QVector&amp;lt;int&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# isSingleNote(): boolean&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# isFlipped(): boolean&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# drawExtraLines(staffLine: int): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# drawSingleStem(): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# drawMultiStem(yPos: QVector&amp;lt;int&amp;gt;): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="-255" y="150" width="250" height="258.76" as="geometry" />
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-311" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endSize=10;" parent="1" source="61lvURAlY18TH1YNvSzT-286" target="61lvURAlY18TH1YNvSzT-282" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="145" y="470" as="targetPoint" />
+            <mxPoint x="145" y="530" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="145" y="470" />
-              <mxPoint x="-130" y="470" />
+              <mxPoint x="145" y="468.76" />
+              <mxPoint x="-130" y="468.76" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-286" value="&lt;p style=&quot;margin: 4px 0px 0px; text-align: center;&quot;&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin: 4px 0px 0px; text-align: center;&quot;&gt;&lt;b style=&quot;&quot;&gt;QuaverFamily&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;# drawFlag(): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;# drawBeam(): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="65" y="510" width="160" height="110" as="geometry" />
+          <mxGeometry x="65" y="508.76" width="160" height="110" as="geometry" />
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-294" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;endSize=10;" parent="1" target="61lvURAlY18TH1YNvSzT-286" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-50" y="600" as="targetPoint" />
-            <mxPoint x="-129.95652173913004" y="700" as="sourcePoint" />
+            <mxPoint x="-50" y="598.76" as="targetPoint" />
+            <mxPoint x="-129.95652173913004" y="698.76" as="sourcePoint" />
             <Array as="points">
-              <mxPoint x="-130" y="660" />
-              <mxPoint x="145" y="660" />
+              <mxPoint x="-130" y="658.76" />
+              <mxPoint x="145" y="658.76" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-292" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;endSize=10;" parent="1" target="61lvURAlY18TH1YNvSzT-286" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="145" y="700" as="sourcePoint" />
+            <mxPoint x="145" y="698.76" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-296" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;endSize=10;" parent="1" target="61lvURAlY18TH1YNvSzT-286" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="425" y="700" as="sourcePoint" />
+            <mxPoint x="425" y="698.76" as="sourcePoint" />
             <Array as="points">
-              <mxPoint x="425" y="660" />
-              <mxPoint x="145" y="660" />
+              <mxPoint x="425" y="658.76" />
+              <mxPoint x="145" y="658.76" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-312" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;endSize=10;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="61lvURAlY18TH1YNvSzT-340" target="61lvURAlY18TH1YNvSzT-282" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-415" y="710" as="sourcePoint" />
+            <mxPoint x="-415" y="770" as="sourcePoint" />
             <Array as="points">
-              <mxPoint x="-415" y="470" />
-              <mxPoint x="-130" y="470" />
+              <mxPoint x="-415" y="468.76" />
+              <mxPoint x="-130" y="468.76" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="61lvURAlY18TH1YNvSzT-316" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamond;endFill=1;endSize=10;startSize=8;entryX=0.333;entryY=0.996;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="61lvURAlY18TH1YNvSzT-315" edge="1">
+        <mxCell id="61lvURAlY18TH1YNvSzT-316" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamond;endFill=1;endSize=10;startSize=8;entryX=0.33;entryY=0.997;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="61lvURAlY18TH1YNvSzT-315" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="146" y="-220" as="targetPoint" />
-            <mxPoint x="145.35000000000002" y="-120" as="sourcePoint" />
+            <mxPoint x="146.53999999999996" y="-150.00000000000023" as="targetPoint" />
+            <mxPoint x="145.35000000000002" y="-38.760000000000005" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="149" y="-39" />
+            </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-297" value="&lt;p style=&quot;margin: 4px 0px 0px; text-align: center;&quot;&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin: 4px 0px 0px; text-align: center;&quot;&gt;&lt;b&gt;RhythmSymbol&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;&lt;i&gt;+ getBeatValue(): double&lt;/i&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="65" y="-120" width="160" height="80" as="geometry" />
+          <mxGeometry x="65" y="-60" width="160" height="70" as="geometry" />
         </mxCell>
         <mxCell id="uu0UymK6C3fd5Xmq3B1f-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;endSize=10;" parent="1" source="61lvURAlY18TH1YNvSzT-304" target="61lvURAlY18TH1YNvSzT-297" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="380" y="40" />
-              <mxPoint x="145" y="40" />
+              <mxPoint x="380" y="90" />
+              <mxPoint x="145" y="90" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-304" value="&lt;p style=&quot;margin: 4px 0px 0px; text-align: center;&quot;&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin: 4px 0px 0px; text-align: center;&quot;&gt;&lt;b&gt;Rest&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="300" y="90" width="160" height="80" as="geometry" />
+          <mxGeometry x="300" y="150" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-309" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;endSize=10;" parent="1" target="61lvURAlY18TH1YNvSzT-304" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="199.9565217391305" y="250" as="sourcePoint" />
+            <mxPoint x="199.9565217391305" y="310" as="sourcePoint" />
             <Array as="points">
-              <mxPoint x="200" y="210" />
-              <mxPoint x="380" y="210" />
+              <mxPoint x="200" y="270" />
+              <mxPoint x="380" y="270" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-308" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;endSize=10;" parent="1" target="61lvURAlY18TH1YNvSzT-304" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="380" y="250" as="sourcePoint" />
+            <mxPoint x="380" y="310" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-310" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=10;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="380" y="170" as="targetPoint" />
-            <mxPoint x="559.9565217391305" y="250" as="sourcePoint" />
+            <mxPoint x="380" y="230" as="targetPoint" />
+            <mxPoint x="559.9565217391305" y="310" as="sourcePoint" />
             <Array as="points">
-              <mxPoint x="560" y="210" />
-              <mxPoint x="380" y="210" />
+              <mxPoint x="560" y="270" />
+              <mxPoint x="380" y="270" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="7g54T-dhEK2xIhRXDeLQ-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endSize=10;endArrow=open;endFill=0;" edge="1" parent="1" source="61lvURAlY18TH1YNvSzT-315" target="uu0UymK6C3fd5Xmq3B1f-7">
+        <mxCell id="7g54T-dhEK2xIhRXDeLQ-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;endSize=10;endArrow=open;endFill=0;" parent="1" source="61lvURAlY18TH1YNvSzT-315" target="e5dnY6fFPtuwyge11Txy-8" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="112" y="-540" />
             </Array>
+            <mxPoint x="112.15000000000009" y="-670" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="61lvURAlY18TH1YNvSzT-315" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b style=&quot;background-color: initial;&quot;&gt;Staff&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;- STAFF_OFFSET: 1&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;- STAFF_SPACING: 7.5&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- INVALID_LINE: -999&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- LINE_COUNT: 5&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- LINE_SPACING: 15&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- menu: MenuBar*&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;-&amp;nbsp;notes: QVector&amp;lt;RhythmSymbol*&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;br&gt;&lt;div&gt;&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;+ updateStaff(): void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp;+ getNotes(): QVector&amp;lt;RhythmSymbol&amp;gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp;+ addNote(staffLines: QVector&amp;lt;int&amp;gt;, index: int, isChord: bool): void&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;+ insertRest(index: int, beat: double): void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp;+ getMeasureInfo(index: int): QPair&amp;lt;QVector&amp;lt;RhythmSymbol*&amp;gt;, int&amp;gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp;+ exceedsMeasure(measure: QVector&amp;lt;RhythmSymbol*&amp;gt;): bool&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;br&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="20" y="-540" width="380" height="310" as="geometry" />
+        <mxCell id="61lvURAlY18TH1YNvSzT-315" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b style=&quot;background-color: initial;&quot;&gt;Staff&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;- beatsPerMeasure: int&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;- beatUnit: int&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- menu: MenuBar*&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;-&amp;nbsp;notes: QVector&amp;lt;RhythmSymbol*&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;br&gt;&lt;div&gt;&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ getBeatsPerMeasure(): int&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp;+ getBeatUnit(): int&lt;/div&gt;&lt;div&gt;&lt;div&gt;&amp;nbsp;+ getNotes(): *QVector&amp;lt;RhythmSymbol&amp;gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;+ updateStaff(): void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;+ addNote(staffLines: QVector&amp;lt;int&amp;gt;, index: int, isChord: bool): void&lt;br&gt;&amp;nbsp;+ insertNote(index: int, symbol: RhythmSymbol*): void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;+ replaceNote(index: int, symbol: RhythmSymbol*): void&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;+ removeNote(index: int, emitSignal: bool): void&lt;br&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp;+ onNoteRemoved(index: int): void&lt;/div&gt;&lt;div&gt;&amp;nbsp;+ onTimeSignatureChanged(beatsPerMeasure: int, beatUnit: int): void&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;br&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="20" y="-540" width="390" height="340" as="geometry" />
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-324" value="&lt;b&gt;1&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="153.13" y="-230" width="20" height="30" as="geometry" />
+          <mxGeometry x="153.13" y="-200" width="20" height="30" as="geometry" />
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-325" value="&lt;b&gt;0..*&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="153.13" y="-150" width="30" height="30" as="geometry" />
+          <mxGeometry x="153.13" y="-90" width="30" height="30" as="geometry" />
         </mxCell>
         <mxCell id="uu0UymK6C3fd5Xmq3B1f-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamond;endFill=1;endSize=10;" parent="1" source="61lvURAlY18TH1YNvSzT-331" target="61lvURAlY18TH1YNvSzT-315" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="270" y="-220" as="targetPoint" />
+            <mxPoint x="270.090909090909" y="-148.76" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="464" y="-170" />
-              <mxPoint x="270" y="-170" />
+              <mxPoint x="464" y="-140" />
+              <mxPoint x="270" y="-140" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-331" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;BarLine&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- height: int&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;# paintEvent(event: QPaintEvent*): void&lt;/p&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="350" y="-120" width="227.5" height="80" as="geometry" />
+          <mxGeometry x="350" y="-60" width="227.5" height="80" as="geometry" />
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-334" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;QuarterRest&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ getBeatValue(): double&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="480" y="250" width="160" height="80" as="geometry" />
+          <mxGeometry x="480" y="310" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-335" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;HalfRest&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ getBeatValue(): double&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="300" y="250" width="160" height="80" as="geometry" />
+          <mxGeometry x="300" y="310" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-336" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;WholeRest&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ getBeatValue(): double&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="120" y="250" width="160" height="80" as="geometry" />
+          <mxGeometry x="120" y="310" width="160" height="80" as="geometry" />
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-337" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Quaver&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getBeatValue(): double&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;# paintEvent(event: QPaintEvent*): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;# drawFlag()&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;# drawBeam()&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="300" y="700" width="250" height="140" as="geometry" />
+          <mxGeometry x="300" y="698.76" width="250" height="140" as="geometry" />
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-338" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;SemiQuaver&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getBeatValue(): double&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;# paintEvent(event: QPaintEvent*): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;# drawFlag()&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;# drawBeam()&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="20" y="700" width="250" height="140" as="geometry" />
+          <mxGeometry x="20" y="698.76" width="250" height="140" as="geometry" />
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-339" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;DemiQuaver&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getBeatValue(): double&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;# paintEvent(event: QPaintEvent*): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;# drawFlag()&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;# drawBeam()&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="-260" y="700" width="250" height="140" as="geometry" />
+          <mxGeometry x="-260" y="698.76" width="250" height="140" as="geometry" />
         </mxCell>
         <mxCell id="61lvURAlY18TH1YNvSzT-340" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Crotchet&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getBeatValue(): double&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;# paintEvent(event: QPaintEvent*): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="-540" y="700" width="250" height="110" as="geometry" />
+          <mxGeometry x="-540" y="698.76" width="250" height="110" as="geometry" />
         </mxCell>
         <mxCell id="sgIyxewJTq29KD3pFsZS-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endSize=10;endArrow=diamond;endFill=1;" parent="1" source="61lvURAlY18TH1YNvSzT-331" target="sgIyxewJTq29KD3pFsZS-2" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="715.0999999999999" y="-140" as="sourcePoint" />
             <Array as="points">
-              <mxPoint x="464" y="-170" />
-              <mxPoint x="705" y="-170" />
+              <mxPoint x="464" y="-140" />
+              <mxPoint x="705" y="-140" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="sgIyxewJTq29KD3pFsZS-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;endArrow=open;endFill=0;endSize=10;" parent="1" edge="1">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="470" y="-425" />
-              <mxPoint x="470" y="-425" />
-            </Array>
-            <mxPoint x="510" y="-500" as="sourcePoint" />
-            <mxPoint x="400" y="-424.9999999999998" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="7g54T-dhEK2xIhRXDeLQ-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeColor=default;endArrow=diamond;endFill=1;endSize=10;" edge="1" parent="1" source="sgIyxewJTq29KD3pFsZS-2" target="7g54T-dhEK2xIhRXDeLQ-1">
+        <mxCell id="7g54T-dhEK2xIhRXDeLQ-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeColor=default;endArrow=diamond;endFill=1;endSize=10;" parent="1" source="sgIyxewJTq29KD3pFsZS-2" target="7g54T-dhEK2xIhRXDeLQ-1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="695" y="-490" />
@@ -181,45 +175,49 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="7g54T-dhEK2xIhRXDeLQ-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endSize=10;endArrow=open;endFill=0;" edge="1" parent="1" source="sgIyxewJTq29KD3pFsZS-2" target="uu0UymK6C3fd5Xmq3B1f-7">
+        <mxCell id="7g54T-dhEK2xIhRXDeLQ-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endSize=10;endArrow=open;endFill=0;" parent="1" source="sgIyxewJTq29KD3pFsZS-2" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="603" y="-630" />
               <mxPoint x="112" y="-630" />
             </Array>
+            <mxPoint x="112.15000000000009" y="-670" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="sgIyxewJTq29KD3pFsZS-2" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Tablature&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- TAB_OFFSET: 1&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- tab: QVector&amp;lt;QPushButton*&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- selectedColumn: QPushButton*&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- staff: Staff*&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- BPM: int&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;br&gt;&lt;div&gt;&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;+ updateTab(): void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp;+ addFretNumber(): void&lt;/div&gt;&lt;div&gt;&amp;nbsp;+ insertRest(index: int): void&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="510" y="-540" width="370" height="230" as="geometry" />
+        <mxCell id="e5dnY6fFPtuwyge11Txy-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;endFill=0;endSize=10;" edge="1" parent="1" source="sgIyxewJTq29KD3pFsZS-2" target="61lvURAlY18TH1YNvSzT-315">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="480" y="-370" />
+              <mxPoint x="480" y="-370" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sgIyxewJTq29KD3pFsZS-2" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Tablature&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- tab: QVector&amp;lt;QPushButton*&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- selectedColumn: QPushButton*&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- staff: Staff*&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;- tempo: QTimer*&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;- BPM: int&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;+ updateTab(): void&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp;+ resetTab(): void&lt;/div&gt;&lt;div&gt;&amp;nbsp;+ addFretNumber(): void&lt;/div&gt;&lt;div&gt;&amp;nbsp;+ addChord(QVector&amp;lt;int&amp;gt; chord): void&lt;/div&gt;&lt;div&gt;&amp;nbsp;+ addRest(): void&lt;/div&gt;&lt;div&gt;&amp;nbsp;+ remove(): void&lt;br&gt;&lt;br&gt;&amp;nbsp;+ playTab(): void&lt;br&gt;&amp;nbsp;+ goLeft(): void&lt;/div&gt;&lt;div&gt;&amp;nbsp;+ goRight(): void&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="510" y="-540" width="370" height="320" as="geometry" />
         </mxCell>
         <mxCell id="sgIyxewJTq29KD3pFsZS-4" value="&lt;b&gt;0..*&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="470" y="-150" width="30" height="30" as="geometry" />
+          <mxGeometry x="470" y="-90" width="30" height="30" as="geometry" />
         </mxCell>
         <mxCell id="sgIyxewJTq29KD3pFsZS-5" value="&lt;b&gt;1&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="714.38" y="-300" width="20" height="30" as="geometry" />
+          <mxGeometry x="710" y="-210" width="20" height="30" as="geometry" />
         </mxCell>
         <mxCell id="uu0UymK6C3fd5Xmq3B1f-3" value="&lt;b&gt;1&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="280" y="-230" width="20" height="30" as="geometry" />
+          <mxGeometry x="280" y="-200" width="20" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="uu0UymK6C3fd5Xmq3B1f-7" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ScoreUpdater&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;- STAFF_HEIGHT: 28&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;- TAB_HEIGHT: 92&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+&amp;nbsp;&lt;u&gt;update(notes: QVector&amp;lt;RhythmSymbol*&amp;gt;&amp;amp;, layout: QBoxLayout*, signature: int, tab: Tablature*): int&lt;/u&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+&amp;nbsp;&lt;u&gt;update(notes: QVector&amp;lt;RhythmSymbol*&amp;gt;&amp;amp;, layout: QBoxLayout*, signature: int, staff: Staff*): int&lt;/u&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ &lt;u&gt;updateBarLines(notes: QVector&amp;lt;RhythmSymbol*&amp;gt;&amp;amp;, layout: QBoxLayout*, signature: int, tab: Tablature*, staff: Staff*): int&lt;/u&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="-219.99999999999994" y="-850" width="664.3" height="180" as="geometry" />
+        <mxCell id="uu0UymK6C3fd5Xmq3B1f-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=open;endFill=0;endSize=10;exitX=-0.001;exitY=0.557;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="e5dnY6fFPtuwyge11Txy-7" target="61lvURAlY18TH1YNvSzT-304" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="640" y="190" as="sourcePoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="uu0UymK6C3fd5Xmq3B1f-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=open;endFill=0;endSize=10;" parent="1" source="uu0UymK6C3fd5Xmq3B1f-13" target="61lvURAlY18TH1YNvSzT-304" edge="1">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="uu0UymK6C3fd5Xmq3B1f-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endSize=10;endArrow=open;endFill=0;" parent="1" source="e5dnY6fFPtuwyge11Txy-6" target="61lvURAlY18TH1YNvSzT-282" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-320" y="279" as="sourcePoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="uu0UymK6C3fd5Xmq3B1f-13" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;RestFactory&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;u&gt;&lt;br&gt;&lt;/u&gt;&lt;div&gt;&amp;nbsp;+ &lt;u&gt;createRest(beatValue: int)&lt;/u&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp;+ &lt;u&gt;createRest(type: NoteType)&lt;/u&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="640" y="70" width="180" height="120" as="geometry" />
+        <mxCell id="7g54T-dhEK2xIhRXDeLQ-1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ContainerWidget&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- menu: MenuBar*&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- staff: Staff*&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- tab: Tablature*&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- sound: Sound*&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ createFretButtons(): void&lt;br&gt;+ createFretButtons(): void&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ createTechniqueButtons(): void&lt;br&gt;+ createPlaybackButtons(): void&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ createTempoButton(): void&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ createScrollArea(): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="530" y="-920" width="330" height="250" as="geometry" />
         </mxCell>
-        <mxCell id="uu0UymK6C3fd5Xmq3B1f-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endSize=10;endArrow=open;endFill=0;" parent="1" source="uu0UymK6C3fd5Xmq3B1f-14" target="61lvURAlY18TH1YNvSzT-282" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="uu0UymK6C3fd5Xmq3B1f-14" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;NoteFactory&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;br&gt;&lt;div&gt;&amp;nbsp;+ &lt;u&gt;createNote(type: NoteType, staffLines: QVector&amp;lt;int&amp;gt;)&lt;/u&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="-630" y="195" width="310" height="110" as="geometry" />
-        </mxCell>
-        <mxCell id="7g54T-dhEK2xIhRXDeLQ-1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ContainerWidget&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- menu: MenuBar*&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- staff: Staff*&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- tab: Tablature*&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- guitarLayout: QHBoxLayout*&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- tabLayout: QVBoxLayout*&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- fretLayout: QGridLayout*&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ getFretButton(row: int, col: int): QPushButton*&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getSelectedNoteButton(type: NoteType): QPushButton*&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getTechniqueButton(symbol: QString): QPushButton*&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getNotes(): QVector&amp;lt;RhythmSymbol*&amp;gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" vertex="1" parent="1">
-          <mxGeometry x="530" y="-930" width="330" height="260" as="geometry" />
-        </mxCell>
-        <mxCell id="7g54T-dhEK2xIhRXDeLQ-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeColor=default;endArrow=diamond;endFill=1;endSize=10;" edge="1" parent="1" source="7g54T-dhEK2xIhRXDeLQ-2" target="7g54T-dhEK2xIhRXDeLQ-1">
+        <mxCell id="7g54T-dhEK2xIhRXDeLQ-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeColor=default;endArrow=diamond;endFill=1;endSize=10;" parent="1" source="7g54T-dhEK2xIhRXDeLQ-2" target="7g54T-dhEK2xIhRXDeLQ-1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1140" y="-600" />
@@ -227,28 +225,37 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="7g54T-dhEK2xIhRXDeLQ-2" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;MenuBar&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- QMenu *fileMenu&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- notes: QMap&amp;lt;QString, NoteType&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- accidentals: QMap&amp;lt;QString, AccidentalTypes&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- selectedNote: QPair&amp;lt;NoteType, QPushButton*&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- selectedAccidental: QPair&amp;lt;AccidentalType, QPushButton*&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getSelectedNote(): NoteType&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getSelectedAccidental(): AccidentalType&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getTimeSignature(): int&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ getNoteButton(note: NoteType): QPushButton*&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" vertex="1" parent="1">
-          <mxGeometry x="970" y="-540" width="340" height="250" as="geometry" />
+        <mxCell id="7g54T-dhEK2xIhRXDeLQ-2" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;MenuBar&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- QMenu *fileMenu&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- notes: QMap&amp;lt;QString, NoteType&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- accidentals: QMap&amp;lt;QString, AccidentalTypes&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- selectedNote: QPair&amp;lt;NoteType, QPushButton*&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- selectedAccidental: QPair&amp;lt;AccidentalType, QPushButton*&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getSelectedNote(): NoteType&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+ getSelectedAccidental(): AccidentalType&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&amp;nbsp;- onNoteClick(): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&amp;nbsp;- onAccidentalClick(): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&amp;nbsp;- onResetTabClick(): void&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&amp;nbsp;- onTimeSignatureClick(): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="970" y="-540" width="340" height="280" as="geometry" />
         </mxCell>
-        <mxCell id="7g54T-dhEK2xIhRXDeLQ-6" value="&lt;b&gt;1&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="7g54T-dhEK2xIhRXDeLQ-6" value="&lt;b&gt;1&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="703.75" y="-670" width="20" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="7g54T-dhEK2xIhRXDeLQ-7" value="&lt;b&gt;1&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="7g54T-dhEK2xIhRXDeLQ-7" value="&lt;b&gt;1&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="220" y="-570" width="20" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="7g54T-dhEK2xIhRXDeLQ-8" value="&lt;b&gt;1&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="7g54T-dhEK2xIhRXDeLQ-8" value="&lt;b&gt;1&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="703.75" y="-570" width="20" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="7g54T-dhEK2xIhRXDeLQ-11" value="&lt;b&gt;1&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="7g54T-dhEK2xIhRXDeLQ-11" value="&lt;b&gt;1&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="1150" y="-570" width="20" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="7g54T-dhEK2xIhRXDeLQ-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=diamond;endFill=1;endSize=10;jumpStyle=arc;jumpSize=15;" edge="1" parent="1" source="61lvURAlY18TH1YNvSzT-315" target="7g54T-dhEK2xIhRXDeLQ-1">
+        <mxCell id="7g54T-dhEK2xIhRXDeLQ-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=diamond;endFill=1;endSize=10;jumpStyle=arc;jumpSize=15;" parent="1" source="61lvURAlY18TH1YNvSzT-315" target="7g54T-dhEK2xIhRXDeLQ-1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="210" y="-600" />
               <mxPoint x="695" y="-600" />
             </Array>
           </mxGeometry>
+        </mxCell>
+        <mxCell id="e5dnY6fFPtuwyge11Txy-6" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;NoteFactory&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;div style=&quot;height:2px;&quot;&gt;&lt;div&gt;&amp;nbsp;&lt;/div&gt;&lt;div&gt;&amp;nbsp;+&amp;nbsp;&lt;u&gt;createNote(type: NoteType, staffLines: QVector&amp;lt;int&amp;gt;)&lt;/u&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="-630" y="236.57" width="310" height="85.62" as="geometry" />
+        </mxCell>
+        <mxCell id="e5dnY6fFPtuwyge11Txy-7" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;RestFactory&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;div style=&quot;height:2px;&quot;&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;+&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;u style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;createRest(beatValue: int)&lt;/u&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp;+&amp;nbsp;&lt;u&gt;createRest(type: NoteType)&lt;/u&gt;&lt;/div&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="640" y="140" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e5dnY6fFPtuwyge11Txy-8" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ScoreUpdater&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;div style=&quot;height:2px;&quot;&gt;&lt;div&gt;&amp;nbsp;&lt;/div&gt;&lt;div&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+&amp;nbsp;&lt;u&gt;update(notes: QVector&amp;lt;RhythmSymbol*&amp;gt;&amp;amp;, layout: QBoxLayout*, signature: int, tab: Tablature*): int&lt;/u&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+&amp;nbsp;&lt;u&gt;update(notes: QVector&amp;lt;RhythmSymbol*&amp;gt;&amp;amp;, layout: QBoxLayout*, signature: int, staff: Staff*): int&lt;/u&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;+&amp;nbsp;&lt;u&gt;updateBarLines(notes: QVector&amp;lt;RhythmSymbol*&amp;gt;&amp;amp;, layout: QBoxLayout*, signature: int, tab: Tablature*, staff: Staff*): int&lt;/u&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="-220" y="-780" width="660" height="110" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
