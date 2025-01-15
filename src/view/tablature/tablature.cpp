@@ -67,6 +67,12 @@ Tablature::Tablature(Sound *sound, Staff *staff, QWidget *parent)
      */
 }
 
+// Sets the play button of the tab
+void Tablature::setPlayButton(QPushButton *button)
+{
+    playButton = button;
+}
+
 // Returns the layout item at the given index
 QWidget *Tablature::getLayoutItem(int index)
 {
@@ -152,7 +158,7 @@ void Tablature::goRight()
 }
 
 // Plays the entire tab
-void Tablature::playTab(QPushButton *play)
+void Tablature::playTab()
 {
     // Stop timer if user pauses the tab
     if (tempo != nullptr)
@@ -160,13 +166,6 @@ void Tablature::playTab(QPushButton *play)
         stopTempoTimer();
         return;
     }
-
-    // Assign play button
-    if (playButton == nullptr)
-    {
-        playButton = play;
-    }
-
     // Play tab from the selected column onwards OR beginning if the last column is selected
     index = getSelectedColumnIndex();
     if (index == tab.size() - 1)

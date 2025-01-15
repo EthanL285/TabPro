@@ -19,6 +19,7 @@ class Tablature : public QWidget
     Q_OBJECT
 public:
     explicit Tablature(Sound *sound, Staff *staff, QWidget *parent = nullptr);
+    void setPlayButton(QPushButton *button);
     QWidget *getLayoutItem(int index);
     QPushButton *createRest();
     QScrollArea *createScrollArea();
@@ -38,7 +39,7 @@ public slots:
     void addFretNumber();
     void goLeft();
     void goRight();
-    void playTab(QPushButton *play);
+    void playTab();
     void playColumn();
     void getColumnInfo();
     void stopTempoTimer();

@@ -198,10 +198,8 @@ void ContainerWidget::createPlaybackButtons()
         "}"
     );
     playbackLayout->addWidget(play);
-    connect(play, &QPushButton::clicked, tab, [=]()
-    {
-        tab->playTab(play);
-    });
+    tab->setPlayButton(play);
+    connect(play, &QPushButton::clicked, tab, &Tablature::playTab);
 
     // Go right button
     QPushButton *right = new QPushButton();
