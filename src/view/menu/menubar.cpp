@@ -1,13 +1,15 @@
 #include "menubar.h"
 #include "resetbutton.h"
-#include "containerwidget.h"
 #include "signaturebutton.h"
+#include "signaturelabel.h"
 
 #include <QVBoxLayout>
 #include <QGraphicsDropShadowEffect>
 #include <QDockWidget>
 #include <QPushButton>
 #include <QLabel>
+#include <QWidgetAction>
+#include <QFontDatabase>
 
 MenuBar::MenuBar(QWidget *parent)
     : QWidget{parent}
@@ -56,7 +58,6 @@ MenuBar::MenuBar(QWidget *parent)
         connect(signButton, &QPushButton::clicked, this, &MenuBar::onAccidentalClick);
         menuLayout->addWidget(signButton);
     }
-    // Divider
     menuLayout->addLayout(createDivider());
 
     // Note buttons
@@ -73,13 +74,20 @@ MenuBar::MenuBar(QWidget *parent)
             selectedNote = qMakePair(NoteType::Crotchet, noteButton);
         }
     } 
-    // Divider
     menuLayout->addLayout(createDivider());
 
-    // Time signature button
+    // Time signature button and menu
     QPushButton *timeSignature = new SignatureButton();
     menuLayout->addWidget(timeSignature);
     connect(timeSignature, &QPushButton::clicked, this, &MenuBar::onTimeSignatureClick);
+
+    QMenu *timeSignatureMenu = createTimeSignatureMenu();
+    connect(timeSignature, &QPushButton::clicked, [timeSignature, timeSignatureMenu]()
+    {
+        int x = timeSignature->mapToGlobal(QPoint(0, 0)).x() + 5 + (timeSignature->width() - timeSignatureMenu->sizeHint().width()) / 2;
+        int y = timeSignature->mapToGlobal(QPoint(0, 0)).y() + 7 + timeSignature->height();
+        timeSignatureMenu->exec(QPoint(x, y));
+    });
 
     // Separate music and utility buttons
     QSpacerItem *menuSpacer = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -136,6 +144,51 @@ QHBoxLayout *MenuBar::createDivider()
     dividerLayout->addSpacerItem(spacer2);
 
     return dividerLayout;
+}
+
+// Creates the menu of the time signature button
+QMenu *MenuBar::createTimeSignatureMenu()
+{
+    QMenu *menu = new QMenu();
+    QWidget *gridWidget = new QWidget();
+    QGridLayout *gridLayout = new QGridLayout(gridWidget);
+    gridLayout->setSpacing(10);
+
+    // Default time signatures
+    for (int i = 0; i < 3; i++)
+    {
+        QString text = QString("\uE09E%1\uE09F\uE084").arg(QChar(0xE084 - i));
+        QLabel *label = new SignatureLabel(text);
+        gridLayout->addWidget(label, 0, i);
+    }
+    // Divider
+    QWidget *divider = new QWidget();
+    divider->setFixedSize(100, 1);
+    divider->setStyleSheet("background-color: gray;");
+    gridLayout->addWidget(divider, 1, 0, 1, 3, Qt::AlignCenter);
+
+    // Custom time signature
+    QLabel *custom = new QLabel("Custom");
+    custom->setCursor(Qt::PointingHandCursor);
+    custom->setAlignment(Qt::AlignCenter);
+    custom->setStyleSheet
+    (
+        "QLabel {"
+        "   color: gray;"
+        "   font: 600 10pt Moon;"
+        "}"
+        "QLabel:hover { "
+        "   color: white;"
+        "}"
+    );
+    gridLayout->addWidget(custom, 2, 0, 1, 3);
+
+    // Action widget
+    QWidgetAction *action = new QWidgetAction(this);
+    action->setDefaultWidget(gridWidget);
+    menu->addAction(action);
+
+    return menu;
 }
 
 // Selects the corresponding note when button is clicked

@@ -1,8 +1,12 @@
 #include "signaturebutton.h"
 
+#define COMMON_TIME "\uE09E\uE084\uE09F\uE084"
+
 SignatureButton::SignatureButton(QWidget *parent)
     : QPushButton{parent}
 {
+    setText(COMMON_TIME);
+    setFont(QFont("Bravura Text", 20));
     setFixedSize(40,23);
     setCursor(Qt::PointingHandCursor);
     setToolTip("Time Signature");
@@ -10,12 +14,10 @@ SignatureButton::SignatureButton(QWidget *parent)
     setStyleSheet
     (
         "QPushButton {"
-        "   image: url(:/menubar/menubar/Time Signature.png);"
-        "   background-color: transparent;"
         "   border: none;"
         "}"
         "QPushButton:hover {"
-        "   image: url(:/menubar/menubar/Time Signature Hover.png)"
+        "   color: rgb(70, 129, 232)"
         "}"
     );
 }

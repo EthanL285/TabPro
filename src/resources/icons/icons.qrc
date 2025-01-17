@@ -42,8 +42,4 @@
         <file>miscellaneous/trash hover.png</file>
         <file>miscellaneous/trash.png</file>
     </qresource>
-    <qresource prefix="/menubar">
-        <file>menubar/Time Signature.png</file>
-        <file>menubar/Time Signature Hover.png</file>
-    </qresource>
 </RCC>

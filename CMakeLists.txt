@@ -77,6 +77,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/view/components/buttons/resetbutton.h src/view/components/buttons/resetbutton.cpp
         tests/view/tablature/testtablature.h tests/view/tablature/testtablature.cpp
         src/view/components/buttons/signaturebutton.h src/view/components/buttons/signaturebutton.cpp
+        src/view/components/labels/signaturelabel.h src/view/components/labels/signaturelabel.cpp
+
 
 
 
@@ -122,6 +124,7 @@ target_include_directories(
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/menu
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/user
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/components/buttons
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/components/labels
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/notes
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/accidentals

@@ -24,6 +24,7 @@ public:
 private:
     QPushButton *createButton(QString text, int fontSize);
     QHBoxLayout *createDivider();
+    QMenu *createTimeSignatureMenu();
 
     QWidget *menuWidget;
     QMenuBar *menuBar;
