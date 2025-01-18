@@ -8,7 +8,7 @@ class SignatureButton : public QPushButton
 {
     Q_OBJECT
 public:
-    explicit SignatureButton(QWidget *parent = nullptr);
+    explicit SignatureButton(QString text, QSize size, int fontSize, QString toolTip, QWidget *parent = nullptr);
 
 signals:
 };

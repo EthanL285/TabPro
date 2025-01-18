@@ -1,7 +1,8 @@
 #include "menubar.h"
 #include "resetbutton.h"
 #include "signaturebutton.h"
-#include "signaturelabel.h"
+
+#define COMMON_TIME "\uE09E\uE084\uE09F\uE084"
 
 #include <QVBoxLayout>
 #include <QGraphicsDropShadowEffect>
@@ -77,7 +78,7 @@ MenuBar::MenuBar(QWidget *parent)
     menuLayout->addLayout(createDivider());
 
     // Time signature button and menu
-    QPushButton *timeSignature = new SignatureButton();
+    QPushButton *timeSignature = new SignatureButton(COMMON_TIME, QSize(40,23), 20, "Time Signature");
     menuLayout->addWidget(timeSignature);
     connect(timeSignature, &QPushButton::clicked, this, &MenuBar::onTimeSignatureClick);
 
@@ -149,7 +150,7 @@ QHBoxLayout *MenuBar::createDivider()
 // Creates the menu of the time signature button
 QMenu *MenuBar::createTimeSignatureMenu()
 {
-    QMenu *menu = new QMenu();
+    QMenu *menu = new QMenu(this);
     QWidget *gridWidget = new QWidget();
     QGridLayout *gridLayout = new QGridLayout(gridWidget);
     gridLayout->setSpacing(10);
@@ -158,8 +159,8 @@ QMenu *MenuBar::createTimeSignatureMenu()
     for (int i = 0; i < 3; i++)
     {
         QString text = QString("\uE09E%1\uE09F\uE084").arg(QChar(0xE084 - i));
-        QLabel *label = new SignatureLabel(text);
-        gridLayout->addWidget(label, 0, i);
+        QPushButton *button = new SignatureButton(text, QSize(30,30), 25, "");
+        gridLayout->addWidget(button, 0, i);
     }
     // Divider
     QWidget *divider = new QWidget();
@@ -168,16 +169,16 @@ QMenu *MenuBar::createTimeSignatureMenu()
     gridLayout->addWidget(divider, 1, 0, 1, 3, Qt::AlignCenter);
 
     // Custom time signature
-    QLabel *custom = new QLabel("Custom");
+    QPushButton *custom = new QPushButton("Custom");
     custom->setCursor(Qt::PointingHandCursor);
-    custom->setAlignment(Qt::AlignCenter);
     custom->setStyleSheet
     (
-        "QLabel {"
+        "QPushButton {"
+        "   background: transparent;"
         "   color: gray;"
         "   font: 600 10pt Moon;"
         "}"
-        "QLabel:hover { "
+        "QPushButton:hover { "
         "   color: white;"
         "}"
     );

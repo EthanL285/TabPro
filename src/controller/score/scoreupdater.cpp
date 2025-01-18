@@ -54,7 +54,7 @@ void ScoreUpdater::updateBarLines(const QVector<RhythmSymbol*> &notes, QBoxLayou
         }
     }
     // Add new barlines to layout
-    int count = 1;
+    int count = (tab) ? Tablature::TAB_OFFSET : Staff::STAFF_OFFSET;
     for (int idx : newBarlineIdx)
     {
         int barHeight = (tab) ? TAB_HEIGHT : STAFF_HEIGHT;

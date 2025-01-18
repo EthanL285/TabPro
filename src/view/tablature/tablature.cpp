@@ -2,6 +2,8 @@
 #include "scoreupdater.h"
 #include "note.h"
 #include "restfactory.h"
+#include "enabledrestbutton.h"
+#include "disabledrestbutton.h"
 
 #include <QTimer>
 #include <QRegularExpression>
@@ -17,7 +19,7 @@ Tablature::Tablature(Sound *sound, Staff *staff, QWidget *parent)
     tabLayout->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
     tabLayout->setSpacing(0);
 
-    // Create tablature display box
+    // Tablature display box
     QFrame *frame = new QFrame();
     frame->setStyleSheet("background-color: rgb(23,23,23)");
     frame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding); // Size policy is handled in guitar.cpp
@@ -56,6 +58,10 @@ Tablature::Tablature(Sound *sound, Staff *staff, QWidget *parent)
     QLabel *strings = createNewTabLine();
     columnLayout->addWidget(strings);
 
+    for (int i = 0; i < 2; i++)
+    {
+        columnLayout->addWidget(new DisabledRestButton());
+    }
     addRest();
 
     /*
@@ -355,27 +361,11 @@ void Tablature::toggleChordMode()
     staff->toggleChordMode();
 }
 
-// Creates the rest QPushButton
+// Creates a new rest button
 QPushButton *Tablature::createRest()
 {
-    QPushButton *rest = new QPushButton(EMPTY_COLUMN);
-
-    rest->setFixedSize(35, 205);
-    rest->setCheckable(true);
-    rest->setCursor(Qt::PointingHandCursor);
-    rest->setFocusPolicy(Qt::NoFocus);
-    rest->setStyleSheet
-    (
-        "QPushButton { "
-        "   border-radius: 1px;"
-        "   background-color: rgb(23,23,23);"
-        "   font: 20pt Consolas;"
-        "}"
-        "QPushButton:hover { "
-        "   background-color: rgb(75,75,75);"
-        "}"
-    );
-    connect(rest, &QPushButton::toggled, this, &Tablature::selectColumn); // Automatically passes parameter 'checked' to slot
+    QPushButton *rest = new EnabledRestButton();
+    connect(rest, &QPushButton::toggled, this, &Tablature::selectColumn);
     return rest;
 }
 
@@ -400,7 +390,7 @@ void Tablature::insertRest(int index)
 
     // Add rest to layout
     int count = 0;
-    for (int i = 1; i < columnLayout->count() + 1; i++)
+    for (int i = TAB_OFFSET; i < columnLayout->count() + 1; i++)
     {
         if (count == index)
         {

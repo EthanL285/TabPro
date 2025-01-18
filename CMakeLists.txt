@@ -77,7 +77,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/view/components/buttons/resetbutton.h src/view/components/buttons/resetbutton.cpp
         tests/view/tablature/testtablature.h tests/view/tablature/testtablature.cpp
         src/view/components/buttons/signaturebutton.h src/view/components/buttons/signaturebutton.cpp
-        src/view/components/labels/signaturelabel.h src/view/components/labels/signaturelabel.cpp
+        src/view/components/buttons/disabledrestbutton.h src/view/components/buttons/disabledrestbutton.cpp
+        src/view/components/buttons/enabledrestbutton.h src/view/components/buttons/enabledrestbutton.cpp
+
 
 
 

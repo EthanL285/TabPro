@@ -42,7 +42,7 @@ void TabProController::createTab(QString tab)
 void TabProController::verifyTab(QString expectedTab)
 {
     int idx = 0;
-    int tabSize = widget->getLayoutSize() - 1;
+    int tabSize = widget->getLayoutSize() - Tablature::TAB_OFFSET;
     bool endsWithBarline = expectedTab.endsWith("|");
 
     // Parse string
@@ -88,7 +88,7 @@ void TabProController::verifyTab(QString expectedTab)
 void TabProController::verifyStaff(QString expectedTab)
 {
     int idx = 0;
-    int tabSize = widget->getLayoutSize() - 1;
+    int tabSize = widget->getLayoutSize() - Staff::STAFF_OFFSET;
     bool endsWithBarline = expectedTab.endsWith("|");
 
     QMap<QString, QString> map =

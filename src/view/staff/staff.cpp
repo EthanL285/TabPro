@@ -8,6 +8,7 @@
 #include <QFrame>
 #include <QLabel>
 #include <QPainter>
+#include <QGraphicsOpacityEffect>
 
 #define DEFAULT_HEIGHT 185
 #define LINE_COUNT 5
@@ -19,19 +20,33 @@ Staff::Staff(MenuBar *menu, QWidget *parent)
     setFixedHeight(DEFAULT_HEIGHT);
     mainLayout = new QHBoxLayout(this);
     mainLayout->setAlignment(Qt::AlignLeft);
-    mainLayout->setContentsMargins(0,0,0,0);
+    mainLayout->setContentsMargins(16,0,0,0);
     mainLayout->setSpacing(0);
 
-    QPixmap trebleClef(":/notes/notes/Treble Clef.png");
-    QSize size(145,145);
-    trebleClef = trebleClef.scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    // Clef
+    QLabel *trebleClef = new QLabel("\uE050");
+    trebleClef->setFont(QFont("Bravura Text", 57));
+    trebleClef->setFixedSize(57, 150);
+    trebleClef->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    mainLayout->addWidget(trebleClef, Qt::AlignVCenter);
 
-    QLabel *trebleClefLabel = new QLabel();
-    trebleClefLabel->setPixmap(trebleClef);
-    trebleClefLabel->setAlignment(Qt::AlignLeft);
-    trebleClefLabel->setFixedSize(86,150);
-    trebleClefLabel->setStyleSheet("background: transparent;");
-    mainLayout->addWidget(trebleClefLabel, Qt::AlignVCenter);
+    // Key Signature
+    QLabel *keySignature = new QLabel("\uE261");
+    keySignature->setFont(QFont("Bravura Text", 57));
+    keySignature->setFixedWidth(25);
+    keySignature->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    mainLayout->addWidget(keySignature, Qt::AlignVCenter);
+
+    QGraphicsOpacityEffect *opacity = new QGraphicsOpacityEffect(keySignature);
+    opacity->setOpacity(0.5);
+    keySignature->setGraphicsEffect(opacity);
+
+    // Time Signature
+    QLabel *timeSignature = new QLabel("\uE09E\uE084\uE09F\uE084");
+    timeSignature->setFont(QFont("Bravura Text", 57));
+    timeSignature->setFixedWidth(50);
+    timeSignature->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    mainLayout->addWidget(timeSignature, Qt::AlignVCenter);
 
     stringMap = createStringMap();
     noteMap = createNoteMap();
@@ -250,7 +265,7 @@ void Staff::addNoteToLayout(int index, RhythmSymbol *symbol)
 {
     // Exclude bar lines from index
     int count = 0;
-    for (int i = 1; i < mainLayout->count() + 1; i++)
+    for (int i = STAFF_OFFSET; i < mainLayout->count() + 1; i++)
     {
         if (count == index)
         {
@@ -326,7 +341,7 @@ QPair<QVector<RhythmSymbol*>, int> Staff::getMeasureInfo(int index)
 
     // Count number of barlines before measure
     int count = 0;
-    for (int i = 0; i < index + count + STAFF_OFFSET; i++)
+    for (int i = 0; i < index + count; i++)
     {
         QWidget *widget = mainLayout->itemAt(i + STAFF_OFFSET)->widget();
         if (dynamic_cast<BarLine*>(widget)) count++;
@@ -341,7 +356,7 @@ QPair<QVector<RhythmSymbol*>, int> Staff::getMeasureInfo(int index)
         measure.append(dynamic_cast<RhythmSymbol*>(widget));
     }
     // Collect notes before the current note until the previous barline
-    for (int i = index + offset - 1; i > 0; i--)
+    for (int i = index + offset - 1; i >= STAFF_OFFSET; i--)
     {
         QWidget *widget = mainLayout->itemAt(i)->widget();
         if (dynamic_cast<BarLine*>(widget)) break;

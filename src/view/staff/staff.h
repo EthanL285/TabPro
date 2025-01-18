@@ -9,7 +9,6 @@
 #include <QPixmap>
 
 #define UPDATE_LINE 11
-#define STAFF_OFFSET 1
 
 class Staff : public QWidget
 {
@@ -41,6 +40,7 @@ public:
     bool exceedsMeasure(QVector<RhythmSymbol*> measure);
     double getBeats(QVector<RhythmSymbol*> measure);
 
+    static constexpr int STAFF_OFFSET = 3;
     static constexpr int INVALID_LINE = -999;
     static constexpr double STAFF_SPACING = 7.5;
 
@@ -51,7 +51,7 @@ private:
     QHBoxLayout *mainLayout;
     int beatsPerMeasure = 4;
     int beatUnit = 4;
-    int length = 95;
+    int length = 150;
     int highestLine = UPDATE_LINE;
     bool chordMode = false;
 

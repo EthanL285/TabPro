@@ -33,9 +33,6 @@
         <file>scroll/scroll right.png</file>
         <file>scroll/scroll up.png</file>
     </qresource>
-    <qresource prefix="/notes">
-        <file>notes/Treble Clef.png</file>
-    </qresource>
     <qresource prefix="/miscellaneous">
         <file>miscellaneous/return hover.png</file>
         <file>miscellaneous/return.png</file>

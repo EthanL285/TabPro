@@ -12,7 +12,6 @@
 #include <QScrollArea>
 
 #define EMPTY_COLUMN "\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015"
-#define TAB_OFFSET 1
 
 class Tablature : public QWidget
 {
@@ -33,6 +32,8 @@ public:
     void adjustScrollBarPosition(QPushButton *button, QString alignment);
     void toggleChordMode();
     void removeColumn(int index, bool emitSignal);
+
+    static constexpr int TAB_OFFSET = 3;
 
 public slots:
     int getSelectedColumnIndex();
