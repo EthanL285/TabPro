@@ -6,7 +6,6 @@
 #include "barline.h"
 
 #include <QFrame>
-#include <QLabel>
 #include <QPainter>
 #include <QGraphicsOpacityEffect>
 
@@ -42,8 +41,8 @@ Staff::Staff(MenuBar *menu, QWidget *parent)
     keySignature->setGraphicsEffect(opacity);
 
     // Time Signature
-    QLabel *timeSignature = new QLabel("\uE09E\uE084\uE09F\uE084");
-    timeSignature->setFont(QFont("Bravura Text", 57));
+    timeSignature = new QLabel("\uE09E\uE084\uE09F\uE084");
+    timeSignature->setFont(QFont("Bravura Text", 56));
     timeSignature->setFixedWidth(50);
     timeSignature->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     mainLayout->addWidget(timeSignature, Qt::AlignVCenter);
@@ -390,7 +389,10 @@ void Staff::onTimeSignatureChanged(int beatsPerMeasure, int beatUnit)
 {
     this->beatsPerMeasure = beatsPerMeasure;
     this->beatUnit = beatUnit;
+
+    // Convert to unicode
+    QChar beatsPerMeasureChar = QChar(0xE080 + beatsPerMeasure);
+    QChar beatUnitChar = QChar(0xE080 + beatUnit);
+    QString text = QString("\uE09E%1\uE09F%2").arg(beatsPerMeasureChar).arg(beatUnitChar);
+    timeSignature->setText(text);
 }
-
-
-

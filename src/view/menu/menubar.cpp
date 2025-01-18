@@ -2,8 +2,6 @@
 #include "resetbutton.h"
 #include "signaturebutton.h"
 
-#define COMMON_TIME "\uE09E\uE084\uE09F\uE084"
-
 #include <QVBoxLayout>
 #include <QGraphicsDropShadowEffect>
 #include <QDockWidget>
@@ -80,7 +78,6 @@ MenuBar::MenuBar(QWidget *parent)
     // Time signature button and menu
     QPushButton *timeSignature = new SignatureButton(COMMON_TIME, QSize(40,23), 20, "Time Signature");
     menuLayout->addWidget(timeSignature);
-    connect(timeSignature, &QPushButton::clicked, this, &MenuBar::onTimeSignatureClick);
 
     QMenu *timeSignatureMenu = createTimeSignatureMenu();
     connect(timeSignature, &QPushButton::clicked, [timeSignature, timeSignatureMenu]()
@@ -120,6 +117,7 @@ QPushButton *MenuBar::createButton(QString text, int fontSize)
     button->setCheckable(true);
     button->setFixedWidth(40);
     button->setCursor(Qt::PointingHandCursor);
+    button->setFocusPolicy(Qt::NoFocus);
     button->setStyleSheet(QString(
         "QPushButton { border: none; font-size: %1px; }"
         "QPushButton:hover { color: rgb(70, 129, 232); }"
@@ -161,6 +159,8 @@ QMenu *MenuBar::createTimeSignatureMenu()
         QString text = QString("\uE09E%1\uE09F\uE084").arg(QChar(0xE084 - i));
         QPushButton *button = new SignatureButton(text, QSize(30,30), 25, "");
         gridLayout->addWidget(button, 0, i);
+        connect(button, &QPushButton::clicked, this, &MenuBar::onTimeSignatureClick);
+        connect(button, &QPushButton::clicked, this, [menu]() { menu->close(); });
     }
     // Divider
     QWidget *divider = new QWidget();
@@ -228,7 +228,17 @@ void MenuBar::onAccidentalClick()
 // Emits the timeSignatureChanged signal
 void MenuBar::onTimeSignatureClick()
 {
-    emit timeSignatureChanged(4, 4);
+    QPushButton *button = qobject_cast<QPushButton*>(sender());
+
+    // Parse unicode
+    QChar base(0xE080); // QChar is 2 Bytes
+    QChar beatsPerMeasureChar = button->text().at(1);
+    QChar beatUnitChar = button->text().at(3);
+
+    int beatsPerMeasure = beatsPerMeasureChar.unicode() - base.unicode();
+    int beatUnit = beatUnitChar.unicode() - base.unicode();
+
+    emit timeSignatureChanged(beatsPerMeasure, beatUnit);
 }
 
 // Emits the resetTab signal

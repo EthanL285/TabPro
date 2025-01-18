@@ -9,6 +9,8 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 
+#define COMMON_TIME "\uE09E\uE084\uE09F\uE084"
+
 class MenuBar : public QWidget
 {
     Q_OBJECT

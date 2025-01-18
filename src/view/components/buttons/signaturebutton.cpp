@@ -13,6 +13,7 @@ SignatureButton::SignatureButton(QString text, QSize size, int fontSize, QString
     (
         "QPushButton {"
         "   border: none;"
+        "   outline: none;"
         "}"
         "QPushButton:hover {"
         "   color: rgb(70, 129, 232)"

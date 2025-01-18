@@ -7,6 +7,7 @@
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QPixmap>
+#include <QLabel>
 
 #define UPDATE_LINE 11
 
@@ -60,6 +61,7 @@ private:
     QMap<int, QPair<int, int>> stringMap;
 
     MenuBar *menu;
+    QLabel *timeSignature;
     QVector<int> lines;
     QVector<RhythmSymbol*> notes;
 
