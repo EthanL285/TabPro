@@ -72,7 +72,7 @@ const QVector<RhythmSymbol*> &Staff::getNotes()
 // Returns the layout item at the given index
 QWidget *Staff::getLayoutItem(int index)
 {
-    return mainLayout->itemAt(index + STAFF_OFFSET)->widget();
+    return mainLayout->itemAt(index + LAYOUT_OFFSET)->widget();
 }
 
 // Returns the layout of the staff
@@ -102,9 +102,9 @@ void Staff::paintEvent(QPaintEvent *event)
 }
 
 // Updates the length of the note line to be the same as the tab length
-void Staff::updateLineLength(bool add)
+void Staff::updateLength(bool increase, int multiplier)
 {
-    length += (add ? 35 : -35);
+    length += (increase ? 35 : -35) * multiplier;
     setFixedWidth(length);
 }
 
@@ -145,7 +145,7 @@ QMap<int, QString> Staff::createNoteMap()
 }
 
 // Adds the selected note to the staff
-void Staff::addNote(QVector<int> fretNumbers, int index, bool isChord)
+bool Staff::addNote(QVector<int> fretNumbers, int index, bool isChord)
 {
     QVector<int> staffLines(6);
     staffLines.fill(INVALID_LINE);
@@ -177,25 +177,26 @@ void Staff::addNote(QVector<int> fretNumbers, int index, bool isChord)
     }
     // Add note to the staff
     Note *note = NoteFactory::createNote(menu->getSelectedNote(), staffLines);
-
-    // Insertion is not at last index
     int maxLine = *std::max_element(staffLines.begin(), staffLines.end());
 
-    if (index != notes.size())
-    {
-        replaceNote(index, maxLine, note);
-    }
-    else
+    // Insertion at last index
+    if (index == notes.size())
     {
         notes.append(note);
         lines.append(maxLine);
         mainLayout->addWidget(note, Qt::AlignVCenter);
+    }
+    // Insertion not at last index
+    else if (!replaceNote(index, maxLine, note))
+    {
+        return false;
     }
     // Update staff height
     if (maxLine > highestLine)
     {
         updateHeight(DEFAULT_HEIGHT + (maxLine - UPDATE_LINE) * LINE_SPACING, maxLine);
     }
+    return true;
 }
 
 // Updates the staff height
@@ -264,7 +265,7 @@ void Staff::addNoteToLayout(int index, RhythmSymbol *symbol)
 {
     // Exclude bar lines from index
     int count = 0;
-    for (int i = STAFF_OFFSET; i < mainLayout->count() + 1; i++)
+    for (int i = LAYOUT_OFFSET; i < mainLayout->count() + 1; i++)
     {
         if (count == index)
         {
@@ -277,7 +278,7 @@ void Staff::addNoteToLayout(int index, RhythmSymbol *symbol)
 }
 
 // Replaces the note at the given index with a symbol
-void Staff::replaceNote(int index, int line, RhythmSymbol *symbol)
+bool Staff::replaceNote(int index, int line, RhythmSymbol *symbol)
 {
     // Different beat values
     if (notes[index]->getBeatValue() != symbol->getBeatValue())
@@ -292,6 +293,14 @@ void Staff::replaceNote(int index, int line, RhythmSymbol *symbol)
         if (exceedsMeasure(measure))
         {
             qDebug() << "Exceeds Measure!";
+
+            // Don't replace if note is last in measure
+            if (idx == measure.size() - 1)
+            {
+                qDebug() << "Unable to Replace Note";
+                delete symbol;
+                return false;
+            }
 
             // Remove subsequent notes until measure is not exceeded
             int count = 1;
@@ -318,6 +327,8 @@ void Staff::replaceNote(int index, int line, RhythmSymbol *symbol)
     // Replace note
     removeNote(index, false);
     insertNote(index, line, symbol);
+
+    return true;
 }
 
 // Returns the total beats in the given measure
@@ -342,10 +353,10 @@ QPair<QVector<RhythmSymbol*>, int> Staff::getMeasureInfo(int index)
     int count = 0;
     for (int i = 0; i <= index + count; i++)
     {
-        QWidget *widget = mainLayout->itemAt(i + STAFF_OFFSET)->widget();
+        QWidget *widget = mainLayout->itemAt(i + LAYOUT_OFFSET)->widget();
         if (dynamic_cast<BarLine*>(widget)) count++;
     }
-    int offset = STAFF_OFFSET + count;
+    int offset = LAYOUT_OFFSET + count;
 
     // Collect the notes after the current note until the next barline
     for (int i = index + offset; i < mainLayout->count(); i++)
@@ -355,7 +366,7 @@ QPair<QVector<RhythmSymbol*>, int> Staff::getMeasureInfo(int index)
         measure.append(dynamic_cast<RhythmSymbol*>(widget));
     }
     // Collect notes before the current note until the previous barline
-    for (int i = index + offset - 1; i >= STAFF_OFFSET; i--)
+    for (int i = index + offset - 1; i >= LAYOUT_OFFSET; i--)
     {
         QWidget *widget = mainLayout->itemAt(i)->widget();
         if (dynamic_cast<BarLine*>(widget)) break;

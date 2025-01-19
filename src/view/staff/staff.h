@@ -23,17 +23,17 @@ public:
     QWidget *getLayoutItem(int index);
     QHBoxLayout *getLayout();
 
-    void updateLineLength(bool add);
+    void updateLength(bool increase, int multiplier);
     void updateHeight(int height, int line);
 
     QMap<int, QPair<int, int>> createStringMap();
     QMap<int, QString> createNoteMap();
 
     void insertRest(int index, double beat, bool emitSignal);
-    void addNote(QVector<int> fretNumbers, int index, bool isChord = false);
+    bool addNote(QVector<int> fretNumbers, int index, bool isChord = false);
     void addNoteToLayout(int index, RhythmSymbol *symbol);
     void removeNote(int index, bool emitSignal);
-    void replaceNote(int index, int line, RhythmSymbol *symbol);
+    bool replaceNote(int index, int line, RhythmSymbol *symbol);
     void insertNote(int index, int line, RhythmSymbol *symbol);
     void toggleChordMode();
 
@@ -41,7 +41,8 @@ public:
     bool exceedsMeasure(QVector<RhythmSymbol*> measure);
     double getBeats(QVector<RhythmSymbol*> measure);
 
-    static constexpr int STAFF_OFFSET = 3;
+    static constexpr int LAYOUT_OFFSET = 3;
+    static constexpr int BARLINE_HEIGHT = 28;
     static constexpr int INVALID_LINE = -999;
     static constexpr double STAFF_SPACING = 7.5;
 

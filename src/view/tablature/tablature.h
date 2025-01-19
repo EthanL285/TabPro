@@ -19,6 +19,7 @@ class Tablature : public QWidget
 public:
     explicit Tablature(Sound *sound, Staff *staff, QWidget *parent = nullptr);
     void setPlayButton(QPushButton *button);
+    QHBoxLayout *getLayout();
     QWidget *getLayoutItem(int index);
     QPushButton *createRest();
     QScrollArea *createScrollArea();
@@ -33,7 +34,8 @@ public:
     void toggleChordMode();
     void removeColumn(int index, bool emitSignal);
 
-    static constexpr int TAB_OFFSET = 3;
+    static constexpr int LAYOUT_OFFSET = 3;
+    static constexpr int BARLINE_HEIGHT = 92;
 
 public slots:
     int getSelectedColumnIndex();

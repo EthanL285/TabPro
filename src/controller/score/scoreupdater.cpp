@@ -1,30 +1,36 @@
 #include "scoreupdater.h"
 #include "barline.h"
 
-#define STAFF_HEIGHT 28
-#define TAB_HEIGHT 92
-
 ScoreUpdater::ScoreUpdater(QWidget *parent)
     : QWidget{parent}
 {}
 
-// Visually updates the tab
-void ScoreUpdater::update(const QVector<RhythmSymbol*> &notes, QBoxLayout *layout, int signature, Tablature *tab)
-{
-    updateBarLines(notes, layout, signature, tab, nullptr);
-}
-
-// Visually updates the staff
-void ScoreUpdater::update(const QVector<RhythmSymbol*> &notes, QBoxLayout *layout, int signature, Staff *staff)
-{
-    updateBarLines(notes, layout, signature, nullptr, staff);
-}
-
 // Visually updates the barlines on the tab/staff
-void ScoreUpdater::updateBarLines(const QVector<RhythmSymbol*> &notes, QBoxLayout *layout, int signature, Tablature *tab, Staff *staff)
+void ScoreUpdater::updateBarLines(const QVector<RhythmSymbol*> &notes, Tablature *tab, Staff *staff, int beatsPerMeasure)
 {
-    // Remove all barlines from layout
-    int diff = 0;
+    QHBoxLayout *staffLayout = staff->getLayout();
+    QHBoxLayout *tabLayout = tab->getLayout();
+
+    // Remove all barlines from tab and staff
+    int barLinesRemoved = removeBarLines(staffLayout);
+    removeBarLines(tabLayout);
+
+    // Get positions of new barlines
+    QVector<int> newBarLinePos = getBarLinePos(notes, tab, staff, beatsPerMeasure);
+
+    // Add new barlines to tab and staff
+    int barLinesAdded = addBarLines(staffLayout, newBarLinePos, Staff::LAYOUT_OFFSET, Staff::BARLINE_HEIGHT);
+    addBarLines(tabLayout, newBarLinePos, Tablature::LAYOUT_OFFSET, Tablature::BARLINE_HEIGHT);
+
+    // Update staff length
+    int diff = barLinesAdded - barLinesRemoved;
+    staff->updateLength(diff >= 0, abs(diff));
+}
+
+// Returns the number of barlines removed from the layout
+int ScoreUpdater::removeBarLines(QHBoxLayout *layout)
+{
+    int count = 0;
     for (int i = layout->count() - 1; i >= 0; i--)
     {
         QWidget *widget = layout->itemAt(i)->widget();
@@ -32,42 +38,44 @@ void ScoreUpdater::updateBarLines(const QVector<RhythmSymbol*> &notes, QBoxLayou
         {
             layout->removeWidget(widget);
             delete widget;
-            diff--;
+            count++;
         }
     }
-    // Get positions of new barlines
+    return count;
+}
+
+// Returns the number of barlines added to the layout at the given positions
+int ScoreUpdater::addBarLines(QHBoxLayout *layout, QVector<int> barLinePos, int layoutOffset, int barHeight)
+{
+    int count = 0;
+    for (int i = 0; i < barLinePos.size(); i++)
+    {
+        layout->insertWidget(barLinePos[i] + layoutOffset + i, new BarLine(barHeight));
+        count++;
+    }
+    return count;
+}
+
+// Returns the positions of new barlines
+QVector<int> ScoreUpdater::getBarLinePos(const QVector<RhythmSymbol*> &notes, Tablature *tab, Staff *staff, int beatsPerMeasure)
+{
     double beats = 0;
-    QVector<int> newBarlineIdx;
+    QVector<int> newBarlinePos;
 
     for (int i = 0; i < notes.size(); i++)
     {
         RhythmSymbol *symbol = dynamic_cast<RhythmSymbol*>(notes[i]);
         beats += symbol->getBeatValue();
-        if (beats > signature)
+        if (beats > beatsPerMeasure)
         {
-            (tab ? tab->insertRest(i) : staff->insertRest(i, beats - signature, false));
+            tab->insertRest(i);
+            staff->insertRest(i, beats - beatsPerMeasure, false);
         }
-        if (beats >= signature)
+        if (beats >= beatsPerMeasure)
         {
-            newBarlineIdx.append(i + 1);
+            newBarlinePos.append(i + 1);
             beats = 0;
         }
     }
-    // Add new barlines to layout
-    int count = (tab) ? Tablature::TAB_OFFSET : Staff::STAFF_OFFSET;
-    for (int idx : newBarlineIdx)
-    {
-        int barHeight = (tab) ? TAB_HEIGHT : STAFF_HEIGHT;
-        layout->insertWidget(idx + count, new BarLine(barHeight));
-        count++;
-        diff++;
-    }
-    // Update staff length
-    if (staff)
-    {
-        for (int i = 0; i < abs(diff); i++)
-        {
-            staff->updateLineLength(diff >= 0);
-        }
-    }
+    return newBarlinePos;
 }

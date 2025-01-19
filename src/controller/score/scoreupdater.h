@@ -13,9 +13,12 @@ class ScoreUpdater : public QWidget
     Q_OBJECT
 public:
     explicit ScoreUpdater(QWidget *parent = nullptr);
-    static void update(const QVector<RhythmSymbol*> &notes, QBoxLayout *layout, int signature, Tablature *tab);
-    static void update(const QVector<RhythmSymbol*> &notes, QBoxLayout *layout, int signature, Staff *staff);
-    static void updateBarLines(const QVector<RhythmSymbol*> &notes, QBoxLayout *layout, int signature, Tablature *tab, Staff *staff);
+    static void updateBarLines(const QVector<RhythmSymbol*> &notes, Tablature *tab, Staff *staff, int beatsPerMeasure);
+
+private:
+    static int removeBarLines(QHBoxLayout *layout);
+    static int addBarLines(QHBoxLayout *layout, QVector<int> barLinePos, int layoutOffset, int barHeight);
+    static QVector<int> getBarLinePos(const QVector<RhythmSymbol*> &notes, Tablature *tab, Staff *staff, int beatsPerMeasure);
 
 signals:
 };

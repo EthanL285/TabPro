@@ -141,12 +141,21 @@ void TestStaff::testNoteReplacementExceedsMeasure()
     controller->addNote(0, 0, 1);
     controller->verifyStaff("2:C,2:Q,1:C|");
 
+    // Note to be replaced is last in measure
+    // Should not replace note
+    // [C, C, C, Q, Q | C]
+    controller->createTab("3:C,2:Q,1:C");
+    controller->moveLeft(2);
+    controller->addNote(0, 0, 1);
+    controller->verifyStaff("3:C,2:Q|1:C");
+
     delete controller;
 }
 
 // Test for note replacement to lower beat value
 void TestStaff::testNoteReplacementToLower()
 {
+    // CASE 1
     // [C, C, C, C | C]
     TabProController *controller = new TabProController();
     controller->createTab("5:C");
@@ -163,6 +172,16 @@ void TestStaff::testNoteReplacementToLower()
     controller->moveRight(2);
     controller->addNote(0, 0, 1);
     controller->verifyStaff("3:C,1:Q,1:QR|1:Q");
+
+    // CASE 2
+    // [C, C, C, C | C, C, C, C]
+    // [C, C, C, \Q | C, C, C, C] -> [C, C, C, Q, QR | C, C, C, C |]
+    // Should not move any crotchets from next measure
+    controller->createTab("8:C");
+    controller->moveLeft(5);
+    controller->changeSelectedNote(NoteType::Quaver);
+    controller->addNote(0, 0, 1);
+    controller->verifyStaff("3:C,1:Q,1:QR|4:C|");
 
     delete controller;
 }

@@ -79,10 +79,16 @@ void Tablature::setPlayButton(QPushButton *button)
     playButton = button;
 }
 
+// Returns the layout of the tab
+QHBoxLayout *Tablature::getLayout()
+{
+    return columnLayout;
+}
+
 // Returns the layout item at the given index
 QWidget *Tablature::getLayoutItem(int index)
 {
-    return columnLayout->itemAt(index + TAB_OFFSET)->widget();
+    return columnLayout->itemAt(index + LAYOUT_OFFSET)->widget();
 }
 
 // Creates new tab line with strings
@@ -314,10 +320,9 @@ void Tablature::addFretNumber()
     fretNumbers.fill(-1);
     fretNumbers[5 - row] = col;
 
-    // Add fret number to tab
+    // Create button text
     int idx = 0;
     QString tabColumn = (chordMode) ? selectedColumn->text() : EMPTY_COLUMN;
-
     for (int i = 0; i < tabColumn.size(); idx++)
     {
         int count = (i < tabColumn.size() - 1 && tabColumn[i + 1] != '\n') ? 2 : 1;
@@ -328,8 +333,9 @@ void Tablature::addFretNumber()
         }
         i += count + 1;
     }
+    // Add note to staff and tab
+    if (!staff->addNote(fretNumbers, getSelectedColumnIndex())) return;
     selectedColumn->setText(tabColumn);
-    staff->addNote(fretNumbers, getSelectedColumnIndex());
 
     // Visually update tab
     updateTab();
@@ -375,7 +381,7 @@ void Tablature::addRest()
     QPushButton *rest = createRest();
     columnLayout->addWidget(rest);
     tab.push_back(rest);
-    staff->updateLineLength(true);
+    staff->updateLength(true, 1);
 
     // Set rest to selected column
     if (!chordMode) rest->setChecked(true);
@@ -386,11 +392,11 @@ void Tablature::insertRest(int index)
 {
     QPushButton *rest = createRest();
     tab.insert(index, rest);
-    staff->updateLineLength(true);
+    staff->updateLength(true, 1);
 
     // Add rest to layout
     int count = 0;
-    for (int i = TAB_OFFSET; i < columnLayout->count() + 1; i++)
+    for (int i = LAYOUT_OFFSET; i < columnLayout->count() + 1; i++)
     {
         if (count == index)
         {
@@ -496,7 +502,7 @@ void Tablature::insertRestAfter()
         int index = getSelectedColumnIndex();
         QPushButton *rest = createRest();
         tab.insert(index + 1, rest);
-        columnLayout->insertWidget(index + TAB_OFFSET, rest);
+        columnLayout->insertWidget(index + LAYOUT_OFFSET, rest);
     }
 }
 
@@ -580,7 +586,7 @@ void Tablature::removeColumn(int index, bool emitSignal)
     columnLayout->removeWidget(temp);
     tab.remove(index);
     delete temp;
-    staff->updateLineLength(false);
+    staff->updateLength(false, 1);
 
     // Emit signal to staff
     if (emitSignal) emit columnRemoved(index);
@@ -589,8 +595,7 @@ void Tablature::removeColumn(int index, bool emitSignal)
 // Visually updates the tab
 void Tablature::updateTab()
 {
-    ScoreUpdater::update(staff->getNotes(), columnLayout, staff->getBeatsPerMeasure(), this);
-    ScoreUpdater::update(staff->getNotes(), staff->getLayout(), staff->getBeatsPerMeasure(), staff);
+    ScoreUpdater::updateBarLines(staff->getNotes(), this, staff, staff->getBeatsPerMeasure());
 }
 
 // Resets the tab
