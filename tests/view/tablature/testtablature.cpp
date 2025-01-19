@@ -145,3 +145,26 @@ void TestTablature::testNoteReplacementExceedsMeasure()
 
     delete controller;
 }
+
+// Test for note replacement to lower beat value
+void TestTablature::testNoteReplacementToLower()
+{
+    // [C, C, C, C | C]
+    TabProController *controller = new TabProController();
+    controller->createTab("5:C");
+
+    // [C, C, C, \Q | C] -> [C, C, C, Q, QR | C]
+    // Should not move crotchet from next measure
+    controller->moveLeft(2);
+    controller->changeSelectedNote(NoteType::Quaver);
+    controller->addNote(0, 0, 1);
+    controller->verifyTab("3:C,1:Q,1:QR|1:C");
+
+    // [C, C, C, Q, QR | \Q] -> [C, C, C, Q, QR | Q]
+    // Should not crash when editing first note in next measure
+    controller->moveRight(2);
+    controller->addNote(0, 0, 1);
+    controller->verifyTab("3:C,1:Q,1:QR|1:Q");
+
+    delete controller;
+}

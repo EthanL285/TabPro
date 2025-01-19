@@ -340,7 +340,7 @@ QPair<QVector<RhythmSymbol*>, int> Staff::getMeasureInfo(int index)
 
     // Count number of barlines before measure
     int count = 0;
-    for (int i = 0; i < index + count; i++)
+    for (int i = 0; i <= index + count; i++)
     {
         QWidget *widget = mainLayout->itemAt(i + STAFF_OFFSET)->widget();
         if (dynamic_cast<BarLine*>(widget)) count++;

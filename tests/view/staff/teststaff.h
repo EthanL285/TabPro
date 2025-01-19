@@ -18,6 +18,7 @@ private slots:
     void testBarLineComplex();
     void testNoteReplacementBasic();
     void testNoteReplacementExceedsMeasure();
+    void testNoteReplacementToLower();
 
 private:
 
