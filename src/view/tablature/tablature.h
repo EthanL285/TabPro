@@ -44,7 +44,7 @@ public slots:
     void goRight();
     void playTab();
     void playColumn();
-    void getColumnInfo();
+    void getColumnInfo(int index);
     void stopTempoTimer();
 
     // Techniques
@@ -88,7 +88,7 @@ private:
     Staff *staff = nullptr;
     bool playSwitch = true;
     bool chordMode = false;
-    int index; // Index of column
+    int playIndex;
     int BPM = 60;
 };
 

@@ -121,23 +121,23 @@ int Tablature::getSelectedColumnIndex()
 // Stops the tempo timer
 void Tablature::stopTempoTimer()
 {
+    playButton->setChecked(false);
     playSwitch = true;
     tempo->stop();
     tempo->deleteLater();
     tempo = nullptr;
+    staff->selectNote(-1);
 }
 
 // Selects the previous column
 void Tablature::goLeft()
 {
     // Stop tempo timer
-    if (tempo != nullptr)
+    if (tempo)
     {
         stopTempoTimer();
-        playButton->setChecked(false);
         return;
     }
-
     int index = getSelectedColumnIndex();
 
     // Select previous column
@@ -152,13 +152,11 @@ void Tablature::goLeft()
 void Tablature::goRight()
 {
     // Stop tempo timer
-    if (tempo != nullptr)
+    if (tempo)
     {
         stopTempoTimer();
-        playButton->setChecked(false);
         return;
     }
-
     int index = getSelectedColumnIndex();
 
     // Select next column
@@ -173,17 +171,14 @@ void Tablature::goRight()
 void Tablature::playTab()
 {
     // Stop timer if user pauses the tab
-    if (tempo != nullptr)
+    if (tempo)
     {
         stopTempoTimer();
         return;
     }
     // Play tab from the selected column onwards OR beginning if the last column is selected
-    index = getSelectedColumnIndex();
-    if (index == tab.size() - 1)
-    {
-        index = 0;
-    }
+    playIndex = getSelectedColumnIndex();
+    if (playIndex == tab.size() - 1) playIndex = 0;
 
     // Initialise tempo timer
     int ms = 60000 / BPM;
@@ -202,34 +197,30 @@ void Tablature::playColumn()
 {
     playSwitch = true;
 
-    // Iterate through tab
-    if (index < tab.size())
+    // Reached end of tab
+    if (playIndex >= tab.size() - 1)
     {
-        // Retrieve the notes in the column and store in hashmap
-        getColumnInfo();
-        tab[index]->setChecked(true);
-        playSwitch = false; // selectColumn() identifies user intervention whilst play is active by seeing if playSwitch is false
-
-        // Access hashmap and play note
-        for (auto it = fretPositions.constBegin(); it != fretPositions.constEnd(); it++)
-        {
-            if (it.value() != "-")
-            {
-                sound->playNote(QString("%1 %2").arg(it.key()).arg(it.value()));
-            }
-        }
-        // Adjust scroll bar position
-        adjustScrollBarPosition(tab[index], "left");
-
-        index++;
-    }
-    // End of tab
-    else
-    {
-        // Stop timer and revert button state to play
         stopTempoTimer();
-        playButton->setChecked(false);
+        tab.last()->setChecked(true);
+        return;
     }
+    // Store frets of column in a hashmap
+    getColumnInfo(playIndex);
+    tab[playIndex]->setChecked(true);
+    playSwitch = false; // selectColumn() identifies user intervention whilst play is active by seeing if playSwitch is false
+
+    // Access hashmap and play note
+    for (auto it = fretPositions.constBegin(); it != fretPositions.constEnd(); it++)
+    {
+        if (it.value() == "-") continue;
+        sound->playNote(QString("%1 %2").arg(it.key()).arg(it.value()));
+    }
+    // Adjust scroll bar position
+    adjustScrollBarPosition(tab[playIndex], "left");
+
+    // Highlight corresponding note in staff
+    staff->selectNote(playIndex);
+    playIndex++;
 }
 
 // Adjusts the scrollbar position such that the button is aligned to either edge of the viewport
@@ -268,7 +259,7 @@ void Tablature::adjustScrollBarPosition(QPushButton *button, QString alignment)
 }
 
 // Stores the notes of a column in a hash map
-void Tablature::getColumnInfo()
+void Tablature::getColumnInfo(int index)
 {
     // Initialise hashmap
     fretPositions.insert(0, "-");
@@ -308,6 +299,9 @@ void Tablature::addFretNumber()
         addRest();
         qDebug() << "Added Rest at: " << getSelectedColumnIndex();
     } */
+
+    // Stop tempo timer
+    if (tempo) stopTempoTimer();
 
     // Retrieve string and fret number
     QPushButton *button = qobject_cast<QPushButton*>(sender());
@@ -412,11 +406,7 @@ void Tablature::insertRest(int index)
 void Tablature::selectColumn(bool checked)
 {
     // User selects a column whilst play is active
-    if (!playSwitch)
-    {
-        stopTempoTimer(); // Sets playSwitch back to true
-        playButton->setChecked(false);
-    }
+    if (!playSwitch) stopTempoTimer();
 
     // Retrieve pointer to the QPushButton that emitted the signal
     QPushButton *column = qobject_cast<QPushButton*>(sender());
@@ -550,6 +540,7 @@ void Tablature::undo()
 // Removes the notes of a column or the column itself if empty
 void Tablature::remove()
 {
+    if (tempo) stopTempoTimer();
     int index = getSelectedColumnIndex();
 
     // Empty tab
@@ -684,11 +675,7 @@ QScrollArea *Tablature::createScrollArea()
     });
     connect(hScrollBar, &QScrollBar::sliderPressed, this, [this]()
     {
-        if (tempo != nullptr)
-        {
-            stopTempoTimer();
-            playButton->setChecked(false);
-        }
+        if (tempo) stopTempoTimer();
     });
 
     return scrollArea;

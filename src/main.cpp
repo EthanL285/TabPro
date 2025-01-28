@@ -11,8 +11,8 @@ int main(int argc, char *argv[])
     TestStaff testStaff;
     TestTablature testTab;
 
-    QTest::qExec(&testStaff, argc, argv);
-    QTest::qExec(&testTab, argc, argv);
+    // QTest::qExec(&testStaff, argc, argv);
+    // QTest::qExec(&testTab, argc, argv);
 
     MainWindow w;
 

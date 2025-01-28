@@ -81,33 +81,6 @@ QHBoxLayout *Staff::getLayout()
     return mainLayout;
 }
 
-// Creates the staff
-void Staff::paintEvent(QPaintEvent *event)
-{
-    QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing);
-
-    QPen pen(Qt::white);
-    pen.setWidth(2);
-    painter.setPen(pen);
-
-    int centerY = height() / 2;
-
-    // Draw the staff lines
-    for (int i = 0; i < LINE_COUNT; i++)
-    {
-        int y = centerY - ((LINE_COUNT - 1) * LINE_SPACING) / 2 + i * LINE_SPACING;
-        painter.drawLine(0, y, width(), y);
-    }
-}
-
-// Updates the length of the note line to be the same as the tab length
-void Staff::updateLength(bool increase, int multiplier)
-{
-    length += (increase ? 35 : -35) * multiplier;
-    setFixedWidth(length);
-}
-
 // Initialises a map of strings that corresponds to a line on the staff
 QMap<int, QPair<int, int>> Staff::createStringMap()
 {
@@ -142,6 +115,40 @@ QMap<int, QString> Staff::createNoteMap()
     noteMap[11] = "B";
 
     return noteMap;
+}
+
+// Creates the staff
+void Staff::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
+
+    QPen pen(Qt::white);
+    pen.setWidth(2);
+    painter.setPen(pen);
+
+    int centerY = height() / 2;
+
+    // Draw the staff lines
+    for (int i = 0; i < LINE_COUNT; i++)
+    {
+        int y = centerY - ((LINE_COUNT - 1) * LINE_SPACING) / 2 + i * LINE_SPACING;
+        painter.drawLine(0, y, width(), y);
+    }
+}
+
+// Updates the length of the note line to be the same as the tab length
+void Staff::updateLength(bool increase, int multiplier)
+{
+    length += (increase ? 35 : -35) * multiplier;
+    setFixedWidth(length);
+}
+
+// Updates the staff height
+void Staff::updateHeight(int height, int line)
+{
+    setFixedHeight(height);
+    highestLine = line;
 }
 
 // Adds the selected note to the staff
@@ -199,37 +206,21 @@ bool Staff::addNote(QVector<int> fretNumbers, int index, bool isChord)
     return true;
 }
 
-// Updates the staff height
-void Staff::updateHeight(int height, int line)
+// Adds the note to the layout at the given index
+void Staff::addNoteToLayout(int index, RhythmSymbol *symbol)
 {
-    setFixedHeight(height);
-    highestLine = line;
-}
-
-// Toggles chord mode
-void Staff::toggleChordMode()
-{
-    chordMode = !chordMode;
-}
-
-// Inserts a rest at the given index
-void Staff::insertRest(int index, double beat, bool emitSignal)
-{
-    Rest *rest = RestFactory::createRest(beat);
-    notes.insert(index, rest);
-    lines.insert(index, -1);
-    addNoteToLayout(index, rest);
-
-    // Emit signal to tab
-    if (emitSignal) emit restInserted(index);
-}
-
-// Inserts the given note at the specified index
-void Staff::insertNote(int index, int line, RhythmSymbol *symbol)
-{
-    notes.insert(index, symbol);
-    lines.insert(index, line);
-    addNoteToLayout(index, symbol);
+    // Exclude bar lines from index
+    int count = 0;
+    for (int i = LAYOUT_OFFSET; i < mainLayout->count() + 1; i++)
+    {
+        if (count == index)
+        {
+            mainLayout->insertWidget(i, symbol);
+            break;
+        }
+        QWidget *widget = mainLayout->itemAt(i)->widget();
+        if (dynamic_cast<RhythmSymbol*>(widget)) count++;
+    }
 }
 
 // Removes the note at the given index
@@ -260,21 +251,24 @@ void Staff::removeNote(int index, bool emitSignal)
     if (emitSignal) emit noteRemoved(index);
 }
 
-// Adds the note to the layout at the given index
-void Staff::addNoteToLayout(int index, RhythmSymbol *symbol)
+// Inserts the given note at the specified index
+void Staff::insertNote(int index, int line, RhythmSymbol *symbol)
 {
-    // Exclude bar lines from index
-    int count = 0;
-    for (int i = LAYOUT_OFFSET; i < mainLayout->count() + 1; i++)
-    {
-        if (count == index)
-        {
-            mainLayout->insertWidget(i, symbol);
-            break;
-        }
-        QWidget *widget = mainLayout->itemAt(i)->widget();
-        if (dynamic_cast<RhythmSymbol*>(widget)) count++;
-    }
+    notes.insert(index, symbol);
+    lines.insert(index, line);
+    addNoteToLayout(index, symbol);
+}
+
+// Inserts a rest at the given index
+void Staff::insertRest(int index, double beat, bool emitSignal)
+{
+    Rest *rest = RestFactory::createRest(beat);
+    notes.insert(index, rest);
+    lines.insert(index, -1);
+    addNoteToLayout(index, rest);
+
+    // Emit signal to tab
+    if (emitSignal) emit restInserted(index);
 }
 
 // Replaces the note at the given index with a symbol
@@ -294,14 +288,12 @@ bool Staff::replaceNote(int index, int line, RhythmSymbol *symbol)
         {
             qDebug() << "Exceeds Measure!";
 
-            // Don't replace if note is last in measure
+            // Do not replace if note is last in measure
             if (idx == measure.size() - 1)
             {
-                qDebug() << "Unable to Replace Note";
                 delete symbol;
                 return false;
             }
-
             // Remove subsequent notes until measure is not exceeded
             int count = 1;
             for (int i = idx + 1; i < measure.size(); i++)
@@ -329,6 +321,19 @@ bool Staff::replaceNote(int index, int line, RhythmSymbol *symbol)
     insertNote(index, line, symbol);
 
     return true;
+}
+
+// Highlights the note at the given index
+void Staff::selectNote(int index)
+{
+    if (selectedNote) selectedNote->toggleSelect();
+    if (index == -1)
+    {
+        selectedNote = nullptr;
+        return;
+    }
+    selectedNote = notes[index];
+    selectedNote->toggleSelect();
 }
 
 // Returns the total beats in the given measure
@@ -385,6 +390,12 @@ bool Staff::exceedsMeasure(QVector<RhythmSymbol*> measure)
         beats += measure[i]->getBeatValue();
     }
     return beats > beatsPerMeasure;
+}
+
+// Toggles chord mode
+void Staff::toggleChordMode()
+{
+    chordMode = !chordMode;
 }
 
 ///////////////////////// SLOTS /////////////////////////

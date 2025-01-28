@@ -33,18 +33,12 @@ void Quaver::paintEvent(QPaintEvent *event)
         // Flip note
         if (isFlipped()) painter.scale(-1, -1);
 
-        painter.save();
-        painter.rotate(-30);
-
-        // Draw the note head centered at (0, 0)
-        QRect rect(-HEAD_WIDTH / 2, (-HEAD_HEIGHT / 2), HEAD_WIDTH, HEAD_HEIGHT);
-        painter.drawEllipse(rect);
-        painter.restore();
-
         // Draw the note stem and additional lines
         if (isSingleNote()) drawSingleStem();
         if (abs(staffLine) > 5) drawExtraLines(staffLine);
 
+        // Draw the note head centered at (0, 0)
+        drawNoteHead(painter);
         painter.restore();
     }
     // Draw the note stem of chords

@@ -18,23 +18,24 @@ public:
     explicit Staff(MenuBar *menu, QWidget *parent = nullptr);
     int getBeatsPerMeasure();
     int getBeatUnit();
-
-    const QVector<RhythmSymbol*> &getNotes();
     QWidget *getLayoutItem(int index);
     QHBoxLayout *getLayout();
-
-    void updateLength(bool increase, int multiplier);
-    void updateHeight(int height, int line);
+    const QVector<RhythmSymbol*> &getNotes();
 
     QMap<int, QPair<int, int>> createStringMap();
     QMap<int, QString> createNoteMap();
 
+    void updateLength(bool increase, int multiplier);
+    void updateHeight(int height, int line);
+
     void insertRest(int index, double beat, bool emitSignal);
+    void insertNote(int index, int line, RhythmSymbol *symbol);
     bool addNote(QVector<int> fretNumbers, int index, bool isChord = false);
     void addNoteToLayout(int index, RhythmSymbol *symbol);
     void removeNote(int index, bool emitSignal);
     bool replaceNote(int index, int line, RhythmSymbol *symbol);
-    void insertNote(int index, int line, RhythmSymbol *symbol);
+    void selectNote(int index);
+
     void toggleChordMode();
 
     QPair<QVector<RhythmSymbol*>, int> getMeasureInfo(int index);
@@ -57,7 +58,6 @@ private:
     int highestLine = UPDATE_LINE;
     bool chordMode = false;
 
-    QString selectedNote = "crotchet";
     QMap<int, QString> noteMap;
     QMap<int, QPair<int, int>> stringMap;
 
@@ -65,6 +65,7 @@ private:
     QLabel *timeSignature;
     QVector<int> lines;
     QVector<RhythmSymbol*> notes;
+    RhythmSymbol *selectedNote = nullptr;
 
 signals:
     void noteRemoved(int index);

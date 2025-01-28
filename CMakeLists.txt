@@ -79,6 +79,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/view/components/buttons/signaturebutton.h src/view/components/buttons/signaturebutton.cpp
         src/view/components/buttons/disabledrestbutton.h src/view/components/buttons/disabledrestbutton.cpp
         src/view/components/buttons/enabledrestbutton.h src/view/components/buttons/enabledrestbutton.cpp
+        src/model/rests/rest.h src/model/rests/rest.cpp
+
 
 
 

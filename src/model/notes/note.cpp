@@ -16,6 +16,34 @@ QVector<int> Note::getStaffLines()
     return staffLines;
 }
 
+// Getter for type
+NoteType Note::getType()
+{
+    return type;
+}
+
+// Toggles selection of note
+void Note::toggleSelect()
+{
+    isSelected = !isSelected;
+    update();
+}
+
+// Draws the note head
+void Note::drawNoteHead(QPainter &painter)
+{
+    if (isSelected)
+    {
+        QPen pen(QColor(70, 129, 232));
+        pen.setWidth(2);
+        painter.setPen(pen);
+        painter.setBrush(QColor(70, 129, 232));
+    }
+    QRect rect(-HEAD_WIDTH / 2, (-HEAD_HEIGHT / 2), HEAD_WIDTH, HEAD_HEIGHT);
+    painter.rotate(-30);
+    painter.drawEllipse(rect);
+}
+
 // Draws extra lines outside the staff
 void Note::drawExtraLines(int staffLine)
 {
@@ -90,10 +118,4 @@ bool Note::isFlipped()
 {
     int staffLine = *std::find_if(staffLines.begin(), staffLines .end(), [](int x) { return x != Staff::INVALID_LINE; } );
     return isSingleNote() && staffLine > 0;
-}
-
-// Getter for type
-NoteType Note::getType()
-{
-    return type;
 }

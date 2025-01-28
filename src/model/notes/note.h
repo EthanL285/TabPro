@@ -13,6 +13,7 @@ class Note : public RhythmSymbol
 public:
     QVector<int> getStaffLines();
     NoteType getType();
+    void toggleSelect() override;
 
 protected:
     explicit Note(QVector<int> staffLines);
@@ -29,9 +30,13 @@ protected:
 
     bool isSingleNote();
     bool isFlipped();
+    void drawNoteHead(QPainter &painter);
     void drawExtraLines(int staffLine);
     void drawSingleStem();
     void drawMultiStem(QVector<int> yPos);
+
+private:
+    bool isSelected = false;
 
 signals:
 };
