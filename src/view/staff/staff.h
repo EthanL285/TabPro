@@ -3,6 +3,7 @@
 
 #include "menubar.h"
 #include "rhythmsymbol.h"
+#include "signaturewidget.h"
 
 #include <QWidget>
 #include <QHBoxLayout>
@@ -62,7 +63,7 @@ private:
     QMap<int, QPair<int, int>> stringMap;
 
     MenuBar *menu;
-    QLabel *timeSignature;
+    SignatureWidget *timeSignature;
     QVector<int> lines;
     QVector<RhythmSymbol*> notes;
     RhythmSymbol *selectedNote = nullptr;

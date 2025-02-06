@@ -9,16 +9,20 @@ class SpinBox : public QWidget
 {
     Q_OBJECT
 public:
-    explicit SpinBox(int value, QPair<int, int> range, QWidget *parent = nullptr);
+    explicit SpinBox(int value, QPair<int, int> range, bool beatUnitBehaviour = false, QWidget *parent = nullptr);
     QPushButton *createArrowButton(int direction);
     void setValue(int value);
     void changeValue(int delta);
+
+    bool isInRange(int value);
+    bool isInvalidValue(int value);
 
 private:
     QWidget *container;
     QLineEdit *field;
     QPushButton *upArrow;
     QPushButton *downArrow;
+    bool beatUnitBehaviour;
     int min;
     int max;
 

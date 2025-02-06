@@ -6,8 +6,8 @@
 static const int UP = 1;
 static const int DOWN = -1;
 
-SpinBox::SpinBox(int value, QPair<int, int> range, QWidget *parent)
-    : min{range.first}, max{range.second}, QWidget{parent}
+SpinBox::SpinBox(int value, QPair<int, int> range, bool beatUnitBehaviour, QWidget *parent)
+    : min{range.first}, max{range.second}, beatUnitBehaviour{beatUnitBehaviour}, QWidget{parent}
 {
     // Container for outlining spinbox
     container = new QWidget();
@@ -84,7 +84,7 @@ QPushButton *SpinBox::createArrowButton(int direction)
 // Sets the value of the spin box
 void SpinBox::setValue(int value)
 {
-    if (value < min || value > max) return;
+    if (!isInRange(value)) return;
     field->setText(QString::number(value));
 }
 
@@ -95,15 +95,24 @@ void SpinBox::changeValue(int delta)
     setValue(value);
 }
 
-// Checks if value is within range
+// Emits the text changed signal
 void SpinBox::onTextChanged(QString text)
 {
     int value = text.toInt();
-    if (value < min || value > max)
-    {
-        container->setStyleSheet("QWidget#container { border: 1px solid red; }");
-        return;
-    }
-    container->setStyleSheet("");
-    emit textChanged(value);
+    bool isValid = !isInvalidValue(value);
+    container->setStyleSheet(isValid ? "" : "QWidget#container { border: 1px solid red; }");
+
+    if (isInRange(value) || value == 0) emit textChanged(value);
+}
+
+// Checks if the value is within range
+bool SpinBox::isInRange(int value)
+{
+    return value >= min && value <= max;
+}
+
+// Checks if the value is invalid
+bool SpinBox::isInvalidValue(int value)
+{
+    return !isInRange(value) || (beatUnitBehaviour && (value & (value - 1)) != 0);
 }

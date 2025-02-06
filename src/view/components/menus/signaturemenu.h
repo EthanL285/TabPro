@@ -29,8 +29,10 @@ private slots:
     void openCustomMenu();
     void onSignatureChange();
     void onSpinBoxChange(int value);
+    void onConfirmClick();
 
 signals:
+    void signatureChanged(int topDigit, int bottomDigit);
 };
 
 #endif // SIGNATUREMENU_H

@@ -136,7 +136,7 @@ ContainerWidget::ContainerWidget(MainWindow *window, QWidget *parent)
     connect(staff, &Staff::noteRemoved, tab, &Tablature::onColumnRemoved);
     connect(staff, &Staff::restInserted, tab, &Tablature::onRestInsertion);
 
-    connect(menu, &MenuBar::timeSignatureChanged, staff, &Staff::onTimeSignatureChanged);
+    connect(menu, &MenuBar::signatureChanged, staff, &Staff::onTimeSignatureChanged);
     connect(menu, &MenuBar::resetTab, tab, &Tablature::resetTab);
 }
 

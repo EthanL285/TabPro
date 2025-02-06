@@ -83,6 +83,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/view/components/menus/signaturemenu.h src/view/components/menus/signaturemenu.cpp
         src/view/components/spinboxes/spinbox.h src/view/components/spinboxes/spinbox.cpp
         src/view/components/widgets/signaturewidget.h src/view/components/widgets/signaturewidget.cpp
+        src/model/helpers/signaturehelper.h src/model/helpers/signaturehelper.cpp
 
 
 
@@ -141,6 +142,7 @@ target_include_directories(
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/accidentals
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/rests
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/barlines
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/helpers
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/resources/chords
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/tests
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/tests/view/staff

@@ -20,8 +20,6 @@ public:
     AccidentalType getSelectedAccidental();
     QString getSelectedSignature();
 
-    static QPair<int, int> parseSignature(QString unicode);
-
     // Testing Functions
     QPushButton *getMenuButton(NoteType note);
     QPushButton *getMenuButton(QString buttonName);
@@ -47,7 +45,7 @@ public slots:
     void onTimeSignatureClick();
 
 signals:
-    void timeSignatureChanged(int beatsPerMeasure, int beatUnit);
+    void signatureChanged(int beatsPerMeasure, int beatUnit);
     void resetTab();
 };
 

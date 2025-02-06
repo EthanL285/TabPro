@@ -2,6 +2,7 @@
 #include "resetbutton.h"
 #include "signaturebutton.h"
 #include "signaturemenu.h"
+#include "signaturehelper.h"
 
 #include <QVBoxLayout>
 #include <QGraphicsDropShadowEffect>
@@ -79,7 +80,8 @@ MenuBar::MenuBar(QWidget *parent)
     // Time signature button and menu
     timeSignature = new SignatureButton(COMMON_TIME, QSize(40,23), 20, "Time Signature");
     menuLayout->addWidget(timeSignature);
-    QMenu *timeSignatureMenu = new SignatureMenu(this, timeSignature);
+    SignatureMenu *signatureMenu = new SignatureMenu(this, timeSignature);
+    connect(signatureMenu, &SignatureMenu::signatureChanged, this, &MenuBar::signatureChanged);
 
     // Separate music and utility buttons
     QSpacerItem *menuSpacer = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -184,21 +186,8 @@ void MenuBar::onTimeSignatureClick()
     QPushButton *button = qobject_cast<QPushButton*>(sender());
     selectedSignature = button->text();
 
-    QPair<int, int> timeSignature = parseSignature(button->text());
-    emit timeSignatureChanged(timeSignature.first, timeSignature.second);
-}
-
-// Parses the unicode time signature
-QPair<int, int> MenuBar::parseSignature(QString unicode)
-{
-    QChar base(0xE080); // QChar is 2 Bytes
-    QChar beatsPerMeasureChar = unicode.at(1);
-    QChar beatUnitChar = unicode.at(3);
-
-    int beatsPerMeasure = beatsPerMeasureChar.unicode() - base.unicode();
-    int beatUnit = beatUnitChar.unicode() - base.unicode();
-
-    return QPair(beatsPerMeasure, beatUnit);
+    QPair<int, int> timeSignature = SignatureHelper::parseSignature(button->text());
+    emit signatureChanged(timeSignature.first, timeSignature.second);
 }
 
 // Emits the resetTab signal

@@ -1,5 +1,6 @@
 #include "signaturemenu.h"
 #include "signaturebutton.h"
+#include "signaturehelper.h"
 
 #include <QPushButton>
 #include <QGridLayout>
@@ -65,17 +66,17 @@ QMenu *SignatureMenu::createCustomSignatureMenu()
     gridLayout->setVerticalSpacing(10);
 
     // Time signature display
-    signatureDisplay = new SignatureWidget(menubar->getSelectedSignature());
+    signatureDisplay = new SignatureWidget(menubar->getSelectedSignature(), 45, QPoint(-30, -54), QPoint(-30, -31));
     signatureDisplay->setStyleSheet("border: none; outline: none; text-align: center");
     signatureDisplay->setCursor(Qt::ArrowCursor);
     gridLayout->addWidget(signatureDisplay, 0, 0);
 
     // Spinboxes
     QVBoxLayout *spinBoxLayout = new QVBoxLayout();
-    QPair<int, int> timeSignature = MenuBar::parseSignature(menubar->getSelectedSignature());
+    QPair<int, int> timeSignature = SignatureHelper::parseSignature(menubar->getSelectedSignature());
 
     topSpinBox = new SpinBox(timeSignature.first, QPair(1, 32));
-    bottomSpinBox = new SpinBox(timeSignature.second, QPair(1, 64));
+    bottomSpinBox = new SpinBox(timeSignature.second, QPair(1, 64), true);
     topSpinBox->setObjectName("TopSpinBox");
     bottomSpinBox->setObjectName("BottomSpinBox");
 
@@ -109,6 +110,7 @@ QMenu *SignatureMenu::createCustomSignatureMenu()
         "}"
     );
     gridLayout->addWidget(confirmButton, 2, 0, 1, 3);
+    connect(confirmButton, &QPushButton::clicked, this, &SignatureMenu::onConfirmClick);
 
     // Action widget
     QWidgetAction *action = new QWidgetAction(menu);
@@ -138,26 +140,25 @@ void SignatureMenu::openCustomMenu()
 // Updates the custom menu on signature change
 void SignatureMenu::onSignatureChange()
 {
-    /*
-    QPair<int, int> timeSignature = MenuBar::parseSignature(customSignatureDisplay->text());
-    beatsPerMeasure->setValue(timeSignature.first);
-    beatUnit->setValue(timeSignature.second);
-    */
+    QPair<int, int> timeSignature = SignatureHelper::parseSignature(menubar->getSelectedSignature());
+    topSpinBox->setValue(timeSignature.first);
+    bottomSpinBox->setValue(timeSignature.second);
 }
 
 // Updates the custom menu on spin box change
 void SignatureMenu::onSpinBoxChange(int value)
 {
     SpinBox *senderSpinBox = qobject_cast<SpinBox*>(sender());
-    QString topDigit = signatureDisplay->getTopDigit();
-    QString bottomDigit = signatureDisplay->getBottomDigit();
+    bool isTopSpinBox = (senderSpinBox->objectName() == "TopSpinBox");
 
-    // Update time signature
-    QString text;
-    if (senderSpinBox->objectName() == "TopSpinBox")
-        text = QString("\uE09E") + QString(QChar(0xE080 + value)) + "\uE09F" + bottomDigit;
-    else
-        text = QString("\uE09E") + topDigit + "\uE09F" + QString(QChar(0xE080 + value));
-
-    signatureDisplay->changeSignature(text);
+    int topDigit = isTopSpinBox ? value : signatureDisplay->getTopDigit();
+    int bottomDigit = isTopSpinBox ? signatureDisplay->getBottomDigit() : value;
+    signatureDisplay->changeSignature(topDigit, bottomDigit);
 }
+
+// Emits the signature changed signal
+void SignatureMenu::onConfirmClick()
+{
+    emit signatureChanged(signatureDisplay->getTopDigit(), signatureDisplay->getBottomDigit());
+}
+

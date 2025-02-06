@@ -41,10 +41,8 @@ Staff::Staff(MenuBar *menu, QWidget *parent)
     keySignature->setGraphicsEffect(opacity);
 
     // Time Signature
-    timeSignature = new QLabel("\uE09E\uE084\uE09F\uE084");
-    timeSignature->setFont(QFont("Bravura Text", 56));
-    timeSignature->setFixedWidth(50);
-    timeSignature->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    timeSignature = new SignatureWidget("\uE09E\uE084\uE09F\uE084", 57, QPoint(-50, -65), QPoint(-50, -35));
+    timeSignature->setFixedSize(50, 67);
     mainLayout->addWidget(timeSignature, Qt::AlignVCenter);
 
     stringMap = createStringMap();
@@ -411,10 +409,5 @@ void Staff::onTimeSignatureChanged(int beatsPerMeasure, int beatUnit)
 {
     this->beatsPerMeasure = beatsPerMeasure;
     this->beatUnit = beatUnit;
-
-    // Convert to unicode
-    QChar beatsPerMeasureChar = QChar(0xE080 + beatsPerMeasure);
-    QChar beatUnitChar = QChar(0xE080 + beatUnit);
-    QString text = QString("\uE09E%1\uE09F%2").arg(beatsPerMeasureChar).arg(beatUnitChar);
-    timeSignature->setText(text);
+    timeSignature->changeSignature(beatsPerMeasure, beatUnit);
 }
