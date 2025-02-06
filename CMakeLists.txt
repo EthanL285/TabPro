@@ -80,6 +80,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/view/components/buttons/disabledrestbutton.h src/view/components/buttons/disabledrestbutton.cpp
         src/view/components/buttons/enabledrestbutton.h src/view/components/buttons/enabledrestbutton.cpp
         src/model/rests/rest.h src/model/rests/rest.cpp
+        src/view/components/menus/signaturemenu.h src/view/components/menus/signaturemenu.cpp
+        src/view/components/spinboxes/spinbox.h src/view/components/spinboxes/spinbox.cpp
+        src/view/components/widgets/signaturewidget.h src/view/components/widgets/signaturewidget.cpp
+
 
 
 
@@ -129,6 +133,9 @@ target_include_directories(
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/user
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/components/buttons
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/components/labels
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/components/menus
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/components/spinboxes
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/components/widgets
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/notes
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/accidentals

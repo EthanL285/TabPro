@@ -1,6 +1,7 @@
 #include "menubar.h"
 #include "resetbutton.h"
 #include "signaturebutton.h"
+#include "signaturemenu.h"
 
 #include <QVBoxLayout>
 #include <QGraphicsDropShadowEffect>
@@ -76,16 +77,9 @@ MenuBar::MenuBar(QWidget *parent)
     menuLayout->addLayout(createDivider());
 
     // Time signature button and menu
-    QPushButton *timeSignature = new SignatureButton(COMMON_TIME, QSize(40,23), 20, "Time Signature");
+    timeSignature = new SignatureButton(COMMON_TIME, QSize(40,23), 20, "Time Signature");
     menuLayout->addWidget(timeSignature);
-
-    QMenu *timeSignatureMenu = createTimeSignatureMenu();
-    connect(timeSignature, &QPushButton::clicked, [timeSignature, timeSignatureMenu]()
-    {
-        int x = timeSignature->mapToGlobal(QPoint(0, 0)).x() + 5 + (timeSignature->width() - timeSignatureMenu->sizeHint().width()) / 2;
-        int y = timeSignature->mapToGlobal(QPoint(0, 0)).y() + 7 + timeSignature->height();
-        timeSignatureMenu->exec(QPoint(x, y));
-    });
+    QMenu *timeSignatureMenu = new SignatureMenu(this, timeSignature);
 
     // Separate music and utility buttons
     QSpacerItem *menuSpacer = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -108,6 +102,12 @@ NoteType MenuBar::getSelectedNote()
 AccidentalType MenuBar::getSelectedAccidental()
 {
     return selectedAccidental.first;
+}
+
+// Getter for selected time signature
+QString MenuBar::getSelectedSignature()
+{
+    return selectedSignature;
 }
 
 // Creates a menu bar button
@@ -143,53 +143,6 @@ QHBoxLayout *MenuBar::createDivider()
     dividerLayout->addSpacerItem(spacer2);
 
     return dividerLayout;
-}
-
-// Creates the menu of the time signature button
-QMenu *MenuBar::createTimeSignatureMenu()
-{
-    QMenu *menu = new QMenu(this);
-    QWidget *gridWidget = new QWidget();
-    QGridLayout *gridLayout = new QGridLayout(gridWidget);
-    gridLayout->setSpacing(10);
-
-    // Default time signatures
-    for (int i = 0; i < 3; i++)
-    {
-        QString text = QString("\uE09E%1\uE09F\uE084").arg(QChar(0xE084 - i));
-        QPushButton *button = new SignatureButton(text, QSize(30,30), 25, "");
-        gridLayout->addWidget(button, 0, i);
-        connect(button, &QPushButton::clicked, this, &MenuBar::onTimeSignatureClick);
-        connect(button, &QPushButton::clicked, this, [menu]() { menu->close(); });
-    }
-    // Divider
-    QWidget *divider = new QWidget();
-    divider->setFixedSize(100, 1);
-    divider->setStyleSheet("background-color: gray;");
-    gridLayout->addWidget(divider, 1, 0, 1, 3, Qt::AlignCenter);
-
-    // Custom time signature
-    QPushButton *custom = new QPushButton("Custom");
-    custom->setCursor(Qt::PointingHandCursor);
-    custom->setStyleSheet
-    (
-        "QPushButton {"
-        "   background: transparent;"
-        "   color: gray;"
-        "   font: 600 10pt Moon;"
-        "}"
-        "QPushButton:hover { "
-        "   color: white;"
-        "}"
-    );
-    gridLayout->addWidget(custom, 2, 0, 1, 3);
-
-    // Action widget
-    QWidgetAction *action = new QWidgetAction(this);
-    action->setDefaultWidget(gridWidget);
-    menu->addAction(action);
-
-    return menu;
 }
 
 // Selects the corresponding note when button is clicked
@@ -229,16 +182,23 @@ void MenuBar::onAccidentalClick()
 void MenuBar::onTimeSignatureClick()
 {
     QPushButton *button = qobject_cast<QPushButton*>(sender());
+    selectedSignature = button->text();
 
-    // Parse unicode
+    QPair<int, int> timeSignature = parseSignature(button->text());
+    emit timeSignatureChanged(timeSignature.first, timeSignature.second);
+}
+
+// Parses the unicode time signature
+QPair<int, int> MenuBar::parseSignature(QString unicode)
+{
     QChar base(0xE080); // QChar is 2 Bytes
-    QChar beatsPerMeasureChar = button->text().at(1);
-    QChar beatUnitChar = button->text().at(3);
+    QChar beatsPerMeasureChar = unicode.at(1);
+    QChar beatUnitChar = unicode.at(3);
 
     int beatsPerMeasure = beatsPerMeasureChar.unicode() - base.unicode();
     int beatUnit = beatUnitChar.unicode() - base.unicode();
 
-    emit timeSignatureChanged(beatsPerMeasure, beatUnit);
+    return QPair(beatsPerMeasure, beatUnit);
 }
 
 // Emits the resetTab signal

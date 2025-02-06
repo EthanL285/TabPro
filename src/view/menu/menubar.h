@@ -18,6 +18,9 @@ public:
     explicit MenuBar(QWidget *parent = nullptr);
     NoteType getSelectedNote();
     AccidentalType getSelectedAccidental();
+    QString getSelectedSignature();
+
+    static QPair<int, int> parseSignature(QString unicode);
 
     // Testing Functions
     QPushButton *getMenuButton(NoteType note);
@@ -26,17 +29,18 @@ public:
 private:
     QPushButton *createButton(QString text, int fontSize);
     QHBoxLayout *createDivider();
-    QMenu *createTimeSignatureMenu();
 
     QWidget *menuWidget;
     QMenuBar *menuBar;
     QMenu *fileMenu;
+    QPushButton *timeSignature;
+    QString selectedSignature = COMMON_TIME;
     QPair<NoteType, QPushButton*> selectedNote;
     QPair<AccidentalType, QPushButton*> selectedAccidental;
     QMap<QString, NoteType> notes;
     QMap<QString, AccidentalType> accidentals;
 
-private slots:
+public slots:
     void onNoteClick();
     void onAccidentalClick();
     void onResetTabClick();

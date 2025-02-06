@@ -121,6 +121,8 @@ int Tablature::getSelectedColumnIndex()
 // Stops the tempo timer
 void Tablature::stopTempoTimer()
 {
+    if (!tempo) return;
+
     playButton->setChecked(false);
     playSwitch = true;
     tempo->stop();
@@ -299,9 +301,8 @@ void Tablature::addFretNumber()
         addRest();
         qDebug() << "Added Rest at: " << getSelectedColumnIndex();
     } */
-
-    // Stop tempo timer
-    if (tempo) stopTempoTimer();
+    // Pause tab
+    stopTempoTimer();
 
     // Retrieve string and fret number
     QPushButton *button = qobject_cast<QPushButton*>(sender());
@@ -341,6 +342,7 @@ void Tablature::addFretNumber()
 // Adds a chord to the tab
 void Tablature::addChord(QVector<int> chord)
 {
+    stopTempoTimer();
     QString tabColumn;
     for (int i = chord.size() - 1; i >= 0; i--)
     {
@@ -540,7 +542,7 @@ void Tablature::undo()
 // Removes the notes of a column or the column itself if empty
 void Tablature::remove()
 {
-    if (tempo) stopTempoTimer();
+    stopTempoTimer();
     int index = getSelectedColumnIndex();
 
     // Empty tab
@@ -673,10 +675,7 @@ QScrollArea *Tablature::createScrollArea()
     {
         if (max > 0) hScrollBar->setValue(max);
     });
-    connect(hScrollBar, &QScrollBar::sliderPressed, this, [this]()
-    {
-        if (tempo) stopTempoTimer();
-    });
+    connect(hScrollBar, &QScrollBar::sliderPressed, this, &Tablature::stopTempoTimer);
 
     return scrollArea;
 }
