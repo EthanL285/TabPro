@@ -3,6 +3,7 @@
 
 #include "sound.h"
 #include "staff.h"
+#include "tablaturebutton.h"
 
 #include <QWidget>
 #include <QLabel>
@@ -34,8 +35,9 @@ public:
     void toggleChordMode();
     void removeColumn(int index, bool emitSignal);
 
-    static constexpr int LAYOUT_OFFSET = 3;
-    static constexpr int BARLINE_HEIGHT = 92;
+    static constexpr int NUM_LINES = 6;
+    static constexpr int LAYOUT_OFFSET = 2;
+    static constexpr int BARLINE_HEIGHT = 79;
 
 public slots:
     int getSelectedColumnIndex();
@@ -77,7 +79,7 @@ private:
     QHBoxLayout *columnLayout;
     QVBoxLayout *rowLayout;
     QHBoxLayout *tabLayout;
-    QPushButton *selectedColumn = nullptr;
+    TablatureButton *selectedColumn = nullptr;
     QVector<QPushButton*> tab;
     Sound *sound;
     QVector<int> *notes;

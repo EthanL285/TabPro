@@ -2,8 +2,7 @@
 #include "scoreupdater.h"
 #include "note.h"
 #include "restfactory.h"
-#include "enabledrestbutton.h"
-#include "disabledrestbutton.h"
+#include "tablatureindent.h"
 
 #include <QTimer>
 #include <QRegularExpression>
@@ -57,11 +56,7 @@ Tablature::Tablature(Sound *sound, Staff *staff, QWidget *parent)
     // Create tablature
     QLabel *strings = createNewTabLine();
     columnLayout->addWidget(strings);
-
-    for (int i = 0; i < 2; i++)
-    {
-        columnLayout->addWidget(new DisabledRestButton());
-    }
+    columnLayout->addWidget(new TablatureIndent(120));
     addRest();
 
     /*
@@ -99,12 +94,12 @@ QLabel *Tablature::createNewTabLine()
     strings->setStyleSheet("color: white; font: 20pt Consolas; letter-spacing: 10px;");
     strings->setText
     (
-        "E|\u2015\n"
-        "B|\u2015\n"
-        "G|\u2015\n"
-        "D|\u2015\n"
-        "A|\u2015\n"
-        "E|\u2015"
+        "E\n"
+        "B\n"
+        "G\n"
+        "D\n"
+        "A\n"
+        "E"
     );
     return strings;
 }
@@ -330,7 +325,7 @@ void Tablature::addFretNumber()
     }
     // Add note to staff and tab
     if (!staff->addNote(fretNumbers, getSelectedColumnIndex())) return;
-    selectedColumn->setText(tabColumn);
+    selectedColumn->updateText(tabColumn);
 
     // Visually update tab
     updateTab();
@@ -351,7 +346,7 @@ void Tablature::addChord(QVector<int> chord)
     }
     tabColumn.chop(1);
 
-    selectedColumn->setText(tabColumn);
+    selectedColumn->updateText(tabColumn);
     staff->addNote(chord, getSelectedColumnIndex(), true);
     if (selectedColumn == tab.last()) addRest();
 }
@@ -366,7 +361,7 @@ void Tablature::toggleChordMode()
 // Creates a new rest button
 QPushButton *Tablature::createRest()
 {
-    QPushButton *rest = new EnabledRestButton();
+    QPushButton *rest = new TablatureButton();
     connect(rest, &QPushButton::toggled, this, &Tablature::selectColumn);
     return rest;
 }
@@ -407,44 +402,19 @@ void Tablature::insertRest(int index)
 // Selects the tab column
 void Tablature::selectColumn(bool checked)
 {
-    // User selects a column whilst play is active
+    // Play is active
     if (!playSwitch) stopTempoTimer();
 
-    // Retrieve pointer to the QPushButton that emitted the signal
-    QPushButton *column = qobject_cast<QPushButton*>(sender());
-
-    // Column is selected (De-selecting a column does nothing)
-    if (checked)
+    // De-select previously selected column
+    if (selectedColumn)
     {
-        column->setStyleSheet
-        (
-            "QPushButton { "
-            "   border-radius: 1px;"
-            "   background-color: rgb(50,50,50);"
-            "   font: 20pt Consolas;"
-            "}"
-            "QPushButton:hover { "
-            "   background-color: rgb(75,75,75);"
-            "}"
-        );
-        // Selected Column is NULL during initialisation
-        if (selectedColumn != nullptr && selectedColumn != column)
-        {
-            selectedColumn->setStyleSheet
-            (
-                "QPushButton { "
-                "   border-radius: 1px;"
-                "   background-color: rgb(23,23,23);" // was 33,33,33
-                "   font: 20pt Consolas;"
-                "}"
-                "QPushButton:hover { "
-                "   background-color: rgb(75,75,75);"
-                "}"
-            );
-            selectedColumn->setChecked(false);
-        }
-        selectedColumn = column;
+        selectedColumn->toggleSelect();
+        selectedColumn->setChecked(false);
     }
+    // Select current column
+    TablatureButton *column = qobject_cast<TablatureButton*>(sender());
+    column->toggleSelect();
+    selectedColumn = column;
 }
 
 // ==================================== TECHNIQUES ====================================
@@ -565,7 +535,7 @@ void Tablature::remove()
         Note *note = dynamic_cast<Note*>(staff->getNotes()[index]);
         Rest *rest = RestFactory::createRest(note->getType());
         staff->replaceNote(index, -1, rest);
-        selectedColumn->setText(EMPTY_COLUMN);
+        selectedColumn->updateText(EMPTY_COLUMN);
     }
     // Visually update tab
     updateTab();
