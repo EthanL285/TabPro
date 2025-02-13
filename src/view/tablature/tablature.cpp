@@ -219,8 +219,9 @@ void Tablature::changeTempoEdit(QLineEdit *field, QPushButton *increase, QPushBu
 //                         COLUMN FUNCTIONS                         //
 //////////////////////////////////////////////////////////////////////
 
-/// NOTE: For add, replace and remove functions, staff functions must be called first
-/// since updateText() updates the width of notes
+/// IMPORTANT: When using addColumn() or replaceColumn(), ensure that updateWidth()
+/// is called after the note has been added and after any text updates.
+/// This ensures both the column and note have the correct matching widths
 
 // Adds a fret number to tab
 void Tablature::addFretNumber()
@@ -273,7 +274,9 @@ void Tablature::addColumn(int index, const QString &text, RhythmSymbol *symbol)
 
     tab.insert(index, column);
     addColumnToLayout(index, column);
+
     column->updateText(text);
+    column->updateWidth(symbol->width());
 
     if (isChordMode) selectColumn(index);
     updateTab();
@@ -298,6 +301,7 @@ void Tablature::replaceColumn(int index, const QString &text, RhythmSymbol *symb
 {
     if (!staff->replaceNote(index, symbol, selectedColumn)) return;
     tab[index]->updateText(text);
+    tab[index]->updateWidth(symbol->width());
     updateTab();
 }
 

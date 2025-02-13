@@ -81,11 +81,16 @@ void TablatureButton::updateText(QString text)
 {
     setText(text);
     fretNumbers = text.split("\n", Qt::SkipEmptyParts);
+}
 
-    // Update width
+// Updates the button width
+void TablatureButton::updateWidth(int noteWidth)
+{
     bool hasDoubleDigit = std::any_of(fretNumbers.begin(), fretNumbers.end(), [](const QString &fret){ return fret.toInt() >= 10; });
-    int newWidth = (hasDoubleDigit ? 40 : Tablature::DEFAULT_BUTTON_WIDTH);
+
+    int newWidth = std::max(hasDoubleDigit ? 40 : Tablature::DEFAULT_BUTTON_WIDTH, noteWidth);
     int prevWidth = width();
+    if (newWidth == prevWidth) return;
 
     setFixedWidth(newWidth);
     emit widthChanged(newWidth, prevWidth);

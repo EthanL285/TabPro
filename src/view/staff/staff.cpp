@@ -97,11 +97,10 @@ const QMap<int, QString> Staff::NOTE_MAP =
 //////////////////////////////////////////////////////////////////////
 
 // Adds a note at the given index
-void Staff::addNote(int index, RhythmSymbol *symbol, TablatureButton *button)
+void Staff::addNote(int index, RhythmSymbol *symbol, TablatureButton *column)
 {
     connect(symbol, &RhythmSymbol::widthChanged, this, &Staff::onNoteWidthChange, Qt::UniqueConnection);
-    connect(symbol, &RhythmSymbol::widthChanged, button, &TablatureButton::setFixedWidth, Qt::UniqueConnection);
-    connect(button, &TablatureButton::widthChanged, symbol, &RhythmSymbol::onWidthChange, Qt::UniqueConnection);
+    connect(column, &TablatureButton::widthChanged, symbol, &RhythmSymbol::onWidthChange, Qt::UniqueConnection);
 
     // Insertion at last index
     if (index == notes.size())
@@ -117,7 +116,7 @@ void Staff::addNote(int index, RhythmSymbol *symbol, TablatureButton *button)
 
 // Replaces the note at the given index
 // Returns true if successful, false otherwise
-bool Staff::replaceNote(int index, RhythmSymbol *symbol, TablatureButton *button)
+bool Staff::replaceNote(int index, RhythmSymbol *symbol, TablatureButton *column)
 {
     // Different beat values
     if (notes[index]->getBeatValue() != symbol->getBeatValue())
@@ -130,7 +129,7 @@ bool Staff::replaceNote(int index, RhythmSymbol *symbol, TablatureButton *button
         if (measureExceeded(measure) && !handleMeasureExceeded(measure, indexInMeasure, index)) return false;
     }
     removeNote(index);
-    addNote(index, symbol, button);
+    addNote(index, symbol, column);
     return true;
 }
 

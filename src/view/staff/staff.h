@@ -25,8 +25,8 @@ public:
     void toggleChordMode();
 
     // Note Operations
-    bool replaceNote(int index, RhythmSymbol *symbol, TablatureButton *button);
-    void addNote(int index, RhythmSymbol *symbol, TablatureButton *button);
+    bool replaceNote(int index, RhythmSymbol *symbol, TablatureButton *column);
+    void addNote(int index, RhythmSymbol *symbol, TablatureButton *column);
     void removeNote(int index);
     void selectNote(int index);
 

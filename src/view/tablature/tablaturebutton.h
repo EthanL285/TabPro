@@ -11,6 +11,7 @@ public:
     explicit TablatureButton(QWidget *parent = nullptr);
     void toggleSelect();
     void updateText(QString text);
+    void updateWidth(int noteWidth);
 
 private:
     QStringList fretNumbers;

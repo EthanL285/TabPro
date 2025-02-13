@@ -7,6 +7,9 @@ Quaver::Quaver(QVector<int> staffLines)
     : Note(staffLines)
 {
     type = NoteType::Quaver;
+
+    // Change width for upright quavers
+    if (!isFlipped()) setFixedWidth(50);
 }
 
 // Draws the quaver
@@ -16,9 +19,6 @@ void Quaver::paintEvent(QPaintEvent *event)
     painter.begin(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setBrush(Qt::white);
-
-    // Translate left to include flag
-    if (!isFlipped()) painter.translate(-6,0);
 
     for (int staffLine : staffLines)
     {
