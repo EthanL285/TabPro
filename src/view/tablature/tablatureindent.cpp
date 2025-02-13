@@ -19,9 +19,9 @@ void TablatureIndent::paintEvent(QPaintEvent *event)
     // Draw tab lines
     int topPadding = 22;
     int availableHeight = height() - 2 * topPadding;
-    int spacing = availableHeight / (Tablature::NUM_LINES - 1);
+    int spacing = availableHeight / (Tablature::NUM_STRINGS - 1);
 
-    for (int i = 0; i < Tablature::NUM_LINES; i++)
+    for (int i = 0; i < Tablature::NUM_STRINGS; i++)
     {
         int y = topPadding + i * spacing;
         painter.drawLine(0, y, width(), y);

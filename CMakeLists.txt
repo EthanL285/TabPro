@@ -85,6 +85,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/view/components/widgets/signaturewidget.h src/view/components/widgets/signaturewidget.cpp
         src/model/helpers/signaturehelper.h src/model/helpers/signaturehelper.cpp
         src/view/tablature/tablatureindent.h src/view/tablature/tablatureindent.cpp
+        src/model/rhythmsymbol.cpp
+        src/view/tablature/tablaturescrollarea.h src/view/tablature/tablaturescrollarea.cpp
 
 
 

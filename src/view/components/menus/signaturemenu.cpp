@@ -66,14 +66,14 @@ QMenu *SignatureMenu::createCustomSignatureMenu()
     gridLayout->setVerticalSpacing(10);
 
     // Time signature display
-    signatureDisplay = new SignatureWidget(menubar->getSelectedSignature(), 45, QPoint(-30, -54), QPoint(-30, -31));
+    signatureDisplay = new SignatureWidget(menubar->getSignature(), 45, QPoint(-30, -54), QPoint(-30, -31));
     signatureDisplay->setStyleSheet("border: none; outline: none; text-align: center");
     signatureDisplay->setCursor(Qt::ArrowCursor);
     gridLayout->addWidget(signatureDisplay, 0, 0);
 
     // Spinboxes
     QVBoxLayout *spinBoxLayout = new QVBoxLayout();
-    QPair<int, int> timeSignature = SignatureHelper::parseSignature(menubar->getSelectedSignature());
+    QPair<int, int> timeSignature = SignatureHelper::parseSignature(menubar->getSignature());
 
     topSpinBox = new SpinBox(timeSignature.first, QPair(1, 32));
     bottomSpinBox = new SpinBox(timeSignature.second, QPair(1, 64), true);
@@ -140,7 +140,7 @@ void SignatureMenu::openCustomMenu()
 // Updates the custom menu on signature change
 void SignatureMenu::onSignatureChange()
 {
-    QPair<int, int> timeSignature = SignatureHelper::parseSignature(menubar->getSelectedSignature());
+    QPair<int, int> timeSignature = SignatureHelper::parseSignature(menubar->getSignature());
     topSpinBox->setValue(timeSignature.first);
     bottomSpinBox->setValue(timeSignature.second);
 }

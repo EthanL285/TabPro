@@ -8,11 +8,11 @@
 #include <QLabel>
 #include <QPainter>
 #include <QMouseEvent>
+#include <tablature.h>
 
 #define ROWS 4
 #define COLS 5
 #define MAX_CIRCLES 4
-#define NUM_STRINGS 6
 #define CIRCLE_RADIUS 16
 #define BAR_POINT QPointF(-14,-14)
 #define INVALID_POINT QPointF(-1,-1)
@@ -70,7 +70,7 @@ private:
     int paddingTop;
     int paddingBottom;
     int barPlacement = 0;
-    int barSpan = NUM_STRINGS;
+    int barSpan = Tablature::NUM_STRINGS;
 
     bool isWidgetHovered = false;
     bool isCircleHovered = false;

@@ -25,6 +25,7 @@ private:
     bool isSelected = false;
 
 signals:
+    void widthChanged(int newWidth, int prevWidth);
 };
 
 #endif // TABLATUREBUTTON_H

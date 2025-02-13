@@ -6,8 +6,8 @@ NoteFactory::NoteFactory(QWidget *parent)
     : QWidget{parent}
 {}
 
-// Create note given a note type
-Note *NoteFactory::createNote(NoteType type, QVector<int> staffLines)
+// Create note given a note type and staff lines
+Note *NoteFactory::createNote(NoteType type, const QVector<int> &staffLines)
 {
     switch (type)
     {

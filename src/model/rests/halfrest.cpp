@@ -1,8 +1,9 @@
 #include "halfrest.h"
+#include "tablature.h"
 
 HalfRest::HalfRest()
 {
-    setFixedWidth(35);
+    setFixedWidth(Tablature::DEFAULT_BUTTON_WIDTH);
 }
 
 // Get the beat value of the rest

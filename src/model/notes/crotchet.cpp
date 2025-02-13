@@ -39,6 +39,7 @@ void Crotchet::paintEvent(QPaintEvent *event)
     // Draw the note stem of chords
     if (!isSingleNote()) drawMultiStem(yPos);
 
+    updateHeight();
     painter.end();
 }
 

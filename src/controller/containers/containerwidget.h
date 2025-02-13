@@ -23,19 +23,19 @@ public:
     QWidget *createTempoButton();
     QScrollArea *createScrollArea();
 
+    // Chord Window Functions
+    void addChord(QVector<int> chord);
+    void toggleChordMode();
+
     // Testing Functions
     int getLayoutSize();
     QWidget *getTabItem(int index);
     QWidget *getStaffItem(int index);
+    QWidget *getUIWidget(QString name);
     QPushButton *getFretButton(int row, int col);
     QPushButton *getMenuButton(NoteType type);
     QPushButton *getMenuButton(QString buttonName);
-    QPushButton *getUIButton(QString buttonName);
     const QVector<RhythmSymbol*> &getNotes();
-
-    // Chord Window Functions
-    void addChord(QVector<int> chord);
-    void toggleChordMode();
 
 signals:
 

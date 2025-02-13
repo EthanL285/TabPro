@@ -1,11 +1,12 @@
 #include "eighthrest.h"
+#include "tablature.h"
 
 #include <QLabel>
 #include <QVBoxLayout>
 
 EighthRest::EighthRest()
 {
-    setFixedWidth(35);
+    setFixedWidth(Tablature::DEFAULT_BUTTON_WIDTH);
 
     QLabel *label = new QLabel();
     label->setText("𝄾");

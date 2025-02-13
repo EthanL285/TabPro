@@ -6,8 +6,8 @@
 TablatureButton::TablatureButton(QWidget *parent)
     : QPushButton{parent}
 {
-    updateText(EMPTY_COLUMN);
-    setFixedSize(35, 205);
+    updateText(Tablature::EMPTY_COLUMN);
+    setFixedSize(Tablature::DEFAULT_BUTTON_WIDTH, 205);
     setCheckable(true);
     setCursor(Qt::PointingHandCursor);
     setFocusPolicy(Qt::NoFocus);
@@ -38,10 +38,10 @@ void TablatureButton::paintEvent(QPaintEvent *event)
     // Draw tab lines
     int topPadding = 22;
     int availableHeight = height() - 2 * topPadding;
-    int spacing = availableHeight / (Tablature::NUM_LINES - 1);
+    int spacing = availableHeight / (Tablature::NUM_STRINGS - 1);
     painter.setPen(QPen(Qt::white, 1.5));
 
-    for (int i = 0; i < Tablature::NUM_LINES; i++)
+    for (int i = 0; i < Tablature::NUM_STRINGS; i++)
     {
         int y = topPadding + i * spacing;
         painter.drawLine(0, y, width(), y);
@@ -50,7 +50,7 @@ void TablatureButton::paintEvent(QPaintEvent *event)
     painter.setFont(QFont("Consolas", 20));
     painter.setBrush(Qt::NoBrush);
 
-    for (int i = 0; i < Tablature::NUM_LINES; i++)
+    for (int i = 0; i < Tablature::NUM_STRINGS; i++)
     {
         if (fretNumbers[i] == "\u2015") continue;
 
@@ -81,6 +81,14 @@ void TablatureButton::updateText(QString text)
 {
     setText(text);
     fretNumbers = text.split("\n", Qt::SkipEmptyParts);
+
+    // Update width
+    bool hasDoubleDigit = std::any_of(fretNumbers.begin(), fretNumbers.end(), [](const QString &fret){ return fret.toInt() >= 10; });
+    int newWidth = (hasDoubleDigit ? 40 : Tablature::DEFAULT_BUTTON_WIDTH);
+    int prevWidth = width();
+
+    setFixedWidth(newWidth);
+    emit widthChanged(newWidth, prevWidth);
 }
 
 // Mouse move event
@@ -97,4 +105,3 @@ void TablatureButton::leaveEvent(QEvent *event)
     isHovered = false;
     update();
 }
-

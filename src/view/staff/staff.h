@@ -4,49 +4,46 @@
 #include "menubar.h"
 #include "rhythmsymbol.h"
 #include "signaturewidget.h"
+#include "tablaturebutton.h"
 
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QPixmap>
 #include <QLabel>
 
-#define UPDATE_LINE 11
-
 class Staff : public QWidget
 {
     Q_OBJECT
 public:
     explicit Staff(MenuBar *menu, QWidget *parent = nullptr);
+
     int getBeatsPerMeasure();
     int getBeatUnit();
-    QWidget *getLayoutItem(int index);
-    QHBoxLayout *getLayout();
     const QVector<RhythmSymbol*> &getNotes();
 
-    QMap<int, QPair<int, int>> createStringMap();
-    QMap<int, QString> createNoteMap();
-
-    void updateLength(bool increase, int multiplier);
-    void updateHeight(int height, int line);
-
-    void insertRest(int index, double beat, bool emitSignal);
-    void insertNote(int index, int line, RhythmSymbol *symbol);
-    bool addNote(QVector<int> fretNumbers, int index, bool isChord = false);
-    void addNoteToLayout(int index, RhythmSymbol *symbol);
-    void removeNote(int index, bool emitSignal);
-    bool replaceNote(int index, int line, RhythmSymbol *symbol);
-    void selectNote(int index);
-
+    void updateLength(int delta, int factor = 1);
     void toggleChordMode();
 
-    QPair<QVector<RhythmSymbol*>, int> getMeasureInfo(int index);
-    bool exceedsMeasure(QVector<RhythmSymbol*> measure);
-    double getBeats(QVector<RhythmSymbol*> measure);
+    // Note Operations
+    bool replaceNote(int index, RhythmSymbol *symbol, TablatureButton *button);
+    void addNote(int index, RhythmSymbol *symbol, TablatureButton *button);
+    void removeNote(int index);
+    void selectNote(int index);
+
+    static const QVector<int> fretToLines(const QVector<int> &fretNumbers);
+
+    // Test functions
+    QWidget *getLayoutItem(int index);
+    QHBoxLayout *getLayout();
 
     static constexpr int LAYOUT_OFFSET = 3;
     static constexpr int BARLINE_HEIGHT = 28;
+    static constexpr int DEFAULT_HEIGHT = 185;
     static constexpr int INVALID_LINE = -999;
+    static constexpr int LINE_COUNT = 5;
+    static constexpr int LINE_SPACING = 15;
     static constexpr double STAFF_SPACING = 7.5;
+    const QString EMPTY_COLUMN = "\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015";
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -55,26 +52,33 @@ private:
     QHBoxLayout *mainLayout;
     int beatsPerMeasure = 4;
     int beatUnit = 4;
-    int length = 150;
-    int highestLine = UPDATE_LINE;
+    int length = 185;
     bool chordMode = false;
 
-    QMap<int, QString> noteMap;
-    QMap<int, QPair<int, int>> stringMap;
+    static const QMap<int, QString> NOTE_MAP;
+    static const QMap<int, QPair<int, int>> STRING_MAP;
 
     MenuBar *menu;
     SignatureWidget *timeSignature;
-    QVector<int> lines;
     QVector<RhythmSymbol*> notes;
     RhythmSymbol *selectedNote = nullptr;
 
+    // Measure functions
+    double getBeats(QVector<RhythmSymbol*> measure);
+    bool measureExceeded(QVector<RhythmSymbol*> measure);
+    bool handleMeasureExceeded(QVector<RhythmSymbol*> measure, int indexInMeasure, int index);
+    QPair<QVector<RhythmSymbol*>, int> getMeasureInfo(int index);
+
+    // Note functions
+    void addNoteToLayout(int index, RhythmSymbol *symbol);
+
 signals:
-    void noteRemoved(int index);
-    void restInserted(int index);
+    void removeColumn(int index);
+    void addColumn(int index, const QString &text, RhythmSymbol *symbol);
 
 public slots:
-    void onNoteRemoved(int index);
     void onTimeSignatureChanged(int beatsPerMeasure, int beatUnit);
+    void onNoteWidthChange(int newWidth, int prevWidth);
 };
 
 #endif // STAFF_H

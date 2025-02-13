@@ -102,6 +102,7 @@ ChordWindow::ChordWindow(ContainerWidget *parent)
     // Chord Mode Switch and Search Field
     QLabel *chordMode = createLabel("Chord Mode");
     ToggleSwitch *toggleSwitch = new ToggleSwitch(QColor(45,45,45));
+    toggleSwitch->setObjectName("Chord Switch");
     searchField = createField("Chord Finder", false, 150);
     connect(toggleSwitch, &ToggleSwitch::clicked, this, &ChordWindow::toggleChordMode);
     connect(searchField, &QLineEdit::textChanged, this, &ChordWindow::searchChord);

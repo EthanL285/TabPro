@@ -1,13 +1,20 @@
 #include "scoreupdater.h"
 #include "barline.h"
+#include "rest.h"
+#include "restfactory.h"
 
 ScoreUpdater::ScoreUpdater(QWidget *parent)
     : QWidget{parent}
 {}
 
+bool ScoreUpdater::isUpdating = false;
+
 // Visually updates the barlines on the tab/staff
 void ScoreUpdater::updateBarLines(const QVector<RhythmSymbol*> &notes, Tablature *tab, Staff *staff, int beatsPerMeasure)
 {
+    if (isUpdating) return;
+    isUpdating = true;
+
     QHBoxLayout *staffLayout = staff->getLayout();
     QHBoxLayout *tabLayout = tab->getLayout();
 
@@ -23,8 +30,8 @@ void ScoreUpdater::updateBarLines(const QVector<RhythmSymbol*> &notes, Tablature
     addBarLines(tabLayout, newBarLinePos, Tablature::LAYOUT_OFFSET, Tablature::BARLINE_HEIGHT);
 
     // Update staff length
-    int diff = barLinesAdded - barLinesRemoved;
-    staff->updateLength(diff >= 0, abs(diff));
+    staff->updateLength(Tablature::DEFAULT_BUTTON_WIDTH, barLinesAdded - barLinesRemoved);
+    isUpdating = false;
 }
 
 // Returns the number of barlines removed from the layout
@@ -68,8 +75,8 @@ QVector<int> ScoreUpdater::getBarLinePos(const QVector<RhythmSymbol*> &notes, Ta
         beats += symbol->getBeatValue();
         if (beats > beatsPerMeasure)
         {
-            tab->insertRest(i);
-            staff->insertRest(i, beats - beatsPerMeasure, false);
+            Rest *rest = RestFactory::createRest(beats - beatsPerMeasure);
+            tab->addColumn(i, Tablature::EMPTY_COLUMN, rest);
         }
         if (beats >= beatsPerMeasure)
         {

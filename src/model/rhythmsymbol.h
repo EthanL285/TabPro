@@ -9,6 +9,12 @@ class RhythmSymbol : public QWidget
 public:
     virtual double getBeatValue() = 0;
     virtual void toggleSelect() = 0;
+
+public slots:
+    void onWidthChange(int newWidth, int prevWidth);
+
+signals:
+    void widthChanged(int newWidth, int prevWidth);
 };
 
 #endif // RYTHMSYMBOL_H

@@ -19,6 +19,8 @@ private slots:
     void testNoteReplacementExceedsMeasure();
     void testNoteReplacementToLower();
 
+    void testChordMode();
+
 signals:
 };
 

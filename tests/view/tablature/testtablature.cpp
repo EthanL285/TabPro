@@ -16,7 +16,7 @@ void TestTablature::testAddNote()
     controller->verifyTab("2:C");
 
     // [C, C, Q, Q]
-    controller->changeSelectedNote(NoteType::Quaver);
+    controller->setSelectedNote(NoteType::Quaver);
     controller->addNote(0, 0, 2);
     controller->verifyTab("2:C,2:Q");
 
@@ -99,11 +99,11 @@ void TestTablature::testNoteReplacementBasic()
 
     // [C, /Q, Q, C]
     controller->moveLeft(1);
-    controller->changeSelectedNote(NoteType::Crotchet);
-    controller->addNote(0, 0, 1);
+    controller->setSelectedNote(NoteType::Crotchet);
+    controller->addNote(0, 0);
     controller->moveLeft(2);
-    controller->changeSelectedNote(NoteType::Quaver);
-    controller->addNote(0, 0, 1);
+    controller->setSelectedNote(NoteType::Quaver);
+    controller->addNote(0, 0);
     controller->verifyTab("1:C,2:Q,1:C");
 
     delete controller;
@@ -119,28 +119,28 @@ void TestTablature::testNoteReplacementExceedsMeasure()
     TabProController *controller = new TabProController();
     controller->createTab("2:Q,1:C,2:Q,1:C");
     controller->moveLeft(2);
-    controller->addNote(0, 0, 1);
+    controller->addNote(0, 0);
     controller->verifyTab("2:Q,1:C,1:Q,1:C,1:QR|");
 
     // CASE 2
     // [Q, Q, C, /C, Q, C |] -> [Q, Q, C, C, C |]
     controller->createTab("2:Q,1:C,2:Q,1:C");
     controller->moveLeft(3);
-    controller->addNote(0, 0, 1);
+    controller->addNote(0, 0);
     controller->verifyTab("2:Q,3:C|");
 
     // CASE 3
     // [Q, /C, C, Q, Q, C |] -> [Q, Q, C, C, C |]
     controller->createTab("2:Q,1:C,2:Q,1:C");
     controller->moveLeft(5);
-    controller->addNote(0, 0, 1);
+    controller->addNote(0, 0);
     controller->verifyTab("1:Q,1:C,1:QR,2:Q,1:C|");
 
     // CASE 4
     // [/C, Q, C, Q, Q, C |] -> [C, C, Q, Q, C|]
     controller->createTab("2:Q,1:C,2:Q,1:C");
     controller->moveLeft(6);
-    controller->addNote(0, 0, 1);
+    controller->addNote(0, 0);
     controller->verifyTab("2:C,2:Q,1:C|");
 
     delete controller;
@@ -157,14 +157,24 @@ void TestTablature::testNoteReplacementToLower()
     // [C, C, C, \Q | C] -> [C, C, C, Q, QR | C]
     // Should not move crotchet from next measure
     controller->moveLeft(2);
-    controller->changeSelectedNote(NoteType::Quaver);
-    controller->addNote(0, 0, 1);
+    controller->setSelectedNote(NoteType::Quaver);
+    controller->addNote(0, 0);
     controller->verifyTab("3:C,1:Q,1:QR|1:C");
 
-    // [C, C, C, Q, QR | \Q] -> [C, C, C, Q, QR | Q]
+    // Should not replace quarter rest
+    controller->moveRight(1);
+    controller->setSelectedNote(NoteType::Crotchet);
+    controller->addNote(0, 0);
+    controller->verifyTab("3:C,1:Q,1:QR|1:C");
+
+    // Should not remove quarter rest (moves selected right)
+    controller->removeNote(1);
+    controller->verifyTab("3:C,1:Q,1:QR|1:C");
+
+    // [C, C, C, Q, QR | \C] -> [C, C, C, Q, QR | Q]
     // Should not crash when editing first note in next measure
-    controller->moveRight(2);
-    controller->addNote(0, 0, 1);
+    controller->setSelectedNote(NoteType::Quaver);
+    controller->addNote(0, 0);
     controller->verifyTab("3:C,1:Q,1:QR|1:Q");
 
     // CASE 2
@@ -173,9 +183,31 @@ void TestTablature::testNoteReplacementToLower()
     // Should not move any crotchets from next measure
     controller->createTab("8:C");
     controller->moveLeft(5);
-    controller->changeSelectedNote(NoteType::Quaver);
-    controller->addNote(0, 0, 1);
+    controller->setSelectedNote(NoteType::Quaver);
+    controller->addNote(0, 0);
     controller->verifyTab("3:C,1:Q,1:QR|4:C|");
 
     delete controller;
+}
+
+// Test for chode mode
+void TestTablature::testChordMode()
+{
+    // TODO: Fix tablature verification
+    /*
+    // [C, C]
+    TabProController *controller = new TabProController();
+    controller->createTab("2:C");
+
+    // [C, C, Cc]
+    controller->addChord({0, 1, 2, 3, 4, 5});
+    controller->verifyTab("3:C");
+
+    // [C, Cc, Cc]
+    controller->moveLeft(1);
+    controller->addChord({1, 2, 3, 4, 5, 6});
+    controller->verifyTab("3:C");
+
+    delete controller;
+    */
 }

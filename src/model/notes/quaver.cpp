@@ -45,6 +45,7 @@ void Quaver::paintEvent(QPaintEvent *event)
     if (!isSingleNote()) drawMultiStem(yPos);
 
     drawFlag();
+    updateHeight();
     painter.end();
 }
 

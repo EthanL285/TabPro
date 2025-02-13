@@ -16,6 +16,7 @@ public:
     static void updateBarLines(const QVector<RhythmSymbol*> &notes, Tablature *tab, Staff *staff, int beatsPerMeasure);
 
 private:
+    static bool isUpdating;
     static int removeBarLines(QHBoxLayout *layout);
     static int addBarLines(QHBoxLayout *layout, QVector<int> barLinePos, int layoutOffset, int barHeight);
     static QVector<int> getBarLinePos(const QVector<RhythmSymbol*> &notes, Tablature *tab, Staff *staff, int beatsPerMeasure);

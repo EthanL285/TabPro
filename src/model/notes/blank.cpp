@@ -1,9 +1,10 @@
 #include "blank.h"
+#include "tablature.h"
 
 Blank::Blank()
     : Note{QVector<int>(6,-1)}
 {
-    setFixedWidth(35);
+    setFixedWidth(Tablature::DEFAULT_BUTTON_WIDTH);
 }
 
 // Get the beat value of the note

@@ -16,9 +16,9 @@ class MenuBar : public QWidget
     Q_OBJECT
 public:
     explicit MenuBar(QWidget *parent = nullptr);
-    NoteType getSelectedNote();
-    AccidentalType getSelectedAccidental();
-    QString getSelectedSignature();
+    NoteType getNote();
+    AccidentalType getAccidental();
+    QString getSignature();
 
     // Testing Functions
     QPushButton *getMenuButton(NoteType note);

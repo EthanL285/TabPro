@@ -11,33 +11,40 @@
 #include <QPushButton>
 #include <QLineEdit>
 #include <QScrollArea>
-
-#define EMPTY_COLUMN "\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015"
+#include <QTimer>
 
 class Tablature : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Tablature(Sound *sound, Staff *staff, QWidget *parent = nullptr);
-    void setPlayButton(QPushButton *button);
-    QHBoxLayout *getLayout();
-    QWidget *getLayoutItem(int index);
-    QPushButton *createRest();
-    QScrollArea *createScrollArea();
-    QLabel *createNewTabLine();
+    explicit Tablature(MenuBar *menu, Sound *sound, Staff *staff, QWidget *parent = nullptr);
 
+    // Tab functions
     void updateTab();
     void resetTab();
-    void addChord(QVector<int> chord);
-    void addRest();
-    void insertRest(int index);
-    void adjustScrollBarPosition(QPushButton *button, QString alignment);
-    void toggleChordMode();
-    void removeColumn(int index, bool emitSignal);
 
-    static constexpr int NUM_LINES = 6;
+    // Chord Functions
+    void addChord(QVector<int> chord);
+    void toggleChordMode();
+
+    // Column Functions
+    TablatureButton *createColumn();
+    void addColumn(int index, const QString &text, RhythmSymbol *symbol);
+    void replaceColumn(int index, const QString &text, RhythmSymbol *symbol);
+    void removeColumn(int index);
+    void selectColumn(int index);
+    void selectColumn(TablatureButton *column);
+
+    // Testing functions
+    QHBoxLayout *getLayout();
+    QWidget *getLayoutItem(int index);
+
+    static const QString EMPTY_COLUMN;
+    static constexpr int NUM_STRINGS = 6;
     static constexpr int LAYOUT_OFFSET = 2;
     static constexpr int BARLINE_HEIGHT = 79;
+    static constexpr int DEFAULT_BUTTON_WIDTH = 35;
+    static constexpr int EMPTY_FRET = -1;
 
 public slots:
     int getSelectedColumnIndex();
@@ -45,9 +52,8 @@ public slots:
     void goLeft();
     void goRight();
     void playTab();
-    void playColumn();
-    void getColumnInfo(int index);
-    void stopTempoTimer();
+    void playColumn(int index);
+    void pauseTab();
 
     // Techniques
     void changeTempoButton(QLineEdit *field, QPushButton *increase, QPushButton *decrease);
@@ -66,32 +72,32 @@ public slots:
     void remove();
 
 private slots:
-    void selectColumn(bool checked);
-
-public slots:
-    void onColumnRemoved(int index);
-    void onRestInsertion(int index);
+    void onColumnClick(bool checked);
 
 signals:
     void columnRemoved(int index);
+    void tabPaused();
 
 private:
+    MenuBar *menu;
     QHBoxLayout *columnLayout;
     QVBoxLayout *rowLayout;
     QHBoxLayout *tabLayout;
     TablatureButton *selectedColumn = nullptr;
-    QVector<QPushButton*> tab;
+    QVector<TablatureButton*> tab;
     Sound *sound;
     QVector<int> *notes;
-    QHash<int, QString> fretPositions;
-    QTimer *tempo = nullptr;
-    QPushButton *playButton = nullptr;
+    QTimer *tempo;
     QScrollArea *scrollArea = nullptr;
     Staff *staff = nullptr;
-    bool playSwitch = true;
-    bool chordMode = false;
+    bool isChordMode = false;
     int playIndex;
     int BPM = 60;
+
+    QVector<int> textToFrets(const QString &text);
+    void addColumnToLayout(int index, TablatureButton *column);
+    void adjustScrollBarPosition(QPushButton *button, QString alignment);
+
 };
 
 #endif // TABLATURE_H

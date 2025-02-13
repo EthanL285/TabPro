@@ -3,6 +3,7 @@
 
 #include "rhythmsymbol.h"
 #include "notetype.h"
+#include "staff.h"
 
 #include <QWidget>
 #include <QPainter>
@@ -20,13 +21,15 @@ protected:
 
     NoteType type;
     QPainter painter;
-    QVector<int> staffLines;    // The staff lines of note heads
-    QVector<int> yPos;          // The positions of note heads
+    QVector<int> staffLines;                // The staff lines of note heads
+    QVector<int> yPos;                      // The positions of note heads
     int stemHeight;
+    int numLines = Staff::LINE_COUNT;
 
     static constexpr int STEM_HEIGHT = 56;
     static constexpr int HEAD_WIDTH = 17;
     static constexpr int HEAD_HEIGHT = 11;
+    static constexpr int HEIGHT_OFFSET = 25;
 
     bool isSingleNote();
     bool isFlipped();
@@ -34,6 +37,7 @@ protected:
     void drawExtraLines(int staffLine);
     void drawSingleStem();
     void drawMultiStem(QVector<int> yPos);
+    void updateHeight();
 
 private:
     bool isSelected = false;

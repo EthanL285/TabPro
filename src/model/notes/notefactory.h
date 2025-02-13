@@ -11,7 +11,7 @@ class NoteFactory : public QWidget
     Q_OBJECT
 public:
     explicit NoteFactory(QWidget *parent = nullptr);
-    static Note *createNote(NoteType type, QVector<int> staffLines);
+    static Note *createNote(NoteType type, const QVector<int> &staffLines);
 
 signals:
 };

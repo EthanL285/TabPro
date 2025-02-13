@@ -57,7 +57,7 @@ ContainerWidget::ContainerWidget(MainWindow *window, QWidget *parent)
     sound = new Sound(this);
 
     // Tablature and playback buttons
-    tab = new Tablature(sound, staff);
+    tab = new Tablature(menu, sound, staff);
     tab->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     tab->setContentsMargins(28, 0, 28, 0);
     tabLayout->addWidget(tab);
@@ -132,9 +132,8 @@ ContainerWidget::ContainerWidget(MainWindow *window, QWidget *parent)
     bottomLayout->addWidget(chords);
 
     // Connect signals and slots between menu, tab and staff
-    connect(tab, &Tablature::columnRemoved, staff, &Staff::onNoteRemoved);
-    connect(staff, &Staff::noteRemoved, tab, &Tablature::onColumnRemoved);
-    connect(staff, &Staff::restInserted, tab, &Tablature::onRestInsertion);
+    connect(staff, &Staff::removeColumn, tab, &Tablature::removeColumn);
+    connect(staff, &Staff::addColumn, tab, &Tablature::addColumn);
 
     connect(menu, &MenuBar::signatureChanged, staff, &Staff::onTimeSignatureChanged);
     connect(menu, &MenuBar::resetTab, tab, &Tablature::resetTab);
@@ -198,8 +197,8 @@ void ContainerWidget::createPlaybackButtons()
         "}"
     );
     playbackLayout->addWidget(play);
-    tab->setPlayButton(play);
-    connect(play, &QPushButton::clicked, tab, &Tablature::playTab);
+    connect(play, &QPushButton::clicked, this, [this, play]() { play->isChecked() ? tab->playTab() : tab->pauseTab(); });
+    connect(tab, &Tablature::tabPaused, play, [play]() { play->setChecked(false); });
 
     // Go right button
     QPushButton *right = new QPushButton();
@@ -645,12 +644,15 @@ QScrollArea *ContainerWidget::createScrollArea()
     return scrollArea;
 }
 
-//////////////////// TESTING FUCNTIONS ///////////////////////
+//////////////////////////////////////////////////////////////////////
+//                         TESTING FUNCTIONS                        //
+//////////////////////////////////////////////////////////////////////
 
 // Returns the size of the layout
+// Includes barlines and excludes indent
 int ContainerWidget::getLayoutSize()
 {
-    return staff->getLayout()->count();
+    return staff->getLayout()->count() - Staff::LAYOUT_OFFSET;
 }
 
 // Returns the fret button at the given row and column index
@@ -673,9 +675,9 @@ QPushButton *ContainerWidget::getMenuButton(QString buttonName)
 }
 
 // Returns the button that corresponds to the given name
-QPushButton *ContainerWidget::getUIButton(QString buttonName)
+QWidget *ContainerWidget::getUIWidget(QString name)
 {
-    return findChild<QPushButton*>(buttonName);
+    return findChild<QWidget*>(name);
 }
 
 // Returns a vector of all the notes on the staff
@@ -696,8 +698,9 @@ QWidget *ContainerWidget::getStaffItem(int index)
     return staff->getLayoutItem(index);
 }
 
-//////////////////// RECTANGLE CLASS ///////////////////////
-
+//////////////////////////////////////////////////////////////////////
+//                        RECTANGLE CLASS                           //
+//////////////////////////////////////////////////////////////////////
 
 Rectangle::Rectangle(int width, int height, QWidget *parent)
     : QWidget(parent), width(width), height(height)

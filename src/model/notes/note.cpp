@@ -1,5 +1,6 @@
 #include "note.h"
 #include "staff.h"
+#include "tablature.h"
 
 #include <QPainter>
 #include <QPainterPath>
@@ -7,7 +8,15 @@
 Note::Note(QVector<int> staffLines)
     : staffLines{staffLines}
 {
-    setFixedWidth(35);
+    // Calculate widget height
+    int numExtraLines = 0;
+    for (int line : staffLines)
+    {
+        if (line == Staff::INVALID_LINE) continue;
+        numExtraLines = std::max(abs(line) - 4, numExtraLines);
+    }
+    numLines += numExtraLines;
+    setFixedSize(Tablature::DEFAULT_BUTTON_WIDTH, numLines * Staff::LINE_SPACING + Note::HEIGHT_OFFSET);
 }
 
 // Getter for staff lines
@@ -29,6 +38,14 @@ void Note::toggleSelect()
     update();
 }
 
+// Updates the height of the widget
+void Note::updateHeight()
+{
+    int newHeight = numLines * Staff::LINE_SPACING + Note::HEIGHT_OFFSET;
+    if (newHeight == height()) return;
+    setFixedHeight(newHeight);
+}
+
 // Draws the note head
 void Note::drawNoteHead(QPainter &painter)
 {
@@ -48,30 +65,30 @@ void Note::drawNoteHead(QPainter &painter)
 void Note::drawExtraLines(int staffLine)
 {
     // Don't draw if extra lines already exist
-    int min = *std::min_element(staffLines.begin(), staffLines.end(), [](int a, int b) { return (a != Staff::Staff::INVALID_LINE && (b == Staff::INVALID_LINE || a < b)); });
+    int min = *std::min_element(staffLines.begin(), staffLines.end(), [](int a, int b) { return (a != Staff::INVALID_LINE && (b == Staff::INVALID_LINE || a < b)); });
     int max = *std::max_element(staffLines.begin(), staffLines.end());
-    if ((staffLine < 0 && staffLine != min) || (staffLine > 0 && staffLine != max)) {
-        return;
-    }
+    if ((staffLine < 0 && staffLine != min) || (staffLine > 0 && staffLine != max)) return;
 
-    int numLines = abs(staffLine) - 4;
+    int numExtraLines = abs(staffLine) - 4;
     int offset = 0;
 
     if (!isSingleNote() && staffLine > 0) painter.scale(-1, -1);
     painter.setPen(QPen(Qt::white, 2));
 
     // Note is not on a line
-    if (numLines % 2 != 0)
+    if (numExtraLines % 2 != 0)
     {
         offset = HEAD_HEIGHT / 2 + 1;
-        numLines--;
+        numExtraLines--;
     }
     // Draw lines
-    for (int i = 0; i < numLines; i += 2)
+    for (int i = 0; i < numExtraLines; i += 2)
     {
-        int yPoint = Staff::Staff::STAFF_SPACING * i + offset;
+        int yPoint = Staff::STAFF_SPACING * i + offset;
         painter.drawLine((HEAD_WIDTH / 2) + 3, -yPoint, (-HEAD_WIDTH / 2) - 3, -yPoint);
     }
+    // Update number of lines
+    numLines = std::max(Staff::LINE_COUNT + numExtraLines, numLines);
 }
 
 // Draws the stem of singular notes
@@ -119,3 +136,4 @@ bool Note::isFlipped()
     int staffLine = *std::find_if(staffLines.begin(), staffLines .end(), [](int x) { return x != Staff::INVALID_LINE; } );
     return isSingleNote() && staffLine > 0;
 }
+

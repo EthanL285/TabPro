@@ -19,16 +19,26 @@ public:
     QWidget *getStaffItem(int index);
     QWidget *getTabItem(int index);
 
+    // Tab functions
     void createTab(QString tab);
     void clearTab();
+
+    // Verification functions
     void verifyTab(QString expectedTab);
     void verifyStaff(QString expectedTab);
 
-    void addNote(int string, int fret, int x);
+    // Note functions
+    void addNote(int string, int fret, int x = 1);
     void removeNote(int x);
-    void changeSelectedNote(NoteType type);
+    void addChord(QVector<int> fretNumbers);
+
+    // Move functions
     void moveLeft(int x);
     void moveRight(int x);
+
+    // Set functions
+    void setSelectedNote(NoteType type);
+    void setChordMode(bool enable);
 
 private:
     ContainerWidget *widget;

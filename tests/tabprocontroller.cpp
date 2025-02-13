@@ -1,4 +1,5 @@
 #include "tabprocontroller.h"
+#include "toggleswitch.h"
 
 #include <QTest>
 
@@ -10,6 +11,28 @@ TabProController::TabProController(QObject *parent)
 {
     widget = new ContainerWidget(nullptr);
 }
+
+// Returns a vector of all the notes on the staff
+const QVector<RhythmSymbol*> &TabProController::getNotes()
+{
+    return widget->getNotes();
+}
+
+// Returns the staff layout item at the given index
+QWidget *TabProController::getStaffItem(int index)
+{
+    return widget->getStaffItem(index);
+}
+
+// Returns the tab layout item at the given index
+QWidget *TabProController::getTabItem(int index)
+{
+    return widget->getTabItem(index);
+}
+
+//////////////////////////////////////////////////////////////////////
+//                          TAB FUNCTIONS                           //
+//////////////////////////////////////////////////////////////////////
 
 // Creates a tab from a comma-separated string where each entry is in the format "amount::NoteType"
 // Each note is added at the default position (0, 0) to simplify testing
@@ -30,10 +53,20 @@ void TabProController::createTab(QString tab)
         int amount = parts[0].toInt();
 
         // Add corresponding note
-        changeSelectedNote(type);
+        setSelectedNote(type);
         addNote(0, 0, amount);
     }
 }
+
+// Clears the tablature
+void TabProController::clearTab()
+{
+    QTest::mouseClick(widget->getMenuButton("reset tab"), Qt::LeftButton);
+}
+
+//////////////////////////////////////////////////////////////////////
+//                      VERIFICATION FUNCTIONS                      //
+//////////////////////////////////////////////////////////////////////
 
 // Verifies the tab by comparing the actual tab against a string representing the expected tab
 // Example input: "4:C|8:Q|"
@@ -42,7 +75,7 @@ void TabProController::createTab(QString tab)
 void TabProController::verifyTab(QString expectedTab)
 {
     int idx = 0;
-    int tabSize = widget->getLayoutSize() - Tablature::LAYOUT_OFFSET;
+    int tabSize = widget->getLayoutSize();
     bool endsWithBarline = expectedTab.endsWith("|");
 
     // Parse string
@@ -88,7 +121,7 @@ void TabProController::verifyTab(QString expectedTab)
 void TabProController::verifyStaff(QString expectedTab)
 {
     int idx = 0;
-    int tabSize = widget->getLayoutSize() - Staff::LAYOUT_OFFSET;
+    int tabSize = widget->getLayoutSize();
     bool endsWithBarline = expectedTab.endsWith("|");
 
     QMap<QString, QString> map =
@@ -131,29 +164,9 @@ void TabProController::verifyStaff(QString expectedTab)
     QCOMPARE(idx, tabSize);
 }
 
-// Clears the tablature
-void TabProController::clearTab()
-{
-    QTest::mouseClick(widget->getMenuButton("reset tab"), Qt::LeftButton);
-}
-
-// Returns a vector of all the notes on the staff
-const QVector<RhythmSymbol*> &TabProController::getNotes()
-{
-    return widget->getNotes();
-}
-
-// Returns the staff layout item at the given index
-QWidget *TabProController::getStaffItem(int index)
-{
-    return widget->getStaffItem(index);
-}
-
-// Returns the tab layout item at the given index
-QWidget *TabProController::getTabItem(int index)
-{
-    return widget->getTabItem(index);
-}
+//////////////////////////////////////////////////////////////////////
+//                         NOTE FUNCTIONS                           //
+//////////////////////////////////////////////////////////////////////
 
 // Adds a note to the tab and staff 'x' times
 void TabProController::addNote(int string, int fret, int x)
@@ -169,22 +182,31 @@ void TabProController::removeNote(int x)
 {
     for (int i = 0; i < x; i++)
     {
-        QTest::mouseClick(widget->getUIButton("\u2715"), Qt::LeftButton);
+        QTest::mouseClick(widget->getUIWidget("\u2715"), Qt::LeftButton);
     }
 }
 
-// Changes the currently selected note to the given type
-void TabProController::changeSelectedNote(NoteType type)
+// Adds a chord to the tab
+void TabProController::addChord(QVector<int> fretNumbers)
 {
-    QTest::mouseClick(widget->getMenuButton(type), Qt::LeftButton);
+    setChordMode(true);
+    for(int i = 0; i < Tablature::NUM_STRINGS; i++)
+    {
+        addNote(i, fretNumbers[i]);
+    }
+    setChordMode(false);
 }
+
+//////////////////////////////////////////////////////////////////////
+//                         MOVE FUNCTIONS                           //
+//////////////////////////////////////////////////////////////////////
 
 // Moves the tab left 'x' times
 void TabProController::moveLeft(int x)
 {
     for (int i = 0; i < x; i++)
     {
-        QTest::mouseClick(widget->getUIButton("left"), Qt::LeftButton);
+        QTest::mouseClick(widget->getUIWidget("left"), Qt::LeftButton);
     }
 }
 
@@ -193,8 +215,26 @@ void TabProController::moveRight(int x)
 {
     for (int i = 0; i < x; i++)
     {
-        QTest::mouseClick(widget->getUIButton("right"), Qt::LeftButton);
+        QTest::mouseClick(widget->getUIWidget("right"), Qt::LeftButton);
     }
+}
+
+//////////////////////////////////////////////////////////////////////
+//                         SET FUNCTIONS                            //
+//////////////////////////////////////////////////////////////////////
+
+// Sets the selected note to the given type
+void TabProController::setSelectedNote(NoteType type)
+{
+    QTest::mouseClick(widget->getMenuButton(type), Qt::LeftButton);
+}
+
+// Sets the chord mode
+void TabProController::setChordMode(bool enable)
+{
+    ToggleSwitch *chordSwitch = qobject_cast<ToggleSwitch*>(widget->getUIWidget("Chord Switch"));
+    if (chordSwitch->isToggled() == enable) return;
+    QTest::mouseClick(chordSwitch, Qt::LeftButton);
 }
 
 // Destructor

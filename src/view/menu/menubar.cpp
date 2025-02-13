@@ -95,19 +95,19 @@ MenuBar::MenuBar(QWidget *parent)
 }
 
 // Getter for selected note
-NoteType MenuBar::getSelectedNote()
+NoteType MenuBar::getNote()
 {
     return selectedNote.first;
 }
 
 // Getter for selected accidental
-AccidentalType MenuBar::getSelectedAccidental()
+AccidentalType MenuBar::getAccidental()
 {
     return selectedAccidental.first;
 }
 
 // Getter for selected time signature
-QString MenuBar::getSelectedSignature()
+QString MenuBar::getSignature()
 {
     return selectedSignature;
 }

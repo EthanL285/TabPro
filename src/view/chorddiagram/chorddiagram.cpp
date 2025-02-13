@@ -125,7 +125,7 @@ void ChordDiagram::convertDiagramToTab()
     tabColumn.fill(-1);
     int startFret = (barExists) ? barPlacement - 1 : 0;
 
-    for (int i = 0; i < NUM_STRINGS; i++)
+    for (int i = 0; i < Tablature::NUM_STRINGS; i++)
     {
         QPointF circle = getCircle(i);
 
@@ -140,7 +140,7 @@ void ChordDiagram::convertDiagramToTab()
             tabColumn[i] = 0;
         }
         // Check if bar exists on the string
-        else if (barExists && i >= NUM_STRINGS - barSpan)
+        else if (barExists && i >= Tablature::NUM_STRINGS - barSpan)
         {
             tabColumn[i] = barPlacement;
         }
@@ -157,7 +157,7 @@ void ChordDiagram::convertTabToDiagram(QVector<QPair<int,int>> tab, int barFret,
 
     placedCircles.clear();
 
-    for (int i = 0; i < NUM_STRINGS; i++)
+    for (int i = 0; i < Tablature::NUM_STRINGS; i++)
     {
         // Insert circle
         if (tab[i].second != -1)
@@ -179,7 +179,7 @@ void ChordDiagram::convertTabToDiagram(QVector<QPair<int,int>> tab, int barFret,
     barSpan = barLength;
     barExists = (barPlacement != 0);
 
-    for (int i = NUM_STRINGS - barSpan; i < NUM_STRINGS; i++)
+    for (int i = Tablature::NUM_STRINGS - barSpan; i < Tablature::NUM_STRINGS; i++)
     {
         setStringVisibility(i, false);
     }
@@ -199,7 +199,7 @@ QPointF ChordDiagram::getCircle(int stringNum)
 // Draws the bar
 void ChordDiagram::drawBar(QFont font, QPainter &painter)
 {
-    int factor = NUM_STRINGS - barSpan;
+    int factor = Tablature::NUM_STRINGS - barSpan;
     int rectWidth = width() - factor * cellWidth;
     int rectHeight = CIRCLE_RADIUS * 2;
     int barOffSet = factor * (cellWidth / 2);
@@ -360,7 +360,7 @@ void ChordDiagram::handleDeleteMode()
 {
     int circleNum = getCircleNumber(currCirclePos);
     int stringNum = getStringNumber(currCirclePos);
-    int barStringNum = NUM_STRINGS - barSpan;
+    int barStringNum = Tablature::NUM_STRINGS - barSpan;
 
     // Delete circle
     if (circleNum != -1)
@@ -377,7 +377,7 @@ void ChordDiagram::handleDeleteMode()
         if (getSameStringCircle(barDeletePoint) == -1) setStringVisibility(barStringNum, true);
 
         barSpan--;
-        barDeletePoint.setX(paddingLeftRight + (NUM_STRINGS - barSpan) * cellWidth);
+        barDeletePoint.setX(paddingLeftRight + (Tablature::NUM_STRINGS - barSpan) * cellWidth);
         setCursor(Qt::ArrowCursor);
     }
 }
@@ -440,7 +440,7 @@ void ChordDiagram::handleValidPlacement(int circleNum, QPointF newPoint)
 {
     int newStringNum = getStringNumber(newPoint);
     int oldStringNum = getStringNumber(placedCircles[circleNum]);
-    int barStringNum = NUM_STRINGS - barSpan;
+    int barStringNum = Tablature::NUM_STRINGS - barSpan;
 
     if (!barExists || oldStringNum < barStringNum) setStringVisibility(oldStringNum, true);
     setStringVisibility(newStringNum, false);
@@ -452,7 +452,7 @@ void ChordDiagram::placeBar()
 {
     QComboBox* barDropdown = qobject_cast<QComboBox*>(sender());
     barPlacement = barDropdown->currentIndex();
-    barSpan = NUM_STRINGS;
+    barSpan = Tablature::NUM_STRINGS;
 
     // Reset bar delete point
     barDeletePoint = QPointF(paddingLeftRight, paddingTop + (cellHeight / 2));
@@ -463,7 +463,7 @@ void ChordDiagram::placeBar()
         placedCircles.remove(1);
 
         // Set strings to open
-        for (int i = 0; i < NUM_STRINGS; i++)
+        for (int i = 0; i < Tablature::NUM_STRINGS; i++)
         {
             int xPos = i * cellWidth + paddingLeftRight;
             if (getSameStringCircle(QPointF(xPos, 0)) == -1) setStringVisibility(i, true);
@@ -481,7 +481,7 @@ void ChordDiagram::placeBar()
             }
         }
         // Set strings to closed
-        for (int i = 0; i < NUM_STRINGS; i++)
+        for (int i = 0; i < Tablature::NUM_STRINGS; i++)
         {
             setStringVisibility(i, false);
         }

@@ -2,17 +2,17 @@
 #include "scoreupdater.h"
 #include "note.h"
 #include "restfactory.h"
+#include "notefactory.h"
 #include "tablatureindent.h"
+#include "tablaturescrollarea.h"
 
-#include <QTimer>
-#include <QRegularExpression>
-#include <QRegularExpressionMatch>
-#include <QRegularExpressionMatchIterator>
 #include <QScrollArea>
 #include <QScrollBar>
 
-Tablature::Tablature(Sound *sound, Staff *staff, QWidget *parent)
-    : sound{sound}, staff{staff}, QWidget{parent}
+const QString Tablature::EMPTY_COLUMN = "\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015";
+
+Tablature::Tablature(MenuBar *menu, Sound *sound, Staff *staff, QWidget *parent)
+    : menu{menu}, sound{sound}, staff{staff}, QWidget{parent}
 {
     tabLayout = new QHBoxLayout(this);
     tabLayout->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
@@ -48,16 +48,30 @@ Tablature::Tablature(Sound *sound, Staff *staff, QWidget *parent)
     tabMarginLayout->setAlignment(Qt::AlignCenter);
 
     // Set scroll area
-    scrollArea = createScrollArea();
+    scrollArea = new TablatureScrollArea(this);
     scrollArea->setWidget(new QWidget());
     scrollArea->widget()->setLayout(columnLayout);
     tabMarginLayout->addWidget(scrollArea, Qt::AlignCenter);
 
     // Create tablature
-    QLabel *strings = createNewTabLine();
+    QLabel *strings = new QLabel();
+    strings->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    strings->setStyleSheet("color: white; font: 20pt Consolas; letter-spacing: 10px;");
+    strings->setText("E\nB\nG\nD\nA\nE");
+
     columnLayout->addWidget(strings);
     columnLayout->addWidget(new TablatureIndent(120));
-    addRest();
+
+    // Add leading tab button
+    TablatureButton *lead = createColumn();
+    columnLayout->addWidget(lead);
+    tab.push_back(lead);
+    selectedColumn = lead;
+    lead->toggleSelect();
+
+    // Initialise timer
+    tempo = new QTimer(this);
+    QObject::connect(tempo, &QTimer::timeout, this, [this]() { playColumn(playIndex++); });
 
     /*
      * LAYOUT (-> means the widget has the specified layout)
@@ -68,79 +82,51 @@ Tablature::Tablature(Sound *sound, Staff *staff, QWidget *parent)
      */
 }
 
-// Sets the play button of the tab
-void Tablature::setPlayButton(QPushButton *button)
+//////////////////////////////////////////////////////////////////////
+//                          TAB FUNCTIONS                           //
+//////////////////////////////////////////////////////////////////////
+
+// Visually updates the tab
+void Tablature::updateTab()
 {
-    playButton = button;
+    ScoreUpdater::updateBarLines(staff->getNotes(), this, staff, staff->getBeatsPerMeasure());
 }
 
-// Returns the layout of the tab
-QHBoxLayout *Tablature::getLayout()
+// Resets the tab
+void Tablature::resetTab()
 {
-    return columnLayout;
+    selectColumn(tab.last());
+    for (int i = staff->getNotes().size() - 1; i >= 0; i--)
+    {
+        remove();
+    }
+    updateTab();
 }
 
-// Returns the layout item at the given index
-QWidget *Tablature::getLayoutItem(int index)
+//////////////////////////////////////////////////////////////////////
+//                       PLAYBACK FUNCTIONS                         //
+//////////////////////////////////////////////////////////////////////
+
+// Pauses the tab
+void Tablature::pauseTab()
 {
-    return columnLayout->itemAt(index + LAYOUT_OFFSET)->widget();
-}
+    if (!tempo->isActive()) return;
 
-// Creates new tab line with strings
-QLabel *Tablature::createNewTabLine()
-{
-    QLabel *strings = new QLabel();
-    strings->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    strings->setStyleSheet("color: white; font: 20pt Consolas; letter-spacing: 10px;");
-    strings->setText
-    (
-        "E\n"
-        "B\n"
-        "G\n"
-        "D\n"
-        "A\n"
-        "E"
-    );
-    return strings;
-}
-
-// Retrieve index of the selected column
-int Tablature::getSelectedColumnIndex()
-{
-    auto it = std::find(tab.begin(), tab.end(), selectedColumn);
-    int index = std::distance(tab.begin(), it);
-
-    return index;
-}
-
-// Stops the tempo timer
-void Tablature::stopTempoTimer()
-{
-    if (!tempo) return;
-
-    playButton->setChecked(false);
-    playSwitch = true;
+    emit tabPaused();
     tempo->stop();
-    tempo->deleteLater();
-    tempo = nullptr;
     staff->selectNote(-1);
 }
 
 // Selects the previous column
 void Tablature::goLeft()
 {
-    // Stop tempo timer
-    if (tempo)
-    {
-        stopTempoTimer();
-        return;
-    }
-    int index = getSelectedColumnIndex();
+    pauseTab();
 
     // Select previous column
+    int index = getSelectedColumnIndex();
     if (index != 0)
     {
-        tab[index - 1]->setChecked(true); // selectColumn() handles the rest
+        selectColumn(index - 1);
         adjustScrollBarPosition(tab[index - 1], "right");
     }
 }
@@ -148,18 +134,13 @@ void Tablature::goLeft()
 // Selects the next column
 void Tablature::goRight()
 {
-    // Stop tempo timer
-    if (tempo)
-    {
-        stopTempoTimer();
-        return;
-    }
-    int index = getSelectedColumnIndex();
+    pauseTab();
 
     // Select next column
+    int index = getSelectedColumnIndex();
     if (index != tab.size() - 1)
     {
-        tab[index + 1]->setChecked(true);
+        selectColumn(index + 1);
         adjustScrollBarPosition(tab[index + 1], "left");
     }
 }
@@ -167,257 +148,39 @@ void Tablature::goRight()
 // Plays the entire tab
 void Tablature::playTab()
 {
-    // Stop timer if user pauses the tab
-    if (tempo)
-    {
-        stopTempoTimer();
-        return;
-    }
-    // Play tab from the selected column onwards OR beginning if the last column is selected
-    playIndex = getSelectedColumnIndex();
-    if (playIndex == tab.size() - 1) playIndex = 0;
+    // Play tab from the selected column OR beginning if the last column is selected
+    int index = (selectedColumn == tab.last()) ? 0 : getSelectedColumnIndex();
+    playIndex = index + 1;
 
-    // Initialise tempo timer
-    int ms = 60000 / BPM;
-    tempo = new QTimer(this);
-    tempo->setInterval(ms);
+    // Set tempo
+    tempo->setInterval(60000 / BPM);
     tempo->start();
-    QObject::connect(tempo, &QTimer::timeout, this, &Tablature::playColumn);
 
-    // Play the first column
-    playSwitch = true;
-    playColumn();
+    playColumn(index);
 }
 
-// Plays the notes of a column
-void Tablature::playColumn()
+// Plays the notes of the column at the given index
+void Tablature::playColumn(int index)
 {
-    playSwitch = true;
-
     // Reached end of tab
-    if (playIndex >= tab.size() - 1)
+    if (index >= tab.size() - 1)
     {
-        stopTempoTimer();
-        tab.last()->setChecked(true);
+        pauseTab();
+        selectColumn(tab.last());
         return;
     }
-    // Store frets of column in a hashmap
-    getColumnInfo(playIndex);
-    tab[playIndex]->setChecked(true);
-    playSwitch = false; // selectColumn() identifies user intervention whilst play is active by seeing if playSwitch is false
-
-    // Access hashmap and play note
-    for (auto it = fretPositions.constBegin(); it != fretPositions.constEnd(); it++)
+    // Play note
+    QVector<int> fretNumbers = textToFrets(tab[index]->text());
+    for (int i = 0; i < Tablature::NUM_STRINGS; i++)
     {
-        if (it.value() == "-") continue;
-        sound->playNote(QString("%1 %2").arg(it.key()).arg(it.value()));
+        if (fretNumbers[i] == EMPTY_FRET) continue;
+        sound->playNote(QString::asprintf("%d %d", 5 - i, fretNumbers[i]));
     }
-    // Adjust scroll bar position
-    adjustScrollBarPosition(tab[playIndex], "left");
-
-    // Highlight corresponding note in staff
-    staff->selectNote(playIndex);
-    playIndex++;
+    // Select column
+    selectColumn(index);
+    staff->selectNote(index);
+    adjustScrollBarPosition(tab[index], "left");
 }
-
-// Adjusts the scrollbar position such that the button is aligned to either edge of the viewport
-void Tablature::adjustScrollBarPosition(QPushButton *button, QString alignment)
-{
-    QWidget *viewport = scrollArea->viewport();
-    QRect viewportRect = viewport->rect();
-
-    // Convert button's rect to the viewport's coordinate system
-    QRect buttonRect = button->geometry();
-    QPoint buttonPos = button->mapTo(viewport, QPoint(0, 0));
-    buttonRect.moveTo(buttonPos);
-
-    if (!viewportRect.contains(buttonRect))
-    {
-        // Set the scrollbar value
-        QScrollBar *hScrollBar = scrollArea->horizontalScrollBar();
-
-        if (button == tab.first())
-        {
-            hScrollBar->setValue(0);
-        }
-        else if (alignment == "left")
-        {
-            int scrollbarValue = buttonPos.x();
-            hScrollBar->setValue(hScrollBar->value() + scrollbarValue);
-        }
-        else
-        {
-            int buttonRightEdge = buttonPos.x() + buttonRect.width();
-            int viewPortRightEdge = viewportRect.width();
-            int scrollbarValue = buttonRightEdge - viewPortRightEdge;
-            hScrollBar->setValue(hScrollBar->value() + scrollbarValue);
-        }
-    }
-}
-
-// Stores the notes of a column in a hash map
-void Tablature::getColumnInfo(int index)
-{
-    // Initialise hashmap
-    fretPositions.insert(0, "-");
-    fretPositions.insert(1, "-");
-    fretPositions.insert(2, "-");
-    fretPositions.insert(3, "-");
-    fretPositions.insert(4, "-");
-    fretPositions.insert(5, "-");
-
-    // Parse column to retrieve fret numbers and strings
-    QString notes = tab[index]->text();
-    QStringList lines = notes.split("\n");
-    static QRegularExpression numRegex("\\d+"); // Regular expression pattern to match digits
-
-    for (int stringNumber = 0; stringNumber < lines.size(); stringNumber++)
-    {
-        QRegularExpressionMatchIterator it = numRegex.globalMatch(lines[stringNumber]); // Iterator for searching through string
-
-        // Store fret number and string in hashmap
-        while (it.hasNext())
-        {
-            QRegularExpressionMatch match = it.next();
-            QString fretNumber = match.captured();
-            (fretPositions)[stringNumber] = fretNumber;
-        }
-    }
-}
-
-// Adds a fret number to tab
-void Tablature::addFretNumber()
-{
-    // Add rest if note exceeds time signature
-    /*
-    if (staff->willExceedSignature())
-    {
-        staff->addRest(getSelectedColumnIndex());
-        addRest();
-        qDebug() << "Added Rest at: " << getSelectedColumnIndex();
-    } */
-    // Pause tab
-    stopTempoTimer();
-
-    // Retrieve string and fret number
-    QPushButton *button = qobject_cast<QPushButton*>(sender());
-    QStringList parts = button->objectName().split(" ");
-    int row = parts[0].toInt();
-    int col = parts[1].toInt();
-
-    // NOTE: NEED TO EDIT BUTTON NAME TO BE IN THE ORDER OF EADGBE
-    QVector<int> fretNumbers(6);
-    fretNumbers.fill(-1);
-    fretNumbers[5 - row] = col;
-
-    // Create button text
-    int idx = 0;
-    QString tabColumn = (chordMode) ? selectedColumn->text() : EMPTY_COLUMN;
-    for (int i = 0; i < tabColumn.size(); idx++)
-    {
-        int count = (i < tabColumn.size() - 1 && tabColumn[i + 1] != '\n') ? 2 : 1;
-        if (idx == row)
-        {
-            tabColumn.replace(i, count, QString::number(col));
-            break;
-        }
-        i += count + 1;
-    }
-    // Add note to staff and tab
-    if (!staff->addNote(fretNumbers, getSelectedColumnIndex())) return;
-    selectedColumn->updateText(tabColumn);
-
-    // Visually update tab
-    updateTab();
-
-    // Add rest if last column
-    if (selectedColumn == tab.last()) addRest();
-}
-
-// Adds a chord to the tab
-void Tablature::addChord(QVector<int> chord)
-{
-    stopTempoTimer();
-    QString tabColumn;
-    for (int i = chord.size() - 1; i >= 0; i--)
-    {
-        QString num = (chord[i] == -1) ? "\u2015" : QString::number(chord[i]);
-        tabColumn.append(num + "\n");
-    }
-    tabColumn.chop(1);
-
-    selectedColumn->updateText(tabColumn);
-    staff->addNote(chord, getSelectedColumnIndex(), true);
-    if (selectedColumn == tab.last()) addRest();
-}
-
-// Toggles chord mode
-void Tablature::toggleChordMode()
-{
-    chordMode = !chordMode;
-    staff->toggleChordMode();
-}
-
-// Creates a new rest button
-QPushButton *Tablature::createRest()
-{
-    QPushButton *rest = new TablatureButton();
-    connect(rest, &QPushButton::toggled, this, &Tablature::selectColumn);
-    return rest;
-}
-
-// Adds rest line to tab
-void Tablature::addRest()
-{
-    QPushButton *rest = createRest();
-    columnLayout->addWidget(rest);
-    tab.push_back(rest);
-    staff->updateLength(true, 1);
-
-    // Set rest to selected column
-    if (!chordMode) rest->setChecked(true);
-}
-
-// Inserts a rest at the given index
-void Tablature::insertRest(int index)
-{
-    QPushButton *rest = createRest();
-    tab.insert(index, rest);
-    staff->updateLength(true, 1);
-
-    // Add rest to layout
-    int count = 0;
-    for (int i = LAYOUT_OFFSET; i < columnLayout->count() + 1; i++)
-    {
-        if (count == index)
-        {
-            columnLayout->insertWidget(i, rest);
-            break;
-        }
-        QWidget *widget = columnLayout->itemAt(i)->widget();
-        if (dynamic_cast<QPushButton*>(widget)) count++;
-    }
-}
-
-// Selects the tab column
-void Tablature::selectColumn(bool checked)
-{
-    // Play is active
-    if (!playSwitch) stopTempoTimer();
-
-    // De-select previously selected column
-    if (selectedColumn)
-    {
-        selectedColumn->toggleSelect();
-        selectedColumn->setChecked(false);
-    }
-    // Select current column
-    TablatureButton *column = qobject_cast<TablatureButton*>(sender());
-    column->toggleSelect();
-    selectedColumn = column;
-}
-
-// ==================================== TECHNIQUES ====================================
 
 // Changes the BPM of the tab via buttons
 void Tablature::changeTempoButton(QLineEdit *field, QPushButton *increase, QPushButton *decrease)
@@ -452,20 +215,199 @@ void Tablature::changeTempoEdit(QLineEdit *field, QPushButton *increase, QPushBu
     BPM = tempo;
 }
 
+//////////////////////////////////////////////////////////////////////
+//                         COLUMN FUNCTIONS                         //
+//////////////////////////////////////////////////////////////////////
+
+/// NOTE: For add, replace and remove functions, staff functions must be called first
+/// since updateText() updates the width of notes
+
+// Adds a fret number to tab
+void Tablature::addFretNumber()
+{
+    pauseTab();
+
+    // Retrieve string and fret number
+    QPushButton *button = qobject_cast<QPushButton*>(sender());
+    QStringList parts = button->objectName().split(" ");
+    int row = parts[0].toInt();
+    int col = parts[1].toInt();
+
+    // Create button text
+    QString text = (isChordMode) ? selectedColumn->text() : EMPTY_COLUMN;
+    QStringList lines = text.split('\n');
+
+    if (row >= 0 && row < lines.size())
+    {
+        lines[row] = QString::number(col);
+        text = lines.join('\n');
+    }
+    // Create note
+    QVector<int> fretNumbers = textToFrets(text);
+    Note *note = NoteFactory::createNote(menu->getNote(), Staff::fretToLines(fretNumbers));
+
+    // Add or replace the fret number
+    int index = getSelectedColumnIndex();
+    if (selectedColumn == tab.last())
+    {
+        addColumn(index, text, note);
+        return;
+    }
+    replaceColumn(index, text, note);
+}
+
+// Creates a new column
+TablatureButton *Tablature::createColumn()
+{
+    TablatureButton *rest = new TablatureButton();
+    connect(rest, &QPushButton::toggled, this, &Tablature::onColumnClick);
+    return rest;
+}
+
+// Adds a column at the given index
+void Tablature::addColumn(int index, const QString &text, RhythmSymbol *symbol)
+{
+    TablatureButton *column = createColumn();
+    staff->addNote(index, symbol, column);
+    staff->updateLength(Tablature::DEFAULT_BUTTON_WIDTH);
+
+    tab.insert(index, column);
+    addColumnToLayout(index, column);
+    column->updateText(text);
+
+    if (isChordMode) selectColumn(index);
+    updateTab();
+}
+
+// Removes the column at the given index
+void Tablature::removeColumn(int index)
+{
+    QPushButton *temp = tab[index];
+    columnLayout->removeWidget(temp);
+    tab.remove(index);
+
+    staff->removeNote(index);
+    staff->updateLength(-temp->width());
+
+    delete temp;
+    updateTab();
+}
+
+// Replaces the column at the given index
+void Tablature::replaceColumn(int index, const QString &text, RhythmSymbol *symbol)
+{
+    if (!staff->replaceNote(index, symbol, selectedColumn)) return;
+    tab[index]->updateText(text);
+    updateTab();
+}
+
+// Selects the column at the given index
+void Tablature::selectColumn(int index)
+{
+    selectColumn(tab[index]);
+}
+
+// Selects the given column
+void Tablature::selectColumn(TablatureButton *column)
+{
+    selectedColumn->toggleSelect();
+    column->toggleSelect();
+    selectedColumn = column;
+}
+
+// Slot for tablature button click
+void Tablature::onColumnClick(bool checked)
+{
+    pauseTab();
+    selectColumn(qobject_cast<TablatureButton*>(sender()));
+}
+
+// Adds the column to the layout at the given index, excluding barlines
+void Tablature::addColumnToLayout(int index, TablatureButton *column)
+{
+    int count = 0;
+    for (int i = LAYOUT_OFFSET; i < columnLayout->count() + 1; i++)
+    {
+        if (count == index)
+        {
+            columnLayout->insertWidget(i, column);
+            break;
+        }
+        QWidget *widget = columnLayout->itemAt(i)->widget();
+        if (dynamic_cast<QPushButton*>(widget)) count++;
+    }
+}
+
+// Retrieve index of the selected column
+int Tablature::getSelectedColumnIndex()
+{
+    auto it = std::find(tab.begin(), tab.end(), selectedColumn);
+    int index = std::distance(tab.begin(), it);
+
+    return index;
+}
+
+// Converts tab button text to a vector of fret numbers
+QVector<int> Tablature::textToFrets(const QString &text)
+{
+    QVector<int> fretNumbers;
+    QStringList lines = text.split("\n", Qt::SkipEmptyParts);
+
+    for (const QString &line : lines)
+    {
+        int fret = (line == "\u2015") ? -1 : line.toInt();
+        fretNumbers.prepend(fret);
+    }
+    return fretNumbers;
+}
+
+//////////////////////////////////////////////////////////////////////
+//                        CHORD FUNCTIONS                           //
+//////////////////////////////////////////////////////////////////////
+
+// Adds a chord to the tab
+void Tablature::addChord(QVector<int> chord)
+{
+    pauseTab();
+
+    // Create button text
+    QString text;
+    for (int i = chord.size() - 1; i >= 0; i--)
+    {
+        QString num = (chord[i] == -1) ? "\u2015" : QString::number(chord[i]);
+        text.append(num + "\n");
+    }
+    text.chop(1);
+
+    // Create note
+    int index = getSelectedColumnIndex();
+    Note *note = NoteFactory::createNote(menu->getNote(), Staff::fretToLines(chord));
+
+    // Add or replace the chord
+    if (selectedColumn == tab.last())
+    {
+        addColumn(index, text, note);
+        return;
+    }
+    replaceColumn(index, text, note);
+}
+
+// Toggles chord mode
+void Tablature::toggleChordMode()
+{
+    isChordMode = !isChordMode;
+    staff->toggleChordMode();
+}
+
+//////////////////////////////////////////////////////////////////////
+//                        TECHNIQUE FUNCTIONS                       //
+//////////////////////////////////////////////////////////////////////
+
 // Inserts rest after selected column
 void Tablature::insertRestAfter()
 {
-    if (selectedColumn == tab.last())
-    {
-        addRest();
-    }
-    else
-    {
-        int index = getSelectedColumnIndex();
-        QPushButton *rest = createRest();
-        tab.insert(index + 1, rest);
-        columnLayout->insertWidget(index + LAYOUT_OFFSET, rest);
-    }
+    int index = (selectedColumn == tab.last()) ? tab.size() - 1 : getSelectedColumnIndex() + 1;
+    addColumn(index, EMPTY_COLUMN, RestFactory::createRest(menu->getNote()));
 }
 
 void Tablature::insertSlideUp()
@@ -512,7 +454,7 @@ void Tablature::undo()
 // Removes the notes of a column or the column itself if empty
 void Tablature::remove()
 {
-    stopTempoTimer();
+    pauseTab();
     int index = getSelectedColumnIndex();
 
     // Empty tab
@@ -521,154 +463,72 @@ void Tablature::remove()
     // Selected column is the last column
     if (selectedColumn == tab.last())
     {
-        removeColumn(index - 1, true);
+        removeColumn(index - 1);
     }
     // Empty column
     else if (selectedColumn->text() == EMPTY_COLUMN)
     {
-        tab[index + 1]->setChecked(true);
-        removeColumn(index, true);
+        selectColumn(index + 1);
+        removeColumn(index);
     }
     // Non-empty column
     else
     {
         Note *note = dynamic_cast<Note*>(staff->getNotes()[index]);
         Rest *rest = RestFactory::createRest(note->getType());
-        staff->replaceNote(index, -1, rest);
-        selectedColumn->updateText(EMPTY_COLUMN);
+        replaceColumn(getSelectedColumnIndex(), EMPTY_COLUMN, rest);
     }
-    // Visually update tab
-    updateTab();
 }
 
-// Removes the column at the given index
-void Tablature::removeColumn(int index, bool emitSignal)
+//////////////////////////////////////////////////////////////////////
+//                      SCROLL AREA FUNCTIONS                       //
+//////////////////////////////////////////////////////////////////////
+
+// Adjusts the scrollbar position such that the button is aligned to either edge of the viewport
+void Tablature::adjustScrollBarPosition(QPushButton *button, QString alignment)
 {
-    // Remove column
-    QPushButton *temp = tab[index];
-    columnLayout->removeWidget(temp);
-    tab.remove(index);
-    delete temp;
-    staff->updateLength(false, 1);
+    QWidget *viewport = scrollArea->viewport();
+    QRect viewportRect = viewport->rect();
 
-    // Emit signal to staff
-    if (emitSignal) emit columnRemoved(index);
-}
+    // Convert button's rect to the viewport's coordinate system
+    QRect buttonRect = button->geometry();
+    QPoint buttonPos = button->mapTo(viewport, QPoint(0, 0));
+    buttonRect.moveTo(buttonPos);
 
-// Visually updates the tab
-void Tablature::updateTab()
-{
-    ScoreUpdater::updateBarLines(staff->getNotes(), this, staff, staff->getBeatsPerMeasure());
-}
+    if (viewportRect.contains(buttonRect)) return;
 
-// Resets the tab
-void Tablature::resetTab()
-{
-    tab.last()->setChecked(true);
-    for (int i = staff->getNotes().size() - 1; i >= 0; i--)
-    {
-        remove();
-    }
-    updateTab();
-}
-
-// Creates the scroll area for the tab
-QScrollArea *Tablature::createScrollArea()
-{
-    QScrollArea *scrollArea = new QScrollArea();
-    scrollArea->setWidgetResizable(true);
-    scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    scrollArea->setStyleSheet
-    (
-        "QScrollBar:horizontal {" // Horizontal scrollbar
-        "    border: 1px solid #222222;"
-        "    background: #333333;"
-        "    height: 15px;"
-        "    margin: 0 22px 0 22px;"
-        "}"
-        "QScrollBar::handle:horizontal {" // Scrollbar handle
-        "    background: rgb(80,80,80);"
-        "    min-width: 20px;"
-        "    border: 1px solid rgb(70,70,70);"
-        "    border-right: 1px solid rgb(40,40,40);"
-        "    border-left: 1px solid rgb(40,40,40);"
-        "    border-radius: 1px;"
-        "}"
-        "QScrollBar::handle:horizontal:hover {"
-        "    background: rgb(100,100,100);"
-        "}"
-        "QScrollBar::handle:horizontal:pressed {"
-        "    background: rgb(85,85,85);"
-        "}"
-        "QScrollBar::add-line:horizontal {" // Buttons at the end of the scrollbar
-        "    border-right: 1px solid rgb(15,15,15);"
-        "    border-bottom: 1px solid rgb(15,15,15);"
-        "    background: rgb(25,25,25);"
-        "    width: 20px;"
-        "    subcontrol-position: right;"
-        "    subcontrol-origin: margin;"
-        "}"
-        "QScrollBar::sub-line:horizontal {"
-        "    border-left: 1px solid rgb(15,15,15);"
-        "    border-bottom: 1px solid rgb(15,15,15);"
-        "    background: rgb(25,25,25);"
-        "    width: 20px;"
-        "    subcontrol-position: left;"
-        "    subcontrol-origin: margin;"
-        "}"
-        "QScrollBar::add-line:horizontal:hover, QScrollBar::sub-line:horizontal:hover {"
-        "    background: rgb(80,80,80);"
-        "}"
-        "QScrollBar::add-line:horizontal:pressed, QScrollBar::sub-line:horizontal:pressed {"
-        "    background: rgb(40,40,40);"
-        "}"
-        "QScrollBar::left-arrow:horizontal {" // Arrows of the end buttons
-        "    width: 8px;"
-        "    height: 8px;"
-        "    image: url(:/scroll/scroll/scroll left.png);"
-        "}"
-        "QScrollBar::right-arrow:horizontal {"
-        "    width: 8px;"
-        "    height: 8px;"
-        "    image: url(:/scroll/scroll/scroll right.png);"
-        "}"
-        "QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {" // Regions to the left and right of the handle
-        "    background: none;"
-        "}"
-    );
-
-    // Connect scroll bar signals to slots
+    // Set the scrollbar value
     QScrollBar *hScrollBar = scrollArea->horizontalScrollBar();
-    hScrollBar->setSingleStep(35);
 
-    connect(hScrollBar, &QScrollBar::rangeChanged, [hScrollBar](int min, int max)
+    if (button == tab.first())
     {
-        if (max > 0) hScrollBar->setValue(max);
-    });
-    connect(hScrollBar, &QScrollBar::sliderPressed, this, &Tablature::stopTempoTimer);
-
-    return scrollArea;
+        hScrollBar->setValue(0);
+        return;
+    }
+    if (alignment == "left")
+    {
+        int scrollbarValue = buttonPos.x();
+        hScrollBar->setValue(hScrollBar->value() + scrollbarValue);
+        return;
+    }
+    int buttonRightEdge = buttonPos.x() + buttonRect.width();
+    int viewPortRightEdge = viewportRect.width();
+    int scrollbarValue = buttonRightEdge - viewPortRightEdge;
+    hScrollBar->setValue(hScrollBar->value() + scrollbarValue);
 }
 
-///////////////////////// SLOTS /////////////////////////
+//////////////////////////////////////////////////////////////////////
+//                         TESTING FUNCTIONS                        //
+//////////////////////////////////////////////////////////////////////
 
-// Slot for column removal
-void Tablature::onColumnRemoved(int index)
+// Returns the layout of the tab
+QHBoxLayout *Tablature::getLayout()
 {
-    removeColumn(index, false);
+    return columnLayout;
 }
 
-// Slot for rest insertion
-void Tablature::onRestInsertion(int index)
+// Returns the layout item at the given index
+QWidget *Tablature::getLayoutItem(int index)
 {
-    insertRest(index);
+    return columnLayout->itemAt(index + LAYOUT_OFFSET)->widget();
 }
-
-/*
-    "E|------------------------|\n"
-    "B|------------------------|\n"
-    "G|------------------------|\n"
-    "D|------------------------|\n"
-    "A|------------------------|\n"
-    "E|------------------------|n"
-*/

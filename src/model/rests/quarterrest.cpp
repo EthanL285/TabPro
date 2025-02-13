@@ -1,11 +1,12 @@
 #include "quarterrest.h"
+#include "tablature.h"
 
 #include <QLabel>
 #include <QVBoxLayout>
 
 QuarterRest::QuarterRest()
 {
-    setFixedWidth(35);
+    setFixedWidth(Tablature::DEFAULT_BUTTON_WIDTH);
 
     QLabel *label = new QLabel();
     label->setText("𝄽");
