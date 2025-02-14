@@ -29,72 +29,66 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
 
-
-
-        src/model/notes/crotchet.h src/model/notes/crotchet.cpp
-        src/model/notes/quaver.h src/model/notes/quaver.cpp
-        src/model/notes/note.h src/model/notes/note.cpp
-        src/model/notes/notetype.h
-        src/model/notes/blank.h src/model/notes/blank.cpp
-        src/model/notes/blank.h src/model/notes/blank.cpp
+        src/model/staff/symbols/notes/crotchet.h src/model/staff/symbols/notes/crotchet.cpp
+        src/model/staff/symbols/notes/quaver.h src/model/staff/symbols/notes/quaver.cpp
+        src/model/staff/symbols/notes/note.h src/model/staff/symbols/notes/note.cpp
+        src/model/staff/symbols/notes/notetype.h
+        src/model/staff/symbols/notes/blank.h src/model/staff/symbols/notes/blank.cpp
+        src/model/staff/symbols/notes/blank.h src/model/staff/symbols/notes/blank.cpp
 
         src/controller/containers/containerwidget.h src/controller/containers/containerwidget.cpp
-        src/controller/sound/sound.h src/controller/sound/sound.cpp
-        src/controller/user/usermodel.h src/controller/user/usermodel.cpp
         src/controller/containers/mainwidget.h src/controller/containers/mainwidget.cpp
+
+        src/controller/user/authmanager.h src/controller/user/authmanager.cpp
+        src/controller/user/verificationstatus.h
         src/controller/score/scoreupdater.h src/controller/score/scoreupdater.cpp
+        src/controller/sound/sound.h src/controller/sound/sound.cpp
 
         src/view/menu/sidebar.h src/view/menu/sidebar.cpp
         src/view/menu/menubar.h src/view/menu/menubar.cpp
-        src/view/staff/staff.h src/view/staff/staff.cpp
-        src/view/tablature/tablature.h src/view/tablature/tablature.cpp
+
         src/view/chorddiagram/chordwindow.h src/view/chorddiagram/chordwindow.cpp
         src/view/chorddiagram/chorddiagram.h src/view/chorddiagram/chorddiagram.cpp
         src/view/chorddiagram/toggleswitch.h src/view/chorddiagram/toggleswitch.cpp
         src/view/chorddiagram/chorddisplay.h src/view/chorddiagram/chorddisplay.cpp
+
         src/view/user/loginui.h src/view/user/loginui.cpp
         src/view/user/registerui.h src/view/user/registerui.cpp
         src/view/user/uiwidgets.h src/view/user/uiwidgets.cpp
         src/view/user/transitions.h src/view/user/transitions.cpp
         src/view/user/passwordui.h src/view/user/passwordui.cpp
 
-        src/resources/chords/chords.qrc
-        src/resources/icons/icons.qrc
-        src/resources/sound/sound.qrc
-        src/model/notes/quaverfamily.h
-        src/model/rests/rest.h
-        src/model/rests/eighthrest.h src/model/rests/eighthrest.cpp
-        src/model/rests/halfrest.h src/model/rests/halfrest.cpp
-        src/model/rests/quarterrest.h src/model/rests/quarterrest.cpp
-        src/model/rhythmsymbol.h
-
-        src/model/barlines/barline.h src/model/barlines/barline.cpp
-        src/model/rests/restfactory.h src/model/rests/restfactory.cpp
-        src/model/notes/notefactory.h src/model/notes/notefactory.cpp
-
-        tests/view/staff/teststaff.h tests/view/staff/teststaff.cpp
-        tests/tabprocontroller.h tests/tabprocontroller.cpp
         src/view/components/buttons/resetbutton.h src/view/components/buttons/resetbutton.cpp
-        tests/view/tablature/testtablature.h tests/view/tablature/testtablature.cpp
         src/view/components/buttons/signaturebutton.h src/view/components/buttons/signaturebutton.cpp
-
-        src/view/tablature/tablaturebutton.h src/view/tablature/tablaturebutton.cpp
-        src/model/rests/rest.h src/model/rests/rest.cpp
         src/view/components/menus/signaturemenu.h src/view/components/menus/signaturemenu.cpp
         src/view/components/spinboxes/spinbox.h src/view/components/spinboxes/spinbox.cpp
         src/view/components/widgets/signaturewidget.h src/view/components/widgets/signaturewidget.cpp
-        src/model/helpers/signaturehelper.h src/model/helpers/signaturehelper.cpp
+
         src/view/tablature/tablatureindent.h src/view/tablature/tablatureindent.cpp
-        src/model/rhythmsymbol.cpp
         src/view/tablature/tablaturescrollarea.h src/view/tablature/tablaturescrollarea.cpp
 
+        src/resources/chords/chords.qrc
+        src/resources/icons/icons.qrc
+        src/resources/sound/sound.qrc
 
+        src/model/staff/staff.h src/model/staff/staff.cpp
+        src/model/tablature/tablature.h src/model/tablature/tablature.cpp
+        src/model/tablature/tablaturebutton.h src/model/tablature/tablaturebutton.cpp
+        src/model/barlines/barline.h src/model/barlines/barline.cpp
+        src/model/helpers/signaturehelper.h src/model/helpers/signaturehelper.cpp
 
+        src/model/staff/symbols/notes/quaverfamily.h
+        src/model/staff/symbols/rests/rest.h src/model/staff/symbols/rests/rest.cpp
+        src/model/staff/symbols/rests/eighthrest.h src/model/staff/symbols/rests/eighthrest.cpp
+        src/model/staff/symbols/rests/halfrest.h src/model/staff/symbols/rests/halfrest.cpp
+        src/model/staff/symbols/rests/quarterrest.h src/model/staff/symbols/rests/quarterrest.cpp
+        src/model/staff/symbols/rhythmsymbol.h src/model/staff/symbols/rhythmsymbol.cpp
+        src/model/staff/symbols/rests/restfactory.h src/model/staff/symbols/rests/restfactory.cpp
+        src/model/staff/symbols/notes/notefactory.h src/model/staff/symbols/notes/notefactory.cpp
 
-
-
-
-
+        tests/model/tablature/testtablature.h tests/model/tablature/testtablature.cpp
+        tests/model/staff/teststaff.h tests/model/staff/teststaff.cpp
+        tests/tabprocontroller.h tests/tabprocontroller.cpp
 
     )
 
@@ -131,9 +125,9 @@ target_include_directories(
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/controller/containers
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/controller/user
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/controller/score
-    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/chorddiagram
-    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/staff
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/tablature
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/staff
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/chorddiagram
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/menu
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/user
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/components/buttons
@@ -142,16 +136,18 @@ target_include_directories(
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/components/spinboxes
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/view/components/widgets
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model
-    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/notes
-    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/accidentals
-    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/rests
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/tablature
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/staff
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/staff/symbols
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/staff/symbols/notes
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/staff/symbols/accidentals
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/staff/symbols/rests
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/barlines
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/model/helpers
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/src/resources/chords
     TabPro PRIVATE ${PROJECT_SOURCE_DIR}/tests
-    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/tests/view/staff
-    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/tests/view/tablature
-
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/tests/model/staff
+    TabPro PRIVATE ${PROJECT_SOURCE_DIR}/tests/model/tablature
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

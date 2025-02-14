@@ -9,8 +9,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    // Create UserModel object for database-related operations
-    usermodel = new UserModel(this);
+    authManager = new AuthManager(this);
 
     // Set app icon
     QIcon appIcon(":/app/app/AppIcon.png");
@@ -44,16 +43,16 @@ MainWindow::MainWindow(QWidget *parent)
     mainLayout->setContentsMargins(0, 0, 0, 0);
 
     // Create loginUI and Transitions object
-    loginBox = new loginUI(this, usermodel);
+    loginBox = new loginUI(this, authManager);
     transition = new Transitions(this);
     stackedWidget->addWidget(loginBox);
 
     // Automatically login user if token exists
-    if (usermodel->tokenExists())
+    if (authManager->tokenExists())
     {
         qDebug() << "Token exists. Logging in";
         redirectMainWidget();
-        // UserCredentials usercredentials = usermodel->getUserCredentials();
+        // UserCredentials usercredentials = authManager->getUserCredentials();
     }
 }
 
@@ -82,7 +81,7 @@ void MainWindow::redirectLogin()
     // Verification page
     if (pageNumber == 0)
     {
-        usermodel->disconnectFromSMTPServer(); // Disconnect from socket if active still
+        authManager->disconnectFromSMTPServer(); // Disconnect from socket if active still
         return;
     }
     // Code input or reset password page
@@ -98,7 +97,7 @@ void MainWindow::redirectRegister()
     // Create registerUI object if first time
     if (registerBox == nullptr)
     {
-        registerBox = new RegisterUI(this, usermodel);
+        registerBox = new RegisterUI(this, authManager);
         stackedWidget->addWidget(registerBox);
     }
     // Add transition and change widgets
@@ -114,7 +113,7 @@ void MainWindow::redirectPassword()
     // Create passwordUI object if first time
     if (passwordBox == nullptr)
     {
-        passwordBox = new PasswordUI(this, usermodel);
+        passwordBox = new PasswordUI(this, authManager);
         stackedWidget->addWidget(passwordBox);
     }
     // Add transition and change widgets

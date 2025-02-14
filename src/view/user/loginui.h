@@ -2,7 +2,7 @@
 #define LOGINUI_H
 
 #include "mainwindow.h"
-#include "usermodel.h"
+#include "authmanager.h"
 #include "uiwidgets.h"
 #include <QWidget>
 #include <QLabel>
@@ -17,7 +17,7 @@ class loginUI : public QWidget
 {
     Q_OBJECT
 public:
-    explicit loginUI(MainWindow *parent = nullptr, UserModel *usermodel = nullptr);
+    explicit loginUI(MainWindow *parent = nullptr, AuthManager *authManager = nullptr);
     void addErrorMessage(const QString &message);
     void removeErrorMessage(int wait);
 
@@ -25,7 +25,7 @@ protected:
     MainWindow *mainWindow;
 
 private:
-    UserModel *usermodel;
+    AuthManager *authManager;
     QVBoxLayout *textLayout;
     TextField *emailParent;
     TextField *passwordParent;

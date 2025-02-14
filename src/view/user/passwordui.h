@@ -2,7 +2,7 @@
 #define PASSWORDUI_H
 
 #include "mainwindow.h"
-#include "usermodel.h"
+#include "authmanager.h"
 #include "uiwidgets.h"
 
 // Reset Password Class
@@ -10,7 +10,7 @@ class PasswordUI : public QWidget
 {
     Q_OBJECT
 public:
-    explicit PasswordUI(MainWindow *parent = nullptr, UserModel *usermodel = nullptr);
+    explicit PasswordUI(MainWindow *parent = nullptr, AuthManager *authManager = nullptr);
     void addErrorMessage(const QString &message, int bottomMargin, const QString &colour);
     void removeErrorMessage(int wait, int bottomMargin);
     QString generateVerificationCode();
@@ -29,7 +29,7 @@ public:
 
 private:
     MainWindow *mainWindow;
-    UserModel *usermodel;
+    AuthManager *authManager;
     QVBoxLayout *widgetLayout;
     TextField *emailParent;
     QLineEdit *email;

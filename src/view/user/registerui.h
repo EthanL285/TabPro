@@ -2,7 +2,7 @@
 #define REGISTERUI_H
 
 #include "mainwindow.h"
-#include "usermodel.h"
+#include "authmanager.h"
 #include "transitions.h"
 #include "uiwidgets.h"
 #include <QWidget>
@@ -13,11 +13,11 @@ class RegisterUI : public QWidget
 {
     Q_OBJECT
 public:
-    explicit RegisterUI(MainWindow *parent = nullptr, UserModel *usermodel = nullptr);
+    explicit RegisterUI(MainWindow *parent = nullptr, AuthManager *authManager = nullptr);
     void removeText();
     void addErrorMessage(const QString &message);
     void removeErrorMessage(int wait);
-    void invalidInput(TextField *fieldParent, QString &message);
+    void invalidInput(TextField *fieldParent, const QString &message);
 
 private:
     MainWindow *mainWindow;
@@ -28,7 +28,7 @@ private:
     QTimer *errorMessageTimer = nullptr;
     QLayout *errorLayout = nullptr;
     QSpacerItem *registerSpacer = nullptr;
-    UserModel *usermodel;
+    AuthManager *authManager;
     TextField *email;
     TextField *username;
     TextField *password;

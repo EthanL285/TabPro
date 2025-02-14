@@ -17,9 +17,6 @@ protected:
     void paintEvent(QPaintEvent *event) override;
     void drawFlag() override;
     void drawBeam() override;
-
-private:
-    bool isFirstPaint = false;
 };
 
 

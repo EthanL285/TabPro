@@ -1,10 +1,11 @@
-#ifndef USERMODEL_H
-#define USERMODEL_H
+#ifndef AUTHMANAGER_H
+#define AUTHMANAGER_H
+
+#include "verificationstatus.h"
 
 #include <QString>
 #include <QtSql>
 #include <QSslSocket>
-#include "uiwidgets.h"
 
 struct UserCredentials
 {
@@ -16,27 +17,34 @@ struct UserCredentials
 class PasswordUI;
 
 // Handles all user information (destroy when user logs in)
-class UserModel : public QObject
+class AuthManager: public QObject
 {
     Q_OBJECT
 
 public:
-    explicit UserModel(QWidget *parent = nullptr);
+    explicit AuthManager(QWidget *parent = nullptr);
+
+    // Database functions
     void addUser(QString email, QString username, QString password);
-    QString isValidEmail(const QString &email);
-    QString isValidPassword(const QString &password);
-    QString isValidUsername(const QString &username);
-    bool isUniqueEmail(const QString &email);
-    QString hashPassword(const QString &password);
-    QString verifyUser(TextField *emailParent, TextField *passwordParent = nullptr);
-    void rememberUserCredentials(const QString &email);
+    void rememberUser(const QString &email);
+    UserCredentials getUserCredentials();
     bool tokenExists(const QString &email = QString());
     void removeToken();
-    UserCredentials getUserCredentials();
+    QString hashPassword(const QString &password);
+
+    // Verification functions
+    bool isRegisteredEmail(const QString &email);
+    EmailStatus verifyEmail(const QString &email);
+    UsernameStatus verifyUsername(const QString &username);
+    PasswordStatus verifyPassword(const QString &password);
+    UserStatus verifyUser(const QString &email, const QString &password);
+
+    // Email verification functions
     void sendVerificationEmail(const QString &userEmail, const QString &verificationCode, PasswordUI *passwordui);
     QString encodeBase64(const QByteArray &byteArray);
     void disconnectFromSMTPServer();
     void updateUserPassword(const QString &email, const QString &password);
+    ~AuthManager();
 
 protected slots:
     void socketError(QAbstractSocket::SocketError error);
@@ -51,4 +59,4 @@ private:
     PasswordUI *passwordui = nullptr;
 };
 
-#endif // USERMODEL_H
+#endif // AUTHMANAGER_H

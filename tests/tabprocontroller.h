@@ -27,6 +27,9 @@ public:
     void verifyTab(QString expectedTab);
     void verifyStaff(QString expectedTab);
 
+    void verifyNote(int index, QVector<int> fretNumbers);
+    void verifyColumn(int index, QVector<int> fretNumbers);
+
     // Note functions
     void addNote(int string, int fret, int x = 1);
     void removeNote(int x);

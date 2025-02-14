@@ -2,7 +2,7 @@
 #include "uiwidgets.h"
 #include "loginui.h"
 
-RegisterUI::RegisterUI(MainWindow *parent, UserModel *usermodel) : QWidget(parent), mainWindow(parent), usermodel(usermodel)
+RegisterUI::RegisterUI(MainWindow *parent, AuthManager *authManager) : QWidget(parent), mainWindow(parent), authManager(authManager)
 {
     setContentsMargins(0, 0, 0, 22);
 
@@ -125,31 +125,29 @@ void RegisterUI::registerSlot()
         return;
     }
     // Validate credentials
-    QString emailMessage = usermodel->isValidEmail(email->text());
-    QString passwordMessage = usermodel->isValidPassword(password->text());
-    QString usernameMessage = usermodel->isValidUsername(username->text());
-
-    // Invalid input
-    if (emailMessage != "Valid")
+    EmailStatus emailStatus = authManager->verifyEmail(email->text());
+    if (emailStatus != EmailStatus::Valid)
     {
-        invalidInput(this->email, emailMessage); // Add error message and red border
+        invalidInput(this->email, emailStatusMap[emailStatus]);
         email->setFocus();
         return;
     }
-    else if (usernameMessage != "Valid")
+    UsernameStatus usernameStatus = authManager->verifyUsername(username->text());
+    if (usernameStatus != UsernameStatus::Valid)
     {
-        invalidInput(this->username, usernameMessage);
+        invalidInput(this->username, usernameStatusMap[usernameStatus]);
         username->setFocus();
         return;
     }
-    else if (passwordMessage != "Valid")
+    PasswordStatus passwordStatus = authManager->verifyPassword(password->text());
+    if (passwordStatus != PasswordStatus::Valid)
     {
-        invalidInput(this->password, passwordMessage);
+        invalidInput(this->password, passwordStatusMap[passwordStatus]);
         password->setFocus();
         return;
     }
     // Add user to database
-    usermodel->addUser(email->text(), username->text(), password->text());
+    authManager->addUser(email->text(), username->text(), password->text());
     removeErrorMessage(0);
 
     // First time registering
@@ -170,7 +168,7 @@ void RegisterUI::registerSlot()
 }
 
 // Creates error message for invalid inputs
-void RegisterUI::invalidInput(TextField *fieldParent, QString &message)
+void RegisterUI::invalidInput(TextField *fieldParent, const QString &message)
 {
     if (message == "Valid") return;
 

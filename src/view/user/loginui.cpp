@@ -1,6 +1,7 @@
 #include "loginui.h"
+#include "verificationstatus.h"
 
-loginUI::loginUI(MainWindow *parent, UserModel *usermodel) : QWidget(parent), mainWindow(parent), usermodel(usermodel)
+loginUI::loginUI(MainWindow *parent, AuthManager *authManager) : QWidget(parent), mainWindow(parent), authManager(authManager)
 {
     setContentsMargins(0, 0, 0, 22);
 
@@ -131,21 +132,33 @@ void loginUI::loginSlot()
         return;
     }
     // Verify user
-    QString message = usermodel->verifyUser(emailParent, passwordParent); // Also sets border and focus
-    if (message != "Valid")
+    UserStatus status = authManager->verifyUser(emailField->text(), passwordField->text());
+    switch (status)
     {
-        addErrorMessage(message);
-        return;
+        case UserStatus::EmailNotFound:
+            emailParent->setRedBorder(true);
+            emailField->setFocus();
+            addErrorMessage(userStatusMap[status]);
+            return;
+
+        case UserStatus::IncorrectPassword:
+            passwordParent->setRedBorder(true);
+            passwordField->setFocus();
+            addErrorMessage(userStatusMap[status]);
+            return;
+
+        case UserStatus::Valid:
+            break;
     }
     // Remember credentials
     if (remember)
     {
-        usermodel->rememberUserCredentials(emailField->text());
+        authManager->rememberUser(emailField->text());
     }
     // Forget credentials if email has existing token
-    else if (usermodel->tokenExists(emailField->text()))
+    else if (authManager->tokenExists(emailField->text()))
     {
-        usermodel->removeToken();
+        authManager->removeToken();
     }
     // Remove error message and fields
     removeErrorMessage(0);

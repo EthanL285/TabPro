@@ -2,7 +2,7 @@
 #include "loginui.h"
 #include <QTime>
 
-PasswordUI::PasswordUI(MainWindow *parent, UserModel *usermodel) : QWidget(parent), mainWindow(parent), usermodel(usermodel)
+PasswordUI::PasswordUI(MainWindow *parent, AuthManager *authManager) : QWidget(parent), mainWindow(parent), authManager(authManager)
 {
     setContentsMargins(0, 0, 0, 22);
 
@@ -106,21 +106,20 @@ void PasswordUI::sendResetEmail()
     // Empty email field
     if (emailParent->emptyFieldCheck(email))
     {
-        addErrorMessage(QString::fromUtf8("\u2717 ") + "Please fill in all required fields", 153, "rgb(237, 67, 55)");
+        addErrorMessage("\u2717 Please fill in all required fields", 153, "rgb(237, 67, 55)");
         return;
     }
-    // Verify user
-    QString message = usermodel->verifyUser(emailParent); // Also sets border and focus
-
-    // Email not found in database
-    if (message != "Valid")
+    // Email is not registered
+    if (!authManager->isRegisteredEmail(email->text()))
     {
-        addErrorMessage(message, 153, "rgb(237, 67, 55)");
+        emailParent->setRedBorder(true);
+        email->setFocus();
+        addErrorMessage(userStatusMap[UserStatus::EmailNotFound], 153, "rgb(237, 57, 55)");
         return;
     }
     // Send verification code to user email
     verificationCode = generateVerificationCode();
-    usermodel->sendVerificationEmail(email->text(), verificationCode, this);
+    authManager->sendVerificationEmail(email->text(), verificationCode, this);
 }
 
 // Email successfully delivered
@@ -277,17 +276,17 @@ void PasswordUI::checkUserPassword()
         return;
     }
     // Invalid password
-    QString message = usermodel->isValidPassword(newPasswordField->text());
-    if (message != "Valid")
+    PasswordStatus status = authManager->verifyPassword(newPasswordField->text());
+    if (status != PasswordStatus::Valid)
     {
         newPasswordField->setFocus();
         newPasswordParent->setRedBorder(true);
         confirmNewPasswordParent->setRedBorder(true);
-        addErrorMessage(message, 141, "rgb(237, 67, 55)");
+        addErrorMessage(passwordStatusMap[status], 141, "rgb(237, 67, 55)");
         return;
     }
     // Update user's password
-    usermodel->updateUserPassword(userEmail, newPasswordField->text());
+    authManager->updateUserPassword(userEmail, newPasswordField->text());
     userHasResetPassword = true;
 
     // Reset widgets
