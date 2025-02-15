@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include "transitions.h"
-#include "authmanager.h"
+
 #include <QMainWindow>
 #include <QIcon>
 #include <QPixmap>
@@ -44,6 +44,5 @@ private:
     QWidget *mainWidget = nullptr;
     QStackedWidget *stackedWidget = nullptr;
     Transitions *transition = nullptr;
-    AuthManager *authManager = nullptr;
 };
 #endif // MAINWINDOW_H

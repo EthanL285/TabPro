@@ -1,5 +1,4 @@
 #include "authmanager.h"
-#include "passwordui.h"
 
 #include <regex>
 #include <QDnsLookup>
@@ -7,9 +6,10 @@
 #include <QDesktopServices>
 #include <QNetworkAccessManager>
 
-AuthManager::AuthManager(QWidget *parent)
-    : QObject{parent}
+AuthManager::AuthManager(QObject *parent)
+    : QObject(parent)
 {
+    // Open database
     userDatabase = QSqlDatabase::addDatabase("QSQLITE");
     userDatabase.setDatabaseName("users.db");
     userDatabase.open();
@@ -208,143 +208,118 @@ PasswordStatus AuthManager::verifyPassword(const QString &password)
 //                  EMAIL VERIFICATION FUNCTIONS                    //
 //////////////////////////////////////////////////////////////////////
 
-// Send verrification code to user's email by connecting to Gmail SMTP servers
-void AuthManager::sendVerificationEmail(const QString &userEmail, const QString &verificationCode, PasswordUI *passwordui)
+// Returns the verification code
+QString AuthManager::getVerificationCode()
 {
-    this->passwordui = passwordui;
-    this->userEmail = userEmail;
-    this->verificationCode = verificationCode;
+    return verificationCode;
+}
 
-    // Initialize a secure TCP socket for connecting to the SMTP server
-    if (socket == nullptr) {
-        socket = new QSslSocket(this);
-
-        // Connect socket signal to slot to avoid blocking program
-        connect(socket, &QSslSocket::readyRead, this, &AuthManager::socketReadyRead); // Read response from server
-        connect(socket, &QSslSocket::errorOccurred, this, &AuthManager::socketError); // Socket error
-    }
-
-    // Connect to the Gmail SMTP server if socket is inactive
-    if (socket->state() == QAbstractSocket::UnconnectedState)
+// Send verification code to user's email by connecting to Gmail SMTP servers
+void AuthManager::sendVerificationEmail(const QString &email)
+{
+    if (socket == nullptr)
     {
-        passwordui->disableEmailField(true);
-        passwordui->addErrorMessage("⏳ Connecting to SMTP server...", 152, "gray");
-        socket->connectToHostEncrypted("smtp.gmail.com", 465);
+        socket = new QSslSocket();
+        connect(socket, &QSslSocket::readyRead, [=]() { AuthManager::onSocketReadyRead(email); });
+        connect(socket, &QSslSocket::errorOccurred, [&]() { AuthManager::onSocketResponse(socket->errorString()); } );
     }
+    verificationCode = generateVerificationCode();
+    socket->connectToHostEncrypted("smtp.gmail.com", 465);
 }
 
-// Converts a QString to Base64
-QString AuthManager::encodeBase64(const QByteArray &byteArray)
+// Generates a random verification code
+QString AuthManager::generateVerificationCode()
 {
-    return QString(byteArray.toBase64());
+    QString code;
+    for (int i = 0; i < 6; ++i)
+    {
+        code.append(QString::number(QRandomGenerator::global()->bounded(10)));
+    }
+    return code;
 }
 
-// Handles socket errors
-void AuthManager::socketError(QAbstractSocket::SocketError error)
+// Handles socket responses
+void AuthManager::onSocketResponse(const QString &response)
 {
-    // Print error message
-    passwordui->disableEmailField(false);
-    passwordui->addErrorMessage(QString::fromUtf8("\u2717 ") + "Error: " + socket->errorString(), 153, "rgb(237, 67, 55)");
+    emit socketResponseReceived(response);
     disconnectFromSMTPServer();
 }
 
-// Reads SMTP responses from socket and handles different responses accordingly
-void AuthManager::socketReadyRead()
+// Reads SMTP responses from socket
+void AuthManager::onSocketReadyRead(const QString &email)
 {
-    QString encodedEmail = encodeBase64(qgetenv("TabProEmail"));
-    QString encodedPassword = encodeBase64(qgetenv("TabProKey"));
-
-    // Read data from the socket
+    QString encodedEmail = QString(qgetenv("TabProEmail").toBase64());
+    QString encodedPassword = QString(qgetenv("TabProKey").toBase64());
     QByteArray response = socket->readAll();
-    qDebug() << response;
 
-    // Handle different SMTP responses (numbers indicate the calling order)
+    // Handle 220: Server is ready for EHLO command (1)
     if (response.startsWith("220"))
     {
-        // Server is ready for EHLO command  (1)
         socket->write("EHLO localhost\r\n");
+        return;
     }
-    else if (response.startsWith("250"))
+    // Handle 250: Server responses
+    if (response.startsWith("250"))
     {
-        // Server has accepted EHLO command, proceed with authentication (2)
-        if (response.startsWith("250-smtp.gmail.com at your service"))
+        // Server accepted EHLO command, proceed with authentication (2)
+        if (response.contains("250-smtp.gmail.com at your service"))
         {
             socket->write("AUTH LOGIN\r\n");
+            return;
         }
-        // Server has accepted MAIL FROM command, proceed with RCPT TO (6)
-        else if (response.startsWith("250 2.1.0 OK"))
+        // Server accepted MAIL FROM command, proceed with RCPT TO (6)
+        if (response.contains("250 2.1.0 OK"))
         {
-            socket->write("RCPT TO:<" + userEmail.toUtf8() + ">\r\n");
+            socket->write("RCPT TO:<" + email.toUtf8() + ">\r\n");
+            return;
         }
         // Send DATA command (7)
-        else if (response.startsWith("250 2.1.5 OK"))
+        if (response.contains("250 2.1.5 OK"))
         {
             socket->write("DATA\r\n");
+            return;
         }
         // Server has accepted email data, proceed with QUIT (9)
-        else
-        {
-            socket->write("QUIT\r\n");
-        }
+        socket->write("QUIT\r\n");
+        return;
     }
-    else if (response.startsWith("334"))
+    // Handle 334: Server requests base64-encoded email or password
+    if (response.startsWith("334"))
     {
-        // Server is requesting base64-encoded email (3)
-        if (response.startsWith("334 VXNlcm5hbWU6"))
+        // Server requesting base64-encoded email (3)
+        if (response.contains("VXNlcm5hbWU6"))
         {
             socket->write(encodedEmail.toUtf8() + "\r\n");
+            return;
         }
-        // Server is requesting base64-encoded email (4)
-        else
-        {
-            socket->write(encodedPassword.toUtf8() + "\r\n");
-        }
+        // Server requesting base64-encoded password (4)
+        socket->write(encodedPassword.toUtf8() + "\r\n");
+        return;
     }
-    else if (response.startsWith("235"))
+    // Handle 235: Authentication successful, proceed with MAIL FROM (5)
+    if (response.startsWith("235"))
     {
-        // Authentication successful, proceed with MAILFROM (5)
         socket->write("MAIL FROM:<tech.tabproapp@gmail.com>\r\n");
+        return;
     }
-    else if (response.startsWith("354"))
+    // Handle 354: Server ready to receive email data, send email (8)
+    if (response.startsWith("354"))
     {
-        // Server is ready to receive email data, send the email (8)
-        QString emailHeaders = "From: \"TabPro\" <tech.tabproapp@gmail.com>\r\n";
-        emailHeaders += "To: <" + userEmail + ">\r\n";
-
-        socket->write(emailHeaders.toUtf8());
-        socket->write("Subject: Verification Code\r\n");
-        socket->write("\r\n");
-        socket->write("Your verification code is: " + verificationCode.toUtf8() + "\r\n");
-        socket->write(".\r\n");
+        QString emailData = "From: \"TabPro\" <tech.tabproapp@gmail.com>\r\n"
+                            "To: <" + email + ">\r\n"
+                            "Subject: Verification Code\r\n\r\n"
+                            "Your verification code is: " + verificationCode + "\r\n.\r\n";
+        socket->write(emailData.toUtf8());
+        return;
     }
-    else if (response.startsWith("221"))
+    // Handle 221: Close the connection (10)
+    if (response.startsWith("221"))
     {
-        // Close the connection (10)
-        disconnectFromSMTPServer();
-
-        // Email Successful, remove connecting to SMTP server message
-        passwordui->removeErrorMessage(0, 172);  // Error message doesn't delete before onEmailSentSuccess() since there is timer in removeErrorMessage()
-
-        // Add timer to transition once error message is removed
-
-        QTimer *timer = new QTimer(this);
-        timer->setSingleShot(true);
-
-        connect(timer, &QTimer::timeout, this, [this, timer]()
-        {
-            passwordui->disableEmailField(false);
-            passwordui->onEmailSentSuccess();
-            delete timer;
-        });
-        timer->start(0);
+        onSocketResponse("Success");
+        return;
     }
-    else
-    {
-        // Unexpected response from server, print error message (most likely environment variables are incorrect)
-        passwordui->disableEmailField(false);
-        passwordui->addErrorMessage(QString::fromUtf8("\u2717 ") + "Error: Unexpected response from server", 153, "rgb(237, 67, 55)");
-        disconnectFromSMTPServer();
-    }
+    // Handle unexpected responses (most likely environment variables are incorrect)
+    onSocketResponse("\u2717 Error: Unexpected response from server");
 }
 
 /*
@@ -362,7 +337,7 @@ void AuthManager::socketReadyRead()
  * (10) "221 2.0.0 closing connection 41be03b00d2f7-6340a632725sm17786173a12.12 - gsmtp\r\n"
  */
 
-// Disconnects user from SMTP server
+// Disconnects socket from SMTP server
 void AuthManager::disconnectFromSMTPServer()
 {
     if (socket == nullptr || socket->state() == QAbstractSocket::UnconnectedState) return;
@@ -371,7 +346,7 @@ void AuthManager::disconnectFromSMTPServer()
     socket = nullptr;
 }
 
-// Destructor
+// Close the database
 AuthManager::~AuthManager()
 {
     userDatabase.close();

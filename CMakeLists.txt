@@ -29,12 +29,28 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
 
+        src/model/staff/staff.h src/model/staff/staff.cpp
         src/model/staff/symbols/notes/crotchet.h src/model/staff/symbols/notes/crotchet.cpp
         src/model/staff/symbols/notes/quaver.h src/model/staff/symbols/notes/quaver.cpp
         src/model/staff/symbols/notes/note.h src/model/staff/symbols/notes/note.cpp
         src/model/staff/symbols/notes/notetype.h
         src/model/staff/symbols/notes/blank.h src/model/staff/symbols/notes/blank.cpp
         src/model/staff/symbols/notes/blank.h src/model/staff/symbols/notes/blank.cpp
+        src/model/staff/symbols/notes/quaverfamily.h
+        src/model/staff/symbols/rests/rest.h src/model/staff/symbols/rests/rest.cpp
+        src/model/staff/symbols/rests/eighthrest.h src/model/staff/symbols/rests/eighthrest.cpp
+        src/model/staff/symbols/rests/halfrest.h src/model/staff/symbols/rests/halfrest.cpp
+        src/model/staff/symbols/rests/quarterrest.h src/model/staff/symbols/rests/quarterrest.cpp
+        src/model/staff/symbols/rhythmsymbol.h src/model/staff/symbols/rhythmsymbol.cpp
+        src/model/staff/symbols/rests/restfactory.h src/model/staff/symbols/rests/restfactory.cpp
+        src/model/staff/symbols/notes/notefactory.h src/model/staff/symbols/notes/notefactory.cpp
+
+        src/model/tablature/tablaturejsonconverter.h src/model/tablature/tablaturejsonconverter.cpp
+        src/model/tablature/tablature.h src/model/tablature/tablature.cpp
+        src/model/tablature/tablaturebutton.h src/model/tablature/tablaturebutton.cpp
+
+        src/model/barlines/barline.h src/model/barlines/barline.cpp
+        src/model/helpers/signaturehelper.h src/model/helpers/signaturehelper.cpp
 
         src/controller/containers/containerwidget.h src/controller/containers/containerwidget.cpp
         src/controller/containers/mainwidget.h src/controller/containers/mainwidget.cpp
@@ -71,24 +87,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/resources/icons/icons.qrc
         src/resources/sound/sound.qrc
 
-        src/model/staff/staff.h src/model/staff/staff.cpp
-        src/model/tablature/tablature.h src/model/tablature/tablature.cpp
-        src/model/tablature/tablaturebutton.h src/model/tablature/tablaturebutton.cpp
-        src/model/barlines/barline.h src/model/barlines/barline.cpp
-        src/model/helpers/signaturehelper.h src/model/helpers/signaturehelper.cpp
-
-        src/model/staff/symbols/notes/quaverfamily.h
-        src/model/staff/symbols/rests/rest.h src/model/staff/symbols/rests/rest.cpp
-        src/model/staff/symbols/rests/eighthrest.h src/model/staff/symbols/rests/eighthrest.cpp
-        src/model/staff/symbols/rests/halfrest.h src/model/staff/symbols/rests/halfrest.cpp
-        src/model/staff/symbols/rests/quarterrest.h src/model/staff/symbols/rests/quarterrest.cpp
-        src/model/staff/symbols/rhythmsymbol.h src/model/staff/symbols/rhythmsymbol.cpp
-        src/model/staff/symbols/rests/restfactory.h src/model/staff/symbols/rests/restfactory.cpp
-        src/model/staff/symbols/notes/notefactory.h src/model/staff/symbols/notes/notefactory.cpp
-
         tests/model/tablature/testtablature.h tests/model/tablature/testtablature.cpp
         tests/model/staff/teststaff.h tests/model/staff/teststaff.cpp
         tests/tabprocontroller.h tests/tabprocontroller.cpp
+
 
     )
 

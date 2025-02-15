@@ -1,8 +1,10 @@
 #include "passwordui.h"
 #include "loginui.h"
+#include "authmanager.h"
+
 #include <QTime>
 
-PasswordUI::PasswordUI(MainWindow *parent, AuthManager *authManager) : QWidget(parent), mainWindow(parent), authManager(authManager)
+PasswordUI::PasswordUI(MainWindow *parent) : QWidget(parent), mainWindow(parent)
 {
     setContentsMargins(0, 0, 0, 22);
 
@@ -110,7 +112,7 @@ void PasswordUI::sendResetEmail()
         return;
     }
     // Email is not registered
-    if (!authManager->isRegisteredEmail(email->text()))
+    if (!AuthManager::instance().isRegisteredEmail(email->text()))
     {
         emailParent->setRedBorder(true);
         email->setFocus();
@@ -118,8 +120,9 @@ void PasswordUI::sendResetEmail()
         return;
     }
     // Send verification code to user email
-    verificationCode = generateVerificationCode();
-    authManager->sendVerificationEmail(email->text(), verificationCode, this);
+    AuthManager::instance().sendVerificationEmail(email->text());
+    disableEmailField(true);
+    addErrorMessage("⏳ Connecting to SMTP server...", 152, "gray");
 }
 
 // Email successfully delivered
@@ -190,7 +193,7 @@ void PasswordUI::checkUserInput()
     }
     // Invalid code
     QString userInput = getUserInputCode();
-    if (userInput != verificationCode)
+    if (userInput != AuthManager::instance().getVerificationCode())
     {
         addErrorMessage(QString::fromUtf8("\u2717 ") + "Incorrect verification code. Please try again", 125, "rgb(237, 67, 55)");
         return;
@@ -276,7 +279,7 @@ void PasswordUI::checkUserPassword()
         return;
     }
     // Invalid password
-    PasswordStatus status = authManager->verifyPassword(newPasswordField->text());
+    PasswordStatus status = AuthManager::instance().verifyPassword(newPasswordField->text());
     if (status != PasswordStatus::Valid)
     {
         newPasswordField->setFocus();
@@ -286,7 +289,7 @@ void PasswordUI::checkUserPassword()
         return;
     }
     // Update user's password
-    authManager->updateUserPassword(userEmail, newPasswordField->text());
+    AuthManager::instance().updateUserPassword(userEmail, newPasswordField->text());
     userHasResetPassword = true;
 
     // Reset widgets
@@ -514,17 +517,6 @@ void PasswordUI::removeErrorMessage(int wait, int bottomMargin)
     errorMessageTimer->start(wait);
 }
 
-// Generates a verification code
-QString PasswordUI::generateVerificationCode()
-{
-    // Generate random 6 digit code
-    QString code;
-    for (int i = 0; i < 6; ++i) {
-        code.append(QString::number(QRandomGenerator::global()->bounded(10))); // Generates number between 0-9 and appends it
-    }
-    return code;
-}
-
 // Returns the current page of PasswordUI
 int PasswordUI::getPageNumber()
 {
@@ -541,4 +533,21 @@ int PasswordUI::getPageNumber()
 void PasswordUI::disableEmailField(bool disable)
 {
     email->setReadOnly(disable);
+}
+
+// Slot for receiving a socket response
+void PasswordUI::onSocketResponseReceived(const QString &response)
+{
+    disableEmailField(false);
+
+    if (response != "Success")
+        return addErrorMessage(response, 153, "rgb(237, 67, 55)");
+
+    // Timer ensures error message is removed before user is redirected
+    removeErrorMessage(0, 172);
+    QTimer::singleShot(0, this, [this]()
+    {
+        disableEmailField(false);
+        onEmailSentSuccess();
+    });
 }

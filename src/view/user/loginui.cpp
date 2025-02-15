@@ -1,7 +1,8 @@
 #include "loginui.h"
 #include "verificationstatus.h"
+#include "authmanager.h"
 
-loginUI::loginUI(MainWindow *parent, AuthManager *authManager) : QWidget(parent), mainWindow(parent), authManager(authManager)
+loginUI::loginUI(MainWindow *parent) : QWidget(parent), mainWindow(parent)
 {
     setContentsMargins(0, 0, 0, 22);
 
@@ -132,7 +133,7 @@ void loginUI::loginSlot()
         return;
     }
     // Verify user
-    UserStatus status = authManager->verifyUser(emailField->text(), passwordField->text());
+    UserStatus status = AuthManager::instance().verifyUser(emailField->text(), passwordField->text());
     switch (status)
     {
         case UserStatus::EmailNotFound:
@@ -153,12 +154,12 @@ void loginUI::loginSlot()
     // Remember credentials
     if (remember)
     {
-        authManager->rememberUser(emailField->text());
+        AuthManager::instance().rememberUser(emailField->text());
     }
     // Forget credentials if email has existing token
-    else if (authManager->tokenExists(emailField->text()))
+    else if (AuthManager::instance().tokenExists(emailField->text()))
     {
-        authManager->removeToken();
+        AuthManager::instance().removeToken();
     }
     // Remove error message and fields
     removeErrorMessage(0);

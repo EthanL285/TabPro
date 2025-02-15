@@ -2,10 +2,10 @@
 #define AUTHMANAGER_H
 
 #include "verificationstatus.h"
-
 #include <QString>
 #include <QtSql>
 #include <QSslSocket>
+#include <QObject>
 
 struct UserCredentials
 {
@@ -13,24 +13,23 @@ struct UserCredentials
     QString password;
 };
 
-// Forward declarations
-class PasswordUI;
-
-// Handles all user information (destroy when user logs in)
-class AuthManager: public QObject
+class AuthManager : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit AuthManager(QWidget *parent = nullptr);
-
+    // Singleton instance
+    static AuthManager& instance()
+    {
+        static AuthManager instance;
+        return instance;
+    }
     // Database functions
     void addUser(QString email, QString username, QString password);
     void rememberUser(const QString &email);
-    UserCredentials getUserCredentials();
     bool tokenExists(const QString &email = QString());
     void removeToken();
-    QString hashPassword(const QString &password);
+    UserCredentials getUserCredentials();
 
     // Verification functions
     bool isRegisteredEmail(const QString &email);
@@ -40,23 +39,30 @@ public:
     UserStatus verifyUser(const QString &email, const QString &password);
 
     // Email verification functions
-    void sendVerificationEmail(const QString &userEmail, const QString &verificationCode, PasswordUI *passwordui);
-    QString encodeBase64(const QByteArray &byteArray);
-    void disconnectFromSMTPServer();
+    QString getVerificationCode();
+    void sendVerificationEmail(const QString &email);
     void updateUserPassword(const QString &email, const QString &password);
-    ~AuthManager();
+    void disconnectFromSMTPServer();
 
-protected slots:
-    void socketError(QAbstractSocket::SocketError error);
-    void socketReadyRead();
+signals:
+    void socketResponseReceived(const QString &response);
+
+private slots:
+    void onSocketResponse(const QString &response);
+    void onSocketReadyRead(const QString &email);
 
 private:
     QSqlDatabase userDatabase;
-    QByteArray emailData;
-    QSslSocket *socket = nullptr;
-    QString userEmail;
+    QSslSocket *socket;
     QString verificationCode;
-    PasswordUI *passwordui = nullptr;
+
+    QString hashPassword(const QString &password);
+    QString generateVerificationCode();
+
+    explicit AuthManager(QObject *parent = nullptr);
+    ~AuthManager();
+    AuthManager(const AuthManager&) = delete;
+    AuthManager& operator=(const AuthManager&) = delete;
 };
 
 #endif // AUTHMANAGER_H

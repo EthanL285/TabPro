@@ -2,7 +2,6 @@
 #define PASSWORDUI_H
 
 #include "mainwindow.h"
-#include "authmanager.h"
 #include "uiwidgets.h"
 
 // Reset Password Class
@@ -10,10 +9,9 @@ class PasswordUI : public QWidget
 {
     Q_OBJECT
 public:
-    explicit PasswordUI(MainWindow *parent = nullptr, AuthManager *authManager = nullptr);
+    explicit PasswordUI(MainWindow *parent = nullptr);
     void addErrorMessage(const QString &message, int bottomMargin, const QString &colour);
     void removeErrorMessage(int wait, int bottomMargin);
-    QString generateVerificationCode();
     void onEmailSentSuccess();
     void displayVerificationPage();
     void displayResetPasswordPage();
@@ -29,7 +27,6 @@ public:
 
 private:
     MainWindow *mainWindow;
-    AuthManager *authManager;
     QVBoxLayout *widgetLayout;
     TextField *emailParent;
     QLineEdit *email;
@@ -44,7 +41,6 @@ private:
     QList<QLineEdit*> codeFields;
     QWidget *codeParent;
     int pageNumber = 0;
-    QString verificationCode;
     TextField *newPasswordParent;
     TextField *confirmNewPasswordParent;
     QLabel *resetSuccess = nullptr;
@@ -53,6 +49,7 @@ private:
 
 public slots:
     void sendResetEmail();
+    void onSocketResponseReceived(const QString &response);
 };
 
 #endif // PASSWORDUI_H

@@ -1,8 +1,9 @@
 #include "registerui.h"
 #include "uiwidgets.h"
 #include "loginui.h"
+#include "authmanager.h"
 
-RegisterUI::RegisterUI(MainWindow *parent, AuthManager *authManager) : QWidget(parent), mainWindow(parent), authManager(authManager)
+RegisterUI::RegisterUI(MainWindow *parent) : QWidget(parent), mainWindow(parent)
 {
     setContentsMargins(0, 0, 0, 22);
 
@@ -125,21 +126,21 @@ void RegisterUI::registerSlot()
         return;
     }
     // Validate credentials
-    EmailStatus emailStatus = authManager->verifyEmail(email->text());
+    EmailStatus emailStatus = AuthManager::instance().verifyEmail(email->text());
     if (emailStatus != EmailStatus::Valid)
     {
         invalidInput(this->email, emailStatusMap[emailStatus]);
         email->setFocus();
         return;
     }
-    UsernameStatus usernameStatus = authManager->verifyUsername(username->text());
+    UsernameStatus usernameStatus = AuthManager::instance().verifyUsername(username->text());
     if (usernameStatus != UsernameStatus::Valid)
     {
         invalidInput(this->username, usernameStatusMap[usernameStatus]);
         username->setFocus();
         return;
     }
-    PasswordStatus passwordStatus = authManager->verifyPassword(password->text());
+    PasswordStatus passwordStatus = AuthManager::instance().verifyPassword(password->text());
     if (passwordStatus != PasswordStatus::Valid)
     {
         invalidInput(this->password, passwordStatusMap[passwordStatus]);
@@ -147,7 +148,7 @@ void RegisterUI::registerSlot()
         return;
     }
     // Add user to database
-    authManager->addUser(email->text(), username->text(), password->text());
+    AuthManager::instance().addUser(email->text(), username->text(), password->text());
     removeErrorMessage(0);
 
     // First time registering

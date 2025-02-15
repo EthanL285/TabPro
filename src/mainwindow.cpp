@@ -4,13 +4,13 @@
 #include "transitions.h"
 #include "passwordui.h"
 #include "mainwidget.h"
+#include "authmanager.h"
+
 #include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    authManager = new AuthManager(this);
-
     // Set app icon
     QIcon appIcon(":/app/app/AppIcon.png");
     this->setWindowIcon(appIcon);
@@ -19,14 +19,10 @@ MainWindow::MainWindow(QWidget *parent)
     this->resize(1440, 900);
     this->setMinimumSize(1440, 900);
 
-    // Load background image
+    // Display background image
     backgroundImage = QPixmap(":/background/background/Background Grayscale.png");
-
-    // Set background image to intial window size
     QPixmap scaledBgImage = backgroundImage;
     scaledBgImage = scaledBgImage.scaled(this->size(), Qt::KeepAspectRatio);
-
-    // Create QLabel to display background image
     backgroundLabel = new QLabel(this);
     backgroundLabel->setPixmap(scaledBgImage);
     backgroundLabel->setGeometry(0, 0, this->size().width(), this->size().height());
@@ -43,17 +39,15 @@ MainWindow::MainWindow(QWidget *parent)
     mainLayout->setContentsMargins(0, 0, 0, 0);
 
     // Create loginUI and Transitions object
-    loginBox = new loginUI(this, authManager);
+    loginBox = new loginUI(this);
     transition = new Transitions(this);
     stackedWidget->addWidget(loginBox);
 
-    // Automatically login user if token exists
-    if (authManager->tokenExists())
-    {
-        qDebug() << "Token exists. Logging in";
-        redirectMainWidget();
-        // UserCredentials usercredentials = authManager->getUserCredentials();
-    }
+    if (!AuthManager::instance().tokenExists()) return;
+
+    // Automatically login user
+    qDebug() << "Token exists. Logging in";
+    redirectMainWidget();
 }
 
 // MainWindow slots
@@ -81,7 +75,7 @@ void MainWindow::redirectLogin()
     // Verification page
     if (pageNumber == 0)
     {
-        authManager->disconnectFromSMTPServer(); // Disconnect from socket if active still
+        AuthManager::instance().disconnectFromSMTPServer();
         return;
     }
     // Code input or reset password page
@@ -97,7 +91,7 @@ void MainWindow::redirectRegister()
     // Create registerUI object if first time
     if (registerBox == nullptr)
     {
-        registerBox = new RegisterUI(this, authManager);
+        registerBox = new RegisterUI(this);
         stackedWidget->addWidget(registerBox);
     }
     // Add transition and change widgets
@@ -113,7 +107,9 @@ void MainWindow::redirectPassword()
     // Create passwordUI object if first time
     if (passwordBox == nullptr)
     {
-        passwordBox = new PasswordUI(this, authManager);
+        PasswordUI *password = new PasswordUI(this);
+        passwordBox = password;
+        connect(&AuthManager::instance(), &AuthManager::socketResponseReceived, password, &PasswordUI::onSocketResponseReceived);
         stackedWidget->addWidget(passwordBox);
     }
     // Add transition and change widgets
