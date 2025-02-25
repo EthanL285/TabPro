@@ -1,4 +1,5 @@
 #include "menubar.h"
+#include "filemenu.h"
 #include "resetbutton.h"
 #include "signaturebutton.h"
 #include "signaturemenu.h"
@@ -21,11 +22,15 @@ MenuBar::MenuBar(QWidget *parent)
 
     // Create menu bar
     QMenuBar *menuBar = new QMenuBar();
-    menuBar->addMenu(tr("&File"));
-    menuBar->addMenu(tr("&Edit"));
-    menuBar->setStyleSheet("QMenuBar { background-color: rgb(23,23,23); border-bottom: 1px solid rgb(18,18,18); }");
     mainLayout->addWidget(menuBar);
-
+    menuBar->addMenu(new FileMenu());
+    menuBar->addMenu(tr("&Edit"));
+    menuBar->setStyleSheet
+    (
+        "QMenuBar { background-color: rgb(23,23,23); border-bottom: 1px solid rgb(18,18,18); padding: 0px 5px; }"
+        "QMenuBar::item { padding: 5px 10px; border: none; border-radius: 5px; margin-right: 5px; }"
+        "QMenuBar::item:selected { background-color: rgb(40,40,40); }"
+    );
     // Create bottom widget
     menuWidget = new QWidget();
     menuWidget->setFixedHeight(40);

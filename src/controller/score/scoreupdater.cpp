@@ -30,7 +30,7 @@ void ScoreUpdater::updateBarLines(const QVector<RhythmSymbol*> &notes, Tablature
     addBarLines(tabLayout, newBarLinePos, Tablature::LAYOUT_OFFSET, Tablature::BARLINE_HEIGHT);
 
     // Update staff length
-    staff->updateLength(Tablature::DEFAULT_BUTTON_WIDTH, barLinesAdded - barLinesRemoved);
+    staff->updateLength(Tablature::DEFAULT_COLUMN_WIDTH, barLinesAdded - barLinesRemoved);
     isUpdating = false;
 }
 

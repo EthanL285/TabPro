@@ -41,13 +41,14 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/model/staff/symbols/rests/eighthrest.h src/model/staff/symbols/rests/eighthrest.cpp
         src/model/staff/symbols/rests/halfrest.h src/model/staff/symbols/rests/halfrest.cpp
         src/model/staff/symbols/rests/quarterrest.h src/model/staff/symbols/rests/quarterrest.cpp
+        src/model/staff/symbols/rests/resttype.h
         src/model/staff/symbols/rhythmsymbol.h src/model/staff/symbols/rhythmsymbol.cpp
         src/model/staff/symbols/rests/restfactory.h src/model/staff/symbols/rests/restfactory.cpp
         src/model/staff/symbols/notes/notefactory.h src/model/staff/symbols/notes/notefactory.cpp
 
-        src/model/tablature/tablaturejsonconverter.h src/model/tablature/tablaturejsonconverter.cpp
+        src/model/tablature/tabjsonconverter.h src/model/tablature/tabjsonconverter.cpp
         src/model/tablature/tablature.h src/model/tablature/tablature.cpp
-        src/model/tablature/tablaturebutton.h src/model/tablature/tablaturebutton.cpp
+
 
         src/model/barlines/barline.h src/model/barlines/barline.cpp
         src/model/helpers/signaturehelper.h src/model/helpers/signaturehelper.cpp
@@ -60,8 +61,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/controller/score/scoreupdater.h src/controller/score/scoreupdater.cpp
         src/controller/sound/sound.h src/controller/sound/sound.cpp
 
-        src/view/menu/sidebar.h src/view/menu/sidebar.cpp
         src/view/menu/menubar.h src/view/menu/menubar.cpp
+        src/view/menu/filemenu.h src/view/menu/filemenu.cpp
+        src/view/menu/filemenu.h src/view/menu/filemenu.cpp
 
         src/view/chorddiagram/chordwindow.h src/view/chorddiagram/chordwindow.cpp
         src/view/chorddiagram/chorddiagram.h src/view/chorddiagram/chorddiagram.cpp
@@ -90,7 +92,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         tests/model/tablature/testtablature.h tests/model/tablature/testtablature.cpp
         tests/model/staff/teststaff.h tests/model/staff/teststaff.cpp
         tests/tabprocontroller.h tests/tabprocontroller.cpp
-
+        src/model/tablature/tabcolumn.h src/model/tablature/tabcolumn.cpp
+        src/model/tablature/tabfret.h src/model/tablature/tabfret.cpp
+        src/model/tablature/tabstate.h
 
     )
 

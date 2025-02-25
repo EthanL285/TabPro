@@ -3,7 +3,7 @@
 
 #include "sound.h"
 #include "staff.h"
-#include "tablaturebutton.h"
+#include "tabcolumn.h"
 
 #include <QWidget>
 #include <QLabel>
@@ -12,6 +12,7 @@
 #include <QLineEdit>
 #include <QScrollArea>
 #include <QTimer>
+#include <QButtonGroup>
 
 class Tablature : public QWidget
 {
@@ -28,27 +29,28 @@ public:
     void toggleChordMode();
 
     // Column Functions
-    TablatureButton *createColumn();
-    void addColumn(int index, const QString &text, RhythmSymbol *symbol);
-    void replaceColumn(int index, const QString &text, RhythmSymbol *symbol);
+    TabColumn *createColumn();
+    void addLeadColumn();
+    void addColumn(int index, const QVector<int> &frets, RhythmSymbol *symbol);
+    void replaceColumn(int index, const QVector<int> &frets, RhythmSymbol *symbol);
     void removeColumn(int index);
     void selectColumn(int index);
-    void selectColumn(TablatureButton *column);
+    void selectColumn(TabColumn *column);
 
     // Testing functions
     QHBoxLayout *getLayout();
     QWidget *getLayoutItem(int index);
 
-    static const QString EMPTY_COLUMN;
+    static const inline QVector<int> EMPTY_COLUMN = {-1, -1, -1, -1, -1, -1};
     static constexpr int NUM_STRINGS = 6;
     static constexpr int LAYOUT_OFFSET = 2;
     static constexpr int BARLINE_HEIGHT = 79;
-    static constexpr int DEFAULT_BUTTON_WIDTH = 35;
+    static constexpr int DEFAULT_COLUMN_WIDTH = 35;
     static constexpr int EMPTY_FRET = -1;
 
 public slots:
     int getSelectedColumnIndex();
-    void addFretNumber();
+    void addFretNumber(int fret, int string);
     void goLeft();
     void goRight();
     void playTab();
@@ -83,8 +85,9 @@ private:
     QHBoxLayout *columnLayout;
     QVBoxLayout *rowLayout;
     QHBoxLayout *tabLayout;
-    TablatureButton *selectedColumn = nullptr;
-    QVector<TablatureButton*> tab;
+    TabColumn *selectedColumn = nullptr;
+    QVector<TabColumn*> tab;
+    QButtonGroup *buttons;
     Sound *sound;
     QVector<int> *notes;
     QTimer *tempo;
@@ -94,9 +97,8 @@ private:
     int playIndex;
     int BPM = 60;
 
-    QVector<int> textToFrets(const QString &text);
-    void addColumnToLayout(int index, TablatureButton *column);
-    void adjustScrollBarPosition(QPushButton *button, QString alignment);
+    void addColumnToLayout(int index, TabColumn *column);
+    void adjustScrollBarPosition(TabColumn *column, QString alignment);
 
 };
 

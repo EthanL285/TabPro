@@ -9,6 +9,7 @@ class RhythmSymbol : public QWidget
 public:
     virtual double getBeatValue() = 0;
     virtual void toggleSelect() = 0;
+    virtual QJsonObject toJson() const = 0;
 
 public slots:
     void onWidthChange(int newWidth, int prevWidth);

@@ -3,7 +3,7 @@
 
 HalfRest::HalfRest()
 {
-    setFixedWidth(Tablature::DEFAULT_BUTTON_WIDTH);
+    setFixedWidth(Tablature::DEFAULT_COLUMN_WIDTH);
 }
 
 // Get the beat value of the rest

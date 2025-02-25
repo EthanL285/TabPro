@@ -15,6 +15,7 @@ public:
     QVector<int> getStaffLines();
     NoteType getType();
     void toggleSelect() override;
+    QJsonObject toJson() const override;
 
 protected:
     explicit Note(QVector<int> staffLines);

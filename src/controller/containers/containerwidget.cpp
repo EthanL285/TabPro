@@ -28,7 +28,7 @@ ContainerWidget::ContainerWidget(MainWindow *window, QWidget *parent)
     mainLayout->setAlignment(Qt::AlignCenter);
     mainLayout->setContentsMargins(0, 0, 0, 0);
 
-    // View Area Layout (excludes sidebar)
+    // View Area Layout
     QVBoxLayout *viewArea = new QVBoxLayout();
 
     // Scroll area
@@ -493,7 +493,6 @@ void ContainerWidget::createFretButtons()
                 "}"
             );
             fretLayout->addWidget(button, row, col);
-            connect(button, &QPushButton::clicked, tab, &Tablature::addFretNumber);
             connect(button, &QPushButton::clicked, this, [=]()
             {
                 sound->playNote(button->objectName());

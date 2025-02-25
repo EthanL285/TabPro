@@ -3,7 +3,8 @@
 
 #include <QString>
 
-enum class NoteType {
+enum class NoteType
+{
     Semibreve,
     Minim,
     Crotchet,
@@ -11,6 +12,21 @@ enum class NoteType {
     Semiquaver
 };
 
+inline const QString noteToString(NoteType type)
+{
+    switch (type)
+    {
+        case NoteType::Semibreve: return "Semibreve";
+        case NoteType::Minim: return "Minim";
+        case NoteType::Crotchet: return "Crotchet";
+        case NoteType::Quaver: return "Quaver";
+        case NoteType::Semiquaver: return "Semiquaver";
+        default: qFatal("Invalid NoteType provided");
+    }
+}
+
+
+// (Remove when JSON is complete)
 inline NoteType stringToNoteType(QString noteString)
 {
     if (noteString == "SB")

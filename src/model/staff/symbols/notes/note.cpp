@@ -2,6 +2,9 @@
 #include "staff.h"
 #include "tablature.h"
 
+#include <QJsonArray>
+#include <QJsonObject>
+
 #include <QPainter>
 #include <QPainterPath>
 
@@ -16,7 +19,7 @@ Note::Note(QVector<int> staffLines)
         numExtraLines = std::max(abs(line) - 4, numExtraLines);
     }
     numLines += numExtraLines;
-    setFixedSize(Tablature::DEFAULT_BUTTON_WIDTH, numLines * Staff::LINE_SPACING + Note::HEIGHT_OFFSET);
+    setFixedSize(Tablature::DEFAULT_COLUMN_WIDTH, numLines * Staff::LINE_SPACING + Note::HEIGHT_OFFSET);
 }
 
 // Getter for staff lines
@@ -137,3 +140,8 @@ bool Note::isFlipped()
     return isSingleNote() && staffLine > 0;
 }
 
+// Converts Note to JSON
+QJsonObject Note::toJson() const
+{
+    return QJsonObject{{"type", noteToString(type)}};
+}

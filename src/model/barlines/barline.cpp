@@ -4,7 +4,7 @@
 
 BarLine::BarLine(int height)
 {
-    setFixedWidth(Tablature::DEFAULT_BUTTON_WIDTH);
+    setFixedWidth(Tablature::DEFAULT_COLUMN_WIDTH);
     barHeight = height;
 }
 

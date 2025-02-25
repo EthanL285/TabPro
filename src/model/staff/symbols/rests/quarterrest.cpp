@@ -6,7 +6,7 @@
 
 QuarterRest::QuarterRest()
 {
-    setFixedWidth(Tablature::DEFAULT_BUTTON_WIDTH);
+    setFixedWidth(Tablature::DEFAULT_COLUMN_WIDTH);
 
     QLabel *label = new QLabel();
     label->setText("𝄽");

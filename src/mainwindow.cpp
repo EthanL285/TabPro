@@ -48,6 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Automatically login user
     qDebug() << "Token exists. Logging in";
     redirectMainWidget();
+
 }
 
 // MainWindow slots

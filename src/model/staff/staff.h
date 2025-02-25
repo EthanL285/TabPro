@@ -4,7 +4,7 @@
 #include "menubar.h"
 #include "rhythmsymbol.h"
 #include "signaturewidget.h"
-#include "tablaturebutton.h"
+#include "tabcolumn.h"
 
 #include <QWidget>
 #include <QHBoxLayout>
@@ -25,8 +25,8 @@ public:
     void toggleChordMode();
 
     // Note Operations
-    bool replaceNote(int index, RhythmSymbol *symbol, TablatureButton *column);
-    void addNote(int index, RhythmSymbol *symbol, TablatureButton *column);
+    bool replaceNote(int index, RhythmSymbol *symbol, TabColumn *column);
+    void addNote(int index, RhythmSymbol *symbol, TabColumn *column);
     void removeNote(int index);
     void selectNote(int index);
 
@@ -43,7 +43,7 @@ public:
     static constexpr int LINE_COUNT = 5;
     static constexpr int LINE_SPACING = 15;
     static constexpr double STAFF_SPACING = 7.5;
-    const QString EMPTY_COLUMN = "\u2015\n\u2015\n\u2015\n\u2015\n\u2015\n\u2015";
+    const QVector<int> EMPTY_COLUMN = {-1, -1, -1, -1, -1, -1};
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -74,7 +74,7 @@ private:
 
 signals:
     void removeColumn(int index);
-    void addColumn(int index, const QString &text, RhythmSymbol *symbol);
+    void addColumn(int index, const QVector<int> &frets, RhythmSymbol *symbol);
 
 public slots:
     void onTimeSignatureChanged(int beatsPerMeasure, int beatUnit);

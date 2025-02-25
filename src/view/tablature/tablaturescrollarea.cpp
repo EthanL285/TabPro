@@ -67,7 +67,7 @@ TablatureScrollArea::TablatureScrollArea(Tablature *tab, QWidget *parent)
     );
     // Connect scroll bar signals to slots
     QScrollBar *hScrollBar = horizontalScrollBar();
-    hScrollBar->setSingleStep(Tablature::DEFAULT_BUTTON_WIDTH);
+    hScrollBar->setSingleStep(Tablature::DEFAULT_COLUMN_WIDTH);
     connect(hScrollBar, &QScrollBar::rangeChanged, [hScrollBar](int max) { if (max > 0) hScrollBar->setValue(max); });
     connect(hScrollBar, &QScrollBar::sliderPressed, tab, &Tablature::pauseTab);
 }

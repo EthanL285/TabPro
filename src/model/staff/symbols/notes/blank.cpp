@@ -4,7 +4,7 @@
 Blank::Blank()
     : Note{QVector<int>(6,-1)}
 {
-    setFixedWidth(Tablature::DEFAULT_BUTTON_WIDTH);
+    setFixedWidth(Tablature::DEFAULT_COLUMN_WIDTH);
 }
 
 // Get the beat value of the note

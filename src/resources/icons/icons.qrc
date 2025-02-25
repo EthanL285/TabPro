@@ -14,9 +14,6 @@
         <file>background/Background.png</file>
         <file>background/Background Grayscale.png</file>
     </qresource>
-    <qresource prefix="/sidebar">
-        <file>sidebar/SideBarIcon.png</file>
-    </qresource>
     <qresource prefix="/playback">
         <file>playback/left chevron hover.png</file>
         <file>playback/left chevron.png</file>
@@ -38,5 +35,11 @@
         <file>miscellaneous/return.png</file>
         <file>miscellaneous/trash hover.png</file>
         <file>miscellaneous/trash.png</file>
+    </qresource>
+    <qresource prefix="/menu">
+        <file>menu/save as.png</file>
+        <file>menu/save.png</file>
+        <file>menu/new.png</file>
+        <file>menu/open.png</file>
     </qresource>
 </RCC>

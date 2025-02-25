@@ -97,10 +97,10 @@ const QMap<int, QString> Staff::NOTE_MAP =
 //////////////////////////////////////////////////////////////////////
 
 // Adds a note at the given index
-void Staff::addNote(int index, RhythmSymbol *symbol, TablatureButton *column)
+void Staff::addNote(int index, RhythmSymbol *symbol, TabColumn *column)
 {
     connect(symbol, &RhythmSymbol::widthChanged, this, &Staff::onNoteWidthChange, Qt::UniqueConnection);
-    connect(column, &TablatureButton::widthChanged, symbol, &RhythmSymbol::onWidthChange, Qt::UniqueConnection);
+    // connect(column, &TabButton::widthChanged, symbol, &RhythmSymbol::onWidthChange, Qt::UniqueConnection);
 
     // Insertion at last index
     if (index == notes.size())
@@ -116,7 +116,7 @@ void Staff::addNote(int index, RhythmSymbol *symbol, TablatureButton *column)
 
 // Replaces the note at the given index
 // Returns true if successful, false otherwise
-bool Staff::replaceNote(int index, RhythmSymbol *symbol, TablatureButton *column)
+bool Staff::replaceNote(int index, RhythmSymbol *symbol, TabColumn *column)
 {
     // Different beat values
     if (notes[index]->getBeatValue() != symbol->getBeatValue())
