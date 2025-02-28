@@ -11,8 +11,7 @@ class Sound : public QObject
     Q_OBJECT
 public:
     explicit Sound(QObject *parent = nullptr);
-    void playNote(QString note);
-    void handleStateChanged(QMediaPlayer::MediaStatus status);
+    static void playNote(QString note);
 
 signals:
 

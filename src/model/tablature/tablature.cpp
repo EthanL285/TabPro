@@ -6,12 +6,15 @@
 #include "tablatureindent.h"
 #include "tablaturescrollarea.h"
 #include "tabcolumn.h"
+#include "sound.h"
 
 #include <QScrollArea>
 #include <QScrollBar>
 
-Tablature::Tablature(MenuBar *menu, Sound *sound, Staff *staff, QWidget *parent)
-    : menu{menu}, sound{sound}, staff{staff}, QWidget{parent}
+Tablature::Tablature(QWidget *parent)
+    : QWidget(parent)
+    , staff(Staff::getInstance())
+    , menu(MenuBar::getInstance())
 {
     tabLayout = new QHBoxLayout(this);
     tabLayout->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
@@ -84,14 +87,29 @@ Tablature::Tablature(MenuBar *menu, Sound *sound, Staff *staff, QWidget *parent)
      */
 }
 
+Tablature *Tablature::instance = nullptr;
+
+// Returns the singleton instance
+Tablature *Tablature::getInstance(QWidget *parent)
+{
+    if (!instance) instance = new Tablature(parent);
+    return instance;
+}
+
 //////////////////////////////////////////////////////////////////////
 //                          TAB FUNCTIONS                           //
 //////////////////////////////////////////////////////////////////////
 
+// Getter for tab
+const QVector<TabColumn*> &Tablature::getTab()
+{
+    return tab;
+}
+
 // Visually updates the tab
 void Tablature::updateTab()
 {
-    ScoreUpdater::updateBarLines(staff->getNotes(), this, staff, staff->getBeatsPerMeasure());
+    ScoreUpdater::updateBarLines();
 }
 
 // Resets the tab
@@ -176,7 +194,7 @@ void Tablature::playColumn(int index)
     for (int i = 0; i < Tablature::NUM_STRINGS; i++)
     {
         if (frets[i] == EMPTY_FRET) continue;
-        sound->playNote(QString::asprintf("%d %d", 5 - i, frets[i]));
+        Sound::playNote(QString::asprintf("%d %d", 5 - i, frets[i]));
     }
     // Select column
     selectColumn(index);

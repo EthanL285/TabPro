@@ -2,6 +2,8 @@
 #include "barline.h"
 #include "rest.h"
 #include "restfactory.h"
+#include "rhythmsymbol.h"
+#include "tablature.h"
 
 ScoreUpdater::ScoreUpdater(QWidget *parent)
     : QWidget{parent}
@@ -10,27 +12,27 @@ ScoreUpdater::ScoreUpdater(QWidget *parent)
 bool ScoreUpdater::isUpdating = false;
 
 // Visually updates the barlines on the tab/staff
-void ScoreUpdater::updateBarLines(const QVector<RhythmSymbol*> &notes, Tablature *tab, Staff *staff, int beatsPerMeasure)
+void ScoreUpdater::updateBarLines()
 {
     if (isUpdating) return;
     isUpdating = true;
 
-    QHBoxLayout *staffLayout = staff->getLayout();
-    QHBoxLayout *tabLayout = tab->getLayout();
+    QHBoxLayout *staffLayout = Staff::getInstance()->getLayout();
+    QHBoxLayout *tabLayout = Tablature::getInstance()->getLayout();
 
     // Remove all barlines from tab and staff
     int barLinesRemoved = removeBarLines(staffLayout);
     removeBarLines(tabLayout);
 
     // Get positions of new barlines
-    QVector<int> newBarLinePos = getBarLinePos(notes, tab, staff, beatsPerMeasure);
+    QVector<int> newBarLinePos = getBarLinePos();
 
     // Add new barlines to tab and staff
     int barLinesAdded = addBarLines(staffLayout, newBarLinePos, Staff::LAYOUT_OFFSET, Staff::BARLINE_HEIGHT);
     addBarLines(tabLayout, newBarLinePos, Tablature::LAYOUT_OFFSET, Tablature::BARLINE_HEIGHT);
 
     // Update staff length
-    staff->updateLength(Tablature::DEFAULT_COLUMN_WIDTH, barLinesAdded - barLinesRemoved);
+    Staff::getInstance()->updateLength(Tablature::DEFAULT_COLUMN_WIDTH, barLinesAdded - barLinesRemoved);
     isUpdating = false;
 }
 
@@ -64,10 +66,13 @@ int ScoreUpdater::addBarLines(QHBoxLayout *layout, QVector<int> barLinePos, int 
 }
 
 // Returns the positions of new barlines
-QVector<int> ScoreUpdater::getBarLinePos(const QVector<RhythmSymbol*> &notes, Tablature *tab, Staff *staff, int beatsPerMeasure)
+QVector<int> ScoreUpdater::getBarLinePos()
 {
     double beats = 0;
+    int beatsPerMeasure = Staff::getInstance()->getBeatsPerMeasure();
+
     QVector<int> newBarlinePos;
+    QVector<RhythmSymbol*> notes = Staff::getInstance()->getNotes();
 
     for (int i = 0; i < notes.size(); i++)
     {
@@ -76,7 +81,7 @@ QVector<int> ScoreUpdater::getBarLinePos(const QVector<RhythmSymbol*> &notes, Ta
         if (beats > beatsPerMeasure)
         {
             Rest *rest = RestFactory::createRest(beats - beatsPerMeasure);
-            tab->addColumn(i, Tablature::EMPTY_COLUMN, rest);
+            Tablature::getInstance()->addColumn(i, Tablature::EMPTY_COLUMN, rest);
         }
         if (beats >= beatsPerMeasure)
         {

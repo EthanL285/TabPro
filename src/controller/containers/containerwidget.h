@@ -3,7 +3,6 @@
 
 #include "menubar.h"
 #include "tablature.h"
-#include "sound.h"
 #include "mainwindow.h"
 
 #include <QWidget>
@@ -15,6 +14,7 @@ class ContainerWidget : public QWidget
     Q_OBJECT
 public:
     explicit ContainerWidget(MainWindow *window, QWidget *parent = nullptr);
+
     QLabel *createStrings(QString note);
     void createFretBoard();
     void createFretButtons();
@@ -41,11 +41,11 @@ signals:
 
 private:
     MenuBar *menu;
+    Tablature *tab;
+    Staff *staff;
+
     QWidget *rectangle;   
     QWidget *playingTechniques;
-    Staff *staff;
-    Tablature *tab;
-    Sound *sound;
 
     QHBoxLayout *guitarLayout;
     QVBoxLayout *tabLayout;

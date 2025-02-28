@@ -9,8 +9,8 @@ Sound::Sound(QObject *parent)
 // Plays the given note
 void Sound::playNote(QString note)
 {
-    QMediaPlayer *player = new QMediaPlayer(this);
-    QAudioOutput *output = new QAudioOutput(this);
+    QMediaPlayer *player = new QMediaPlayer();
+    QAudioOutput *output = new QAudioOutput();
     player->setAudioOutput(output);
     output->setVolume(1);
 
@@ -32,7 +32,7 @@ void Sound::playNote(QString note)
     player->play();
 
     // Delete player and output once finished
-    connect(player, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus status)
+    connect(player, &QMediaPlayer::mediaStatusChanged, [=](QMediaPlayer::MediaStatus status)
     {
         if (status == QMediaPlayer::EndOfMedia)
         {
@@ -41,18 +41,3 @@ void Sound::playNote(QString note)
         }
     });
 }
-
-
-
-/*
-connect(player, &QMediaPlayer::mediaStatusChanged, this, &Sound::handleStateChanged);
-
-void Sound::handleStateChanged(QMediaPlayer::MediaStatus status)
-{
-    if (status == QMediaPlayer::EndOfMedia)
-    {
-        qDebug() << "Deleted";
-        delete player;
-    }
-}
-*/

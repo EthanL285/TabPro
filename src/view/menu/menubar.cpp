@@ -99,6 +99,15 @@ MenuBar::MenuBar(QWidget *parent)
     connect(reset, &QPushButton::clicked, this, &MenuBar::onResetTabClick);
 }
 
+MenuBar *MenuBar::instance = nullptr;
+
+// Returns the singleton instance
+MenuBar *MenuBar::getInstance(QWidget *parent)
+{
+    if (!instance) instance = new MenuBar(parent);
+    return instance;
+}
+
 // Getter for selected note
 NoteType MenuBar::getNote()
 {

@@ -23,6 +23,7 @@ public:
 
     bool isEmpty();
     bool isSelected();
+    QJsonArray toJson() const;
 
 protected:
     void paintEvent(QPaintEvent *event) override;

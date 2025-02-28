@@ -46,7 +46,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/model/staff/symbols/rests/restfactory.h src/model/staff/symbols/rests/restfactory.cpp
         src/model/staff/symbols/notes/notefactory.h src/model/staff/symbols/notes/notefactory.cpp
 
-        src/model/tablature/tabjsonconverter.h src/model/tablature/tabjsonconverter.cpp
+        src/model/tablature/tabjsonmanager.h src/model/tablature/tabjsonmanager.cpp
         src/model/tablature/tablature.h src/model/tablature/tablature.cpp
 
 

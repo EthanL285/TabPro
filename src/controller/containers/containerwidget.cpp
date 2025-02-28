@@ -1,6 +1,7 @@
 #include "containerwidget.h"
 #include "staff.h"
 #include "chordwindow.h"
+#include "sound.h"
 
 #include <QPainter>
 #include <QGraphicsDropShadowEffect>
@@ -18,9 +19,11 @@
 
 ContainerWidget::ContainerWidget(MainWindow *window, QWidget *parent)
     : QWidget{parent}
+    , menu(MenuBar::getInstance(this))
+    , tab(Tablature::getInstance(this))
+    , staff(Staff::getInstance(this))
 {
     // Menu bar
-    menu = new MenuBar(this);
     if (window) window->setMenuWidget(menu);
 
     // Main Layout
@@ -44,7 +47,6 @@ ContainerWidget::ContainerWidget(MainWindow *window, QWidget *parent)
     viewArea->addLayout(noteLayout);
 
     // Staff
-    staff = new Staff(menu, this);
     noteLayout->addWidget(staff);
 
     // Tab Layout (includes both tablature and playback)
@@ -53,11 +55,7 @@ ContainerWidget::ContainerWidget(MainWindow *window, QWidget *parent)
     tabLayout->setSpacing(20);
     viewArea->addLayout(tabLayout);
 
-    // Sound
-    sound = new Sound(this);
-
     // Tablature and playback buttons
-    tab = new Tablature(menu, sound, staff);
     tab->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     tab->setContentsMargins(28, 0, 28, 0);
     tabLayout->addWidget(tab);
@@ -495,7 +493,7 @@ void ContainerWidget::createFretButtons()
             fretLayout->addWidget(button, row, col);
             connect(button, &QPushButton::clicked, this, [=]()
             {
-                sound->playNote(button->objectName());
+                Sound::playNote(button->objectName());
             });
         }
     }

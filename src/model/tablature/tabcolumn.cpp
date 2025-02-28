@@ -4,6 +4,7 @@
 #include <QPainter>
 #include <QVBoxLayout>
 #include <QButtonGroup>
+#include <QJsonArray>
 
 TabColumn::TabColumn(QWidget *parent)
     : QWidget{parent}
@@ -102,6 +103,17 @@ bool TabColumn::isEmpty()
 bool TabColumn::isSelected()
 {
     return std::any_of(buttons.begin(), buttons.end(), [](QPushButton* button) { return button->isChecked(); });
+}
+
+// Converts to JSON
+QJsonArray TabColumn::toJson() const
+{
+    QJsonArray jsonArray;
+    for (TabFret *button : buttons)
+    {
+        jsonArray.append(button->getFret());
+    }
+    return jsonArray;
 }
 
 // Paint event

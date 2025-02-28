@@ -15,7 +15,8 @@ class MenuBar : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MenuBar(QWidget *parent = nullptr);
+    static MenuBar *getInstance(QWidget *parent = nullptr);
+
     NoteType getNote();
     AccidentalType getAccidental();
     QString getSignature();
@@ -25,6 +26,11 @@ public:
     QPushButton *getMenuButton(QString buttonName);
 
 private:
+    static MenuBar *instance;
+    MenuBar(QWidget *parent = nullptr);
+    MenuBar(const MenuBar&) = delete;
+    MenuBar &operator=(const MenuBar&) = delete;
+
     QPushButton *createButton(QString text, int fontSize);
     QHBoxLayout *createDivider();
 

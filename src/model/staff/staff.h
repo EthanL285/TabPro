@@ -1,7 +1,6 @@
 #ifndef STAFF_H
 #define STAFF_H
 
-#include "menubar.h"
 #include "rhythmsymbol.h"
 #include "signaturewidget.h"
 #include "tabcolumn.h"
@@ -15,7 +14,7 @@ class Staff : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Staff(MenuBar *menu, QWidget *parent = nullptr);
+    static Staff *getInstance(QWidget *parent = nullptr);
 
     int getBeatsPerMeasure();
     int getBeatUnit();
@@ -49,18 +48,22 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
+    static Staff *instance;
+    Staff(QWidget *parent = nullptr);
+    Staff(const Staff&) = delete;
+    Staff &operator=(const Staff&) = delete;
+
+    static const QMap<int, QString> NOTE_MAP;
+    static const QMap<int, QPair<int, int>> STRING_MAP;
+
     QHBoxLayout *mainLayout;
     int beatsPerMeasure = 4;
     int beatUnit = 4;
     int length = 185;
     bool chordMode = false;
 
-    static const QMap<int, QString> NOTE_MAP;
-    static const QMap<int, QPair<int, int>> STRING_MAP;
-
-    MenuBar *menu;
-    SignatureWidget *timeSignature;
     QVector<RhythmSymbol*> notes;
+    SignatureWidget *timeSignature;
     RhythmSymbol *selectedNote = nullptr;
 
     // Measure functions

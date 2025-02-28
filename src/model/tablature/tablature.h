@@ -1,9 +1,9 @@
 #ifndef TABLATURE_H
 #define TABLATURE_H
 
-#include "sound.h"
 #include "staff.h"
 #include "tabcolumn.h"
+#include "menubar.h"
 
 #include <QWidget>
 #include <QLabel>
@@ -18,9 +18,10 @@ class Tablature : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Tablature(MenuBar *menu, Sound *sound, Staff *staff, QWidget *parent = nullptr);
+    static Tablature *getInstance(QWidget *parent = nullptr);
 
     // Tab functions
+    const QVector<TabColumn*> &getTab();
     void updateTab();
     void resetTab();
 
@@ -81,25 +82,29 @@ signals:
     void tabPaused();
 
 private:
+    static Tablature *instance;
+    Tablature(QWidget *parent = nullptr);
+    Tablature(const Tablature&) = delete;
+    Tablature &operator=(const Tablature&) = delete;
+
+    QVector<TabColumn*> tab;
+    Staff *staff;
     MenuBar *menu;
+
     QHBoxLayout *columnLayout;
     QVBoxLayout *rowLayout;
     QHBoxLayout *tabLayout;
     TabColumn *selectedColumn = nullptr;
-    QVector<TabColumn*> tab;
     QButtonGroup *buttons;
-    Sound *sound;
     QVector<int> *notes;
     QTimer *tempo;
     QScrollArea *scrollArea = nullptr;
-    Staff *staff = nullptr;
     bool isChordMode = false;
     int playIndex;
     int BPM = 60;
 
     void addColumnToLayout(int index, TabColumn *column);
     void adjustScrollBarPosition(TabColumn *column, QString alignment);
-
 };
 
 #endif // TABLATURE_H

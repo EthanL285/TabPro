@@ -7,8 +7,8 @@
 #include <QPainter>
 #include <QGraphicsOpacityEffect>
 
-Staff::Staff(MenuBar *menu, QWidget *parent)
-    : menu{menu}, QWidget{parent}
+Staff::Staff(QWidget *parent)
+    : QWidget{parent}
 {
     setFixedWidth(length);
     mainLayout = new QHBoxLayout(this);
@@ -40,6 +40,15 @@ Staff::Staff(MenuBar *menu, QWidget *parent)
     mainLayout->addWidget(timeSignature, Qt::AlignVCenter);
 }
 
+Staff *Staff::instance = nullptr;
+
+// Returns the singleton instance
+Staff *Staff::getInstance(QWidget *parent)
+{
+    if (!instance) instance = new Staff(parent);
+    return instance;
+}
+
 // Getter for beats per measure
 int Staff::getBeatsPerMeasure()
 {
@@ -52,7 +61,7 @@ int Staff::getBeatUnit()
     return beatUnit;
 }
 
-// Getter for notes
+// Getter for staff
 const QVector<RhythmSymbol*> &Staff::getNotes()
 {
     return notes;
@@ -165,7 +174,7 @@ void Staff::addNoteToLayout(int index, RhythmSymbol *symbol)
             break;
         }
         QWidget *widget = mainLayout->itemAt(i)->widget();
-        if (dynamic_cast<RhythmSymbol*>(widget)) count++;
+        if (qobject_cast<RhythmSymbol*>(widget)) count++;
     }
 }
 
@@ -259,7 +268,7 @@ QPair<QVector<RhythmSymbol*>, int> Staff::getMeasureInfo(int index)
     for (int i = 0; i <= index + count; i++)
     {
         QWidget *widget = mainLayout->itemAt(i + LAYOUT_OFFSET)->widget();
-        if (dynamic_cast<BarLine*>(widget)) count++;
+        if (qobject_cast<BarLine*>(widget)) count++;
     }
     int offset = LAYOUT_OFFSET + count;
 
@@ -267,15 +276,15 @@ QPair<QVector<RhythmSymbol*>, int> Staff::getMeasureInfo(int index)
     for (int i = index + offset; i < mainLayout->count(); i++)
     {
         QWidget *widget = mainLayout->itemAt(i)->widget();
-        if (dynamic_cast<BarLine*>(widget)) break;
-        measure.append(dynamic_cast<RhythmSymbol*>(widget));
+        if (qobject_cast<BarLine*>(widget)) break;
+        measure.append(qobject_cast<RhythmSymbol*>(widget));
     }
     // Collect notes before the current note until the previous barline
     for (int i = index + offset - 1; i >= LAYOUT_OFFSET; i--)
     {
         QWidget *widget = mainLayout->itemAt(i)->widget();
-        if (dynamic_cast<BarLine*>(widget)) break;
-        measure.prepend(dynamic_cast<RhythmSymbol*>(widget));
+        if (qobject_cast<BarLine*>(widget)) break;
+        measure.prepend(qobject_cast<RhythmSymbol*>(widget));
         measureIdx++;
     }
     return QPair<QVector<RhythmSymbol*>, int>(measure, measureIdx);
